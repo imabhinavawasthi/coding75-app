@@ -25,7 +25,7 @@ export const SidebarItem = ({
     pathname?.startsWith(`${href}/`);
 
   return (
-    <Link
+    <a
       href={href}
       className={cn(
         "flex items-center gap-x-2 text-slate-500 text-sm font-[500] pl-6 transition-all hover:text-slate-600 hover:bg-slate-300/20",
@@ -48,6 +48,6 @@ export const SidebarItem = ({
           isActive && "opacity-100"
         )}
       />
-    </Link>
+    </a>
   )
 }
