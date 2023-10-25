@@ -29,7 +29,7 @@ import { Code2, Rocket } from "lucide-react"
 
 export default function ImageCard() {
     return (
-        <Link href="/">
+        <Link href="/dsa-cp">
         <Card className="shadow-lg hover:shadow-[0_35px_60px_-15px_rgba(0,0,0,0.3)] mt-3">
             <CardHeader className="grid items-start gap-4 space-y-0">
                 <div className="space-y-1">
