@@ -1,10 +1,9 @@
 "use client";
 
 import { LucideIcon } from "lucide-react";
-import { usePathname, useRouter } from "next/navigation";
+import { usePathname } from "next/navigation";
 
 import { cn } from "@/lib/utils";
-import Link from "next/link";
 
 interface SidebarItemProps {
   icon: LucideIcon;

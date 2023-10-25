@@ -10,7 +10,7 @@ export async function fetchInternships() {
         if (error) {
             console.error('Error fetching data:', error);
         } else {
-            console.log('Internships data:', internships);
+            return { internships };
         }
 
         return { internships, error };
