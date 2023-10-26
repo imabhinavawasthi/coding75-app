@@ -3,22 +3,24 @@
 import React, { useEffect, useState } from 'react';
 import ImageCard from "@/components/image-card";
 import OpportunityCard from "@/components/opportunity-card";
-import { fetchInternships } from './api/fetchInternships';
+import { fetchInternships } from './(api)/fetchInternships';
 
 const OpportunitiesPage = () => {
-    const [internshipsList, setInternshipsList] = useState()
-    async function fetchData() {
-        const { internships, error } = await fetchInternships();
-
-        if (!error) {
-            // Use the internships data here
-            console.log(internships);
-            
+    const [internshipsList, setInternshipsList] = useState([])
+    useEffect(() => {
+        async function fetchData() {
+            try {
+                const { internships } = await fetchInternships({"slug_url":null});
+                setInternshipsList(internships);
+            } catch (error) {
+                console.error("Error fetching data:", error);
+            }
         }
-    }
-
-    fetchData();
     
+        fetchData();
+    }, [])
+    
+
 
     return (
         <div className="mt-3 container grid grid-cols-6 gap-3">
@@ -26,18 +28,17 @@ const OpportunitiesPage = () => {
                 <ImageCard />
             </div>
             <div className="flex flex-col col-span-6 lg:col-span-4">
-                <OpportunityCard />
-                <OpportunityCard />
-                <OpportunityCard />
-                <OpportunityCard />
-                <OpportunityCard />
-                <OpportunityCard />
-                <OpportunityCard />
-                <OpportunityCard />
-                <OpportunityCard />
-                <OpportunityCard />
-                <OpportunityCard />
-                <OpportunityCard />
+                {internshipsList.map((internship, index) => (
+                    <OpportunityCard
+                        key={index}
+                        title={internship?.internship_title}
+                        company_name={internship?.company_name}
+                        location={internship?.internship_location}
+                        company_logo={internship?.company_logo}
+                        apply_link={internship?.apply_link}
+                        url_slug={internship?.url_slug}
+                    />
+                ))}
             </div>
             <div className="hidden md:flex relative mt-3 col-span-6 md:col-span-2">
                 <div className="fixed mr-5" style={{ overflowY: 'scroll' }}>
