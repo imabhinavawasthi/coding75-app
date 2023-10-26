@@ -1,9 +1,10 @@
+"use client";
+
 import { Building, ExternalLink, GraduationCap, MapPin } from "lucide-react";
 import { Button } from "./ui/button";
-import Image from "next/image";
 import Link from "next/link";
 
-const OpportunityCard = ({ title, company_name, location, company_logo, apply_link, url_slug }) => {
+const OpportunityCard = ({title, company_name, location, company_logo, apply_link, url_slug}) => {
     return (
         <div>
             <div className="mt-3 shadow-lg hover:shadow-[0_35px_60px_-15px_rgba(0,0,0,0.3)] w-full">

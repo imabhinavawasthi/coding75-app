@@ -1,9 +1,10 @@
 // internshipsService.ts
 import supabase from "@/supabase";
 
-export async function fetchInternships(params) {
+export async function fetchInternships(params: any) {
     
     if(params.url_slug){
+        
         try {
             let { data: internships, error } = await supabase
                 .from('internships')

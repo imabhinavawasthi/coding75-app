@@ -3,12 +3,13 @@
 import React, { useEffect, useState } from "react";
 import { fetchInternships } from "../(api)/fetchInternships";
 
-const OpportunityPage = ({params}) => {
+const OpportunityPage = (params: any) => {
     const [internshipDetails, setInternshipDetails] = useState([])
     useEffect(() => {
         async function fetchData() {
             try {
-                const { internships } = await fetchInternships({"url_slug":params.opportunity});
+                
+                const { internships } = await fetchInternships({"url_slug":params.params.opportunity});
                 setInternshipDetails(internships);
                 
             } catch (error) {
