@@ -1,8 +1,7 @@
 "use client";
 
 import React, { useEffect, useState } from 'react';
-import ImageCard from "@/components/image-card";
-import OpportunityCard from "@/components/opportunity-card";
+import OpportunityCard from "@/components/cards/opportunity-card";
 import { fetchInternships } from './(api)/fetchInternships';
 
 const OpportunitiesPage = () => {
@@ -24,11 +23,8 @@ const OpportunitiesPage = () => {
 
     return (
         <div className="mt-3 container grid grid-cols-6 gap-3">
-            <div className="lg:hidden col-span-6">
-                <ImageCard />
-            </div>
             <div className="flex flex-col col-span-6 lg:col-span-4">
-                {internshipsList.map((internship, index) => (
+                {internshipsList?.map((internship, index) => (
                     <OpportunityCard
                         key={index}
                         title={internship?.internship_title}
@@ -39,13 +35,6 @@ const OpportunitiesPage = () => {
                         url_slug={internship?.url_slug}
                     />
                 ))}
-            </div>
-            <div className="hidden md:flex relative mt-3 col-span-6 md:col-span-2">
-                <div className="fixed mr-5" style={{ overflowY: 'scroll' }}>
-                    <ImageCard />
-                    <ImageCard />
-                    <ImageCard />
-                </div>
             </div>
         </div>
     );

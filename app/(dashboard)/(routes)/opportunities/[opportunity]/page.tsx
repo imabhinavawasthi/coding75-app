@@ -4,10 +4,6 @@ import React, { useEffect, useState } from "react";
 import { fetchInternships } from "../(api)/fetchInternships";
 import { BriefcaseIcon, CalendarIcon, CheckIcon, CurrencyIcon, LinkIcon, MapPinIcon, PencilIcon } from "lucide-react";
 
-function classNames(...classes) {
-    return classes.filter(Boolean).join(' ')
-  }
-
 const OpportunityPage = (params: any) => {
     const [internshipDetails, setInternshipDetails] = useState([])
     useEffect(() => {

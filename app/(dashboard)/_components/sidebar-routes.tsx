@@ -1,6 +1,6 @@
 "use client";
 
-import { BarChart, BookText, Briefcase, Code2, Compass, Layout, List, RocketIcon } from "lucide-react";
+import { BarChart, BookText, Briefcase, Code2, Compass, Layout, List, RocketIcon, Users } from "lucide-react";
 import { usePathname } from "next/navigation";
 
 import { SidebarItem } from "./sidebar-item";
@@ -35,6 +35,11 @@ const guestRoutes = [
     icon: RocketIcon,
     label: "DSA & CP",
     href: "/dsa-cp",
+  },
+  {
+    icon: Users,
+    label: "Community",
+    href: "/community",
   },
 ];
 

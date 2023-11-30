@@ -1,7 +1,7 @@
 "use client";
 
 import { Building, ExternalLink, GraduationCap, MapPin } from "lucide-react";
-import { Button } from "./ui/button";
+import { Button } from "../ui/button";
 import Link from "next/link";
 
 const OpportunityCard = ({title, company_name, location, company_logo, apply_link, url_slug}) => {
