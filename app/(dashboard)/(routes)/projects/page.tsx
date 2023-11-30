@@ -8,7 +8,7 @@ const ProjectsPage = () => {
         <div>
             <div className="container">
                 <div className="mt-3">
-                    <PageHeaders heading="Projects Hub 🔥: Explore, Learn, Create 🚀" description="Explore a variety of coding projects—web development, mobile apps, machine learning, and more. From beginners to experienced coders, find inspiration and hands-on learning in our curated collection. 🚀" b1text="Button" b1link={undefined} b2text="Button" b2link={undefined} />
+                    <PageHeaders heading="Projects Hub 🔥: Explore, Learn, Create 🚀" description="Explore a variety of coding projects—web development, mobile apps, machine learning, and more. From beginners to experienced coders, find inspiration and hands-on learning in our curated collection. 🚀" b1text="Button" b1link={undefined}/>
                 </div>
                 <div className="mt-3">
                     <div className="grid lg:grid-cols-2 grid-cols-1">
