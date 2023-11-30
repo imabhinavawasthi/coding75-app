@@ -3,7 +3,7 @@
 import { CheckIcon, Share2Icon } from "lucide-react";
 import { useState } from "react";
 
-const PageHeaders = ({heading, description, b1text, b1link}) => {
+const PageHeaders = ({heading, description}) => {
     const [isCopied, setIsCopied] = useState(false)
     function getCurrentURL () {
         return window.location.href
@@ -59,11 +59,11 @@ const PageHeaders = ({heading, description, b1text, b1link}) => {
                             
 
                             <a
-                                className="block rounded-lg bg-indigo-600 px-5 py-3 text-sm font-medium text-white transition hover:bg-indigo-700 focus:outline-none focus:ring"
+                                className="block text-center rounded-lg bg-indigo-600 px-5 py-3 text-sm font-medium text-white transition hover:bg-indigo-700 focus:outline-none focus:ring"
                                 type="button"
-                                href={b1link}
+                                href="/community"
                             >
-                                {b1text}
+                                Join&nbsp;Community&nbsp;👨🏻‍💻
                             </a>
                         </div>
                     </div>

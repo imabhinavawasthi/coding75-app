@@ -1,14 +1,21 @@
 import ResourceCard2 from "@/components/cards/resource-card-2";
-import Footer from "@/components/footer";
 import PageHeaders from "@/components/page-headers";
 import { CloudCogIcon, Code2Icon, ComputerIcon, FileJson2, FileJson2Icon, FileJsonIcon, LayoutDashboardIcon, LucideCode2 } from "lucide-react";
+import type { Metadata } from 'next'
+
+export const metadata: Metadata = {
+    title: 'Project Hub 🚀 coding75',
+    description: 'Explore a variety of coding projects—web development, mobile apps, machine learning, and more. From beginners to experienced coders, find inspiration and hands-on learning in our curated collection. 🚀',
+  }
 
 const ProjectsPage = () => {
     return (
         <div>
             <div className="container">
                 <div className="mt-3">
-                    <PageHeaders heading="Projects Hub 🔥: Explore, Learn, Create 🚀" description="Explore a variety of coding projects—web development, mobile apps, machine learning, and more. From beginners to experienced coders, find inspiration and hands-on learning in our curated collection. 🚀" b1text="Button" b1link={undefined}/>
+                    <PageHeaders 
+                    heading="Projects Hub 🔥: Explore, Learn, Create 🚀" 
+                    description="Explore a variety of coding projects—web development, mobile apps, machine learning, and more. From beginners to experienced coders, find inspiration and hands-on learning in our curated collection. 🚀"/>
                 </div>
                 <div className="mt-3">
                     <div className="grid lg:grid-cols-2 grid-cols-1">

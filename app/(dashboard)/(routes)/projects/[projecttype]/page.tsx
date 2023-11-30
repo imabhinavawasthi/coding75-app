@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 import { fetchProjects } from "../(api)/fetchProjects";
 import PageHeaders from "@/components/page-headers";
 import ProjectCard from "@/components/cards/project-card";
+import PageNotFound from "@/components/page-not-found";
 
 const ProjectType = (params: any) => {
     const [projectDetails, setProjectsDetails] = useState([])
@@ -27,9 +28,11 @@ const ProjectType = (params: any) => {
 
     return (
         <div>
-            {projectDetails&&<div className="container">
+            {projectDetails?<div className="container">
                 <div className="mt-3">
-                    <PageHeaders heading={projectDetails[0]?.project_type + " 👨🏻‍💻"} description={projectDetails[0]?.project_type_description + " 🚀"} b1text="Button" b1link={undefined} />
+                    <PageHeaders 
+                    heading={projectDetails[0]?.project_type + " 👨🏻‍💻"} 
+                    description={projectDetails[0]?.project_type_description + " 🚀"}/>
                 </div>
                 <div className="mt-3">
                     <div className="grid lg:grid-cols-2 grid-cols-1">
@@ -44,7 +47,11 @@ const ProjectType = (params: any) => {
 
                     </div>
                 </div>
-            </div>}
+            </div>:
+            <div>
+                <PageNotFound/>
+                </div>
+            }
         </div>
     );
 }
