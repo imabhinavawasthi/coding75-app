@@ -40,15 +40,15 @@ const OpportunityPage = (params: any) => {
 
   return (
     <div className="container">
-      <div className="p-5 lg:p-10">
+      <div className="mt-3 p-3 lg:p-10">
         <div className="lg:flex lg:items-center lg:justify-between">
           <div className="min-w-0 flex-1">
             <div className="flex">
-              <div className="mr-5">
+              <div className="mr-3 md:mr-5 lg:mr-5">
                 <img
                   alt="company_logo"
                   src={internshipDetails[0]?.company_logo||"https://cdn-icons-png.flaticon.com/512/5345/5345937.png"}
-                  className="mx-auto object-cover rounded-full h-16 w-16 "
+                  className="object-cover mx-auto object-cover rounded-full max-h-16 max-w-16 lg:h-16 lg:w-16 "
                 />
               </div>
               <h2 className="text-center text-2xl font-bold leading-7 text-gray-900 sm:truncate sm:text-3xl sm:tracking-tight">
