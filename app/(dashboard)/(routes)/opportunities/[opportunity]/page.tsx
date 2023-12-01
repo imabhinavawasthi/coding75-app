@@ -113,12 +113,14 @@ const OpportunityPage = (params: any) => {
             </span>
           </div>
         </div>
-        {internshipDetails[0]?.internship_description && <div className="mt-10">
+        {internshipDetails[0]?.internship_description && 
+        <div>
+          <div className="mt-10">
           <div>
             <h3 className="mb-3 text-lg font-bold ">Job Description:</h3>
             <p className="text-gray-900">{internshipDetails[0]?.internship_description}</p>
           </div>
-        </div>}
+        </div>
         <div className="mt-10">
           <div className="flex justify-center ">
             <a
@@ -131,6 +133,8 @@ const OpportunityPage = (params: any) => {
             </a>
           </div>
         </div>
+        </div>
+        }
         <div className="mt-10">
           <h2 className="text-lg font-bold text-black-500">Accelerate Your Interview Preparation With Us 🚀</h2>
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-5">
