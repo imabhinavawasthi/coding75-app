@@ -17,18 +17,6 @@ export default function DashboardPage() {
           </div>
         </div>
         <div className="p-5">
-          <div className="pt-3">
-            <ResourceCard3 />
-          </div>
-          <div className="pt-3">
-            <ResourceCard3 />
-          </div>
-          <div className="pt-3">
-            <ResourceCard3 />
-          </div>
-          <div className="pt-3">
-            <ResourceCard3 />
-          </div>
         </div>
       </div>
     </div>
