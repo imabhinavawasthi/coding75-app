@@ -13,7 +13,7 @@ export default function LandingPage() {
             <HeaderSection/>
             <FeatureSection/>
             {/* <BlogSection/> */}
-            <div className="container pl-20">
+            <div className="container lg:pl-20">
             <Community/>
             </div>
             <Footer/>
