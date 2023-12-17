@@ -13,7 +13,7 @@ export default function DashboardPage() {
             {/* <ResourceCard2 /> */}
           </div>
           <div className="pt-3">
-            <ResourceCard />
+            {/* <ResourceCard /> */}
           </div>
         </div>
         <div className="p-5">

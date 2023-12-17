@@ -7,10 +7,10 @@ const ResourcesPage = () => {
         <div className="container mt-3">
             <div className="grid lg:grid-cols-2 grid-cols-1">
                 <div className="p-5">
-                    <ResourceCard />
+                    {/* <ResourceCard /> */}
                 </div>
                 <div className="p-5">
-                    <ResourceCard />
+                    {/* <ResourceCard /> */}
                 </div>
             </div>
         </div>

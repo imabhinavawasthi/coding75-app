@@ -1,7 +1,7 @@
 'use client';
 
 import Footer from "../footer";
-import BlogSection from "./blog-section";
+import Community from "./community";
 import FeatureSection from "./feature-section";
 import HeaderSection from "./header-section";
 
@@ -12,7 +12,10 @@ export default function LandingPage() {
         <div>
             <HeaderSection/>
             <FeatureSection/>
-            <BlogSection/>
+            {/* <BlogSection/> */}
+            <div className="container pl-20">
+            <Community/>
+            </div>
             <Footer/>
         </div>
     )

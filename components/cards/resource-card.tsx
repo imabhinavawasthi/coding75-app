@@ -1,50 +1,61 @@
-const ResourceCard = () => {
+import { Code2Icon, Link2, Pin, PlayCircleIcon, VideoIcon } from "lucide-react";
+import { Button } from "../ui/button";
+
+const ResourceCard = ({heading, description, link, sub_title}) => {
     return (
         <div>
             <a
-                href="#"
+                href={link}
                 className="relative block overflow-hidden rounded-lg border border-gray-100 p-4 sm:p-6 lg:p-8"
             >
                 <span
-                    className="absolute inset-x-0 bottom-0 h-2 bg-gradient-to-r from-green-300 via-blue-500 to-purple-600"
+                    className="absolute inset-x-0 bottom-0 h-2 bg-indigo-600"//bg-gradient-to-r from-green-300 via-blue-500 to-purple-600
                 ></span>
 
-                <div className="sm:flex sm:justify-between sm:gap-4">
+                <div className="mb-4 lg:mb-0 sm:flex sm:justify-between sm:gap-4">
                     <div>
-                        <h3 className="text-lg font-bold text-gray-900 sm:text-xl">
-                            Building a SaaS product as a software developer
+                        <h3 className="hover:underline text-lg font-medium sm:text-xl text-gray-900">
+                            {heading}
                         </h3>
 
-                        <p className="mt-1 text-xs font-medium text-gray-600">By John Doe</p>
+                        <p className="mt-1 text-xs font-medium text-gray-600">📌 {sub_title}</p>
                     </div>
 
                     <div className="hidden sm:block sm:shrink-0">
-                        <img
-                            alt="Paul Clapton"
-                            src="https://images.unsplash.com/photo-1633332755192-727a05c4013d?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1180&q=80"
-                            className="h-16 w-16 rounded-lg object-cover shadow-sm"
-                        />
+                        <PlayCircleIcon strokeWidth={1} className="w-16 h-16 text-indigo-500"/>
                     </div>
                 </div>
 
-                <div className="mt-4">
+                <div >
                     <p className="max-w-[40ch] text-sm text-gray-500">
-                        Lorem ipsum dolor sit, amet consectetur adipisicing elit. At velit illum
-                        provident a, ipsa maiores deleniti consectetur nobis et eaque.
+                        {description}
                     </p>
                 </div>
+                <div className="mt-4 lg:mb-4 mb-4 sm:flex sm:items-center sm:gap-2">
+                        <div className="flex items-center gap-1 text-gray-500">
+                            <VideoIcon className="h-4 w-4"/>
 
-                <dl className="mt-6 flex gap-4 sm:gap-6">
-                    <div className="flex flex-col-reverse">
-                        <dt className="text-sm font-medium text-gray-600">Published</dt>
-                        <dd className="text-xs text-gray-500">31st June, 2021</dd>
-                    </div>
+                            <p className="text-xs font-medium">Video Editorial</p>
+                        </div>
 
-                    <div className="flex flex-col-reverse">
-                        <dt className="text-sm font-medium text-gray-600">Reading time</dt>
-                        <dd className="text-xs text-gray-500">3 minute</dd>
+                        <span className="hidden sm:block" aria-hidden="true">&middot;</span>
+
+                        <div className="flex items-center gap-1 text-gray-500">
+                            <Code2Icon className="h-4 w-4"/>
+
+                            <p className="text-xs font-medium">Code</p>
+                        </div>
+                        <span className="hidden sm:block" aria-hidden="true">&middot;</span>
+
+                        <div className="flex items-center gap-1 text-gray-500">
+                            <Link2 className="h-4 w-4"/>
+
+                            <p className="text-xs font-medium">Link</p>
+                        </div>
                     </div>
-                </dl>
+                    <div className="w-full">
+                    <Button className="min-w-full lg:hidden hover:border-indigo-500 bg-indigo-500 hover:bg-white hover:text-indigo-800">Start Solving →</Button>
+                    </div>
             </a>
         </div>
     );
