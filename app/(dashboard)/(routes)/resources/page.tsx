@@ -13,14 +13,6 @@ const ResourcesPage = () => {
                     <ResourceCard />
                 </div>
             </div>
-            <div className="grid lg:grid-cols-2 grid-cols-1">
-                <div className="p-5">
-                    {/* <ResourceCard2 /> */}
-                </div>
-                <div className="p-5">
-                    {/* <ResourceCard2 /> */}
-                </div>
-            </div>
         </div>
     );
 }
