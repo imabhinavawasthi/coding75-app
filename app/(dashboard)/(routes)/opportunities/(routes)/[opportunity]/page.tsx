@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useEffect, useState } from "react";
-import { fetchInternships } from "../(api)/fetchInternships";
+import { fetchInternships } from "../../(api)/fetchInternships";
 import { BriefcaseIcon, CalendarIcon, Check, CheckIcon, CurrencyIcon, ExternalLink, IndianRupeeIcon, LinkIcon, MapPinIcon, PencilIcon, Share2 } from "lucide-react";
 import ResumeReviewCard from "@/components/cards/resume-review-card";
 import InternshipGuideCard from "@/components/cards/internship-guide-card";
@@ -26,7 +26,6 @@ const OpportunityPage = (params: any) => {
 
         const { internships } = await fetchInternships({ "url_slug": params.params.opportunity });
         setInternshipDetails(internships);
-        console.log(internships[0]?.batch_eligible.batch);
 
 
       } catch (error) {
@@ -47,7 +46,7 @@ const OpportunityPage = (params: any) => {
               <div className="mr-3 md:mr-5 lg:mr-5">
                 <img
                   alt="company_logo"
-                  src={internshipDetails[0]?.company_logo||"https://cdn-icons-png.flaticon.com/512/5345/5345937.png"}
+                  src={internshipDetails[0]?.company_logo||"https://cdn-icons-png.flaticon.com/512/3666/3666417.png"}
                   className="object-cover mx-auto object-cover rounded-full max-h-16 max-w-16 lg:h-16 lg:w-16 "
                 />
               </div>

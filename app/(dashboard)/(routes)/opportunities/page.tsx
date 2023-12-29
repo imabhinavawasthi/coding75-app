@@ -52,7 +52,7 @@ const OpportunitiesPage = () => {
                             title={internship?.internship_title}
                             company_name={internship?.company_name}
                             location={internship?.internship_location}
-                            company_logo={internship?.company_logo||"https://cdn-icons-png.flaticon.com/512/5345/5345937.png"}
+                            company_logo={internship?.company_logo||"https://cdn-icons-png.flaticon.com/512/3666/3666417.png"}
                             apply_link={internship?.apply_link}
                             url_slug={internship?.url_slug}
                         />

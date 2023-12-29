@@ -37,25 +37,9 @@ const AddProblem = () => {
         return s
     }
 
-    function printDetails() {
-        console.log(problem_name);
-        console.log(problem_description);
-        console.log(problem_link);
-        console.log(platform);
-        console.log(video_editorial);
-        console.log(editorial);
-        console.log(difficulty);
-        console.log(topic_tag);
-        console.log(company_tag);
-        console.log(create_url_slug(problem_name));
-        
-    }
-
-    
 
     async function addProblem(e) {
         e.preventDefault()
-        printDetails()
 
         try {
             const { data, error } = await supabase
