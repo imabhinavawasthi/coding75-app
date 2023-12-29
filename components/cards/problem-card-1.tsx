@@ -1,9 +1,9 @@
 'use client'
 
-import { CheckCheckIcon, Code2, ExternalLink, FlaskConical, Save, VideoIcon, XCircle } from "lucide-react";
+import { Code2, ExternalLink, VideoIcon } from "lucide-react";
 import { useEffect, useState } from "react";
 
-const ProblemCard1 = ({ problem_name, platform_name, problem_link, topic_tags,company_tags, difficulty, status, slug_url }) => {
+const ProblemCard1 = ({ problem_name, platform_name, problem_link, topic_tags,company_tags, difficulty, status, slug_url, editorial, video_editorial }) => {
     const [currentStatus, setCurrentStatus] = useState(status)
     function setStatus(e: any) {
         setCurrentStatus(e.target.value)
@@ -98,7 +98,7 @@ const ProblemCard1 = ({ problem_name, platform_name, problem_link, topic_tags,co
 
                             <span className="hidden sm:block" aria-hidden="true">&middot;</span>
                             <div className="mb-2 lg:mb-0 md:mb-0">
-                                <a href="" target="_blank" className="text-xs text-gray-500">
+                                <a href={problem_link} target="_blank" className="text-xs text-gray-500">
                                     <strong
                                         className="flex rounded border border-indigo-500 bg-indigo-500 px-3 py-1.5 text-[10px] font-medium text-white"
                                     >
@@ -108,7 +108,7 @@ const ProblemCard1 = ({ problem_name, platform_name, problem_link, topic_tags,co
                                 </a>
                             </div>
                             <div className="mb-2 lg:mb-0 md:mb-0">
-                                <a href="" target="_blank" className="text-xs text-gray-500">
+                                <a href={video_editorial} target="_blank" className="text-xs text-gray-500">
                                     <strong
                                         className="flex rounded border border-indigo-500 bg-indigo-500 px-3 py-1.5 text-[10px] font-medium text-white"
                                     >
@@ -118,7 +118,7 @@ const ProblemCard1 = ({ problem_name, platform_name, problem_link, topic_tags,co
                                 </a>
                             </div>
                             <div className="mb-2 lg:mb-0 md:mb-0 ">
-                                <a href="" target="_blank" className="text-xs text-gray-500">
+                                <a href={editorial} target="_blank" className="text-xs text-gray-500">
                                     <strong
                                         className="flex rounded border border-indigo-500 bg-indigo-500 px-3 py-1.5 text-[10px] font-medium text-white"
                                     >

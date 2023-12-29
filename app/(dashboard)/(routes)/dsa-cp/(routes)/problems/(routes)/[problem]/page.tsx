@@ -88,7 +88,7 @@ const Problem = (params: any) => {
                                                 </span>
                                             </div>}
                                         </div>
-                                        {problem["company_tags"] && <div className="flex flex-wrap mt-4 items-center text-sm text-gray-500">
+                                        {problem["company_tags"].length>0 && <div className="flex flex-wrap mt-4 items-center text-sm text-gray-500">
                                             <BriefcaseIcon className="mr-1.5 h-5 w-5 flex-shrink-0 text-gray-400" aria-hidden="true" />
                                             {problem["company_tags"].map((value, index) => (
                                                 <a
@@ -105,7 +105,7 @@ const Problem = (params: any) => {
                                                 </a>
                                             ))}
                                         </div>}
-                                        {problem["topic_tags"] && <div className="flex flex-wrap mt-4 items-center text-sm text-gray-500">
+                                        {problem["topic_tags"].length>0 && <div className="flex flex-wrap mt-4 items-center text-sm text-gray-500">
                                             <BookText className="mr-1.5 h-5 w-5 flex-shrink-0 text-gray-400" aria-hidden="true" />
                                             {problem["topic_tags"].map((value, index) => (
                                                 <a
