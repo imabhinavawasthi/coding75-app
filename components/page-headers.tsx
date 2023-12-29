@@ -31,7 +31,7 @@ const PageHeaders = ({heading, description}) => {
                             </p>
                         </div>
 
-                        <div className="mt-4 flex flex-col gap-4 sm:mt-0 sm:flex-row sm:items-center">
+                        <div className="lg:ml-2 mt-4 flex flex-col gap-4 sm:mt-0 sm:flex-row sm:items-center">
                             {isCopied?<div>
                                 <button
                                 className="inline-flex items-center justify-center gap-1.5 rounded-lg border border-gray-200 bg-white px-5 py-3 text-gray-500 transition hover:text-gray-700 focus:outline-none focus:ring"

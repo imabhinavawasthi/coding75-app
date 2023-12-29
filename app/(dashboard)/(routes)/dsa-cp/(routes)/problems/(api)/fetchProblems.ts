@@ -1,21 +1,22 @@
-// internshipsService.ts
 import supabase from "@/supabase";
 
-export async function fetchProjects(params: any) {
-    
-    
+export async function fetchProblems() {
+
+
     try {
-        let { data: projects, error } = await supabase
-            .from(params.projecttype+"projects")
+
+        let { data: dsaproblems, error } = await supabase
+            .from('dsaproblems')
             .select('*')
+
 
         if (error) {
             console.error('Error fetching data:', error);
         } else {
-            return { projects };
+            return { dsaproblems };
         }
 
-        return { projects, error };
+        return { dsaproblems, error };
     } catch (error) {
         console.error('An error occurred:', error);
         return { error };

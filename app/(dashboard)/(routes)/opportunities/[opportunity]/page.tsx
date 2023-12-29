@@ -10,7 +10,7 @@ const OpportunityPage = (params: any) => {
   const [internshipDetails, setInternshipDetails] = useState([])
   const [isCopied, setIsCopied] = useState(false)
   function getCurrentURL() {
-    return window.location.href
+    return window.location.href 
   }
   function copyurl() {
     const url = getCurrentURL()

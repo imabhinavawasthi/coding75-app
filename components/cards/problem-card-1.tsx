@@ -3,7 +3,7 @@
 import { CheckCheckIcon, Code2, ExternalLink, FlaskConical, Save, VideoIcon, XCircle } from "lucide-react";
 import { useEffect, useState } from "react";
 
-const ProblemCard1 = ({ problem_name, platform_name, problem_link, topic_tags, difficulty, status }) => {
+const ProblemCard1 = ({ problem_name, platform_name, problem_link, topic_tags,company_tags, difficulty, status, slug_url }) => {
     const [currentStatus, setCurrentStatus] = useState(status)
     function setStatus(e: any) {
         setCurrentStatus(e.target.value)
@@ -14,33 +14,41 @@ const ProblemCard1 = ({ problem_name, platform_name, problem_link, topic_tags, d
 
     return (
         <div>
+            <a href={"/dsa-cp/problems/"+slug_url}>
             <article className="rounded-xl border-2 border-gray-100 bg-white">
-                <div className="flex items-start gap-4 p-4 pb-0">
+                <div className="flex items-start gap-4 p-4">
 
                     <div>
                         <h3 className="font-medium sm:text-lg flex">
-                            <a href={problem_link} target="_blank" className="mr-3 hover:underline">
+                            <div className="mr-3 hover:underline">
                                 {problem_name}
-                            </a>
-                            {difficulty == "Easy" && <div>
+                            </div>
+                            {difficulty == 0 && <div>
                                 <span
                                     className="whitespace-nowrap rounded-full bg-green-100 px-2.5 py-0.5 text-sm text-green-700"
                                 >
-                                    {difficulty}
+                                    {"Easy"}
                                 </span>
                             </div>}
-                            {difficulty == "Medium" && <div>
+                            {difficulty == 1 && <div>
                                 <span
                                     className="whitespace-nowrap rounded-full bg-orange-100 px-2.5 py-0.5 text-sm text-orange-700"
                                 >
-                                    {difficulty}
+                                    {"Medium"}
                                 </span>
                             </div>}
-                            {difficulty == "Hard" && <div>
+                            {difficulty == 2 && <div>
                                 <span
                                     className="whitespace-nowrap rounded-full bg-red-100 px-2.5 py-0.5 text-sm text-red-700"
                                 >
-                                    {difficulty}
+                                    {"Hard"}
+                                </span>
+                            </div>}
+                            {difficulty == 3 && <div>
+                                <span
+                                    className="whitespace-nowrap rounded-full bg-blue-100 px-2.5 py-0.5 text-sm text-blue-700"
+                                >
+                                    {"Advanced"}
                                 </span>
                             </div>}
                         </h3>
@@ -60,6 +68,25 @@ const ProblemCard1 = ({ problem_name, platform_name, problem_link, topic_tags, d
                                         <p className="text-xs">
                                             <span
                                                 className="whitespace-nowrap rounded-full bg-purple-100 px-2.5 py-0.5 text-purple-700 "
+                                            >
+                                                {value}
+                                            </span>
+                                        </p>
+                                    </div>
+                                ))}
+
+                            </div>
+                            <span className="hidden sm:block" aria-hidden="true">&middot;</span>
+                            <div className="hidden sm:block md:flex lg:flex items-center gap-1 text-gray-500">
+                                {company_tags.map((value, index) => (
+                                    <div
+                                        key={index}
+                                        className="mb-2 md:mb-0 lg:mb-0"
+                                    >
+
+                                        <p className="text-xs">
+                                            <span
+                                                className="whitespace-nowrap rounded-full bg-yellow-100 px-2.5 py-0.5 text-yellow-700 "
                                             >
                                                 {value}
                                             </span>
@@ -90,7 +117,7 @@ const ProblemCard1 = ({ problem_name, platform_name, problem_link, topic_tags, d
                                     </strong>
                                 </a>
                             </div>
-                            <div className="mb-2 lg:mb-0 md:mb-0">
+                            <div className="mb-2 lg:mb-0 md:mb-0 ">
                                 <a href="" target="_blank" className="text-xs text-gray-500">
                                     <strong
                                         className="flex rounded border border-indigo-500 bg-indigo-500 px-3 py-1.5 text-[10px] font-medium text-white"
@@ -100,7 +127,7 @@ const ProblemCard1 = ({ problem_name, platform_name, problem_link, topic_tags, d
                                     </strong>
                                 </a>
                             </div>
-                            <div className="mb-2 lg:mb-0 md:mb-0">
+                            {/* <div className="mb-2 lg:mb-0 md:mb-0">
                                 <strong
                                     className="flex rounded border border-indigo-500 bg-indigo-500 px-2 py-2 text-[10px] font-medium text-white"
                                 >
@@ -111,12 +138,12 @@ const ProblemCard1 = ({ problem_name, platform_name, problem_link, topic_tags, d
                                         <option selected={status == "save"} value="save">Save for Later</option>
                                     </select>
                                 </strong>
-                            </div>
+                            </div> */}
                         </div>
                     </div>
                 </div>
 
-                <div className="flex justify-end">
+                {/* <div className="flex justify-end">
 
                     {currentStatus == "solved" &&
                         <strong
@@ -162,8 +189,9 @@ const ProblemCard1 = ({ problem_name, platform_name, problem_link, topic_tags, d
                             </div>
                         </strong>
                     }
-                </div>
+                </div> */}
             </article>
+            </a>
         </div>
     );
 }
