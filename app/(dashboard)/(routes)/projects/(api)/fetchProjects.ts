@@ -3,11 +3,11 @@ import supabase from "@/supabase";
 
 export async function fetchProjects(params: any) {
     
-    
     try {
         let { data: projects, error } = await supabase
-            .from(params.projecttype+"projects")
+            .from("projects")
             .select('*')
+            .eq('slug_url',params.projecttype)
 
         if (error) {
             console.error('Error fetching data:', error);

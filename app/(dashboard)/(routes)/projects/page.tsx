@@ -1,6 +1,6 @@
 import ResourceCard2 from "@/components/cards/resource-card-2";
 import PageHeaders from "@/components/page-headers";
-import { CloudCogIcon, Code2Icon, ComputerIcon, FileJson2, FileJson2Icon, FileJsonIcon, LayoutDashboardIcon, LucideCode2 } from "lucide-react";
+import { CloudCogIcon, ComputerIcon, FileJson2Icon, FileJsonIcon, LayoutDashboardIcon, LucideCode2 } from "lucide-react";
 import type { Metadata } from 'next'
 
 export const metadata: Metadata = {

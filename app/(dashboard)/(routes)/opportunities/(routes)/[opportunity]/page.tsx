@@ -2,7 +2,7 @@
 
 import React, { useEffect, useState } from "react";
 import { fetchInternships } from "../../(api)/fetchInternships";
-import { BriefcaseIcon, CalendarIcon, Check, CheckIcon, CurrencyIcon, ExternalLink, IndianRupeeIcon, LinkIcon, MapPinIcon, PencilIcon, Share2 } from "lucide-react";
+import { BriefcaseIcon, CalendarIcon, Check, ExternalLink, IndianRupeeIcon, MapPinIcon, Share2 } from "lucide-react";
 import ResumeReviewCard from "@/components/cards/resume-review-card";
 import InternshipGuideCard from "@/components/cards/internship-guide-card";
 
@@ -10,7 +10,7 @@ const OpportunityPage = (params: any) => {
   const [internshipDetails, setInternshipDetails] = useState([])
   const [isCopied, setIsCopied] = useState(false)
   function getCurrentURL() {
-    return window.location.href 
+    return window.location.href
   }
   function copyurl() {
     const url = getCurrentURL()
@@ -26,8 +26,7 @@ const OpportunityPage = (params: any) => {
 
         const { internships } = await fetchInternships({ "url_slug": params.params.opportunity });
         setInternshipDetails(internships);
-
-
+        document.title = `${internships[0]?.internship_title} - ${internships[0]?.company_name}`
       } catch (error) {
         console.error("Error fetching data:", error);
       }
@@ -46,7 +45,7 @@ const OpportunityPage = (params: any) => {
               <div className="mr-3 md:mr-5 lg:mr-5">
                 <img
                   alt="company_logo"
-                  src={internshipDetails[0]?.company_logo||"https://cdn-icons-png.flaticon.com/512/3666/3666417.png"}
+                  src={internshipDetails[0]?.company_logo || "https://cdn-icons-png.flaticon.com/512/3666/3666417.png"}
                   className="object-cover mx-auto object-cover rounded-full max-h-16 max-w-16 lg:h-16 lg:w-16 "
                 />
               </div>
@@ -67,12 +66,12 @@ const OpportunityPage = (params: any) => {
                 <IndianRupeeIcon className="mr-1.5 h-5 w-5 flex-shrink-0 text-gray-400" aria-hidden="true" />
                 {internshipDetails[0]?.stipend}
               </div>}
-              {internshipDetails[0]?.batch_eligible && <div className="mt-4 flex items-center text-sm text-gray-500">
+              {internshipDetails[0]?.batch_eligible && <div className="mt-4 flex flex-wrap items-center text-sm text-gray-500">
                 <CalendarIcon className="mr-1.5 h-5 w-5 flex-shrink-0 text-gray-400" aria-hidden="true" />
                 Batch Eligible: {internshipDetails[0]?.batch_eligible.batch.map((value, index) => (
                   <span
                     key={index}
-                    className="ml-2 mr-2whitespace-nowrap rounded-full bg-purple-100 px-2.5 py-0.5 text-sm text-purple-700"
+                    className="ml-2 mr-2 mt-2 whitespace-nowrap rounded-full bg-purple-100 px-2.5 py-0.5 text-sm text-purple-700"
                   >
                     {value}
                   </span>
@@ -81,15 +80,6 @@ const OpportunityPage = (params: any) => {
             </div>
           </div>
           <div className="mt-10 flex lg:ml-4 lg:mt-0">
-            {/* <span className="">
-          <button
-            type="button"
-            className="inline-flex items-center rounded-md bg-white px-3 py-2 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50"
-          >
-            <PencilIcon className="-ml-0.5 mr-1.5 h-5 w-5 text-gray-400" aria-hidden="true" />
-            Edit
-          </button>
-        </span> */}
             {isCopied ? <span className="ml-3">
               <button
                 type="button"
