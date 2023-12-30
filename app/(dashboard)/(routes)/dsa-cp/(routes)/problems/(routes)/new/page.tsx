@@ -77,9 +77,7 @@ const AddProblem = () => {
             } else {
                 console.log(data);
                 router.push(`/dsa-cp/problems/${slug_url}`)
-                setLoading(false)
             }
-            setLoading(false)
             return { data, error };
         } catch (error) {
             alert('Error adding problem:');
