@@ -1,5 +1,5 @@
 import ResourceCard2 from "@/components/cards/resource-card-2";
-import PageHeaders from "@/components/page-headers";
+import PageHeaders from "@/components/page-headers/page-headers";
 import { CloudCogIcon, ComputerIcon, FileJson2Icon, FileJsonIcon, LayoutDashboardIcon, LucideCode2 } from "lucide-react";
 import type { Metadata } from 'next'
 

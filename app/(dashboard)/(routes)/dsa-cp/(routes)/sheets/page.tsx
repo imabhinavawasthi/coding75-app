@@ -1,6 +1,6 @@
 import ResourceCard from "@/components/cards/resource-card";
 import ResourceCard2 from "@/components/cards/resource-card-2";
-import PageHeaders from "@/components/page-headers";
+import PageHeaders from "@/components/page-headers/page-headers";
 import { BinaryIcon, BookKeyIcon, Code2Icon, ComputerIcon, GitForkIcon, SearchCodeIcon } from "lucide-react";
 
 const Sheets = () => {

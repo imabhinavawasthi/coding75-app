@@ -1,7 +1,4 @@
 import DashboardHeader from "./_components/dashboard-header"
-import ResourceCard3 from "@/components/cards/resource-card-3"
-import ResourceCard2 from "@/components/cards/resource-card-2"
-import ResourceCard from "@/components/cards/resource-card"
 
 export default function DashboardPage() {
   return (

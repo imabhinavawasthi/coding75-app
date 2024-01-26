@@ -15,7 +15,7 @@ const AddOpportunity = () => {
     const [internship_duration, setInternshipDuration] = useState("Duration Not Specified")
     const [internship_location, setInternshipLocation] = useState("Location Not Specified")
     const [apply_link, setApplyLink] = useState("")
-
+    const [password,setPassword]=useState("")
 
     function create_url_slug(name:string){
         let s=name.toLowerCase()
@@ -24,19 +24,14 @@ const AddOpportunity = () => {
         return s
     }    
 
-    async function AddOpportunity(e) {
+    async function AddOpportunity(e:any) {
         e.preventDefault()
+        if(password!=process.env.NEXT_PUBLIC_CODING_75){
+            alert("Wrong Password")
+            return
+        }
         let batches=batch_eligible.split(",")
         let batches_int=batches.map((value)=>{return parseInt(value)})
-        console.log(internship_title);
-        console.log(internship_description);
-        console.log(company_name);
-        console.log(company_logo);
-        console.log(batches_int);
-        console.log(internship_duration);
-        console.log(internship_location);
-        console.log(apply_link);
-        console.log(create_url_slug(internship_title));
         let slug_url=create_url_slug(internship_title)
         
         try {
@@ -63,8 +58,6 @@ const AddOpportunity = () => {
                 alert('Error adding problem:');
                 console.error('An error occurred:', error);
             } else {
-                
-                console.log(data);
                 router.push(`/opportunities/${slug_url}`)
             }
             
@@ -160,6 +153,17 @@ const AddOpportunity = () => {
                                 id="batch_eligible"
                                 className="block w-full rounded-md border-0 p-3 text-gray-900 ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                                 placeholder="Batch Eligible"
+                                required />
+                        </div>
+                        <div className="mt-2">
+                            <input
+                                onChange={(e) => { setPassword(e.target.value) }}
+                                type="text"
+                                name="password"
+                                id="password"
+                                autoComplete="off"
+                                className="block w-full rounded-md border-0 p-3 text-gray-900 ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                                placeholder="coding75 Password"
                                 required />
                         </div>
                         <div className="mt-2">

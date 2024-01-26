@@ -5,6 +5,7 @@ import { fetchInternships } from "../../(api)/fetchInternships";
 import { BriefcaseIcon, CalendarIcon, Check, ExternalLink, IndianRupeeIcon, MapPinIcon, Share2 } from "lucide-react";
 import ResumeReviewCard from "@/components/cards/resume-review-card";
 import InternshipGuideCard from "@/components/cards/internship-guide-card";
+import Image from "next/image";
 
 const OpportunityPage = (params: any) => {
   const [internshipDetails, setInternshipDetails] = useState([])
@@ -46,7 +47,7 @@ const OpportunityPage = (params: any) => {
                 <img
                   alt="company_logo"
                   src={internshipDetails[0]?.company_logo || "https://cdn-icons-png.flaticon.com/512/3666/3666417.png"}
-                  className="object-cover mx-auto object-cover rounded-full max-h-16 max-w-16 lg:h-16 lg:w-16 "
+                  className="object-contain mx-auto rounded-full max-h-16 max-w-16 lg:h-16 lg:w-16 "
                 />
               </div>
               <h2 className="text-center text-2xl font-bold leading-7 text-gray-900 sm:truncate sm:text-3xl sm:tracking-tight">
@@ -64,9 +65,9 @@ const OpportunityPage = (params: any) => {
               </div>
               {internshipDetails[0]?.stipend && <div className="mt-4 flex items-center text-sm text-gray-500">
                 <IndianRupeeIcon className="mr-1.5 h-5 w-5 flex-shrink-0 text-gray-400" aria-hidden="true" />
-                {internshipDetails[0]?.stipend}
+                Stipend: {internshipDetails[0]?.stipend}
               </div>}
-              {internshipDetails[0]?.batch_eligible && <div className="mt-4 flex flex-wrap items-center text-sm text-gray-500">
+              {internshipDetails[0]?.batch_eligible && <div className="mt-4 flex flex-wrap justify-center items-center text-sm text-gray-500">
                 <CalendarIcon className="mr-1.5 h-5 w-5 flex-shrink-0 text-gray-400" aria-hidden="true" />
                 Batch Eligible: {internshipDetails[0]?.batch_eligible.batch.map((value, index) => (
                   <span
@@ -75,7 +76,7 @@ const OpportunityPage = (params: any) => {
                   >
                     {value}
                   </span>
-                ))}
+                ))} 
               </div>}
             </div>
           </div>

@@ -1,4 +1,4 @@
-import PageHeaders from "@/components/page-headers";
+import PageHeaders from "@/components/page-headers/page-headers";
 import { AccordionUI } from "@/components/templates/AccordionUI";
 import { ChevronRight } from "lucide-react";
 import { Fragment } from "react";

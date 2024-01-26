@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from "react";
 import { fetchProjects } from "../(api)/fetchProjects";
-import PageHeaders from "@/components/page-headers";
+import PageHeaders from "@/components/page-headers/page-headers";
 import ProjectCard from "@/components/cards/project-card";
 import PageNotFound from "@/components/page-not-found";
 import Loading from "@/components/loading";

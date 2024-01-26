@@ -1,5 +1,5 @@
 import ResourceCard2 from "@/components/cards/resource-card-2";
-import PageHeaders from "@/components/page-headers";
+import PageHeaders from "@/components/page-headers/page-headers";
 import { BookKeyIcon, Code2Icon, ComputerIcon, GitForkIcon, LayoutListIcon, SearchCodeIcon } from "lucide-react";
 
 const DSACPPage = () => {

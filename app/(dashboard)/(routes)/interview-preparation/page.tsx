@@ -1,5 +1,5 @@
 import ResourceCard3 from "@/components/cards/resource-card-3";
-import PageHeaders from "@/components/page-headers";
+import PageHeaders from "@/components/page-headers/page-headers";
 
 const InterviewPreparation = () => {
     return (

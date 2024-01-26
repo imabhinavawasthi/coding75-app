@@ -2,8 +2,10 @@
 
 import Image from 'next/image';
 import { Fragment, useState } from 'react'
-import { Dialog, Popover, Transition } from '@headlessui/react'
-import { ChevronDownIcon, Menu, RocketIcon, TargetIcon, Users, X } from 'lucide-react';
+import { Popover, Transition } from '@headlessui/react'
+import { ChevronDownIcon, RocketIcon, Users } from 'lucide-react';
+
+// https://codesandbox.io/p/sandbox/headless-ui-popover-with-hover-q558p?file=%2Fsrc%2FApp.js%3A42%2C26
 
 const navigation = [
     { name: 'Projects', href: '/projects' },

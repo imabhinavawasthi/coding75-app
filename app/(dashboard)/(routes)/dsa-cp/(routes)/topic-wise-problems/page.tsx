@@ -1,7 +1,7 @@
 "use client"
 
 import ImageCard2 from "@/components/cards/image-card-2";
-import PageHeaders from "@/components/page-headers";
+import PageHeaders from "@/components/page-headers/page-headers";
 import { Button } from "@/components/ui/button";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";

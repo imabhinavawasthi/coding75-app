@@ -42,6 +42,14 @@ module.exports = {
           DEFAULT: "hsl(var(--accent))",
           foreground: "hsl(var(--accent-foreground))",
         },
+        basic: {
+          DEFAULT: "hsl(var(--basic))",
+          foreground: "hsl(var(--basic-foreground))",
+        },
+        basichover: {
+          DEFAULT: "hsl(var(--basic-hover))",
+          foreground: "hsl(var(--basic-hover-foreground))",
+        },
         popover: {
           DEFAULT: "hsl(var(--popover))",
           foreground: "hsl(var(--popover-foreground))",
@@ -65,6 +73,11 @@ module.exports = {
           from: { height: "var(--radix-accordion-content-height)" },
           to: { height: 0 },
         },
+      },
+      backgroundImage: {
+        'hexagon': "url('./(dashboard)/_components/img/hexagon.svg')",
+        'web': "url('./(dashboard)/_components/img/web.svg')",
+        'underline': "url('./(dashboard)/_components/img/underline.png')",
       },
       animation: {
         "accordion-down": "accordion-down 0.2s ease-out",

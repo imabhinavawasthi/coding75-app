@@ -1,4 +1,4 @@
-import PageHeaders from "@/components/page-headers";
+import PageHeaders from "@/components/page-headers/page-headers";
 
 const DashboardHeader = () => {
     return (

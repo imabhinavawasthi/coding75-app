@@ -23,6 +23,6 @@
       "@/*": ["./*"]
     }
   },
-  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts", "supabase.js", "app/pages/404.jx", "components/page-headers.tsx"],
+  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts", "supabase.js", "app/pages/404.jx", "components/page-headers/page-headers.tsx"],
   "exclude": ["node_modules"]
 }
