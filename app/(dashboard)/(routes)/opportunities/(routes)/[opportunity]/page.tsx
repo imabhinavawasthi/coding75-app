@@ -5,7 +5,6 @@ import { fetchInternships } from "../../(api)/fetchInternships";
 import { BriefcaseIcon, CalendarIcon, Check, ExternalLink, IndianRupeeIcon, MapPinIcon, Share2 } from "lucide-react";
 import ResumeReviewCard from "@/components/cards/resume-review-card";
 import InternshipGuideCard from "@/components/cards/internship-guide-card";
-import Image from "next/image";
 
 const OpportunityPage = (params: any) => {
   const [internshipDetails, setInternshipDetails] = useState([])
@@ -21,19 +20,18 @@ const OpportunityPage = (params: any) => {
       setIsCopied(false)
     }, 2000);
   }
-  useEffect(() => {
-    async function fetchData() {
-      try {
+  async function fetchData() {
+    try {
 
-        const { internships } = await fetchInternships({ "url_slug": params.params.opportunity });
-        setInternshipDetails(internships);
-        document.title = `${internships[0]?.internship_title} - ${internships[0]?.company_name}`
-      } catch (error) {
-        console.error("Error fetching data:", error);
-      }
-
+      const { internships } = await fetchInternships(params.params.opportunity, undefined);
+      setInternshipDetails(internships);
+      document.title = `${internships[0]?.internship_title} - ${internships[0]?.company_name}`
+    } catch (error) {
+      console.error("Error fetching data:", error);
     }
 
+  }
+  useEffect(() => {
     fetchData();
   }, [])
 
@@ -69,14 +67,14 @@ const OpportunityPage = (params: any) => {
               </div>}
               {internshipDetails[0]?.batch_eligible && <div className="mt-4 flex flex-wrap justify-center items-center text-sm text-gray-500">
                 <CalendarIcon className="mr-1.5 h-5 w-5 flex-shrink-0 text-gray-400" aria-hidden="true" />
-                Batch Eligible: {internshipDetails[0]?.batch_eligible.batch.map((value, index) => (
+                Batch Eligible: {internshipDetails[0]?.batch_eligible.map((value, index) => (
                   <span
                     key={index}
                     className="ml-2 mr-2 mt-2 whitespace-nowrap rounded-full bg-purple-100 px-2.5 py-0.5 text-sm text-purple-700"
                   >
                     {value}
                   </span>
-                ))} 
+                ))}
               </div>}
             </div>
           </div>

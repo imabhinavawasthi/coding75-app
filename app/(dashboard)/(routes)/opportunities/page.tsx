@@ -13,22 +13,53 @@ import { Button } from '@/components/ui/button';
 import { Alert, AlertDescription, AlertTitle } from '@/components/ui/alert';
 import UnderlineImage from "../../../(dashboard)/_components/img/underline.png"
 import Image from 'next/image';
+import InfoBanner from '../../_components/info-banner';
+import { Separator } from '@/components/ui/separator';
 
 const OpportunitiesPage = () => {
     const [internshipsList, setInternshipsList] = useState([])
-    useEffect(() => {
-        async function fetchData() {
-            try {
-                const { internships } = await fetchInternships({ "slug_url": null });
+    const [batch, setBatch] = useState("all")
+    const [status, setStatus] = useState("loading")
+    async function fetchData(batchSelect = "all") {
+        setStatus("loading")
+        try {
+            if (batchSelect == "all") {
+                const { internships } = await fetchInternships(undefined, undefined);
+                internships.sort(function (a, b) {
+                    var keyA = new Date(a.created_at),
+                        keyB = new Date(b.created_at);
+                    if (keyA < keyB) return 1;
+                    if (keyA > keyB) return -1;
+                    return 0;
+                });
                 setInternshipsList(internships);
-
-            } catch (error) {
-                console.error("Error fetching data:", error);
             }
-        }
+            else {
+                const { internships } = await fetchInternships(undefined, batchSelect);
+                internships.sort(function (a, b) {
+                    var keyA = new Date(a.created_at),
+                        keyB = new Date(b.created_at);
+                    if (keyA < keyB) return 1;
+                    if (keyA > keyB) return -1;
+                    return 0;
+                });
+                setInternshipsList(internships);
+            }
+            setStatus("done")
 
+        } catch (error) {
+            setStatus("error")
+            console.error("Error fetching data:", error);
+        }
+    }
+    useEffect(() => {
         fetchData();
     }, [])
+    function setBatchChange(e: any) {
+        console.log(e);
+        setBatch(e)
+        fetchData(e)
+    }
     return (
         <div>
             <div>
@@ -39,59 +70,63 @@ const OpportunitiesPage = () => {
             </div>
 
             <div className='container mt-4'>
-                <Alert className='mb-2'>
-                    <Terminal className="h-4 w-4 " />
-                    <AlertTitle>Heads up!</AlertTitle>
-                    <AlertDescription>
-                        Join Our <h1 className="inline relative mb-4 font-bold leading-none tracking-tight text-gray-900 dark:text-white">
-                            <a target="_blank" href="https://telegram.me/cpabhinav">
-                            <span className="text-blue-800">
-                                Telegram Channel
-                            </span>
-                            <Image
-                                src={UnderlineImage}
-                                alt="underline"
-                                className="mt-1 h-2 absolute top-2 left-0"
-                            />
-                            </a>
-                        </h1> and Stay Updated with all the latest Opportunities.
-                    </AlertDescription>
-                </Alert>
+                <a target="_blank" href="https://telegram.me/cpabhinav">
+                    <Alert className='mb-2'>
+                        <Terminal className="h-4 w-4 " />
+                        <AlertTitle>Heads up!</AlertTitle>
+                        <AlertDescription>
+                            Join Our <h1 className="inline relative mb-4 font-bold leading-none tracking-tight text-gray-900 dark:text-white">
+                                <span className="text-blue-800">
+                                    Telegram Channel
+                                </span>
+                                <Image
+                                    src={UnderlineImage}
+                                    alt="underline"
+                                    className="mt-1 h-2 absolute top-2 left-0"
+                                />
 
+                            </h1> and Stay Updated with all the latest Opportunities.
+                        </AlertDescription>
+                    </Alert>
+                </a>
+                <Separator className='my-4' />
                 <div className='lg:hidden'>
                     <div>
-                    <Dialog>
-                        <DialogTrigger asChild>
-                            <Button variant="outline"><Filter className='w-4 h-4 mr-2' /> Filter</Button>
-                        </DialogTrigger>
-                        <DialogContent className="sm:max-w-[425px]">
-                            <DialogHeader>
-                                <DialogTitle><Filter className='w-4 h-4 mr-2' /> Filter</DialogTitle>
-                                <DialogDescription>
-                                    Find opportunity that fits you right.
-                                </DialogDescription>
-                            </DialogHeader>
-                            <form>
-                                <div className="grid w-full items-center gap-4">
-                                    <div className="flex flex-col space-y-1.5">
-                                        <Select>
-                                            <SelectTrigger id="batch">
-                                                <SelectValue placeholder="Select Your Batch" />
-                                            </SelectTrigger>
-                                            <SelectContent position="popper">
-                                                <SelectItem value="all">All Batches</SelectItem>
-                                                <SelectItem value="2023">Batch 2023</SelectItem>
-                                                <SelectItem value="2024">Batch 2024</SelectItem>
-                                                <SelectItem value="2025">Batch 2025</SelectItem>
-                                                <SelectItem value="2026">Batch 2026</SelectItem>
-                                                <SelectItem value="2027">Batch 2027</SelectItem>
-                                            </SelectContent>
-                                        </Select>
+                        <Dialog>
+                            <DialogTrigger asChild>
+                                <Button variant="outline"><Filter className='w-4 h-4 mr-2' /> Filter</Button>
+                            </DialogTrigger>
+                            <DialogContent className="sm:max-w-[425px]">
+                                <DialogHeader>
+                                    <DialogTitle><Filter className='w-4 h-4 mr-2' /> Filter</DialogTitle>
+                                    <DialogDescription>
+                                        Find opportunity that fits you right.
+                                    </DialogDescription>
+                                </DialogHeader>
+                                <form>
+                                    <div className="grid w-full items-center gap-4">
+                                        <div className="flex flex-col space-y-1.5">
+                                            <Select
+                                                defaultValue={batch}
+                                                onValueChange={(e) => setBatchChange(e)}
+                                            >
+                                                <SelectTrigger id="batch">
+                                                    <SelectValue placeholder="Select Your Batch" />
+                                                </SelectTrigger>
+                                                <SelectContent position="popper">
+                                                    <SelectItem value="all">All Batches</SelectItem>
+                                                    <SelectItem value="2023">Batch 2023</SelectItem>
+                                                    <SelectItem value="2024">Batch 2024</SelectItem>
+                                                    <SelectItem value="2025">Batch 2025</SelectItem>
+                                                    <SelectItem value="2026">Batch 2026</SelectItem>
+                                                    <SelectItem value="2027">Batch 2027</SelectItem>
+                                                </SelectContent>
+                                            </Select>
+                                        </div>
                                     </div>
-                                </div>
-                            </form>
-                        </DialogContent>
-                    </Dialog>
+                                </form>
+                            </DialogContent>
+                        </Dialog>
                     </div>
                 </div>
                 <div className="mt-3 grid grid-cols-4 gap-6">
@@ -106,7 +141,10 @@ const OpportunitiesPage = () => {
                                     <form>
                                         <div className="grid w-full items-center gap-4">
                                             <div className="flex flex-col space-y-1.5">
-                                                <Select>
+                                                <Select
+                                                    defaultValue={batch}
+                                                    onValueChange={(e) => setBatchChange(e)}
+                                                >
                                                     <SelectTrigger id="batch">
                                                         <SelectValue placeholder="Select Your Batch" />
                                                     </SelectTrigger>
@@ -126,25 +164,41 @@ const OpportunitiesPage = () => {
                             </Card>
                         </div>
                     </div>
-                    {internshipsList? <div className="flex flex-col col-span-4 lg:col-span-3">
-                        {internshipsList?.map((internship, index) => (
-                            <div
-                                key={index}
-                                className='mb-4'
-                            >
-                                <OpportunityCard
+                    <div className="flex flex-col col-span-4 lg:col-span-3">
+                        {(status == "done") ? <>
+                            {(internshipsList.length > 0) ? <>
 
-                                    title={internship?.internship_title}
-                                    company_name={internship?.company_name}
-                                    location={internship?.internship_location}
-                                    company_logo={internship?.company_logo || "https://cdn-icons-png.flaticon.com/512/3666/3666417.png"}
-                                    apply_link={internship?.apply_link}
-                                    url_slug={internship?.url_slug}
-                                />
-                            </div>
-                        ))}
-                    </div> :
-                        <Loading title="Fetching Opportunities" />}
+                                {internshipsList?.map((internship, index) => (
+                                    <div
+                                        key={index}
+                                        className='mb-4'
+                                    >
+                                        <OpportunityCard
+
+                                            title={internship?.internship_title}
+                                            company_name={internship?.company_name}
+                                            location={internship?.internship_location}
+                                            company_logo={internship?.company_logo || "https://cdn-icons-png.flaticon.com/512/3666/3666417.png"}
+                                            apply_link={internship?.apply_link}
+                                            batch_eligible={internship?.batch_eligible}
+                                            url_slug={internship?.url_slug}
+                                        />
+                                    </div>
+                                ))}
+
+                            </>
+                                :
+                                <>
+                                    <InfoBanner message="No Opportunities" description='Please reset your filters to view all opportunities' />
+                                </>}
+                        </>
+
+
+                            :
+                            <Loading title="Fetching Opportunities" />
+
+                        }
+                    </div>
                 </div>
             </div>
 

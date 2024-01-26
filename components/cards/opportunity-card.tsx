@@ -1,6 +1,8 @@
 "use client";
 
-const OpportunityCard = ({ title, company_name, location, company_logo, apply_link, url_slug }) => {
+import { Badge } from "../ui/badge";
+
+const OpportunityCard = ({ title, company_name, location, company_logo, apply_link, batch_eligible, url_slug }) => {
     return (
         <div>
             <a href={`/opportunities/${url_slug}`}>
@@ -34,18 +36,23 @@ const OpportunityCard = ({ title, company_name, location, company_logo, apply_li
                             </div>
                             <div className="w-full flex gap-3 justify-between items-stretch flex-wrap">
                                 <div className="lg:flex md:flex grid  gap-x-2 items-center">
-                                    <p className="text-sm text-gray-600">
-                                        {company_name}
+                                    <p className="lg:mb-0 md:mb-0 mb-4 text-sm text-gray-600">
+                                        <Badge variant="destructive">{company_name}</Badge>
                                     </p>
                                     <div className="hidden lg:block md:block w-[1px] h-3 bg-gray-400">
                                     </div>
-                                    <p className="text-sm text-gray-600">
-                                        Batch 2024, 2025
+                                    <p className="overflow-scroll lg:mb-0 md:mb-0 mb-4 flex gap-x-1 text-sm text-gray-600">
+                                        Batch: {batch_eligible.map((data)=>{
+                                            return <>
+                                            <Badge variant="basic">{data}</Badge>
+                                            
+                                            </>
+                                        })}
                                     </p>
                                     <div className="hidden lg:block md:block w-[1px] h-3 bg-gray-400">
                                     </div>
                                     <p className="text-sm text-gray-600 line-clamp-1">
-                                        {location}
+                                        <Badge variant="secondary">{location}</Badge>
                                     </p>
                                 </div>
                             </div>
