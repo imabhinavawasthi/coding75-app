@@ -11,14 +11,12 @@ export async function fetchInternships(url_slug:any, batch:any) {
     
             if (error) {
                 console.error('Error fetching data:', error);
-            } else {
-                return { internships };
             }
     
             return { internships, error };
         } catch (error) {
             console.error('An error occurred:', error);
-            return { error };
+            return { undefined, error };
         }
     }
     else if(url_slug){

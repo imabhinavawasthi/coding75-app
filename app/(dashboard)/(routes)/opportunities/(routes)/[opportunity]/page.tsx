@@ -5,10 +5,16 @@ import { fetchInternships } from "../../(api)/fetchInternships";
 import { BriefcaseIcon, CalendarIcon, Check, ExternalLink, IndianRupeeIcon, MapPinIcon, Share2 } from "lucide-react";
 import ResumeReviewCard from "@/components/cards/resume-review-card";
 import InternshipGuideCard from "@/components/cards/internship-guide-card";
+import { Badge } from "@/components/ui/badge";
+import { Button } from "@/components/ui/button";
+import { Skeleton } from "@/components/ui/skeleton";
+import Loading from "@/components/loading";
+import ErrorBanner from "@/app/(dashboard)/_components/error-banner";
 
 const OpportunityPage = (params: any) => {
   const [internshipDetails, setInternshipDetails] = useState([])
   const [isCopied, setIsCopied] = useState(false)
+  const [status, setStatus] = useState("loading")
   function getCurrentURL() {
     return window.location.href
   }
@@ -23,10 +29,16 @@ const OpportunityPage = (params: any) => {
   async function fetchData() {
     try {
 
-      const { internships } = await fetchInternships(params.params.opportunity, undefined);
+      const { internships, error } = await fetchInternships(params.params.opportunity, undefined);
+      if(error){
+        setStatus("error")
+        return
+      }
       setInternshipDetails(internships);
       document.title = `${internships[0]?.internship_title} - ${internships[0]?.company_name}`
+      setStatus("done")
     } catch (error) {
+      setStatus("error")
       console.error("Error fetching data:", error);
     }
 
@@ -36,115 +48,176 @@ const OpportunityPage = (params: any) => {
   }, [])
 
   return (
-    <div className="container">
-      <div className="mt-3 p-3 lg:p-10">
-        <div className="lg:flex lg:items-center lg:justify-between">
-          <div className="min-w-0 flex-1">
-            <div className="flex">
-              <div className="mr-3 md:mr-5 lg:mr-5">
-                <img
-                  alt="company_logo"
-                  src={internshipDetails[0]?.company_logo || "https://cdn-icons-png.flaticon.com/512/3666/3666417.png"}
-                  className="object-contain mx-auto rounded-full max-h-16 max-w-16 lg:h-16 lg:w-16 "
-                />
-              </div>
-              <h2 className="text-center text-2xl font-bold leading-7 text-gray-900 sm:truncate sm:text-3xl sm:tracking-tight">
-                {internshipDetails[0]?.internship_title}
-              </h2>
-            </div>
-            <div className="mt-1 flex flex-col sm:mt-0 sm:flex-row sm:flex-wrap sm:space-x-6">
-              <div className="mt-4 flex items-center text-sm text-gray-500">
-                <BriefcaseIcon className="mr-1.5 h-5 w-5 flex-shrink-0 text-gray-400" aria-hidden="true" />
-                {internshipDetails[0]?.company_name}
-              </div>
-              <div className="mt-4 flex items-center text-sm text-gray-500">
-                <MapPinIcon className="mr-1.5 h-5 w-5 flex-shrink-0 text-gray-400" aria-hidden="true" />
-                {internshipDetails[0]?.internship_location}
-              </div>
-              {internshipDetails[0]?.stipend && <div className="mt-4 flex items-center text-sm text-gray-500">
-                <IndianRupeeIcon className="mr-1.5 h-5 w-5 flex-shrink-0 text-gray-400" aria-hidden="true" />
-                Stipend: {internshipDetails[0]?.stipend}
-              </div>}
-              {internshipDetails[0]?.batch_eligible && <div className="mt-4 flex flex-wrap justify-center items-center text-sm text-gray-500">
-                <CalendarIcon className="mr-1.5 h-5 w-5 flex-shrink-0 text-gray-400" aria-hidden="true" />
-                Batch Eligible: {internshipDetails[0]?.batch_eligible.map((value, index) => (
-                  <span
-                    key={index}
-                    className="ml-2 mr-2 mt-2 whitespace-nowrap rounded-full bg-purple-100 px-2.5 py-0.5 text-sm text-purple-700"
-                  >
-                    {value}
-                  </span>
-                ))}
-              </div>}
-            </div>
-          </div>
-          <div className="mt-10 flex lg:ml-4 lg:mt-0">
-            {isCopied ? <span className="ml-3">
-              <button
-                type="button"
-                className="inline-flex items-center rounded-md bg-white px-5 py-2 text-lg font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50"
-              >
-                <Check className="-ml-0.5 mr-1.5 h-5 w-5 text-gray-400" aria-hidden="true" />
-                Copied
-              </button>
-            </span> : <span className="ml-3">
-              <button
-                type="button"
-                onClick={copyurl}
-                className="inline-flex items-center rounded-md bg-white px-5 py-2 text-lg font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50"
-              >
-                <Share2 className="-ml-0.5 mr-1.5 h-5 w-5 text-gray-400" aria-hidden="true" />
-                Share
-              </button>
-            </span>}
-
-            <span className="ml-3">
-              <a
-                href={internshipDetails[0]?.apply_link}
-                target="_blank"
-                className="inline-flex items-center rounded-md bg-indigo-600 px-5 py-2 text-lg font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
-              >
-                <ExternalLink className="-ml-0.5 mr-1.5 h-5 w-5" aria-hidden="true" />
-                Apply
-              </a>
-            </span>
-          </div>
-        </div>
-        {internshipDetails[0]?.internship_description &&
-          <div>
-            <div className="mt-10">
+    <>
+      {
+        internshipDetails[0] ? <>
+          <div className="container">
+            <div className="mt-3 p-3 lg:p-10">
               <div>
-                <h3 className="mb-3 text-lg font-bold ">Job Description:</h3>
-                <p className="text-gray-900">{internshipDetails[0]?.internship_description}</p>
+                <div className="w-full flex flex-col justify-center items-start h-auto gap-3 p-6 border-gray-500 rounded-xl bg-gray-50 hover:cursor-pointer hover:bg-gray-100 hover:border-gray-600 hover:shadow-lg transition-all duration-500 capitalize">
+                  <div className="flex lg:py-2 md:py-1 py-0 gap-3 self-stretch items-start">
+                    <span className="relative flex shrink-0 overflow-hidden w-12 h-12 lg:w-20 lg:h-20 md:w-17 md:h-17 rounded-full">
+                      <img className="aspect-square h-full w-full object-contain" alt="company_logo" width="48" height="48" src={internshipDetails[0].company_logo} />
+                    </span>
+                    <div className="w-full flex flex-col items-start gap-1 flex-wrap">
+                      <div className="flex mb-5 items-center gap-2">
+                        <p className="text-xl font-extrabold md:text-3xl lg:text-4xl">
+                          {internshipDetails[0].internship_title}
+                        </p>
+                      </div>
+                      <div className="w-full flex gap-3 justify-between items-stretch flex-wrap">
+                        <div className="lg:flex md:flex grid  gap-x-2 items-center">
+                          <p className="flex items-center lg:mb-0 md:mb-0 mb-4 text-sm text-gray-600">
+                            <BriefcaseIcon className="h-4 w-4 mr-2" aria-hidden="true" /><Badge variant="destructive">{internshipDetails[0].company_name}</Badge>
+                          </p>
+                          <div className="hidden lg:block md:block w-[1px] h-3 bg-gray-400">
+                          </div>
+                          <p className="items-center  overflow-scroll lg:mb-0 md:mb-0 mb-4 flex gap-x-1 text-sm text-gray-600">
+                            <CalendarIcon className="h-4 w-4 mr-2" aria-hidden="true" /> Batch Eligible: {internshipDetails[0].batch_eligible.map((data) => {
+                              return <>
+                                <Badge variant="basic">{data}</Badge>
+                              </>
+                            })}
+                          </p>
+                          <div className="hidden lg:block md:block w-[1px] h-3 bg-gray-400">
+                          </div>
+                          <p className="flex items-center text-sm text-gray-600 line-clamp-1">
+                            <MapPinIcon className="h-4 w-4 mr-2" aria-hidden="true" />
+                            <Badge variant="secondary" className="border border-gray-1000">{internshipDetails[0].internship_location}</Badge>
+                          </p>
+                          {internshipDetails[0].stipend && <>
+
+                            <div className="hidden lg:block md:block w-[1px] h-3 bg-gray-400">
+                            </div>
+                            <p className="flex items-center text-sm text-gray-600 line-clamp-1">
+                              <IndianRupeeIcon className="h-4 w-4 mr-2" aria-hidden="true" /><Badge variant="outline">{internshipDetails[0].stipend}</Badge>
+                            </p></>}
+                        </div>
+                      </div>
+                    </div>
+
+                  </div>
+
+                </div>
               </div>
-            </div>
-            <div className="mt-10">
-              <div className="flex justify-center ">
-                <a
-                  href={internshipDetails[0]?.apply_link}
-                  target="_blank"
-                  className="inline-flex items-center rounded-md bg-indigo-600 px-20 py-2 text-lg font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
-                >
-                  <ExternalLink className="-ml-0.5 mr-1.5 h-5 w-5" aria-hidden="true" />
-                  Apply
-                </a>
+              <div className="mt-5 justify-center items-center flex">
+                {isCopied ? <span className="ml-3">
+                  <Button
+                    type="button"
+                    variant="outline"
+                    onClick={copyurl}>
+                    <Check className="h-4 w-4 mr-2" aria-hidden="true" />
+                    Copied
+                  </Button>
+                </span> : <span className="ml-3">
+                  <Button
+                    type="button"
+                    variant="outline"
+                    onClick={copyurl}>
+                    <Share2 className="h-4 w-4 mr-2" aria-hidden="true" />
+                    Share
+                  </Button>
+                </span>}
+
+                <span className="ml-3">
+                  <a
+                    href={internshipDetails[0]?.apply_link}
+                    target="_blank"
+                    className="flex gap-x-2"
+                  >
+                    <Button
+                      type="button"
+                      variant="basic"
+                      className="w-full"
+                    >
+                      <ExternalLink className="h-4 w-4 mr-2" aria-hidden="true" />
+                      Apply
+                    </Button>
+                  </a>
+                </span>
+              </div>
+              {internshipDetails[0]?.internship_description &&
+                <div>
+                  <div className="mt-10">
+                    <div>
+                      <h3 className="mb-3 text-lg font-bold ">Job Description:</h3>
+                      <p className="text-gray-900">{internshipDetails[0]?.internship_description}</p>
+                    </div>
+                  </div>
+                  <div className="mt-10">
+                    <div className="flex justify-center ">
+                      <a
+                        href={internshipDetails[0]?.apply_link}
+                        target="_blank"
+                        className="flex gap-x-2 w-full"
+                      >
+                        <Button
+                          type="button"
+                          variant="basic"
+                          className="w-full"
+                        >
+                          <ExternalLink className="h-4 w-4 mr-2" aria-hidden="true" />
+                          Apply
+                        </Button>
+                      </a>
+                    </div>
+                  </div>
+                </div>
+              }
+              <div className="mt-10">
+                <h2 className="text-lg font-bold text-black-500">Accelerate Your Interview Preparation With Us 🚀</h2>
+                <div className="grid grid-cols-1 lg:grid-cols-2 gap-5">
+                  <div className="mt-5">
+                    <ResumeReviewCard />
+                  </div>
+                  <div className="mt-5">
+                    <InternshipGuideCard />
+                  </div>
+                </div>
               </div>
             </div>
           </div>
-        }
-        <div className="mt-10">
-          <h2 className="text-lg font-bold text-black-500">Accelerate Your Interview Preparation With Us 🚀</h2>
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-5">
-            <div className="mt-5">
-              <ResumeReviewCard />
+        </> : <>
+          <div className="container p-3 lg:p-10">
+            <div className="w-full flex flex-col justify-center items-start h-auto gap-3 p-6 capitalize">
+              <div className="flex lg:py-2 md:py-1 py-0 gap-3 self-stretch items-start">
+                <span className="relative flex shrink-0 overflow-hidden w-12 h-12 lg:w-20 lg:h-20 md:w-17 md:h-17 rounded-full">
+                  <Skeleton className="w-12 h-12 lg:w-20 lg:h-20 md:w-17 md:h-172 rounded-full" />
+                </span>
+                <div className="w-full flex flex-col items-start gap-1 flex-wrap">
+                  <div className="flex mb-5 items-center gap-2">
+                    <div className="text-xl font-extrabold md:text-3xl lg:text-4xl">
+                      <Skeleton className="h-[50px] w-[250px] lg:w-[500px]" />
+                    </div>
+                  </div>
+                  <div className="w-full flex gap-3 justify-between items-stretch flex-wrap">
+                    <div className="lg:flex md:flex grid  gap-x-2 items-center">
+                      <div className="flex items-center lg:mb-0 md:mb-0 mb-4 text-sm text-gray-600">
+                        <Skeleton className="h-4 w-[50px]" />
+                      </div>
+                      <div className="items-center  overflow-scroll lg:mb-0 md:mb-0 mb-4 flex gap-x-1 text-sm text-gray-600">
+                        <Skeleton className="h-4 w-[50px]" />
+                      </div>
+                      <div className="flex items-center text-sm text-gray-600 line-clamp-1">
+                        <Skeleton className="h-4 w-[50px]" />
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+              </div>
+
             </div>
-            <div className="mt-5">
-              <InternshipGuideCard />
-            </div>
+            {status=="loading"?<>
+            <Loading title={"Loading Opportunity"} />
+            </>:<>
+            <ErrorBanner/>
+            </>}
           </div>
-        </div>
-      </div>
-    </div>
+
+        </>
+
+      }</>
   );
 }
 

@@ -35,12 +35,12 @@ const NewProject = () => {
     const [projectLevel, setProjectLevel] = useState("")
     const [techUsed, setTechUsed] = useState("")
     const [password, setPassword] = useState("")
-    const [status,setStatus] = useState("")
+    const [status, setStatus] = useState("")
 
-    const projectTypeDetails={
-        "basicfrontend":{
-            title:"Basic Frontend",
-            description:"Frontend Projects for Beginners with HTML, CSS and Javascript."
+    const projectTypeDetails = {
+        "basicfrontend": {
+            title: "Basic Frontend",
+            description: "Frontend Projects for Beginners with HTML, CSS and Javascript."
         },
         "reactjs": {
             "title": "ReactJS",
@@ -62,27 +62,27 @@ const NewProject = () => {
             "title": "Machine Learning",
             "description": "Explore real-world applications, diverse algorithms, and hands-on experiences to master the art of AI."
         },
-}
+    }
 
     function create_url_slug(name: string) {
         let s = name.toLowerCase()
         s = s.replace(/([~!@#$%^&*()_+=`{}\[\]\|\\:;'<>,.\/? ])+/g, '-').replace(/^(-)+|(-)+$/g, '');
-        s=s+"-"+Math.floor((new Date()).getTime() / 1000).toString()
+        s = s + "-" + Math.floor((new Date()).getTime() / 1000).toString()
         return s
     }
 
-    function getTechUsedArray(s:any){
+    function getTechUsedArray(s: any) {
         return s.split(",")
     }
 
-    async function uploadProject(e:any){
+    async function uploadProject(e: any) {
         e.preventDefault()
-        if(password!=process.env.NEXT_PUBLIC_CODING_75){
+        if (password != process.env.NEXT_PUBLIC_CODING_75) {
             alert("Wrong Password")
             return
         }
         setStatus("loading")
-        const slug_href=create_url_slug(name+" "+projectType)
+        const slug_href = create_url_slug(name + " " + projectType)
         try {
             const { data, error } = await supabase
                 .from('projects')
@@ -99,7 +99,7 @@ const NewProject = () => {
                         project_type_description: projectTypeDetails[projectType]["description"],
                         slug_href: slug_href,
                         slug_url: projectType,
-                        tech_used:getTechUsedArray(techUsed)
+                        tech_used: getTechUsedArray(techUsed)
                     },
                 ])
                 .select()
@@ -129,15 +129,15 @@ const NewProject = () => {
                         <div className="grid w-full items-center gap-4">
                             <div className="flex flex-col space-y-1.5">
                                 <Label htmlFor="name">Name*</Label>
-                                <Input onChange={(e)=>{setName(e.target.value)}} required id="name" placeholder="Name of your project" />
+                                <Input onChange={(e) => { setName(e.target.value) }} required id="name" placeholder="Name of your project" />
                             </div>
                             <div className="flex flex-col space-y-1.5">
                                 <Label htmlFor="description">Description*</Label>
-                                <Input onChange={(e)=>{setDescription(e.target.value)}} required id="name" placeholder="Name of your project" />
+                                <Input onChange={(e) => { setDescription(e.target.value) }} required id="name" placeholder="Name of your project" />
                             </div>
                             <div className="flex flex-col space-y-1.5">
                                 <Label htmlFor="projecttype">Project Type*</Label>
-                                <Select onValueChange={(e)=>{setProjectType(e)}} required>
+                                <Select onValueChange={(e) => { setProjectType(e) }} required>
                                     <SelectTrigger id="projecttype">
                                         <SelectValue placeholder="Select" />
                                     </SelectTrigger>
@@ -153,23 +153,23 @@ const NewProject = () => {
                             </div>
                             <div className="flex flex-col space-y-1.5">
                                 <Label htmlFor="Blog">Blog Link*</Label>
-                                <Input onChange={(e)=>{setBlogLink(e.target.value)}} id="Blog" placeholder="Blog Link" />
+                                <Input onChange={(e) => { setBlogLink(e.target.value) }} id="Blog" placeholder="Blog Link" />
                             </div>
                             <div className="flex flex-col space-y-1.5">
                                 <Label htmlFor="Video">Video Link*</Label>
-                                <Input onChange={(e)=>{setVideoLink(e.target.value)}} id="Video" placeholder="Video Link" />
+                                <Input onChange={(e) => { setVideoLink(e.target.value) }} id="Video" placeholder="Video Link" />
                             </div>
                             <div className="flex flex-col space-y-1.5">
                                 <Label htmlFor="Code">Code Link</Label>
-                                <Input onChange={(e)=>{setCodeLink(e.target.value)}} id="Code" placeholder="Code Link" />
+                                <Input onChange={(e) => { setCodeLink(e.target.value) }} id="Code" placeholder="Code Link" />
                             </div>
                             <div className="flex flex-col space-y-1.5">
                                 <Label htmlFor="Deploy">Deploy Link</Label>
-                                <Input onChange={(e)=>{setDeployLink(e.target.value)}} id="Deploy" placeholder="Deploy Link" />
+                                <Input onChange={(e) => { setDeployLink(e.target.value) }} id="Deploy" placeholder="Deploy Link" />
                             </div>
                             <div className="flex flex-col space-y-1.5">
                                 <Label htmlFor="projectlevel">Project Level*</Label>
-                                <Select onValueChange={(e)=>{setProjectLevel(e)}} required>
+                                <Select onValueChange={(e) => { setProjectLevel(e) }} required>
                                     <SelectTrigger id="projectlevel">
                                         <SelectValue placeholder="Select" />
                                     </SelectTrigger>
@@ -182,24 +182,24 @@ const NewProject = () => {
                             </div>
                             <div className="flex flex-col space-y-1.5">
                                 <Label htmlFor="techused">Tech Used*</Label>
-                                <Input onChange={(e)=>{setTechUsed(e.target.value)}} required id="techused" placeholder="With Commas Ex: HTML,CSS,Javascript,ReactJS" />
+                                <Input onChange={(e) => { setTechUsed(e.target.value) }} required id="techused" placeholder="With Commas Ex: HTML,CSS,Javascript,ReactJS" />
                             </div>
                             <div className="flex flex-col space-y-1.5">
                                 <Label htmlFor="password">Password*</Label>
-                                <Input type="text" onChange={(e)=>{setPassword(e.target.value)}} required id="password" placeholder="CrackDSA Admin Password" />
+                                <Input type="text" onChange={(e) => { setPassword(e.target.value) }} required id="password" placeholder="CrackDSA Admin Password" />
                             </div>
                         </div>
                         <div className="mt-5">
-                        {status==""?<>
-                        <Button type="submit" onClick={uploadProject}>Upload</Button>
-                        </>:<>
-                        {status=="loading"?<>
-                        <Button><Loader2 className="animate-spin h-4 w-4 mr-2"/> Loading</Button>
-                        </>:<>
-                        <Button type="submit" className="mb-4" onClick={uploadProject}>Upload</Button>
-                        <ErrorBanner/>
-                        </>}
-                        </>}
+                            {status == "" ? <>
+                                <Button type="submit" onClick={uploadProject}>Upload</Button>
+                            </> : <>
+                                {status == "loading" ? <>
+                                    <Button><Loader2 className="animate-spin h-4 w-4 mr-2" /> Loading</Button>
+                                </> : <>
+                                    <Button type="submit" className="mb-4" onClick={uploadProject}>Upload</Button>
+                                    <ErrorBanner />
+                                </>}
+                            </>}
                         </div>
                     </form>
                 </CardContent>
