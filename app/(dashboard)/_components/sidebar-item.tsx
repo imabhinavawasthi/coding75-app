@@ -4,6 +4,7 @@ import { LucideIcon } from "lucide-react";
 import { usePathname } from "next/navigation";
 
 import { cn } from "@/lib/utils";
+import Link from "next/link";
 
 interface SidebarItemProps {
   icon: LucideIcon;
@@ -24,7 +25,7 @@ export const SidebarItem = ({
     pathname?.startsWith(`${href}/`);
 
   return (
-    <a
+    <Link
       href={href}
       className={cn(
         "flex items-center gap-x-2 text-slate-500 text-sm font-[500] pl-6 transition-all hover:text-slate-600 hover:bg-slate-300/20",
@@ -48,6 +49,6 @@ export const SidebarItem = ({
           isActive && "opacity-100"
         )}
       />
-    </a>
+    </Link>
   )
 }

@@ -1,11 +1,12 @@
 "use client";
 
+import Link from "next/link";
 import { Badge } from "../ui/badge";
 
 const OpportunityCard = ({ title, company_name, location, company_logo, apply_link, batch_eligible, url_slug }) => {
     return (
         <div>
-            <a href={`/opportunities/${url_slug}`}>
+            <Link href={`/opportunities/${url_slug}`}>
                 <div className="w-full flex flex-col justify-center items-start h-auto gap-3 p-6 border-gray-500 rounded-xl bg-gray-50 hover:cursor-pointer hover:bg-gray-100 hover:border-gray-600 hover:shadow-lg transition-all duration-500 capitalize">
 
                     {/* <div className="flex gap-3 self-stretch items-center justify-between flex-wrap">
@@ -60,7 +61,7 @@ const OpportunityCard = ({ title, company_name, location, company_logo, apply_li
                     </div>
 
                 </div>
-            </a>
+            </Link>
         </div>
     );
 }

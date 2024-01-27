@@ -27,36 +27,39 @@ const ProjectCard = ({ project }) => {
                     </strong>
                     }
 
-                    <div >
+                    <div className="lg:flex md:flex gap-x-4 items-center">
                         <h3 className="mt-3 text-lg font-medium text-gray-900">
                             {project?.project_name}
                         </h3>
-                        <p className="mt-2 text-sm text-gray-700">{project?.project_description}</p>
+                        <div className="mt-2 flex flex-wrap gap-1">
+                            {project.tech_used?.map((tech: any, index: any) => (
+                                <div
+                                    key={index}>
+                                    <span
+                                        className="whitespace-nowrap rounded-full bg-purple-100 px-2.5 py-0.5 text-xs text-purple-600"
+                                    >
+                                        {tech}
+                                    </span>
+                                </div>
+                            ))}
+                        </div>
+
                     </div>
 
-                    <div className="mt-4 flex flex-wrap gap-1">
-                        {project.tech_used["tech"]?.map((tech, index) => (
-                            <div
-                                key={index}>
-                                <span
-                                    className="whitespace-nowrap rounded-full bg-purple-100 px-2.5 py-0.5 text-xs text-purple-600"
-                                >
-                                    {tech}
-                                </span>
-                            </div>
-                        ))}
+                    <div>
+                        <p className="mt-2 text-sm text-gray-700">{project?.project_description}</p>
                     </div>
                     <div className="mt-4 flex flex-wrap gap-2">
-                        {project?.video_link && <a href={project?.video_link} target="_blank" className="rounded border flex gap-2 text-xs border-indigo-500 bg-indigo-500 px-3 py-1.5 text-[10px] font-medium text-white">
+                        {project?.video_link && <a href={project?.video_link} target="_blank" className="rounded bg-basic border flex gap-2 text-xs border-indigo-500 bg-indigo-500 px-3 py-1.5 text-[10px] font-medium text-white">
                             <VideoIcon className="text-xs w-4 h-4" /> Video
                         </a>}
-                        {project?.code_link&&<a href={project?.code_link} target="_blank" className="rounded border flex gap-2 text-xs border-indigo-500 bg-indigo-500 px-3 py-1.5 text-[10px] font-medium text-white">
+                        {project?.code_link && <a href={project?.code_link} target="_blank" className="rounded border flex gap-2 text-xs border-indigo-500 bg-indigo-500 px-3 py-1.5 text-[10px] font-medium text-white">
                             <CodeIcon className="text-xs w-4 h-4" /> Code
                         </a>}
-                        {project?.blog_link&&<a href={project?.blog_link} target="_blank" className="rounded border flex gap-2 text-xs border-indigo-500 bg-indigo-500 px-3 py-1.5 text-[10px] font-medium text-white">
+                        {project?.blog_link && <a href={project?.blog_link} target="_blank" className="rounded border flex gap-2 text-xs border-indigo-500 bg-indigo-500 px-3 py-1.5 text-[10px] font-medium text-white">
                             <PackageIcon className="text-xs w-4 h-4" /> Blog
                         </a>}
-                        {project?.deploy_link&&<a href={project?.deploy_link} target="_blank" className="rounded border flex gap-2 text-xs border-indigo-500 bg-indigo-500 px-3 py-1.5 text-[10px] font-medium text-white">
+                        {project?.deploy_link && <a href={project?.deploy_link} target="_blank" className="rounded border flex gap-2 text-xs border-indigo-500 bg-indigo-500 px-3 py-1.5 text-[10px] font-medium text-white">
                             <LinkIcon className="text-xs w-4 h-4" /> Deploy
                         </a>}
                     </div>

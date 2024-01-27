@@ -13,7 +13,7 @@ const AddProblem = () => {
     const [problem_name, setProblemName] = useState("")
     const [problem_description, setProblemDescription] = useState("")
     const [problem_link, setProblemLink] = useState("")
-    const [platform, setPlatform] = useState("leetcode")
+    const [platform, setPlatform] = useState("Leetcode")
     const [video_editorial, setVideoEditorial] = useState("")
     const [editorial, setEditorial] = useState("")
     const [difficulty, setDifficulty] = useState("0")

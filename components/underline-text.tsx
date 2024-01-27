@@ -1,5 +1,5 @@
 import Image from "next/image";
-import UnderlineImage from "../app/(dashboard)/_components/img/underline.png"
+import UnderlineImage from "../app/(dashboard)/_components/img/underline.gif"
 
 
 const UnderlineText = ({ heading = "" }) => {
@@ -12,7 +12,7 @@ const UnderlineText = ({ heading = "" }) => {
                 <Image
                     src={UnderlineImage}
                     alt="underline"
-                    className="mt-1 h-8 absolute top-5 lg:top-12 md:top-8 left-0"
+                    className="mt-1 w-full h-14 absolute top-2 lg:top-10 md:top-4 left-0"
                 />
             </h1>
         </div>

@@ -4,15 +4,18 @@ import { CheckIcon, Share2Icon, User2 } from "lucide-react";
 import { useState } from "react";
 import Image from "next/image";
 import { Button } from "../ui/button";
-import GoogleLogo from "../../app/(dashboard)/_components/img/google.svg.png"
-import LinkedinLogo from "../../app/(dashboard)/_components/img/linkedin.svg.png"
-import AmazonLogo from "../../app/(dashboard)/_components/img/amazon.svg.png"
-import AtlassianLogo from "../../app/(dashboard)/_components/img/atlassian.svg.png"
-import MicrosoftLogo from "../../app/(dashboard)/_components/img/microsoft.svg.png"
-import SwiggyLogo from "../../app/(dashboard)/_components/img/swiggy.svg.png"
+import Feature2 from  "../../app/(dashboard)/_components/img/feature2.png"
+// import NextLogo from "../../app/(dashboard)/_components/img/next.svg"
+// import ReactLogo from "../../app/(dashboard)/_components/img/react.png"
+// import PythonLogo from "../../app/(dashboard)/_components/img/python.svg.png"
+// import MDBLogo from "../../app/(dashboard)/_components/img/mongodb.png"
+// import JSLogo from "../../app/(dashboard)/_components/img/js.png"
+// import JavaLogo from "../../app/(dashboard)/_components/img/java.svg.png"
+// import DBLogo from "../../app/(dashboard)/_components/img/db.png"
+// import FlutterLogo from "../../app/(dashboard)/_components/img/flutter.png"
 import UnderlineText from "../underline-text";
 
-const PageHeaderCompanyList = ({ focusHeading = "", heading = "", description = "" }) => {
+const PageHeaderTechList = ({ focusHeading = "", heading = "", description = "" }) => {
     const [isCopied, setIsCopied] = useState(false)
     function getCurrentURL() {
         return window.location.href
@@ -27,11 +30,11 @@ const PageHeaderCompanyList = ({ focusHeading = "", heading = "", description = 
     }
     return (
         <div>
-            <header className="bg-web px-5 py-8">
+            <header className="bg-web px-5">
                 <div className="mx-auto max-w-screen-xl px-4 py-8 sm:px-6 sm:py-12 lg:px-8">
                     <div className="sm:flex sm:items-center sm:justify-between">
                         <div className="text-center sm:text-left">
-                            <UnderlineText heading={focusHeading}/>
+                            <UnderlineText heading={focusHeading} />
                             <h2 className="mb-4 mt-8 text-lg font-bold leading-none tracking-tight text-gray-900 md:text-xl lg:text-2xl dark:text-white">{heading} </h2>
                             <p className="mb-10 text-md font-normal text-gray-500 lg:text-lg dark:text-gray-400">{description}</p>
                             <div className="lg:flex mx:flex gap-x-4">
@@ -69,44 +72,62 @@ const PageHeaderCompanyList = ({ focusHeading = "", heading = "", description = 
                         </div>
 
                         <div className="lg:ml-20 md:ml-10 md:mr-10 lg:mr-20 ml-5 mr-5 mt-5 flex flex-col gap-4 sm:mt-0 sm:flex-row sm:items-center">
-                            <div className="grid grid-cols-2 gap-x-10 md:gap-x-20 lg:gap-x-20 gap-y-6">
+                            <Image
+                            width={300}
+                            height={300}
+                            src={Feature2}
+                            alt="projects"
+                            />
+                            {/* <div className="grid grid-cols-4 gap-x-3 md:gap-x-20 lg:gap-x-10 gap-y-6">
                                 <Image
-                                    width={150}
-                                    height={150}
-                                    src={GoogleLogo}
-                                    alt="google"
+                                    width={50}
+                                    height={50}
+                                    src={NextLogo}
+                                    alt="next"
                                 />
                                 <Image
-                                    width={150}
-                                    height={150}
-                                    src={LinkedinLogo}
-                                    alt="linkedin"
+                                    width={50}
+                                    height={50}
+                                    src={ReactLogo}
+                                    alt="react"
                                 />
                                 <Image
-                                    width={150}
-                                    height={150}
-                                    src={AtlassianLogo}
-                                    alt="atlassian"
+                                    width={50}
+                                    height={50}
+                                    src={JavaLogo}
+                                    alt="java"
                                 />
                                 <Image
-                                    width={150}
-                                    height={150}
-                                    src={SwiggyLogo}
-                                    alt="swiggy"
+                                    width={50}
+                                    height={50}
+                                    src={DBLogo}
+                                    alt="db"
                                 />
                                 <Image
-                                    width={150}
-                                    height={150}
-                                    src={MicrosoftLogo}
-                                    alt="microsoft"
+                                    width={50}
+                                    height={50}
+                                    src={MDBLogo}
+                                    alt="mdb"
                                 />
                                 <Image
-                                    width={150}
-                                    height={150}
-                                    src={AmazonLogo}
-                                    alt="amazon"
+                                    width={50}
+                                    height={50}
+                                    src={PythonLogo}
+                                    alt="python"
                                 />
-                            </div>
+                                <Image
+                                    width={50}
+                                    height={50}
+                                    src={JSLogo}
+                                    alt="js"
+                                />
+                                <Image
+                                    width={50}
+                                    height={50}
+                                    src={FlutterLogo}
+                                    alt="flutter"
+                                />
+                            </div> */}
                         </div>
                     </div>
                 </div>
@@ -115,4 +136,4 @@ const PageHeaderCompanyList = ({ focusHeading = "", heading = "", description = 
     );
 }
 
-export default PageHeaderCompanyList;
+export default PageHeaderTechList;

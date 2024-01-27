@@ -7,19 +7,19 @@ import Loading from '@/components/loading';
 import PageHeaderCompanyList from '@/components/page-headers/page-header-company-list';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
-import { Filter, Terminal } from 'lucide-react';
+import { Filter, Info, RotateCcw, Terminal } from 'lucide-react';
 import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle, DialogTrigger } from '@/components/ui/dialog';
 import { Button } from '@/components/ui/button';
 import { Alert, AlertDescription, AlertTitle } from '@/components/ui/alert';
-import UnderlineImage from "../../../(dashboard)/_components/img/underline.png"
-import Image from 'next/image';
 import InfoBanner from '../../_components/info-banner';
 import { Separator } from '@/components/ui/separator';
+import ErrorBanner from '../../_components/error-banner';
 
 const OpportunitiesPage = () => {
     const [internshipsList, setInternshipsList] = useState([])
     const [batch, setBatch] = useState("all")
     const [status, setStatus] = useState("loading")
+    const [cardCount, setCardCount] = useState(20)
     async function fetchData(batchSelect = "all") {
         setStatus("loading")
         try {
@@ -79,11 +79,6 @@ const OpportunitiesPage = () => {
                                 <span className="text-blue-800">
                                     Telegram Channel
                                 </span>
-                                <Image
-                                    src={UnderlineImage}
-                                    alt="underline"
-                                    className="mt-1 h-2 absolute top-2 left-0"
-                                />
 
                             </h1> and Stay Updated with all the latest Opportunities.
                         </AlertDescription>
@@ -165,38 +160,58 @@ const OpportunitiesPage = () => {
                         </div>
                     </div>
                     <div className="flex flex-col col-span-4 lg:col-span-3">
-                        {(status == "done") ? <>
-                            {(internshipsList.length > 0) ? <>
+                        {(status == "done") ?
+                            <>
+                                {(internshipsList.length > 0) ? <>
+                                    {internshipsList.slice(0,cardCount)?.map((internship, index) => (
+                                        <div
+                                            key={index}
+                                            className='mb-4'
+                                        >
+                                            <OpportunityCard
+                                                title={internship?.internship_title}
+                                                company_name={internship?.company_name}
+                                                location={internship?.internship_location}
+                                                company_logo={internship?.company_logo || "https://cdn-icons-png.flaticon.com/512/3666/3666417.png"}
+                                                apply_link={internship?.apply_link}
+                                                batch_eligible={internship?.batch_eligible}
+                                                url_slug={internship?.url_slug}
+                                            />
+                                        </div>
+                                    ))}
+                                    {cardCount < internshipsList.length ? <>
+                                        <Button onClick={(e) => setCardCount(cardCount + 10)} variant='outline'><RotateCcw className='h-4 w-4 mr-2' /> Load More Opportunities</Button>
+                                    </> : <>
+                                        <a target="_blank" href="https://telegram.me/cpabhinav">
+                                            <Alert className='mt-4'>
+                                                <Info className='h-4 w-4'/>
+                                                <AlertTitle>No More Opportunities!</AlertTitle>
+                                                <AlertDescription>
+                                                    Join Our <h1 className="inline relative mb-4 font-bold leading-none tracking-tight text-gray-900 dark:text-white">
+                                                        <span className="text-blue-800">
+                                                            Telegram Channel
+                                                        </span>
 
-                                {internshipsList?.map((internship, index) => (
-                                    <div
-                                        key={index}
-                                        className='mb-4'
-                                    >
-                                        <OpportunityCard
+                                                    </h1> and Stay Updated with all the latest Opportunities.
+                                                </AlertDescription>
+                                            </Alert>
+                                        </a>
+                                    </>}
 
-                                            title={internship?.internship_title}
-                                            company_name={internship?.company_name}
-                                            location={internship?.internship_location}
-                                            company_logo={internship?.company_logo || "https://cdn-icons-png.flaticon.com/512/3666/3666417.png"}
-                                            apply_link={internship?.apply_link}
-                                            batch_eligible={internship?.batch_eligible}
-                                            url_slug={internship?.url_slug}
-                                        />
-                                    </div>
-                                ))}
-
+                                </>
+                                    :
+                                    <>
+                                        <InfoBanner message="No Opportunities" description='Please reset your filters to view all opportunities' />
+                                    </>}
                             </>
-                                :
-                                <>
-                                    <InfoBanner message="No Opportunities" description='Please reset your filters to view all opportunities' />
-                                </>}
-                        </>
-
-
                             :
-                            <Loading title="Fetching Opportunities" />
-
+                            <>
+                                {status == "loading" ? <>
+                                    <Loading title="Fetching Opportunities" />
+                                </> : <>
+                                    <ErrorBanner />
+                                </>}
+                            </>
                         }
                     </div>
                 </div>

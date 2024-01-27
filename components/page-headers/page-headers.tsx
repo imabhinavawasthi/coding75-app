@@ -2,7 +2,6 @@
 
 import { CheckIcon, Share2Icon } from "lucide-react";
 import { useState } from "react";
-import Feature1 from "../../app/(dashboard)/_components/img/feature1.png"
 import Image from "next/image";
 
 const PageHeaders = ({ heading, description }) => {
@@ -31,10 +30,6 @@ const PageHeaders = ({ heading, description }) => {
                             <p className="mt-1.5 text-sm text-gray-500">
                                 {description}
                             </p>
-                            <Image
-                                src={Feature1}
-                                alt="Feature 1"
-                            />
                         </div>
 
                         <div className="lg:ml-2 mt-4 flex flex-col gap-4 sm:mt-0 sm:flex-row sm:items-center">
