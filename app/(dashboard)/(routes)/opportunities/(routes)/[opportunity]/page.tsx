@@ -65,7 +65,7 @@ const OpportunityPage = (params: any) => {
                           {internshipDetails[0].internship_title}
                         </p>
                       </div>
-                      <div className="w-full flex gap-3 justify-between items-stretch flex-wrap">
+                      <div className="w-full hidden md:flex lg:flex gap-3 justify-between items-stretch flex-wrap">
                         <div className="lg:flex md:flex grid  gap-x-2 items-center">
                           <p className="flex items-center lg:mb-0 md:mb-0 mb-4 text-sm text-gray-600">
                             <BriefcaseIcon className="h-4 w-4 mr-2" aria-hidden="true" /><Badge variant="destructive">{internshipDetails[0].company_name}</Badge>
@@ -100,6 +100,35 @@ const OpportunityPage = (params: any) => {
 
                 </div>
               </div>
+              <div className="mt-5 mb-10 lg:hidden md:hidden w-full flex gap-3 justify-between items-stretch flex-wrap">
+                        <div className="lg:flex md:flex grid  gap-x-2 items-center">
+                          <p className="flex items-center lg:mb-0 md:mb-0 mb-4 text-sm text-gray-600">
+                            <BriefcaseIcon className="h-4 w-4 mr-2" aria-hidden="true" /><Badge variant="destructive">{internshipDetails[0].company_name}</Badge>
+                          </p>
+                          <div className="hidden lg:block md:block w-[1px] h-3 bg-gray-400">
+                          </div>
+                          <p className="items-center  overflow-scroll lg:mb-0 md:mb-0 mb-4 flex gap-x-1 text-sm text-gray-600">
+                            <CalendarIcon className="h-4 w-4 mr-2" aria-hidden="true" /> Batch Eligible: {internshipDetails[0].batch_eligible.map((data) => {
+                              return <>
+                                <Badge variant="basic">{data}</Badge>
+                              </>
+                            })}
+                          </p>
+                          <div className="hidden lg:block md:block w-[1px] h-3 bg-gray-400">
+                          </div>
+                          <p className="flex items-center text-sm text-gray-600 line-clamp-1">
+                            <MapPinIcon className="h-4 w-4 mr-2" aria-hidden="true" />
+                            <Badge variant="secondary" className="border border-gray-1000">{internshipDetails[0].internship_location}</Badge>
+                          </p>
+                          {internshipDetails[0].stipend && <>
+
+                            <div className="hidden lg:block md:block w-[1px] h-3 bg-gray-400">
+                            </div>
+                            <p className="flex items-center text-sm text-gray-600 line-clamp-1">
+                              <IndianRupeeIcon className="h-4 w-4 mr-2" aria-hidden="true" /><Badge variant="outline">{internshipDetails[0].stipend}</Badge>
+                            </p></>}
+                        </div>
+                      </div>
               <div className="mt-5 justify-center items-center flex">
                 {isCopied ? <span className="ml-3">
                   <Button
