@@ -7,7 +7,7 @@ import Loading from '@/components/loading';
 import PageHeaderCompanyList from '@/components/page-headers/page-header-company-list';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
-import { Filter, Info, RotateCcw, Terminal } from 'lucide-react';
+import { Filter, Info, RotateCcw, Shapes, Terminal } from 'lucide-react';
 import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle, DialogTrigger } from '@/components/ui/dialog';
 import { Button } from '@/components/ui/button';
 import { Alert, AlertDescription, AlertTitle } from '@/components/ui/alert';
@@ -72,7 +72,7 @@ const OpportunitiesPage = () => {
             <div className='container mt-4'>
                 <a target="_blank" href="https://telegram.me/cpabhinav">
                     <Alert className='mb-2'>
-                        <Terminal className="h-4 w-4 " />
+                        <Shapes className="h-4 w-4 " />
                         <AlertTitle>Heads up!</AlertTitle>
                         <AlertDescription>
                             Join Our <h1 className="inline relative mb-4 font-bold leading-none tracking-tight text-gray-900 dark:text-white">
@@ -85,11 +85,11 @@ const OpportunitiesPage = () => {
                     </Alert>
                 </a>
                 <Separator className='my-4' />
-                <div className='lg:hidden'>
-                    <div>
+                <div className='lg:hidden mb-4'>
+                    <div className='w-full'>
                         <Dialog>
                             <DialogTrigger asChild>
-                                <Button variant="outline"><Filter className='w-4 h-4 mr-2' /> Filter</Button>
+                                <Button className='w-full' variant="outline"><Filter className='w-4 h-4 mr-2' /> Filter</Button>
                             </DialogTrigger>
                             <DialogContent className="sm:max-w-[425px]">
                                 <DialogHeader>

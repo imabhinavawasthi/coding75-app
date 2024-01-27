@@ -8,7 +8,6 @@ const OpportunityCard = ({ title, company_name, location, company_logo, apply_li
         <div>
             <Link href={`/opportunities/${url_slug}`}>
                 <div className="w-full flex flex-col justify-center items-start h-auto gap-3 p-6 border-gray-500 rounded-xl bg-gray-50 hover:cursor-pointer hover:bg-gray-100 hover:border-gray-600 hover:shadow-lg transition-all duration-500 capitalize">
-
                     {/* <div className="flex gap-3 self-stretch items-center justify-between flex-wrap">
                         <div className="flex gap-2 items-center flex-wrap">
                             <p className="flex text-sm text-gray-600 capitalize">
@@ -59,7 +58,6 @@ const OpportunityCard = ({ title, company_name, location, company_logo, apply_li
                             </div>
                         </div>
                     </div>
-
                 </div>
             </Link>
         </div>

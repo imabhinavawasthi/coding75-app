@@ -6,11 +6,15 @@ import ProjectCard from "@/components/cards/project-card";
 import Loading from "@/components/loading";
 import PageHeaderTechList from "@/components/page-headers/page-header-tech-list";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
-import { Filter } from "lucide-react";
+import { Filter, Shapes } from "lucide-react";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import Link from "next/link";
 import InfoBanner from "@/app/(dashboard)/_components/info-banner";
 import ErrorBanner from "@/app/(dashboard)/_components/error-banner";
+import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
+import { Separator } from "@/components/ui/separator";
+import { Button } from "@/components/ui/button";
+import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
 
 const ProjectType = (params: any) => {
     const [projectDetails, setProjectsDetails] = useState([])
@@ -66,6 +70,58 @@ const ProjectType = (params: any) => {
                                 focusHeading="Projects"
                                 heading={projectDetails[0]?.project_type_description} />
                             <div className="mt-3 container">
+                                <a target="_blank" href="https://telegram.me/cpabhinav">
+                                    <Alert className='mb-2'>
+                                        <Shapes className="h-4 w-4 " />
+                                        <AlertTitle>Heads up!</AlertTitle>
+                                        <AlertDescription>
+                                            Join Our <h1 className="inline relative mb-4 font-bold leading-none tracking-tight text-gray-900 dark:text-white">
+                                                <span className="text-blue-800">
+                                                    Telegram Channel
+                                                </span>
+
+                                            </h1> and Stay Updated with all the latest Projects.
+                                        </AlertDescription>
+                                    </Alert>
+                                </a>
+                                <Separator className='my-4' />
+                                <div className='lg:hidden mb-4'>
+                                    <div className='w-full'>
+                                        <Dialog>
+                                            <DialogTrigger asChild>
+                                                <Button className='w-full' variant="outline"><Filter className='w-4 h-4 mr-2' /> Filter</Button>
+                                            </DialogTrigger>
+                                            <DialogContent className="sm:max-w-[425px]">
+                                                <DialogHeader>
+                                                    <DialogTitle><Filter className='w-4 h-4 mr-2' /> Filter</DialogTitle>
+                                                    <DialogDescription>
+                                                    Explore different projects.
+                                                    </DialogDescription>
+                                                </DialogHeader>
+                                                <form>
+                                                    <div className="grid w-full items-center gap-4">
+                                                        <div className="flex flex-col space-y-1.5">
+                                                        <Select
+                                                                defaultValue={level}
+                                                                onValueChange={(e) => setLevelProjects(e)}
+                                                            >
+                                                                <SelectTrigger id="batch">
+                                                                    <SelectValue defaultValue={"all"} placeholder="Select Project Difficulty" />
+                                                                </SelectTrigger>
+                                                                <SelectContent position="popper">
+                                                                    <SelectItem value="all">All Projects</SelectItem>
+                                                                    <SelectItem value="Beginner">Beginner</SelectItem>
+                                                                    <SelectItem value="Intermediate">Intermediate</SelectItem>
+                                                                    <SelectItem value="Expert">Expert</SelectItem>
+                                                                </SelectContent>
+                                                            </Select>
+                                                        </div>
+                                                    </div>
+                                                </form>
+                                            </DialogContent>
+                                        </Dialog>
+                                    </div>
+                                </div>
                                 <div className="grid grid-cols-4 gap-x-4">
                                     <div className="hidden lg:block md:block">
                                         <Card>
