@@ -1,3 +1,4 @@
+import { Toaster } from '@/components/ui/sonner';
 import './globals.css'
 import type { Metadata } from 'next'
 import { Inter } from 'next/font/google'
@@ -18,12 +19,13 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={inter.className}>
-      <NextTopLoader
-      color="#818cf8"
-      height={4}
-      showSpinner={false}
-      />
+        <NextTopLoader
+          color="#818cf8"
+          height={4}
+          showSpinner={false}
+        />
         {children}
+        <Toaster theme='light' richColors closeButton position="top-right" />
       </body>
     </html>
   )

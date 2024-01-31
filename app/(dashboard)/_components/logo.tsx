@@ -1,10 +1,10 @@
 import Image from "next/image";
 
-export const Logo = () => {
+export const Logo = ({width=200,height=200}) => {
   return (
     <Image
-      height={200}
-      width={200}
+      height={height}
+      width={width}
       alt="logo"
       src="/logo-bg.png"
     />

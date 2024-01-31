@@ -95,13 +95,13 @@ const ProjectType = (params: any) => {
                                                 <DialogHeader>
                                                     <DialogTitle><Filter className='w-4 h-4 mr-2' /> Filter</DialogTitle>
                                                     <DialogDescription>
-                                                    Explore different projects.
+                                                        Explore different projects.
                                                     </DialogDescription>
                                                 </DialogHeader>
                                                 <form>
                                                     <div className="grid w-full items-center gap-4">
                                                         <div className="flex flex-col space-y-1.5">
-                                                        <Select
+                                                            <Select
                                                                 defaultValue={level}
                                                                 onValueChange={(e) => setLevelProjects(e)}
                                                             >
