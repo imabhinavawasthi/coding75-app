@@ -5,7 +5,6 @@ import supabase from "@/supabase";
 import { useRouter } from 'next/navigation'
 import { useState } from "react";
 import ReactQuill from 'react-quill';
-import 'react-quill/dist/quill.snow.css';
 
 const modules = {
     toolbar: [
@@ -50,8 +49,6 @@ const AddOpportunity = () => {
 
     async function AddOpportunity(e:any) {
         e.preventDefault()
-        console.log(internship_description);
-        
         if(password!=process.env.NEXT_PUBLIC_CODING_75){
             alert("Wrong Password")
             return
@@ -59,7 +56,6 @@ const AddOpportunity = () => {
         let batches=batch_eligible.split(",")
         let batches_int=batches.map((value)=>{return parseInt(value)})
         let slug_url=create_url_slug(internship_title)
-        
         try {
             const { data, error } = await supabase
                 .from('internships')
