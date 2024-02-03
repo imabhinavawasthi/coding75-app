@@ -4,7 +4,7 @@ import { Button } from "@/components/ui/button";
 import supabase from "@/supabase";
 import { useRouter } from 'next/navigation'
 import { useState } from "react";
-import ReactQuill from 'react-quill';
+// import ReactQuill from 'react-quill';
 
 const modules = {
     toolbar: [
@@ -106,7 +106,7 @@ const AddOpportunity = () => {
                                 required />
                         </div>
                         <div className="mt-2">
-                        <ReactQuill placeholder="Internship Description" modules={modules} theme="snow" onChange={(e) => { setInternshipDescription(e) }} />
+                        {/* <ReactQuill placeholder="Internship Description" modules={modules} theme="snow" onChange={(e) => { setInternshipDescription(e) }} /> */}
                         </div>
                         <div className="mt-2">
                             <input
