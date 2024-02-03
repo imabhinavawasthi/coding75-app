@@ -10,6 +10,7 @@ import { Button } from "@/components/ui/button";
 import { Skeleton } from "@/components/ui/skeleton";
 import Loading from "@/components/loading";
 import ErrorBanner from "@/app/(dashboard)/_components/error-banner";
+import DOMPurify from 'dompurify';
 
 const OpportunityPage = (params: any) => {
   const [internshipDetails, setInternshipDetails] = useState([])
@@ -170,7 +171,7 @@ const OpportunityPage = (params: any) => {
                   <div className="mt-10">
                     <div>
                       <h3 className="mb-3 text-lg font-bold ">Job Description:</h3>
-                      <p className="text-gray-900">{internshipDetails[0]?.internship_description}</p>
+                      <p className="text-gray-900"><div dangerouslySetInnerHTML={{ __html: DOMPurify.sanitize(internshipDetails[0]?.internship_description) }} /></p>
                     </div>
                   </div>
                   <div className="mt-10">

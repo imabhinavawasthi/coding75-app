@@ -1,12 +1,12 @@
 import Image from "next/image";
-import UnderlineImage from "../app/(dashboard)/_components/img/underline.gif"
+import UnderlineImage from "../app/(dashboard)/_components/img/underline.png"
 
 
 const UnderlineText = ({ heading = "" }) => {
     return (
         <div>
             <h1 className="inline relative mb-4 text-3xl font-extrabold leading-none tracking-tight text-gray-900 md:text-4xl lg:text-6xl dark:text-white">
-                <span className="text-blue-800">
+                <span className="font-mono text-blue-800">
                     {heading}
                 </span>
                 <Image

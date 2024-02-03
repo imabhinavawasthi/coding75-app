@@ -18,7 +18,7 @@ const ProjectsPage = () => {
         <div>
             <PageHeaderTechList
                 focusHeading="Projects"
-                heading="Explore a variety of coding projects. Explore, Learn, Create"
+                heading="Explore a variety of coding projects. Explore, Learn & Create"
             />
             <div className="container">
 

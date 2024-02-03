@@ -1,6 +1,6 @@
 "use client";
 
-import { BarChart, BookText, Briefcase, Code2, Compass, ComputerIcon, GitFork, Layout, List, RocketIcon, UserCheck, Users } from "lucide-react";
+import { BarChart, BookText, Briefcase, Code2, Compass, ComputerIcon, GitFork, Layout, List, RocketIcon, Route, UserCheck, Users } from "lucide-react";
 import { usePathname } from "next/navigation";
 
 import { SidebarItem } from "./sidebar-item";
@@ -11,15 +11,15 @@ const guestRoutes = [
     label: "Dashboard",
     href: "/dashboard",
   },
-  // {
-  //   icon: Compass,
-  //   label: "Browse",
-  //   href: "/explore",
-  // },
   {
     icon: BookText,
     label: "Resources",
     href: "/resources",
+  },
+  {
+    icon: Route,
+    label: "Roadmap",
+    href: "/roadmap",
   },
   {
     icon: Briefcase,

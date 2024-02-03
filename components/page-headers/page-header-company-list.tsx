@@ -32,7 +32,7 @@ const PageHeaderCompanyList = ({ focusHeading = "", heading = "", description = 
                     <div className="sm:flex sm:items-center sm:justify-between">
                         <div className="text-center sm:text-left">
                             <UnderlineText heading={focusHeading}/>
-                            <h2 className="mb-4 mt-8 text-lg font-bold leading-none tracking-tight text-gray-900 md:text-xl lg:text-2xl dark:text-white">{heading} </h2>
+                            <h2 className="font-mono mb-4 mt-8 text-lg font-bold leading-none tracking-tight text-gray-900 md:text-xl lg:text-2xl dark:text-white">{heading} </h2>
                             <p className="mb-10 text-md font-normal text-gray-500 lg:text-lg dark:text-gray-400">{description}</p>
                             <div className="lg:flex mx:flex gap-x-4">
                                 <div>

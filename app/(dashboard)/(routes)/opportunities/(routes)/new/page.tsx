@@ -4,6 +4,30 @@ import { Button } from "@/components/ui/button";
 import supabase from "@/supabase";
 import { useRouter } from 'next/navigation'
 import { useState } from "react";
+import ReactQuill from 'react-quill';
+import 'react-quill/dist/quill.snow.css';
+
+const modules = {
+    toolbar: [
+        ['bold', 'italic', 'underline', 'strike'],        // toggled buttons
+        ['blockquote', 'code-block'],
+      
+        [{ 'header': 1 }, { 'header': 2 }],               // custom button values
+        [{ 'list': 'ordered'}, { 'list': 'bullet' }],
+        [{ 'script': 'sub'}, { 'script': 'super' }],      // superscript/subscript
+        [{ 'indent': '-1'}, { 'indent': '+1' }],          // outdent/indent
+        [{ 'direction': 'rtl' }],                         // text direction
+      
+        [{ 'size': ['small', false, 'large', 'huge'] }],  // custom dropdown
+        [{ 'header': [1, 2, 3, 4, 5, 6, false] }],
+      
+        [{ 'color': [] }, { 'background': [] }],          // dropdown with defaults from theme
+        [{ 'font': [] }],
+        [{ 'align': [] }],
+      
+        ['clean']                                         // remove formatting button
+      ]
+  };
 
 const AddOpportunity = () => {
     const router = useRouter()
@@ -26,6 +50,8 @@ const AddOpportunity = () => {
 
     async function AddOpportunity(e:any) {
         e.preventDefault()
+        console.log(internship_description);
+        
         if(password!=process.env.NEXT_PUBLIC_CODING_75){
             alert("Wrong Password")
             return
@@ -40,12 +66,10 @@ const AddOpportunity = () => {
                 .insert([
                     { 
                         internship_title: internship_title, 
-                        internship_description: internship_description,
+                        internship_description:String(internship_description),
                         company_name:company_name,
                         company_logo:company_logo,
-                        batch_eligible:{
-                            "batch":batches_int
-                        },
+                        batch_eligible:batches_int,
                         internship_duration:internship_duration,
                         internship_location:internship_location,
                         apply_link:apply_link,
@@ -86,14 +110,7 @@ const AddOpportunity = () => {
                                 required />
                         </div>
                         <div className="mt-2">
-                            <input
-                                onChange={(e) => { setInternshipDescription(e.target.value) }}
-                                type="text"
-                                name="internship_description"
-                                id="internship_description"
-                                className="block w-full rounded-md border-0 p-3 text-gray-900 ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
-                                placeholder="Internship Description"
-                                />
+                        <ReactQuill placeholder="Internship Description" modules={modules} theme="snow" onChange={(e) => { setInternshipDescription(e) }} />
                         </div>
                         <div className="mt-2">
                             <input

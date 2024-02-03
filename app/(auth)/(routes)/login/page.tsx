@@ -39,7 +39,7 @@ const LogIn = () => {
                         prompt: 'consent',
                     },
                 }
-            }
+            },
             )
         }
         catch {
