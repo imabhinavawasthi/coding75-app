@@ -49,44 +49,43 @@ const AddOpportunity = () => {
 
     async function AddOpportunity(e: any) {
         e.preventDefault()
-        console.log(internship_description);
         
-        // if (password != process.env.NEXT_PUBLIC_CODING_75) {
-        //     alert("Wrong Password")
-        //     return
-        // }
-        // let batches = batch_eligible.split(",")
-        // let batches_int = batches.map((value) => { return parseInt(value) })
-        // let slug_url = create_url_slug(internship_title)
-        // try {
-        //     const { data, error } = await supabase
-        //         .from('internships')
-        //         .insert([
-        //             {
-        //                 internship_title: internship_title,
-        //                 internship_description: String(internship_description),
-        //                 company_name: company_name,
-        //                 company_logo: company_logo,
-        //                 batch_eligible: batches_int,
-        //                 internship_duration: internship_duration,
-        //                 internship_location: internship_location,
-        //                 apply_link: apply_link,
-        //                 url_slug: slug_url
-        //             },
-        //         ])
-        //         .select()
+        if (password != process.env.NEXT_PUBLIC_CODING_75) {
+            alert("Wrong Password")
+            return
+        }
+        let batches = batch_eligible.split(",")
+        let batches_int = batches.map((value) => { return parseInt(value) })
+        let slug_url = create_url_slug(internship_title)
+        try {
+            const { data, error } = await supabase
+                .from('internships')
+                .insert([
+                    {
+                        internship_title: internship_title,
+                        internship_description: String(internship_description),
+                        company_name: company_name,
+                        company_logo: company_logo,
+                        batch_eligible: batches_int,
+                        internship_duration: internship_duration,
+                        internship_location: internship_location,
+                        apply_link: apply_link,
+                        url_slug: slug_url
+                    },
+                ])
+                .select()
 
-        //     if (error) {
-        //         alert('Error adding problem:');
-        //         console.error('An error occurred:', error);
-        //     } else {
-        //         router.push(`/opportunities/${slug_url}`)
-        //     }
+            if (error) {
+                alert('Error adding problem:');
+                console.error('An error occurred:', error);
+            } else {
+                router.push(`/opportunities/${slug_url}`)
+            }
 
-        // } catch (error) {
-        //     alert('Error adding problem:');
-        //     console.error('An error occurred:', error);
-        // }
+        } catch (error) {
+            alert('Error adding problem:');
+            console.error('An error occurred:', error);
+        }
     }
 
     return (
