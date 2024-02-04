@@ -38,6 +38,7 @@ const AddOpportunity = () => {
     const [internship_duration, setInternshipDuration] = useState("Duration Not Specified")
     const [internship_location, setInternshipLocation] = useState("Location Not Specified")
     const [apply_link, setApplyLink] = useState("")
+    const [stipend, setStipend] = useState("")
     const [password, setPassword] = useState("")
 
     function create_url_slug(name: string) {
@@ -70,7 +71,8 @@ const AddOpportunity = () => {
                         internship_duration: internship_duration,
                         internship_location: internship_location,
                         apply_link: apply_link,
-                        url_slug: slug_url
+                        url_slug: slug_url,
+                        stipend: stipend
                     },
                 ])
                 .select()
@@ -167,6 +169,16 @@ const AddOpportunity = () => {
                                 id="batch_eligible"
                                 className="block w-full rounded-md border-0 p-3 text-gray-900 ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                                 placeholder="Batch Eligible"
+                                required />
+                        </div>
+                        <div className="mt-2">
+                            <input
+                                onChange={(e) => { setStipend(e.target.value) }}
+                                type="text"
+                                name="stipend"
+                                id="stipend"
+                                className="block w-full rounded-md border-0 p-3 text-gray-900 ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                                placeholder="Stipend"
                                 required />
                         </div>
                         <div className="mt-2">
