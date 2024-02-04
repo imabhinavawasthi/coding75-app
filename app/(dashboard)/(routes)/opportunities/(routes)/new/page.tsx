@@ -2,33 +2,31 @@
 
 import { Button } from "@/components/ui/button";
 import supabase from "@/supabase";
-import dynamic from "next/dynamic";
 import { useRouter } from 'next/navigation'
 import { useState } from "react";
-import ReactQuill from 'react-quill';
-import 'react-quill/dist/quill.snow.css';
+import QuillEditor from '../../../../_components/quill-editor';
 
 const modules = {
     toolbar: [
         ['bold', 'italic', 'underline', 'strike'],        // toggled buttons
         ['blockquote', 'code-block'],
-      
+
         [{ 'header': 1 }, { 'header': 2 }],               // custom button values
-        [{ 'list': 'ordered'}, { 'list': 'bullet' }],
-        [{ 'script': 'sub'}, { 'script': 'super' }],      // superscript/subscript
-        [{ 'indent': '-1'}, { 'indent': '+1' }],          // outdent/indent
+        [{ 'list': 'ordered' }, { 'list': 'bullet' }],
+        [{ 'script': 'sub' }, { 'script': 'super' }],      // superscript/subscript
+        [{ 'indent': '-1' }, { 'indent': '+1' }],          // outdent/indent
         [{ 'direction': 'rtl' }],                         // text direction
-      
+
         [{ 'size': ['small', false, 'large', 'huge'] }],  // custom dropdown
         [{ 'header': [1, 2, 3, 4, 5, 6, false] }],
-      
+
         [{ 'color': [] }, { 'background': [] }],          // dropdown with defaults from theme
         [{ 'font': [] }],
         [{ 'align': [] }],
-      
+
         ['clean']                                         // remove formatting button
-      ]
-  };
+    ]
+};
 
 const AddOpportunity = () => {
     const router = useRouter()
@@ -40,55 +38,55 @@ const AddOpportunity = () => {
     const [internship_duration, setInternshipDuration] = useState("Duration Not Specified")
     const [internship_location, setInternshipLocation] = useState("Location Not Specified")
     const [apply_link, setApplyLink] = useState("")
-    const [password,setPassword]=useState("")
+    const [password, setPassword] = useState("")
 
-    const QuillEditor = dynamic(() => import('react-quill'), { ssr: false, loading: () => <p>Loading Quill Editor...</p> });
-
-    function create_url_slug(name:string){
-        let s=name.toLowerCase()
-        s=s.replace(/([~!@#$%^&*()_+=`{}\[\]\|\\:;'<>,.\/? ])+/g, '-').replace(/^(-)+|(-)+$/g,'');
-        s=s+"-"+Math.floor((new Date()).getTime() / 1000).toString()
+    function create_url_slug(name: string) {
+        let s = name.toLowerCase()
+        s = s.replace(/([~!@#$%^&*()_+=`{}\[\]\|\\:;'<>,.\/? ])+/g, '-').replace(/^(-)+|(-)+$/g, '');
+        s = s + "-" + Math.floor((new Date()).getTime() / 1000).toString()
         return s
-    }    
+    }
 
-    async function AddOpportunity(e:any) {
+    async function AddOpportunity(e: any) {
         e.preventDefault()
-        if(password!=process.env.NEXT_PUBLIC_CODING_75){
-            alert("Wrong Password")
-            return
-        }
-        let batches=batch_eligible.split(",")
-        let batches_int=batches.map((value)=>{return parseInt(value)})
-        let slug_url=create_url_slug(internship_title)
-        try {
-            const { data, error } = await supabase
-                .from('internships')
-                .insert([
-                    { 
-                        internship_title: internship_title, 
-                        internship_description:String(internship_description),
-                        company_name:company_name,
-                        company_logo:company_logo,
-                        batch_eligible:batches_int,
-                        internship_duration:internship_duration,
-                        internship_location:internship_location,
-                        apply_link:apply_link,
-                        url_slug:slug_url
-                    },
-                ])
-                .select()
+        console.log(internship_description);
+        
+        // if (password != process.env.NEXT_PUBLIC_CODING_75) {
+        //     alert("Wrong Password")
+        //     return
+        // }
+        // let batches = batch_eligible.split(",")
+        // let batches_int = batches.map((value) => { return parseInt(value) })
+        // let slug_url = create_url_slug(internship_title)
+        // try {
+        //     const { data, error } = await supabase
+        //         .from('internships')
+        //         .insert([
+        //             {
+        //                 internship_title: internship_title,
+        //                 internship_description: String(internship_description),
+        //                 company_name: company_name,
+        //                 company_logo: company_logo,
+        //                 batch_eligible: batches_int,
+        //                 internship_duration: internship_duration,
+        //                 internship_location: internship_location,
+        //                 apply_link: apply_link,
+        //                 url_slug: slug_url
+        //             },
+        //         ])
+        //         .select()
 
-            if (error) {
-                alert('Error adding problem:');
-                console.error('An error occurred:', error);
-            } else {
-                router.push(`/opportunities/${slug_url}`)
-            }
-            
-        } catch (error) {
-            alert('Error adding problem:');
-            console.error('An error occurred:', error);
-        }
+        //     if (error) {
+        //         alert('Error adding problem:');
+        //         console.error('An error occurred:', error);
+        //     } else {
+        //         router.push(`/opportunities/${slug_url}`)
+        //     }
+
+        // } catch (error) {
+        //     alert('Error adding problem:');
+        //     console.error('An error occurred:', error);
+        // }
     }
 
     return (
@@ -110,11 +108,7 @@ const AddOpportunity = () => {
                                 required />
                         </div>
                         <div className="mt-2">
-                        <QuillEditor 
-                        placeholder="Internship Description" 
-                        modules={modules} theme="snow" 
-                        onChange={(e) => { setInternshipDescription(e) }}
-                        />
+                            <QuillEditor value={internship_description} onChange={(e) => { setInternshipDescription(e) }} />
                         </div>
                         <div className="mt-2">
                             <input
@@ -134,7 +128,7 @@ const AddOpportunity = () => {
                                 id="company_logo"
                                 className="block w-full rounded-md border-0 p-3 text-gray-900 ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                                 placeholder="Company Logo"
-                                 />
+                            />
                         </div>
                         <div className="mt-2">
                             <input
@@ -144,7 +138,7 @@ const AddOpportunity = () => {
                                 id="internship_duration"
                                 className="block w-full rounded-md border-0 p-3 text-gray-900 ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                                 placeholder="Internship Duration"
-                                 />
+                            />
                         </div>
                         <div className="mt-2">
                             <input
@@ -154,7 +148,7 @@ const AddOpportunity = () => {
                                 id="internship_location"
                                 className="block w-full rounded-md border-0 p-3 text-gray-900 ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                                 placeholder="Internship Location"
-                                 />
+                            />
                         </div>
                         <div className="mt-2">
                             <input
