@@ -2,9 +2,11 @@
 
 import { Button } from "@/components/ui/button";
 import supabase from "@/supabase";
+import dynamic from "next/dynamic";
 import { useRouter } from 'next/navigation'
 import { useState } from "react";
-// import ReactQuill from 'react-quill';
+import ReactQuill from 'react-quill';
+import 'react-quill/dist/quill.snow.css';
 
 const modules = {
     toolbar: [
@@ -39,6 +41,8 @@ const AddOpportunity = () => {
     const [internship_location, setInternshipLocation] = useState("Location Not Specified")
     const [apply_link, setApplyLink] = useState("")
     const [password,setPassword]=useState("")
+
+    const QuillEditor = dynamic(() => import('react-quill'), { ssr: false, loading: () => <p>Loading Quill Editor...</p> });
 
     function create_url_slug(name:string){
         let s=name.toLowerCase()
@@ -106,7 +110,11 @@ const AddOpportunity = () => {
                                 required />
                         </div>
                         <div className="mt-2">
-                        {/* <ReactQuill placeholder="Internship Description" modules={modules} theme="snow" onChange={(e) => { setInternshipDescription(e) }} /> */}
+                        <QuillEditor 
+                        placeholder="Internship Description" 
+                        modules={modules} theme="snow" 
+                        onChange={(e) => { setInternshipDescription(e) }}
+                        />
                         </div>
                         <div className="mt-2">
                             <input
