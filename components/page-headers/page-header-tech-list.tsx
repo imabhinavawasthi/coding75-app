@@ -4,7 +4,7 @@ import { CheckIcon, Share2Icon, User2 } from "lucide-react";
 import { useState } from "react";
 import Image from "next/image";
 import { Button } from "../ui/button";
-import Feature2 from  "../../app/(dashboard)/_components/img/feature2.png"
+import Feature2 from "../../app/(dashboard)/_components/img/feature2.png"
 // import NextLogo from "../../app/(dashboard)/_components/img/next.svg"
 // import ReactLogo from "../../app/(dashboard)/_components/img/react.png"
 // import PythonLogo from "../../app/(dashboard)/_components/img/python.svg.png"
@@ -34,7 +34,7 @@ const PageHeaderTechList = ({ focusHeading = "", heading = "", description = "" 
                 <div className="mx-auto max-w-screen-xl px-4 py-8 sm:px-6 sm:py-12 lg:px-8">
                     <div className="sm:flex sm:items-center sm:justify-between">
                         <div className="text-center sm:text-left">
-                            <UnderlineText heading={focusHeading} />
+                            <UnderlineText texts={['Projects', 'Frontend', 'Backend', 'Fullstack']} />
                             <h2 className="font-mono mb-4 mt-8 text-lg font-bold leading-none tracking-tighter text-gray-900 md:text-xl lg:text-2xl dark:text-white">{heading} </h2>
                             <p className="mb-10 text-md font-normal text-gray-500 lg:text-lg dark:text-gray-400">{description}</p>
                             <div className="lg:flex mx:flex gap-x-4">
@@ -73,10 +73,10 @@ const PageHeaderTechList = ({ focusHeading = "", heading = "", description = "" 
 
                         <div className="lg:ml-20 md:ml-10 md:mr-10 lg:mr-20 ml-5 mr-5 mt-5 flex flex-col gap-4 sm:mt-0 sm:flex-row sm:items-center">
                             <Image
-                            width={300}
-                            height={300}
-                            src={Feature2}
-                            alt="projects"
+                                width={300}
+                                height={300}
+                                src={Feature2}
+                                alt="projects"
                             />
                             {/* <div className="grid grid-cols-4 gap-x-3 md:gap-x-20 lg:gap-x-10 gap-y-6">
                                 <Image

@@ -3,7 +3,6 @@ import { Logo } from "@/app/(dashboard)/_components/logo";
 const Footer = () => {
     return (
         <div>
-
             <footer className="bg-white">
                 <div className="mx-auto max-w-screen-xl px-4 py-16 sm:px-6 lg:px-8">
                     <div
@@ -12,7 +11,6 @@ const Footer = () => {
                         <p className="text-xl text-white sm:text-xl">
                             Have more questions? <strong>Join our Community </strong>
                         </p>
-
                         <a
                             className="inline-flex items-center gap-2 rounded-full border border-white bg-white px-8 py-3 text-indigo-600 hover:bg-transparent hover:text-white focus:outline-none focus:ring active:bg-white/90"
                             href="/community"
@@ -35,7 +33,6 @@ const Footer = () => {
                             </svg>
                         </a>
                     </div>
-
                     {/* <div className="mt-16 grid grid-cols-1 gap-8 sm:grid-cols-2 lg:grid-cols-4">
                         <div className="text-center sm:text-left">
                             <p className="text-lg font-medium text-gray-900">About Us</p>
@@ -173,7 +170,6 @@ const Footer = () => {
                             </ul>
                         </div>
                     </div> */}
-
                     <div className="mt-16">
                         <ul className="flex justify-center gap-6 sm:justify-end">
                             <li>
@@ -198,7 +194,6 @@ const Footer = () => {
                                     </svg>
                                 </a>
                             </li>
-
                             <li>
                                 <a
                                     href="/"
@@ -221,7 +216,6 @@ const Footer = () => {
                                     </svg>
                                 </a>
                             </li>
-
                             <li>
                                 <a
                                     href="/"
@@ -242,7 +236,6 @@ const Footer = () => {
                                     </svg>
                                 </a>
                             </li>
-
                             <li>
                                 <a
                                     href="/"
@@ -265,7 +258,6 @@ const Footer = () => {
                                     </svg>
                                 </a>
                             </li>
-
                             <li>
                                 <a
                                     href="/"
@@ -289,7 +281,6 @@ const Footer = () => {
                                 </a>
                             </li>
                         </ul>
-
                         <div className="mt-16 sm:flex sm:items-center sm:justify-between">
                             <div className="flex justify-center text-teal-600 sm:justify-start">
                                 <Logo/>

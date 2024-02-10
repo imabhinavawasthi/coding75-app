@@ -20,8 +20,7 @@ const ProjectsPage = () => {
                 focusHeading="Projects"
                 heading="Explore a variety of coding projects. Explore, Learn & Create"
             />
-            <div className="container">
-
+            <div className="lg:container px-2">
                 <div className="mt-3">
                     <div className="grid lg:grid-cols-2 grid-cols-1">
                         <div className="p-5">

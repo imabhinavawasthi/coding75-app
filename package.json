@@ -49,6 +49,7 @@
     "react-multi-select-component": "^4.3.4",
     "react-quill": "^2.0.0",
     "react-resizable-panels": "^2.0.2",
+    "react-text-transition": "^3.1.0",
     "sonner": "^1.4.0",
     "supabase": "^1.136.3",
     "tailwind-merge": "^1.14.0",

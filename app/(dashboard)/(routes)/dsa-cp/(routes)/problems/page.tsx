@@ -8,10 +8,9 @@ import PageHeaders from "@/components/page-headers/page-headers";
 import { MultiSelect } from "react-multi-select-component";
 import { company_tags, topic_tags } from "@/components/constants";
 import { ArrowDown, Filter } from "lucide-react";
-import supabase from "@/supabase";
 
 const DSAProblems = () => {
-    const [problem_list, setProblemList] = useState([])
+    const [problem_list, setProblemList] = useState<any[]>([])
     const [loading, setLoading] = useState(true)
     const [topic_tag, setTopicTag] = useState([])
     const [company_tag, setCompanyTag] = useState([])
@@ -62,7 +61,9 @@ const DSAProblems = () => {
         async function fetchProblemsFun() {
             try {
                 const { dsaproblems } = await fetchProblems();
-                setProblemList(dsaproblems);
+                if(dsaproblems){
+                    setProblemList(dsaproblems);
+                }
                 setLoading(false)
             } catch (error) {
                 console.error("Error fetching data:", error);
@@ -130,7 +131,7 @@ const DSAProblems = () => {
             <div className="mt-5">
                 {!loading ? <>
                     <div className="grid grid-col-1 gap-3">
-                        {problem_list.slice(0, pageCount)?.map((problem) => (
+                        {problem_list.slice(0, pageCount)?.map((problem:any) => (
                             <div key={problem.id}>
                                 <ProblemCard1
                                     problem_name={problem.problem_name} platform_name={problem.platform} problem_link={problem.problem_link} topic_tags={problem.topic_tags.map((topic) => (topic.label)).slice(0, 3)} company_tags={problem.company_tags.map((company) => (company.label)).slice(0, 3)} difficulty={problem.difficulty} status="trying" slug_url={problem.slug_url} editorial={problem.editorial} video_editorial={problem.video_editorial} />

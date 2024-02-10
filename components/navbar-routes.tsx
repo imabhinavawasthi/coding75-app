@@ -77,7 +77,7 @@ const components: { title: string; href: string; description: string }[] = [
 
 
 export const NavbarRoutes = () => {
-  const [user, setUser] = useState(null)
+  const [user, setUser] = useState<any>(null)
   const pathname = usePathname();
   const router = useRouter()
   const [status, setStatus] = useState("loading")

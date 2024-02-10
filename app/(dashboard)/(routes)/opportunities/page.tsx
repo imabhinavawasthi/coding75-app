@@ -16,7 +16,7 @@ import { Separator } from '@/components/ui/separator';
 import ErrorBanner from '../../_components/error-banner';
 
 const OpportunitiesPage = () => {
-    const [internshipsList, setInternshipsList] = useState([])
+    const [internshipsList, setInternshipsList] = useState<any>([])
     const [batch, setBatch] = useState("all")
     const [status, setStatus] = useState("loading")
     const [cardCount, setCardCount] = useState(20)
@@ -25,25 +25,29 @@ const OpportunitiesPage = () => {
         try {
             if (batchSelect == "all") {
                 const { internships } = await fetchInternships(undefined, undefined);
-                internships.sort(function (a, b) {
-                    var keyA = new Date(a.created_at),
-                        keyB = new Date(b.created_at);
-                    if (keyA < keyB) return 1;
-                    if (keyA > keyB) return -1;
-                    return 0;
-                });
-                setInternshipsList(internships);
+                if (internships) {
+                    internships.sort(function (a, b) {
+                        var keyA = new Date(a.created_at),
+                            keyB = new Date(b.created_at);
+                        if (keyA < keyB) return 1;
+                        if (keyA > keyB) return -1;
+                        return 0;
+                    });
+                    setInternshipsList(internships);
+                }
             }
             else {
                 const { internships } = await fetchInternships(undefined, batchSelect);
-                internships.sort(function (a, b) {
-                    var keyA = new Date(a.created_at),
-                        keyB = new Date(b.created_at);
-                    if (keyA < keyB) return 1;
-                    if (keyA > keyB) return -1;
-                    return 0;
-                });
-                setInternshipsList(internships);
+                if (internships) {
+                    internships.sort(function (a, b) {
+                        var keyA = new Date(a.created_at),
+                            keyB = new Date(b.created_at);
+                        if (keyA < keyB) return 1;
+                        if (keyA > keyB) return -1;
+                        return 0;
+                    });
+                    setInternshipsList(internships);
+                }
             }
             setStatus("done")
 
@@ -163,7 +167,7 @@ const OpportunitiesPage = () => {
                         {(status == "done") ?
                             <>
                                 {(internshipsList.length > 0) ? <>
-                                    {internshipsList.slice(0,cardCount)?.map((internship, index) => (
+                                    {internshipsList.slice(0, cardCount)?.map((internship, index) => (
                                         <div
                                             key={index}
                                             className='mb-4'
@@ -184,7 +188,7 @@ const OpportunitiesPage = () => {
                                     </> : <>
                                         <a target="_blank" href="https://telegram.me/cpabhinav">
                                             <Alert className='mt-4'>
-                                                <Info className='h-4 w-4'/>
+                                                <Info className='h-4 w-4' />
                                                 <AlertTitle>No More Opportunities!</AlertTitle>
                                                 <AlertDescription>
                                                     Join Our <h1 className="inline relative mb-4 font-bold leading-none tracking-tight text-gray-900 dark:text-white">

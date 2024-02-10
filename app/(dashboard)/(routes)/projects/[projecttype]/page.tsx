@@ -15,22 +15,25 @@ import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle, Di
 import { Separator } from "@/components/ui/separator";
 import { Button } from "@/components/ui/button";
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
+import { PostgrestError } from "@supabase/supabase-js";
 
 const ProjectType = (params: any) => {
-    const [projectDetails, setProjectsDetails] = useState([])
+    const [projectDetails, setProjectsDetails] = useState<any>([])
     const [status, setStatus] = useState("loading")
     const [level, setLevel] = useState("all")
 
     async function fetchData(levelProject = undefined) {
         setStatus("loading")
         try {
-            const { projects, error } = await fetchProjects(params.params.projecttype, undefined, (!levelProject || levelProject == "all") ? undefined : levelProject);
+            const response = await fetchProjects(params.params.projecttype, undefined, (!levelProject || levelProject == "all") ? undefined : levelProject);
+            const { projects, error } = response as { projects: any[] | null; error: PostgrestError | null };
             if (error) {
                 setStatus("error")
                 return
             }
-            console.log(projects);
-            setProjectsDetails(projects);
+            if(projects){
+                setProjectsDetails(projects);
+            }
             setStatus("done")
         } catch (error) {
             setStatus("error")

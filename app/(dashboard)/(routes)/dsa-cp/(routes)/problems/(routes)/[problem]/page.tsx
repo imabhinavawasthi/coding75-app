@@ -9,15 +9,16 @@ import Loading from "@/components/loading";
 import PageNotFound from "@/components/page-not-found";
 
 const Problem = (params: any) => {
-    const [problem, setProblem] = useState({})
+    const [problem, setProblem] = useState<any>()
     const [loading, setLoading] = useState(true)
 
     useEffect(() => {
         async function fetchProblemsFun() {
             try {
                 const { dsaproblem } = await fetchProblem({ problem: params.params.problem });
-                setProblem(dsaproblem[0])
-
+                if(dsaproblem){
+                    setProblem(dsaproblem[0])
+                }
                 setLoading(false)
             } catch (error) {
                 console.error("Error fetching data:", error);

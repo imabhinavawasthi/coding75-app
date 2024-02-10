@@ -13,7 +13,7 @@ import ErrorBanner from "@/app/(dashboard)/_components/error-banner";
 import DOMPurify from 'dompurify';
 
 const OpportunityPage = (params: any) => {
-  const [internshipDetails, setInternshipDetails] = useState([])
+  const [internshipDetails, setInternshipDetails] = useState<any>([])
   const [isCopied, setIsCopied] = useState(false)
   const [status, setStatus] = useState("loading")
   function getCurrentURL() {
@@ -31,12 +31,14 @@ const OpportunityPage = (params: any) => {
     try {
 
       const { internships, error } = await fetchInternships(params.params.opportunity, undefined);
-      if(error){
+      if (error) {
         setStatus("error")
         return
       }
       setInternshipDetails(internships);
-      document.title = `${internships[0]?.internship_title} - ${internships[0]?.company_name}`
+      if(internships){
+        document.title = `${internships[0]?.internship_title} - ${internships[0]?.company_name}`
+      }
       setStatus("done")
     } catch (error) {
       setStatus("error")
@@ -102,34 +104,34 @@ const OpportunityPage = (params: any) => {
                 </div>
               </div>
               <div className="mt-5 mb-10 lg:hidden md:hidden w-full flex gap-3 justify-between items-stretch flex-wrap">
-                        <div className="lg:flex md:flex grid  gap-x-2 items-center">
-                          <p className="flex items-center lg:mb-0 md:mb-0 mb-4 text-sm text-gray-600">
-                            <BriefcaseIcon className="h-4 w-4 mr-2" aria-hidden="true" /><Badge variant="destructive">{internshipDetails[0].company_name}</Badge>
-                          </p>
-                          <div className="hidden lg:block md:block w-[1px] h-3 bg-gray-400">
-                          </div>
-                          <p className="items-center  overflow-scroll lg:mb-0 md:mb-0 mb-4 flex gap-x-1 text-sm text-gray-600">
-                            <CalendarIcon className="h-4 w-4 mr-2" aria-hidden="true" /> Batch Eligible: {internshipDetails[0].batch_eligible.map((data) => {
-                              return <>
-                                <Badge variant="basic">{data}</Badge>
-                              </>
-                            })}
-                          </p>
-                          <div className="hidden lg:block md:block w-[1px] h-3 bg-gray-400">
-                          </div>
-                          <p className="flex items-center text-sm text-gray-600 line-clamp-1">
-                            <MapPinIcon className="h-4 w-4 mr-2" aria-hidden="true" />
-                            <Badge variant="secondary" className="border border-gray-1000">{internshipDetails[0].internship_location}</Badge>
-                          </p>
-                          {internshipDetails[0].stipend && <>
+                <div className="lg:flex md:flex grid  gap-x-2 items-center">
+                  <p className="flex items-center lg:mb-0 md:mb-0 mb-4 text-sm text-gray-600">
+                    <BriefcaseIcon className="h-4 w-4 mr-2" aria-hidden="true" /><Badge variant="destructive">{internshipDetails[0].company_name}</Badge>
+                  </p>
+                  <div className="hidden lg:block md:block w-[1px] h-3 bg-gray-400">
+                  </div>
+                  <p className="items-center  overflow-scroll lg:mb-0 md:mb-0 mb-4 flex gap-x-1 text-sm text-gray-600">
+                    <CalendarIcon className="h-4 w-4 mr-2" aria-hidden="true" /> Batch Eligible: {internshipDetails[0].batch_eligible.map((data) => {
+                      return <>
+                        <Badge variant="basic">{data}</Badge>
+                      </>
+                    })}
+                  </p>
+                  <div className="hidden lg:block md:block w-[1px] h-3 bg-gray-400">
+                  </div>
+                  <p className="flex items-center text-sm text-gray-600 line-clamp-1">
+                    <MapPinIcon className="h-4 w-4 mr-2" aria-hidden="true" />
+                    <Badge variant="secondary" className="border border-gray-1000">{internshipDetails[0].internship_location}</Badge>
+                  </p>
+                  {internshipDetails[0].stipend && <>
 
-                            <div className="hidden lg:block md:block w-[1px] h-3 bg-gray-400">
-                            </div>
-                            <p className="flex items-center text-sm text-gray-600 line-clamp-1">
-                              <IndianRupeeIcon className="h-4 w-4 mr-2" aria-hidden="true" /><Badge variant="outline">{internshipDetails[0].stipend}</Badge>
-                            </p></>}
-                        </div>
-                      </div>
+                    <div className="hidden lg:block md:block w-[1px] h-3 bg-gray-400">
+                    </div>
+                    <p className="flex items-center text-sm text-gray-600 line-clamp-1">
+                      <IndianRupeeIcon className="h-4 w-4 mr-2" aria-hidden="true" /><Badge variant="outline">{internshipDetails[0].stipend}</Badge>
+                    </p></>}
+                </div>
+              </div>
               <div className="mt-5 justify-center items-center flex">
                 {isCopied ? <span className="ml-3">
                   <Button
@@ -171,7 +173,7 @@ const OpportunityPage = (params: any) => {
                   <div className="mt-10">
                     <div>
                       <h3 className="mb-3 text-lg font-bold ">Job Description:</h3>
-                      <p className="text-gray-900"><div dangerouslySetInnerHTML={{ __html: DOMPurify.sanitize(internshipDetails[0]?.internship_description) }} /></p>
+                      <p className="text-gray-900 no-more-tailwind"><div dangerouslySetInnerHTML={{ __html: DOMPurify.sanitize(internshipDetails[0]?.internship_description) }} /></p>
                     </div>
                   </div>
                   <div className="mt-10">
@@ -238,10 +240,10 @@ const OpportunityPage = (params: any) => {
               </div>
 
             </div>
-            {status=="loading"?<>
-            <Loading title={"Loading Opportunity"} />
-            </>:<>
-            <ErrorBanner/>
+            {status == "loading" ? <>
+              <Loading title={"Loading Opportunity"} />
+            </> : <>
+              <ErrorBanner />
             </>}
           </div>
 
