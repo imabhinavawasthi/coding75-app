@@ -7,13 +7,14 @@ import Loading from '@/components/loading';
 import PageHeaderCompanyList from '@/components/page-headers/page-header-company-list';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
-import { Filter, Info, RotateCcw, Shapes, Terminal } from 'lucide-react';
+import { Filter, Info, RotateCcw, Shapes } from 'lucide-react';
 import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle, DialogTrigger } from '@/components/ui/dialog';
 import { Button } from '@/components/ui/button';
 import { Alert, AlertDescription, AlertTitle } from '@/components/ui/alert';
 import InfoBanner from '../../_components/info-banner';
 import { Separator } from '@/components/ui/separator';
 import ErrorBanner from '../../_components/error-banner';
+import { Input } from '@/components/ui/input';
 
 const OpportunitiesPage = () => {
     const [internshipsList, setInternshipsList] = useState<any>([])
@@ -34,6 +35,8 @@ const OpportunitiesPage = () => {
                         return 0;
                     });
                     setInternshipsList(internships);
+                    setStatus("done")
+                    return internships
                 }
             }
             else {
@@ -47,6 +50,8 @@ const OpportunitiesPage = () => {
                         return 0;
                     });
                     setInternshipsList(internships);
+                    setStatus("done")
+                    return internships
                 }
             }
             setStatus("done")
@@ -55,7 +60,18 @@ const OpportunitiesPage = () => {
             setStatus("error")
             console.error("Error fetching data:", error);
         }
+        return []
     }
+
+    async function handleSearch(e) {
+        let internships = await fetchData()
+        setInternshipsList(
+            internships.filter((data) => {
+                if (data?.internship_title.toLowerCase().includes(e.target.value.toLowerCase())) return true; else return false;
+            })
+        )
+    }
+
     useEffect(() => {
         fetchData();
     }, [])
@@ -164,9 +180,20 @@ const OpportunitiesPage = () => {
                         </div>
                     </div>
                     <div className="flex flex-col col-span-4 lg:col-span-3">
+                        <div>
+                            <Input className='mb-5' onChange={(e) => {
+                                if (e.target.value != "") {
+                                    handleSearch(e)
+                                }
+                                else {
+                                    fetchData()
+                                }
+                            }} placeholder='Search Opportunity' />
+                        </div>
                         {(status == "done") ?
                             <>
-                                {(internshipsList.length > 0) ? <>
+                                {(internshipsList && internshipsList.length > 0) ? <>
+
                                     {internshipsList.slice(0, cardCount)?.map((internship, index) => (
                                         <div
                                             key={index}

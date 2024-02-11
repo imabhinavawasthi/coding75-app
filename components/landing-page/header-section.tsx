@@ -1,6 +1,8 @@
 'use client';
 
+import Typewriter from 'typewriter-effect';
 import { Logo } from '@/app/(dashboard)/_components/logo';
+import CountUp from 'react-countup';
 import {
     NavigationMenu,
     NavigationMenuContent,
@@ -13,7 +15,8 @@ import React from 'react';
 import { cn } from '@/lib/utils';
 import { Button } from '../ui/button';
 import Link from 'next/link';
-import { Briefcase, Code2, Computer, LogIn, Rocket, UserCheck, Users } from 'lucide-react';
+import { Briefcase, Code2, Computer, GraduationCap, Layout, LayoutDashboard, LogIn, Rocket, UserCheck, Users } from 'lucide-react';
+import { DashboardIcon } from '@radix-ui/react-icons';
 
 const components: { title: string; href: string; description: string }[] = [
     {
@@ -92,15 +95,16 @@ const LOGOS = [
 
 export default function HeaderSection() {
 
-    const NavMenuCSS = 'hover:text-white focus:bg-transparent focus:text-white focus:outline-none disabled:pointer-events-none disabled:opacity-50 data-[active]:bg-white data-[state=open]:bg-transparent text-white bg-transparent hover:bg-transparent'
+    const NavMenuCSS = 'disabled:pointer-events-none disabled:opacity-50 bg-transparent hover:bg-transparent'
 
     return (
         <div>
-            <section className="bg-gray-900 min-h-screen    bg-[url('https://flowbite.s3.amazonaws.com/docs/jumbotron/hero-pattern-dark.svg')]">
-                <div className="mt-2 z-20 relative mx-auto max-w-screen-xl px-4 sm:px-6 lg:px-8">
+            <section className="bg-white dark:bg-gray-900">
+                <div className="bg-gradient-to-b from-blue-100 to-transparent dark:from-blue-900 w-full h-full absolute top-0 left-0 z-0"></div>
+                <div className="mt-2 relative mx-auto max-w-screen-xl px-4 sm:px-6 lg:px-8">
                     <div className="flex h-16 items-center justify-between">
                         <div className="md:flex md:items-center md:gap-12">
-                            <Logo white={true} />
+                            <Logo />
                         </div>
 
                         <div className="hidden z-50 md:block">
@@ -147,67 +151,72 @@ export default function HeaderSection() {
                         <div className="flex items-center gap-4">
                             <div className="sm:flex sm:gap-4">
                                 <Link
-                                    className="flex justify-center items-center rounded-md bg-blue-600 px-5 py-2.5 text-sm font-medium text-white shadow"
+                                    className="flex justify-center items-center rounded-md bg-primary-700 hover:bg-primary-800 px-5 py-2.5 text-sm font-medium text-white shadow"
                                     href="/login"
                                 >
-                                    <LogIn className='h-4 w-4 mr-2'/> Login
+                                    <LogIn className='h-4 w-4 mr-2' /> Login
                                 </Link>
                             </div>
                         </div>
                     </div>
                 </div>
-                <div className="py-8 px-8 mx-auto max-w-screen-xl text-center lg:py-16 z-10 relative">
-                    <a href="#" className="inline-flex justify-between items-center py-1 px-1 pe-4 mb-7 text-sm rounded-full bg-blue-900 text-blue-300 hover:bg-blue-800">
-                        <span className="text-xs bg-blue-600 rounded-full text-white px-4 py-1.5 me-3">New</span> <span className="text-sm font-medium">Jumbotron component was launched! See what&apos;s new</span>
-                        <svg className="w-2.5 h-2.5 ms-2 rtl:rotate-180" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 6 10">
-                            <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 9 4-4-4-4" />
-                        </svg>
-                    </a>
-                    <h1 className="mb-10 text-4xl font-extrabold tracking-tight leading-none md:text-5xl lg:text-6xl text-white">Your College Coding Journey Just Got Easier</h1>
-                    <p className="mb-10 text-lg font-normal lg:text-xl sm:px-16 lg:px-48 text-gray-200">Your gateway to coding mastery. We&apos;re here to empower students with all the essential resources they need to succeed in coding, from in-depth tutorials to real-world projects and more. 🚀</p>
-                    <form className="w-full max-w-md mx-auto">
-                        <label htmlFor="default-email" className="mb-2 text-sm font-medium sr-only text-white">Email sign-up</label>
-                        <div className="relative">
-                            <div className="absolute inset-y-0 rtl:inset-x-0 start-0 flex items-center ps-3.5 pointer-events-none">
-                                <svg className="w-4 h-4 text-gray-400" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 16">
-                                    <path d="m10.036 8.278 9.258-7.79A1.979 1.979 0 0 0 18 0H2A1.987 1.987 0 0 0 .641.541l9.395 7.737Z" />
-                                    <path d="M11.241 9.817c-.36.275-.801.425-1.255.427-.428 0-.845-.138-1.187-.395L0 2.6V14a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V2.5l-8.759 7.317Z" />
-                                </svg>
-                            </div>
-                            <input type="email" id="default-email" className="block w-full p-4 ps-10 text-sm  border rounded-lg  bg-gray-800 border-gray-700 placeholder-gray-400 text-white focus:ring-blue-500 focus:border-blue-500" placeholder="Enter your email here..." required />
-                            <button type="submit" className="text-white absolute end-2.5 bottom-2.5 focus:ring-4 focus:outline-none  font-medium rounded-lg text-sm px-4 py-2 bg-blue-600 hover:bg-blue-700 focus:ring-blue-800">Sign up</button>
-                        </div>
-                    </form>
-                    <div className='flex mt-10 justify-center items-center gap-x-20'>
-                    <Link href="/dashboard" className="inline-flex justify-between items-center py-1 px-1 pe-4 mb-7 text-lg rounded-full bg-blue-900 text-blue-300 hover:bg-blue-800">
-                        <span className="text-md bg-blue-600 rounded-full text-white px-4 py-1.5 me-3"><Rocket className='animate-bounce'/></span> <span className="text-lg text-white font-medium">Get Started</span>
-                        <svg className="w-2.5 h-2.5 ms-2 rtl:rotate-180" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 6 10">
-                            <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 9 4-4-4-4" />
-                        </svg>
+                <div className="py-8 relative px-4 mx-auto max-w-screen-xl text-center lg:py-16 lg:px-12">
+                    <Link href="/community" className="inline-flex justify-between items-center py-1 px-1 pr-4 mb-7 text-sm text-gray-700 bg-gray-100 rounded-full dark:bg-gray-800 dark:text-white hover:bg-gray-200 dark:hover:bg-gray-700" role="alert">
+                        <span className="text-xs bg-primary-600 rounded-full text-white px-4 py-1.5 mr-3">New</span> <span className="text-sm font-medium">1:1 Mentorship Community 🚀</span>
+                        <svg className="ml-2 w-5 h-5" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z" clip-rule="evenodd"></path></svg>
                     </Link>
-                    </div>
-                    <div className="mt-10 relative m-auto w-full overflow-hidden before:absolute before:left-0 before:top-0 before:z-[2] before:h-full before:w-[100px] before:content-[''] after:absolute after:right-0 after:top-0 after:z-[2] after:h-full after:w-[100px] after:-scale-x-100 after:content-['']">
-                        <div className="animate-infinite-slider flex w-[calc(250px*20)]">
-                            {LOGOS.map((logo, index) => (
-                                <div
-                                    className="slide mr-20 flex items-center justify-center"
-                                    key={index}
-                                >
-                                    {logo}
-                                </div>
-                            ))}
-                            {LOGOS.map((logo, index) => (
-                                <div
-                                    className="slide mr-20 flex items-center justify-center"
-                                    key={index}
-                                >
-                                    {logo}
-                                </div>
-                            ))}
+                    <h1 className="mb-4 text-4xl font-extrabold tracking-tight leading-none text-gray-900 md:text-5xl lg:text-6xl dark:text-white">
+                        <Typewriter
+                            options={{
+                                strings: [
+                                    '<strong>Amazing <span style="color: #27ae60;">Coding Resources</span>.</strong>',
+                                    '<strong>Explore <span style="color: #27ae60;">Internships</span>.</strong>',
+                                    '<strong>Practice <span style="color: #27ae60;">DSA and CP</span>.</strong>',
+                                    '<strong>Learn <span style="color: #27ae60;">CS Fundamentals</span>.</strong>',
+                                    '<strong>Get Prepared for <span style="color: #27ae60;">Interviews</span>.</strong>',
+                                    '<strong>Explore & Develop <span style="color: #27ae60;">Projects</span>.</strong>',
+                                    '<strong>Join <span style="color: #27ae60;">Exclusive Community</span>.</strong>'
+                                ],
+                                autoStart: true,
+                                loop: true,
+                                delay: 75,
+                                deleteSpeed:20
+                            }}
+                        />
+                    </h1>
+                    <p className="mb-8 text-lg font-normal text-gray-500 lg:text-xl sm:px-16 xl:px-48 dark:text-gray-400">We&apos;re here to empower students with all the essential resources they need to succeed in coding, from in-depth tutorials to real-world projects and more.</p>
+                    <div className="flex flex-col mb-8 lg:mb-16 space-y-4 sm:flex-row sm:justify-center sm:space-y-0 sm:space-x-4">
+                        <Link href="/dashboard" className="shadow-2xl inline-flex justify-center items-center py-3 px-5 text-base font-medium text-center text-white rounded-lg bg-primary-700 hover:bg-primary-800 focus:ring-4 focus:ring-primary-300 dark:focus:ring-primary-900">
+                            <Layout className="mr-2 -ml-1 w-5 h-5" /> Dashboard
+                            <svg className="ml-2 -mr-1 w-5 h-5" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M10.293 3.293a1 1 0 011.414 0l6 6a1 1 0 010 1.414l-6 6a1 1 0 01-1.414-1.414L14.586 11H3a1 1 0 110-2h11.586l-4.293-4.293a1 1 0 010-1.414z" clip-rule="evenodd"></path></svg>
+                        </Link>
+                        <div className='hover:animate-background rounded-xl bg-gradient-to-r from-green-300 via-blue-500 to-purple-600 p-0.5 shadow-xl transition hover:bg-[length:400%_400%] hover:shadow-sm hover:[animation-duration:_4s]'>
+                        <Link href="/community" className="bg-white rounded-xl inline-flex justify-center items-center py-3 px-5 text-base font-medium text-center text-gray-900 hover:bg-gray-100 focus:ring-4 focus:ring-gray-100 dark:text-white dark:border-gray-700 dark:hover:bg-gray-700 dark:focus:ring-gray-800">
+                            <GraduationCap className="mr-2 -ml-1 w-5 h-5" />
+                            Mentorship
+                        </Link>
                         </div>
+                        
+                    </div>
+                    <div className="mb-5">
+                    <span className="font-semibold text-gray-400 uppercase mb-5">Stats that matter</span>
+                        <dl className="mt-5 grid max-w-screen-md gap-8 mx-auto text-gray-900 sm:grid-cols-3 dark:text-white">
+                            <div className="flex flex-col items-center justify-center">
+                                <dt className="mb-2 text-3xl md:text-4xl font-extrabold"><CountUp end={50000} />+</dt>
+                                <dd className="font-light text-gray-500 dark:text-gray-400">Students</dd>
+                            </div>
+                            <div className="flex flex-col items-center justify-center">
+                                <dt className="mb-2 text-3xl md:text-4xl font-extrabold"><CountUp end={100} />+</dt>
+                                <dd className="font-light text-gray-500 dark:text-gray-400">Colleges</dd>
+                            </div>
+                            <div className="flex flex-col items-center justify-center">
+                                <dt className="mb-2 text-3xl md:text-4xl font-extrabold"><CountUp end={40000} />+</dt>
+                                <dd className="font-light text-gray-500 dark:text-gray-400">Followers</dd>
+                            </div>
+                        </dl>
                     </div>
                 </div>
-                <div className="bg-gradient-to-b  to-transparent from-blue-900 w-full h-full absolute top-0 left-0 z-0"></div>
+
             </section>
         </div>
     )

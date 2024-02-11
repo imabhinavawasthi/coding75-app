@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 import { fetchProjects } from "../(api)/fetchProjects";
 import ProjectCard from "@/components/cards/project-card";
 import Loading from "@/components/loading";
+import Feature2 from "../../../_components/img/feature2.png"
 import PageHeaderTechList from "@/components/page-headers/page-header-tech-list";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Filter, Shapes } from "lucide-react";
@@ -57,6 +58,7 @@ const ProjectType = (params: any) => {
                     <PageHeaderTechList
                         focusHeading="Projects"
                         heading="Explore a variety of coding projects. Explore, Learn, Create"
+                        icon={Feature2}
                     /></div>
                 {status == "loading" ? <>
                     <Loading title="Getting some great Projects for you 🚀" /></> : <>
@@ -71,7 +73,8 @@ const ProjectType = (params: any) => {
                         <div className="">
                             <PageHeaderTechList
                                 focusHeading="Projects"
-                                heading={projectDetails[0]?.project_type_description} />
+                                heading={projectDetails[0]?.project_type_description}
+                                icon={Feature2} />
                             <div className="mt-3 container">
                                 <a target="_blank" href="https://telegram.me/cpabhinav">
                                     <Alert className='mb-2'>

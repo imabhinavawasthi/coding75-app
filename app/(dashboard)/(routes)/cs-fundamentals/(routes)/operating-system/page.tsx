@@ -1,71 +1,72 @@
 import PageHeaders from "@/components/page-headers/page-headers";
-import { AccordionUI } from "@/components/templates/AccordionUI";
-import { ChevronRight } from "lucide-react";
-import { Fragment } from "react";
+import { Shapes } from "lucide-react";
 
 const OperatingSystem = () => {
     return (
-        <div className="container mt-5">
-            <div className="mb-3">
-                <PageHeaders
-                    heading="Operating System"
-                    description=""
-                />
-            </div>
+        <>
+        </>
+        // <div className="container mt-5">
+        //     <div className="mb-3">
+        //         <PageHeaders
+        //             heading="Operating System"
+        //             description="" icon={undefined}                
+        //         />
+        //     </div>
+        //     <div className="lg:container px-2">
+        //         <div className="mt-5">
+        //             <div id="operating-system-definition" className="mb-8 text-gray-800">
+        //                 <div className="mb-4">
+        //                     <h1 className="text-2xl font-bold mb-6">What is an Operating System and What Does It Do?</h1>
+        //                     <p>
+        //                         Operating System (OS) is basically a software program that manages and handles all resources of a computer such as hardware and software. It takes care of everything the computer needs to work, both the physical parts (like the screen and keyboard) and the invisible parts (like the programs running in the background). The first OS was introduced in the early 1950s and was called GMOs. The OS helps people interact with the computer and makes sure it runs smoothly.
+        //                     </p>
+        //                 </div>
 
-            <div className="grid lg:grid-cols-4 grid-cols-3 gap-5">
-                <div className="p-5 lg:col-span-1 col-span-3 divide-x rounded-lg">
-                    <div className="font-sans">
-                        <div className="text-md">
-                            <p className="text-indigo-500">Introduction</p>
-                            <div className="text-sm ml-2">
-                                <a href="#what-is-operating-system" className="mt-2 flex">
-                                    <ChevronRight className="w-4 h-4 " />
-                                    <span>What is Operating System?</span>
-                                </a>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div className="col-span-3 lg:mr-10">
-                    <div className="mt-5">
-                        <div>
-                            <AccordionUI
-                                title="What is an Operating System & Types of OS"
-                                body={<Fragment>
-                                    <div>
-                                        <p>An operating system (OS) is software that acts as an interface between computer hardware and user applications. It manages the resources and provides services for the efficient and secure execution of programs. The primary functions of an operating system include process management, memory management, file system management, device management, and user interface.
+        //                 <div className="mb-4">
+        //                     <h2 className="text-lg font-bold mb-3">What Does an Operating System Do?</h2>
+        //                     <ul className="list-disc pl-6">
+        //                         <li className="mb-2"><strong>Manages Memory and Processor:</strong> Takes care of the computer's memory and brain (processor) so they work well.</li>
+        //                         <li className="mb-2"><strong>Provides User Interface:</strong> Gives users a friendly way to talk to the computer.</li>
+        //                         <li className="mb-2"><strong>Handles Files and Devices:</strong> Organizes and uses files and devices, like your documents and printer.</li>
+        //                         <li className="mb-2"><strong>Schedules Resources and Jobs:</strong> Plans when different tasks should happen on the computer.</li>
+        //                         <li className="mb-2"><strong>Detects Errors:</strong> Finds and deals with problems that might happen while the computer is working.</li>
+        //                         <li className="mb-2"><strong>Ensures Security:</strong> Keeps the computer safe from harm and protects its resources.</li>
+        //                     </ul>
+        //                 </div>
+        //             </div>
+        //             <div>
+        //                 <p className="mb-4 text-xl flex items-center"><Shapes className="h-4 w-4 mr-2" />Important Interview Questions: </p>
+        //                 <div id="operating-system-importance" className="mb-8 text-gray-800">
+        //                     <div className="mb-4">
+        //                         <h1 className="text-2xl font-bold mb-6">1. Why is the Operating System Important?</h1>
+        //                         <p>
+        //                             The Operating System (OS) is like the heart of a computer – it's incredibly important. Without it, a computer is practically useless. The OS serves as a connection between the software installed on the computer and the people using it. It helps in talking to the hardware and ensures a balance between all the different parts, including the CPU. The OS provides services to users and a platform for programs to run. In simple terms, it does all the common tasks that applications need to work smoothly.
+        //                         </p>
+        //                     </div>
+        //                 </div>
+        //                 <div id="operating-system-purpose-types" className="mb-8 text-gray-800">
+        //                     <div className="mb-4">
+        //                         <h1 className="text-2xl font-bold mb-6">2. What's the Main Purpose of an Operating System and What Types Are There?</h1>
+        //                         <p>
+        //                             The main purpose of an Operating System (OS) is to run the programs people use and make computers easier for us to understand. It helps us interact with computers and run applications smoothly. The OS is like a special manager that ensures the computer works well by handling all its tasks. It takes care of computer memory, processes, and makes sure all the hardware and software work together.
+        //                         </p>
+        //                     </div>
 
-                                            There are several types of operating systems, including:
-
-                                            Windows: Developed by Microsoft, Windows is a widely used operating system for personal computers. It offers a user-friendly interface, supports a vast range of software applications, and is compatible with various hardware configurations.
-                                            macOS: Developed by Apple, macOS is the operating system used on Apple Mac computers. It provides a sleek and intuitive user interface, seamless integration with other Apple devices, and a robust ecosystem of software applications.
-                                            Linux: Linux is an open-source operating system that is highly customizable and widely used in server environments and embedded systems. It offers a high level of stability, security, and flexibility. Numerous distributions of Linux, such as Ubuntu, Fedora, and CentOS, cater to different user needs.
-                                            Unix: Unix is a powerful multi-user operating system that served as the foundation for many other operating systems, including Linux and macOS. It provides a stable and secure environment and is famous for server applications.
-                                            Android: Developed by Google, Android is an open-source operating system primarily designed for mobile devices such as smartphones and tablets. It offers a rich ecosystem of applications and customization options.
-                                            iOS: Developed by Apple, iOS is the operating system used on iPhones, iPads, and iPods. It provides a seamless and secure user experience, focusing on performance and integration with other Apple devices.
-                                            Real-Time Operating Systems (RTOS): RTOS is designed for systems that require deterministic and real-time response. It is commonly used in embedded systems, control systems, and IoT devices.</p>
-                                    </div>
-                                </Fragment>}
-                            />
-                        </div>
-                        <div>
-                            <AccordionUI
-                                title="Difference between Multiprogramming, Multiprocess, Multitasking, and Multithreading"
-                                body={<Fragment>
-                                    <div>
-                                        <p>Multiprocess: Multiprocess refers to the execution of multiple processes on a system with multiple CPUs or CPU cores. Each process is an instance of a running program, and multiple processes can execute concurrently. In multiprocess systems, each process has its own memory space and resources. Multiprocessing aims to increase system throughput and provide faster execution by distributing the workload across multiple processors.
-                                            Multithreading: Multithreading involves executing multiple threads within a single process. A thread is a lightweight unit of execution that can run concurrently with other threads within the same process. Threads share the same memory space and resources, such as file handles and network connections. Multithreading allows for parallel execution within a process, enabling better utilization of system resources and potentially improving performance by dividing tasks into smaller units of work that can be executed concurrently.
-                                            Multiprogramming: Multiprogramming is a technique where multiple programs are loaded into memory simultaneously, and the CPU switches between them to execute instructions. The purpose of multiprogramming is to maximize CPU utilization and keep the CPU busy by quickly switching between different programs when one is waiting for I/O or other operations. Each program has its own separate memory space.
-                                            Multitasking: Multitasking is a technique that allows multiple tasks or processes to run concurrently on a single CPU. The CPU time is divided among the tasks, giving the illusion of parallel execution. The operating system switches between tasks rapidly, giving each task a time slice or quantum to execute. Multitasking is commonly used in modern operating systems to provide responsiveness and the ability to run multiple applications simultaneously.</p>
-                                    </div>
-                                </Fragment>}
-                            />
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
+        //                     <div className="mb-4">
+        //                         <h2 className="text-lg font-bold mb-3">Types of Operating Systems:</h2>
+        //                         <ul className="list-disc pl-6">
+        //                             <li className="mb-2"><strong>Batched OS:</strong> Examples include Payroll Systems and Transactions Processes.</li>
+        //                             <li className="mb-2"><strong>Multi-Programmed OS:</strong> Examples include Windows OS and UNIX OS.</li>
+        //                             <li className="mb-2"><strong>Timesharing OS:</strong> Examples include Multics.</li>
+        //                             <li className="mb-2"><strong>Distributed OS:</strong> Examples include LOCUS.</li>
+        //                             <li className="mb-2"><strong>Real-Time OS:</strong> Examples include PSOS and VRTX.</li>
+        //                         </ul>
+        //                     </div>
+        //                 </div>
+        //             </div>
+        //         </div>
+        //     </div>
+        // </div>
     );
 }
 

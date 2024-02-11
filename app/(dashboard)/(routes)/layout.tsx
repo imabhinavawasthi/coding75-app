@@ -16,7 +16,7 @@ const DashboardLayout = ({
         <Sidebar />
       </div>
       <main className="md:pl-56 pt-[80px] h-full">
-        <div className="bg-[url('https://flowbite.s3.amazonaws.com/docs/jumbotron/hero-pattern.svg')] min-h-full ">
+        <div className="min-h-full ">
           {children}
         </div>
         <footer>

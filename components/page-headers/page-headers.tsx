@@ -1,71 +1,66 @@
 'use client'
 
-import { CheckIcon, Share2Icon } from "lucide-react";
-import { useState } from "react";
+import { Share2Icon, User2 } from "lucide-react";
 import Image from "next/image";
+import { Button } from "../ui/button";
+import { toast } from "sonner";
+import Link from "next/link";
+import Feature from "../../app/(dashboard)/_components/img/feature2.png"
 
-const PageHeaders = ({ heading, description }) => {
-    const [isCopied, setIsCopied] = useState(false)
+const PageHeaders = ({ heading = "", description = "", icon=Feature }) => {
     function getCurrentURL() {
         return window.location.href
     }
     function copyurl() {
         const url = getCurrentURL()
-        setIsCopied(true)
         navigator.clipboard.writeText(url);
-        setTimeout(() => {
-            setIsCopied(false)
-        }, 2000);
+        toast.info("Link Copied to Clipboard")
     }
     return (
         <div>
-            <header className="bg-web">
+            <header className="bg-web px-5">
                 <div className="mx-auto max-w-screen-xl px-4 py-8 sm:px-6 sm:py-12 lg:px-8">
                     <div className="sm:flex sm:items-center sm:justify-between">
                         <div className="text-center sm:text-left">
-                            <h1 className="text-2xl font-bold text-gray-900 sm:text-3xl">
-                                {heading}
-                            </h1>
+                            <p className="mb-3 lg:text-6xl md:text-6xl text-4xl font-extrabold text-blue-800">{heading}</p>
+                            <p className="mb-10 text-md font-normal text-gray-500 lg:text-lg dark:text-gray-400">{description}</p>
+                            <div className="lg:flex mx:flex gap-x-4">
+                                <div>
+                                    <div>
+                                        <Button
+                                            variant="secondary"
+                                            type="button"
+                                            className="rounded-lg w-full mb-4 md:mb-4 lg:mb-0 border border-gray-600 "
+                                            onClick={copyurl}
+                                        >
+                                            <Share2Icon className="h-4 w-4 mr-2" /> Share
 
-                            <p className="mt-1.5 text-sm text-gray-500">
-                                {description}
-                            </p>
+                                        </Button>
+                                    </div>
+                                </div>
+                                <Button
+                                    className="bg-blue-800 hover:bg-blue-900 rounded-lg mb-4 md:mb-4 lg:mb-0 w-full shadow-lg hover:shadow-none shadow-gray-600"
+                                >
+                                    <Link
+                                        className="flex justify-center items-center gap-x-2"
+                                        type="button"
+                                        href="/community"
+                                    >
+                                        <User2 />Join Community
+                                    </Link>
+                                </Button>
+                            </div>
                         </div>
 
-                        <div className="lg:ml-2 mt-4 flex flex-col gap-4 sm:mt-0 sm:flex-row sm:items-center">
-                            {isCopied ? <div>
-                                <button
-                                    className="inline-flex items-center justify-center gap-1.5 rounded-lg border border-gray-200 bg-white px-5 py-3 text-gray-500 transition hover:text-gray-700 focus:outline-none focus:ring"
-                                    type="button"
-                                    onClick={copyurl}
-                                >
-                                    <span className="text-sm font-medium">Copied</span>
-
-                                    <CheckIcon className="h-4 w-4" />
-                                </button>
-                            </div>
-                                :
-                                <div>
-                                    <button
-                                        className="inline-flex items-center justify-center gap-1.5 rounded-lg border border-gray-200 bg-white px-5 py-3 text-gray-500 transition hover:text-gray-700 focus:outline-none focus:ring"
-                                        type="button"
-                                        onClick={copyurl}
-                                    >
-                                        <span className="text-sm font-medium">Share</span>
-
-                                        <Share2Icon className="h-4 w-4" />
-                                    </button>
-                                </div>
+                        <div className="lg:ml-20 md:ml-10 md:mr-10 lg:mr-20 ml-5 mr-5 mt-5 flex flex-col gap-4 sm:mt-0 sm:flex-row sm:items-center">
+                            {icon &&
+                                <Image
+                                    width={700}
+                                    height={700}
+                                    src={icon}
+                                    alt="projects"
+                                />
                             }
-
-
-                            <a
-                                className="block text-center rounded-lg bg-indigo-600 px-5 py-3 text-sm font-medium text-white transition hover:bg-indigo-700 focus:outline-none focus:ring"
-                                type="button"
-                                href="/community"
-                            >
-                                Join&nbsp;Community&nbsp;👨🏻‍💻
-                            </a>
                         </div>
                     </div>
                 </div>

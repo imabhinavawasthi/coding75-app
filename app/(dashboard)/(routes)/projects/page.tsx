@@ -7,6 +7,7 @@ import JSLogo from "../../../(dashboard)/_components/img/js.png"
 import DBLogo from "../../../(dashboard)/_components/img/db.png"
 import FlutterLogo from "../../../(dashboard)/_components/img/flutter.png"
 import type { Metadata } from 'next'
+import Feature2 from "../../_components/img/feature2.png"
 
 export const metadata: Metadata = {
     title: 'Project Hub coding75',
@@ -19,6 +20,7 @@ const ProjectsPage = () => {
             <PageHeaderTechList
                 focusHeading="Projects"
                 heading="Explore a variety of coding projects. Explore, Learn & Create"
+                icon={Feature2}
             />
             <div className="lg:container px-2">
                 <div className="mt-3">

@@ -2,7 +2,6 @@ const Roadmap = () => {
     return (
         <div>
             <div className="container mt-5">
-
                 <ol className="relative border-s border-gray-200 dark:border-gray-700">
                     <li className="mb-10 ms-6">
                         <span className="absolute flex items-center justify-center w-6 h-6 bg-blue-100 rounded-full -start-3 ring-8 ring-white dark:ring-gray-900 dark:bg-blue-900">
@@ -39,8 +38,6 @@ const Roadmap = () => {
                         <p className="text-base font-normal text-gray-500 dark:text-gray-400">Get started with dozens of web components and interactive elements built on top of Tailwind CSS.</p>
                     </li>
                 </ol>
-
-
             </div>
         </div>
     );

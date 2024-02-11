@@ -4,18 +4,9 @@ import { CheckIcon, Share2Icon, User2 } from "lucide-react";
 import { useState } from "react";
 import Image from "next/image";
 import { Button } from "../ui/button";
-import Feature2 from "../../app/(dashboard)/_components/img/feature2.png"
-// import NextLogo from "../../app/(dashboard)/_components/img/next.svg"
-// import ReactLogo from "../../app/(dashboard)/_components/img/react.png"
-// import PythonLogo from "../../app/(dashboard)/_components/img/python.svg.png"
-// import MDBLogo from "../../app/(dashboard)/_components/img/mongodb.png"
-// import JSLogo from "../../app/(dashboard)/_components/img/js.png"
-// import JavaLogo from "../../app/(dashboard)/_components/img/java.svg.png"
-// import DBLogo from "../../app/(dashboard)/_components/img/db.png"
-// import FlutterLogo from "../../app/(dashboard)/_components/img/flutter.png"
 import UnderlineText from "../underline-text";
 
-const PageHeaderTechList = ({ focusHeading = "", heading = "", description = "" }) => {
+const PageHeaderTechList = ({ focusHeading = "", heading = "", description = "", icon }) => {
     const [isCopied, setIsCopied] = useState(false)
     function getCurrentURL() {
         return window.location.href
@@ -75,7 +66,7 @@ const PageHeaderTechList = ({ focusHeading = "", heading = "", description = "" 
                             <Image
                                 width={300}
                                 height={300}
-                                src={Feature2}
+                                src={icon}
                                 alt="projects"
                             />
                             {/* <div className="grid grid-cols-4 gap-x-3 md:gap-x-20 lg:gap-x-10 gap-y-6">
