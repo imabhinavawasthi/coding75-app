@@ -74,59 +74,12 @@ const DSAProblems = () => {
 
 
     return (
-        <div className="container">
+        <div className="">
             <div className="mt-3">
                 <PageHeaders
-                    heading="Explore DSA and CP Problems 🎯"
+                    heading="Explore"
+                    greenHeading="DSA Problems"
                     description="Empower your coding journey with a rich collection of Data Structures and Competitive Programming Problems, with detailed editorials." />
-            </div>
-            <div className="mt-5">
-                <div className="grid lg:grid-cols-4 md:grid-cols-2 grid-cols-1 gap-3 ml-2 mr-2">
-                    <details
-                        className="rounded border border-gray-300 [&_summary::-webkit-details-marker]:hidden"
-                    >
-                        <summary
-                            className="flex cursor-pointer items-center justify-between bg-white p-2 text-gray-900 transition"
-                        >
-                            <span className="ml-3 flex text-sm font-medium justify-center"><Filter className="mr-2 w-4 h-4" /> Filter Problems </span>
-
-                            <button
-                                onClick={resetFilters}
-                            >
-                                <span className="text-sm mr-3 flex justify-center hover:underline">
-                                    Reset ⤬
-                                </span>
-                            </button>
-                        </summary>
-                    </details>
-                    <div >
-                            <MultiSelect
-                                options={company_tags_list}
-                                value={company_tag}
-                                onChange={setCompanyTag}
-                                labelledBy="Select Companies"
-                                overrideStrings={{ "selectSomeItems": "Select Companies","allItemsAreSelected":"All companies are selected"}}
-                            />
-                        </div>
-                    <div >
-                            <MultiSelect
-                                options={topic_tags_list}
-                                value={topic_tag}
-                                onChange={setTopicTag}
-                                labelledBy="Select Topics"
-                                overrideStrings={{ "selectSomeItems": "Select Topics","allItemsAreSelected":"All topics are selected"}}
-                            />
-                        </div>
-                        <div >
-                                <MultiSelect
-                                    options={difficulty_tags_list}
-                                    value={difficulty}
-                                    onChange={setDifficulty}
-                                    labelledBy="Select Difficulty"
-                                    overrideStrings={{ "selectSomeItems": "Select Difficulty","allItemsAreSelected":"All Difficulty Levels"}}
-                                />
-                            </div>
-                </div>
             </div>
             <div className="mt-5">
                 {!loading ? <>

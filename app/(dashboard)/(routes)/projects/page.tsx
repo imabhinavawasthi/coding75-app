@@ -1,5 +1,5 @@
 import ResourceCard2 from "@/components/cards/resource-card-2";
-import PageHeaderTechList from "@/components/page-headers/page-header-tech-list";
+import PageHeaderTechList from "@/components/page-headers/page-header-projects";
 import NextLogo from "../../../(dashboard)/_components/img/next.svg"
 import ReactLogo from "../../../(dashboard)/_components/img/react.png"
 import PythonLogo from "../../../(dashboard)/_components/img/python.svg.png"

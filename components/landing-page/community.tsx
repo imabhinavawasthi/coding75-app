@@ -3,10 +3,10 @@ import Link from "next/link";
 
 const Community = () => {
     return (
-        <div className="container">
+        <div className="">
             <section className="bg-white dark:bg-gray-900">
                 <div className="grid max-w-screen-xl px-4 py-8 mx-auto lg:gap-8 lg:py-16 lg:grid-cols-12 lg:gap-x-10">
-                    <div className="mr-auto place-self-center lg:col-span-6">
+                    <div className="container mr-auto place-self-center lg:col-span-6">
                         <h1 className="mb-10 text-4xl font-extrabold tracking-tight leading-none md:text-5xl xl:text-6xl dark:text-white">Join our <span style={{ color: "#27ae60" }}>Exclusive Community</span>. </h1>
                         <p className="max-w-2xl lg:mb-20 text-gray-500 mb-10 md:text-lg lg:text-xl dark:text-gray-400">
                             <span className="flex items-center"><Rocket className="w-4 h-4 mr-2" /> Live DSA Classes. </span>

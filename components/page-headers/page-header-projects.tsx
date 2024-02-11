@@ -1,20 +1,19 @@
-'use client'
+"use client"
 
-import { Share2, Share2Icon, User2 } from "lucide-react";
+import { Share2 } from "lucide-react";
 import Image from "next/image";
-import { Button } from "../ui/button";
 import { toast } from "sonner";
-import Link from "next/link";
 import Feature from "../../app/(dashboard)/_components/img/opportunity-feature.png"
+import Link from "next/link";
 
-const PageHeaders = ({ heading = "", greenHeading = "", description = "", icon=Feature }) => {
+const PageHeaderTechList = ({ focusHeading = "", heading = "", description = "", icon }) => {
     function getCurrentURL() {
         return window.location.href
     }
     function copyurl() {
         const url = getCurrentURL()
         navigator.clipboard.writeText(url);
-        toast.info("Link Copied to Clipboard")
+        toast.info("Link copied to clipboard!")
     }
     return (
         <div>
@@ -22,8 +21,8 @@ const PageHeaders = ({ heading = "", greenHeading = "", description = "", icon=F
                 <div className="gap-8 items-center py-8 px-4 mx-auto max-w-screen-xl xl:gap-16 md:grid md:grid-cols-2 sm:py-16 lg:px-6">
                     <div className="mr-auto place-self-center mb-16 lg:mb-0 md:mb-0">
                         <h2 className="mb-10 text-4xl font-extrabold tracking-tight leading-none md:text-5xl xl:text-6xl dark:text-white">
-                            <strong>{heading} <span style={{ color: "#27ae60" }}>{greenHeading}</span>.</strong></h2>
-                        <p className="max-w-2xl mb-6 font-light text-gray-500 lg:mb-8 md:text-lg lg:text-xl dark:text-gray-400">{description}</p>
+                            <strong>Develop <span style={{ color: "#27ae60" }}>Projects</span>.</strong></h2>
+                        <p className="mb-6 font-light text-gray-500 lg:mb-8 md:text-lg lg:text-xl dark:text-gray-400">Explore a diverse range of projects that span various domains, including web development, mobile app creation, machine learning, and more.</p>
                         <div className="flex flex-row items-center">
                             <button onClick={copyurl} className="shadow-2xl inline-flex items-center justify-center px-5 py-3 mr-3 text-base font-medium text-center text-white rounded-lg bg-primary-700 hover:bg-primary-800 focus:ring-4 focus:ring-primary-300 dark:focus:ring-primary-900">
                                 <Share2 className="h-4 w-4 mr-2" />
@@ -43,4 +42,4 @@ const PageHeaders = ({ heading = "", greenHeading = "", description = "", icon=F
     );
 }
 
-export default PageHeaders;
+export default PageHeaderTechList;

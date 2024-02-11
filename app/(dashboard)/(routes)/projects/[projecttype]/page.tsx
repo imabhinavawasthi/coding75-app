@@ -5,7 +5,7 @@ import { fetchProjects } from "../(api)/fetchProjects";
 import ProjectCard from "@/components/cards/project-card";
 import Loading from "@/components/loading";
 import Feature2 from "../../../_components/img/feature2.png"
-import PageHeaderTechList from "@/components/page-headers/page-header-tech-list";
+import PageHeaderTechList from "@/components/page-headers/page-header-projects";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Filter, Shapes } from "lucide-react";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";

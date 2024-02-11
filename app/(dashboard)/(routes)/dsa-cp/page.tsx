@@ -4,13 +4,13 @@ import { BookKeyIcon, Code2Icon, ComputerIcon, GitForkIcon, LayoutListIcon, Sear
 
 const DSACPPage = () => {
     return (
-        <div className="container">
+        <div className="">
             <div className="mt-3">
                 <PageHeaders
                     heading="Explore DSA and CP Resources 🎯"
                     description="Empower your coding journey with a rich collection of Data Structures and Competitive Programming resources, thoughtfully assembled to guide coding enthusiasts of varying skill levels through their learning journey." />
             </div>
-            <div className="mt-3">
+            <div className="container mt-3">
                 <div className="grid lg:grid-cols-2 grid-cols-1">
                     <div className="p-5">
                         <ResourceCard2 heading={"Complete DSA Course"} description={"Complete list of resources for all Data Structures and Algorithms topics"} link={"/dsa-cp/complete-dsa-course"} icon={<LayoutListIcon className="text-indigo-500 h-8 w-8" />} extra_details={true} />
