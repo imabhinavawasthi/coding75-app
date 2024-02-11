@@ -5,16 +5,16 @@ import Link from "next/link";
 
 const FeatureSection2 = () => {
     return (
-        <section className="bg-white dark:bg-gray-900">
+        <section className="bg-white dark:bg-gray-900 container">
             <div className="gap-8 items-center py-8 px-4 mx-auto max-w-screen-xl xl:gap-16 md:grid md:grid-cols-2 sm:py-16 lg:px-6">
                 <Image src={Feature} alt="opportunity-feature" className="shadow-2xl rounded-xl w-full"/>
                 <div className="mt-10">
-                    <h2 className="mb-4 text-4xl tracking-tight flex font-extrabold text-gray-900 dark:text-white">Explore&nbsp; <Typewriter
+                    <h2 className="mb-10 text-4xl font-extrabold tracking-tight leading-none md:text-5xl xl:text-6xl dark:text-white"> <Typewriter
                             options={{
                                 strings: [
-                                    '<strong> <span style="color: #27ae60;">Opportunities</span>.</strong>',
-                                    '<strong> <span style="color: #27ae60;">Internships</span>.</strong>',
-                                    '<strong> <span style="color: #27ae60;">Jobs</span>.</strong>',
+                                    '<strong>Explore <span style="color: #27ae60;">Opportunities</span>.</strong>',
+                                    '<strong> Explore <span style="color: #27ae60;">Internships</span>.</strong>',
+                                    '<strong> Explore <span style="color: #27ae60;">Jobs</span>.</strong>',
                                 ],
                                 autoStart: true,
                                 loop: true,

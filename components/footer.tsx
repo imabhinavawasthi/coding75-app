@@ -1,9 +1,11 @@
 import { Logo } from "@/app/(dashboard)/_components/logo";
 import Image from "next/image";
+import { Separator } from "./ui/separator";
 
 const Footer = () => {
     return (
         <div>
+            <Separator className="mt-5 mb-5"/>
             <footer className="p-4 bg-white sm:p-6 dark:bg-gray-800">
                 <div className="mx-auto max-w-screen-xl">
                     <div className="md:flex md:justify-between">

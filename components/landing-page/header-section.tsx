@@ -99,7 +99,7 @@ export default function HeaderSection() {
 
     return (
         <div>
-            <section className="bg-white dark:bg-gray-900">
+            <section className="bg-white dark:bg-gray-900 container">
                 <div className="bg-gradient-to-b from-blue-100 to-transparent dark:from-blue-900 w-full h-full absolute top-0 left-0 z-0"></div>
                 <div className="mt-2 relative mx-auto max-w-screen-xl px-4 sm:px-6 lg:px-8">
                     <div className="flex h-16 items-center justify-between">
@@ -107,7 +107,7 @@ export default function HeaderSection() {
                             <Logo />
                         </div>
 
-                        <div className="hidden z-50 md:block">
+                        <div className="hidden z-40 md:block">
                             <NavigationMenu className='z-10 relative'>
                                 <NavigationMenuList>
                                     <NavigationMenuItem>

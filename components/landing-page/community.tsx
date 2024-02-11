@@ -1,115 +1,44 @@
-import { BookText, Globe2, MessageSquareDashed, MessagesSquare, Radio, SearchCheck, Users } from "lucide-react";
+import { Briefcase, Code, Rocket, ScrollText, Users } from "lucide-react";
+import Link from "next/link";
 
 const Community = () => {
     return (
-        <div>
-            <section>
-                <div className="max-w-screen-xl px-4 py-8 sm:px-6 sm:py-12 lg:px-8 lg:py-16">
-                    <div className="grid grid-cols-1 gap-y-8 lg:grid-cols-2 lg:items-center lg:gap-x-16">
-                    <div className="hidden lg:grid lg:grid-cols-2 gap-4 grid-cols-1">
-                            <div
-                                className="block rounded-xl border border-gray-100 p-4 shadow-sm hover:border-gray-200 hover:ring-1 hover:ring-gray-200 focus:outline-none focus:ring"
-                            >
-                                <span className="inline-block rounded-lg bg-gray-50 p-3">
-                                    <Users className="w-6 h-6" />
-                                </span>
+        <div className="container">
+            <section className="bg-white dark:bg-gray-900">
+                <div className="grid max-w-screen-xl px-4 py-8 mx-auto lg:gap-8 lg:py-16 lg:grid-cols-12 lg:gap-x-10">
+                    <div className="mr-auto place-self-center lg:col-span-6">
+                        <h1 className="mb-10 text-4xl font-extrabold tracking-tight leading-none md:text-5xl xl:text-6xl dark:text-white">Join our <span style={{ color: "#27ae60" }}>Exclusive Community</span>. </h1>
+                        <p className="max-w-2xl lg:mb-20 text-gray-500 mb-10 md:text-lg lg:text-xl dark:text-gray-400">
+                            <span className="flex items-center"><Rocket className="w-4 h-4 mr-2" /> Live DSA Classes. </span>
+                            <span className="flex items-center"><Code className="w-4 h-4 mr-2" /> Live Project Building Sessions. </span>
+                            <span className="flex items-center"><Briefcase className="w-4 h-4 mr-2" /> Internships and Referrals. </span>
+                            <span className="flex items-center"><ScrollText className="w-4 h-4 mr-2" />Resume Review and Mock Interviews. </span>
+                            <span className="flex items-center"><Users className="w-4 h-4 mr-2" />1:1 Mentorship and Doubt Sessions. </span>
+                        </p>
+                        <div className="lg:mt-20 mt-10 grid lg:grid-cols-2 w-full gap-x-5">
+                            <Link href="/community" className="lg:mb-0 mb-5 w-full inline-flex items-center justify-center px-5 py-3 mr-3 text-base font-medium text-center text-white rounded-lg bg-primary-700 hover:bg-primary-800 focus:ring-4 focus:ring-primary-300 dark:focus:ring-primary-900">
+                                Know More
+                                <svg className="w-5 h-5 ml-2 -mr-1" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M10.293 3.293a1 1 0 011.414 0l6 6a1 1 0 010 1.414l-6 6a1 1 0 01-1.414-1.414L14.586 11H3a1 1 0 110-2h11.586l-4.293-4.293a1 1 0 010-1.414z" clip-rule="evenodd"></path></svg>
+                            </Link>
 
-                                <h2 className="mt-2 font-bold">20k+ Members</h2>
-
-                                <p className="hidden sm:mt-1 sm:block sm:text-sm sm:text-gray-600">
-                                    Community of more than 20k members from different colleges.
-                                </p>
-                            </div>
-
-                            <div
-                                className="block rounded-xl border border-gray-100 p-4 shadow-sm hover:border-gray-200 hover:ring-1 hover:ring-gray-200 focus:outline-none focus:ring"
-                            >
-                                <span className="inline-block rounded-lg bg-gray-50 p-3">
-                                    <Radio className="w-6 h-6" />
-                                </span>
-
-                                <h2 className="mt-2 font-bold">Live Sessions</h2>
-
-                                <p className="hidden sm:mt-1 sm:block sm:text-sm sm:text-gray-600">
-                                    Quick updates of exclusive live sessions and classes.
-                                </p>
-                            </div>
-
-                            <div
-                                className="block rounded-xl border border-gray-100 p-4 shadow-sm hover:border-gray-200 hover:ring-1 hover:ring-gray-200 focus:outline-none focus:ring"
-                            >
-                                <span className="inline-block rounded-lg bg-gray-50 p-3">
-                                    <BookText className="w-6 h-6" />
-                                </span>
-
-                                <h2 className="mt-2 font-bold">Resources</h2>
-
-                                <p className="hidden sm:mt-1 sm:block sm:text-sm sm:text-gray-600">
-                                    Get instant access to premium member only resources.
-                                </p>
-                            </div>
-
-                            <div
-                                className="block rounded-xl border border-gray-100 p-4 shadow-sm hover:border-gray-200 hover:ring-1 hover:ring-gray-200 focus:outline-none focus:ring"
-                            >
-                                <span className="inline-block rounded-lg bg-gray-50 p-3">
-                                    <MessageSquareDashed className="w-6 h-6" />
-                                </span>
-
-                                <h2 className="mt-2 font-bold">Interact with Others</h2>
-
-                                <p className="hidden sm:mt-1 sm:block sm:text-sm sm:text-gray-600">
-                                    Interact with others having diversified domain knowledge.
-                                </p>
-                            </div>
-
-                            <div
-                                className="block rounded-xl border border-gray-100 p-4 shadow-sm hover:border-gray-200 hover:ring-1 hover:ring-gray-200 focus:outline-none focus:ring"
-                            >
-                                <span className="inline-block rounded-lg bg-gray-50 p-3">
-                                    <MessagesSquare className="w-6 h-6" />
-                                </span>
-
-                                <h2 className="mt-2 font-bold">1:1 Mentorship</h2>
-
-                                <p className="hidden sm:mt-1 sm:block sm:text-sm sm:text-gray-600">
-                                    1:1 Mentorship Sessions with our experts and mentors.
-                                </p>
-                            </div>
-
-                            <div
-                                className="block rounded-xl border border-gray-100 p-4 shadow-sm hover:border-gray-200 hover:ring-1 hover:ring-gray-200 focus:outline-none focus:ring"
-                            >
-                                <span className="inline-block rounded-lg bg-gray-50 p-3">
-                                    <SearchCheck className="w-6 h-6" />
-                                </span>
-
-                                <h2 className="mt-2 font-bold">Opportunities</h2>
-
-                                <p className="hidden sm:mt-1 sm:block sm:text-sm sm:text-gray-600">
-                                    Regular updates for new jobs and opportunities.
-                                </p>
+                            <div className='hover:animate-background rounded-xl bg-gradient-to-r from-green-300 via-blue-500 to-purple-600 p-0.5 shadow-xl transition hover:bg-[length:400%_400%] hover:shadow-sm hover:[animation-duration:_4s]'>
+                                <Link href="/community" className="w-full bg-white rounded-xl inline-flex justify-center items-center py-3 px-5 text-base font-medium text-center text-gray-900 hover:bg-gray-100 focus:ring-4 focus:ring-gray-100 dark:text-white dark:border-gray-700 dark:hover:bg-gray-700 dark:focus:ring-gray-800">
+                                    <Rocket className="mr-2 -ml-1 w-5 h-5" />
+                                    Join Now
+                                </Link>
                             </div>
                         </div>
-                        <div className=" mx-auto max-w-lg text-center lg:mx-0 ltr:lg:text-left rtl:lg:text-right">
-                            <div className="flex justify-center">
-                                <span className="align-items-center"><Globe2 size={35} /></span><h2 className="text-3xl font-bold sm:text-4xl">&nbsp;  Join Our Community</h2>
-                            </div>
-
-                            <p className="mt-4 text-gray-600">
-                                Dive into a welcoming space where tech enthusiasts from all backgrounds converge. Join our dynamic coding community to share insights, seek advice, and engage with a diverse network of passionate individuals. Together, let&apos;s inspire, learn, and shape the future of technology!
-                            </p>
-
-                            <a
-                                href="https://telegram.me/cpabhinav"
-                                target="_blank"
-                                className="mt-8 inline-block rounded bg-indigo-600 px-12 py-3 text-sm font-medium text-white transition hover:bg-indigo-700 focus:outline-none focus:ring focus:ring-yellow-400"
-                            >
-                                Join Now
-                            </a>
+                    </div>
+                    <div className="lg:mt-0 mt-10 flex lg:col-span-6 h-[300px]">
+                        <div className="aspect-h-9 w-full hover:animate-background rounded-xl bg-gradient-to-r from-green-300 via-blue-500 to-purple-600 p-0.5 shadow-xl transition hover:bg-[length:400%_400%] hover:shadow-sm hover:[animation-duration:_4s] z-40">
+                            <iframe
+                                className="w-full h-full rounded-xl p-1"
+                                src="https://www.youtube.com/embed/q9oxkhweXY4?si=zqQDV5F_tK2kCP-E"
+                                title="YouTube video player"
+                                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                                allowFullScreen>
+                            </iframe>
                         </div>
-
-                        
                     </div>
                 </div>
             </section>
