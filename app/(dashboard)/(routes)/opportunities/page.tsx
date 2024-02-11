@@ -4,7 +4,7 @@ import React, { useEffect, useState } from 'react';
 import OpportunityCard from "@/components/cards/opportunity-card";
 import { fetchInternships } from './(api)/fetchInternships';
 import Loading from '@/components/loading';
-import PageHeaderCompanyList from '@/components/page-headers/page-header-company-list';
+import PageHeaderCompanyList from '@/components/page-headers/page-header-opportunities';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Filter, Info, RotateCcw, Shapes } from 'lucide-react';
