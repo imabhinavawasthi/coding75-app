@@ -15,6 +15,7 @@ import InfoBanner from '../../_components/info-banner';
 import { Separator } from '@/components/ui/separator';
 import ErrorBanner from '../../_components/error-banner';
 import { Input } from '@/components/ui/input';
+import { Label } from '@/components/ui/label';
 
 const OpportunitiesPage = () => {
     const [internshipsList, setInternshipsList] = useState<any>([])
@@ -67,7 +68,7 @@ const OpportunitiesPage = () => {
         let internships = await fetchData()
         setInternshipsList(
             internships.filter((data) => {
-                if (data?.internship_title.toLowerCase().includes(e.target.value.toLowerCase())) return true; else return false;
+                if (data?.internship_title.toLowerCase().includes(e.target.value.toLowerCase())||data?.company_name.toLowerCase().includes(e.target.value.toLowerCase())) return true; else return false;
             })
         )
     }
@@ -181,6 +182,7 @@ const OpportunitiesPage = () => {
                     </div>
                     <div className="flex flex-col col-span-4 lg:col-span-3">
                         <div>
+                            <Label>Search Opportunities</Label>
                             <Input className='mb-5' onChange={(e) => {
                                 if (e.target.value != "") {
                                     handleSearch(e)
@@ -188,7 +190,7 @@ const OpportunitiesPage = () => {
                                 else {
                                     fetchData()
                                 }
-                            }} placeholder='Search Opportunity' />
+                            }} placeholder='Search Opportunity or Company Name' />
                         </div>
                         {(status == "done") ?
                             <>
