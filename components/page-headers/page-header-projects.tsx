@@ -19,7 +19,7 @@ const PageHeaderProjects = ({ greenHeading = "Projects", heading = "Develop", de
         <div>
             <header className="bg-web px-5 py-8">
                 <div className="grid lg:grid-cols-12 md:grid-cols-12 grid-cols-1 lg:px-10 lg:py-10 md:px-10 md:py-8 px-5">
-                    <div className="col-span-8 mr-auto place-self-center mb-16 lg:mb-0 md:mb-0">
+                    <div className="col-span-8 mr-auto place-self-center mb-16 lg:mb-0 md:mb-0 lg:mr-5 md:mr-5">
                         <h2 className="mb-10 text-4xl font-extrabold tracking-tight leading-none md:text-5xl xl:text-6xl dark:text-white">
                             <strong>{heading} <span style={{ color: "#27ae60" }}>{greenHeading}</span>.</strong></h2>
                         <p className="mb-6 font-light text-gray-500 lg:mb-8 md:text-lg lg:text-xl dark:text-gray-400">{description}</p>

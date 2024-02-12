@@ -14,7 +14,6 @@ const DSARoadmap = () => {
                 <PageHeaders
                     heading="DSA Mastery Roadmap 🚀"
                     description="Explore step-by-step concepts, solve beginner-friendly challenges, and build a solid foundation for your coding journey. Start your adventure to algorithmic mastery today!"
-                    icon={Feature3}
                 />
                 <div className="mt-5 container">
                     <div>
