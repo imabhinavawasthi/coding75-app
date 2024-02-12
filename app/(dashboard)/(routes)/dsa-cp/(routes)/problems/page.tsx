@@ -5,7 +5,6 @@ import { useEffect, useState } from "react";
 import { fetchProblems } from "./(api)/fetchProblems";
 import Loading from "@/components/loading";
 import PageHeaders from "@/components/page-headers/page-headers";
-import { MultiSelect } from "react-multi-select-component";
 import { company_tags, topic_tags } from "@/components/constants";
 import { ArrowDown, Filter } from "lucide-react";
 

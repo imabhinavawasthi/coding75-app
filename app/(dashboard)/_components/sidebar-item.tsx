@@ -30,7 +30,7 @@ export const SidebarItem = ({
       href={href}
       className={cn(
         "hidden lg:flex md:flex items-center gap-x-2 text-slate-500 text-sm font-[500] pl-6 transition-all hover:text-slate-600 hover:bg-slate-300/20",
-        isActive && "text-indigo-700 bg-indigo-200/20 hover:bg-indigo-200/20 hover:text-indigo-700"
+        isActive && "text-primary-700 bg-primary-200/20 hover:bg-primary-200/20 hover:text-primary-700"
       )}//text-sky-700 previous color
     >
       <div className="flex items-center gap-x-2 py-4">
@@ -38,7 +38,7 @@ export const SidebarItem = ({
           size={22}
           className={cn(
             "text-slate-500",
-            isActive && "text-indigo-700"
+            isActive && "text-primary-700"
           )}
         />
         {label}
@@ -46,7 +46,7 @@ export const SidebarItem = ({
       </div>
       <div
         className={cn(
-          "ml-auto opacity-0 border-2 border-indigo-700 h-full transition-all",
+          "ml-auto opacity-0 border-2 border-primary-700 h-full transition-all",
           isActive && "opacity-100"
         )}
       />
@@ -55,7 +55,7 @@ export const SidebarItem = ({
       href={href}
       className={cn(
         "lg:hidden md:hidden flex items-center gap-x-2 text-slate-500 text-sm font-[500] pl-6 transition-all hover:text-slate-600 hover:bg-slate-300/20",
-        isActive && "text-indigo-700 bg-indigo-200/20 hover:bg-indigo-200/20 hover:text-indigo-700"
+        isActive && "text-primary-700 bg-primary-200/20 hover:bg-primary-200/20 hover:text-primary-700"
       )}//text-sky-700 previous color
     >
       <div className="flex items-center gap-x-2 py-4">
@@ -63,7 +63,7 @@ export const SidebarItem = ({
           size={22}
           className={cn(
             "text-slate-500",
-            isActive && "text-indigo-700"
+            isActive && "text-primary-700"
           )}
         />
         {label}
@@ -71,7 +71,7 @@ export const SidebarItem = ({
       </div>
       <div
         className={cn(
-          "ml-auto opacity-0 border-2 border-indigo-700 h-full transition-all",
+          "ml-auto opacity-0 border-2 border-primary-700 h-full transition-all",
           isActive && "opacity-100"
         )}
       />

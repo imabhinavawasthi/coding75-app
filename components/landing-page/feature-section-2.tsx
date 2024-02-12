@@ -5,7 +5,7 @@ import Link from "next/link";
 
 const FeatureSection2 = () => {
     return (
-        <section className="bg-white dark:bg-gray-900 container">
+        <section className="bg-white mt-20 dark:bg-gray-900 container">
             <div className="gap-8 items-center py-8 px-4 mx-auto max-w-screen-xl xl:gap-16 md:grid md:grid-cols-2 sm:py-16 lg:px-6">
                 <Image src={Feature} alt="opportunity-feature" className="shadow-2xl rounded-xl w-full"/>
                 <div className="mt-10">
