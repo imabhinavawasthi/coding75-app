@@ -14,7 +14,7 @@ import {
 import React, { useEffect, useState } from "react";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
 import supabase from "@/supabase";
-import { BookMarked, LogIn, LogOut, User } from "lucide-react";
+import { Bell, BookMarked, ChevronDown, LogIn, LogOut, Megaphone, RotateCcw, RotateCw, User } from "lucide-react";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -22,7 +22,7 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu"
-import { Badge } from "./ui/badge";
+import { Badge } from "../../../components/ui/badge";
 import { FcGoogle } from "react-icons/fc";
 import {
   Dialog,
@@ -33,9 +33,10 @@ import {
   DialogTrigger,
 } from "@/components/ui/dialog"
 import { toast } from "sonner";
-import { Button } from "./ui/button";
 import { usePathname, useRouter } from "next/navigation";
-import { Skeleton } from "./ui/skeleton";
+import { Skeleton } from "../../../components/ui/skeleton";
+import { BellIcon } from "@radix-ui/react-icons";
+import { Button } from "@/components/ui/button";
 
 const components: { title: string; href: string; description: string }[] = [
   {
@@ -101,7 +102,7 @@ export const NavbarRoutes = () => {
 
   async function handleLogIn(e: any) {
     e.preventDefault();
-    localStorage.setItem('loggedin_route',pathname)
+    localStorage.setItem('loggedin_route', pathname)
     try {
       const { data, error } = await supabase.auth.signInWithOAuth({
         provider: 'google',
@@ -221,67 +222,98 @@ export const NavbarRoutes = () => {
           </NavigationMenuList>
         </NavigationMenu>
       </div>
-      <div className="flex justify-end gap-x-2 ml-auto mr-5">
-        {status=="loading"?
-      <>
-      <Skeleton className="h-12 w-12 rounded-full"/>
-      </>:
-      <>
-      {user ?
-          <>
-            <DropdownMenu>
-              <DropdownMenuTrigger>
-                <Avatar>
-                  <AvatarImage src={user?.["user_metadata"]["picture"]} />
-                  <AvatarFallback><User /></AvatarFallback>
-                </Avatar>
-              </DropdownMenuTrigger>
-              <DropdownMenuContent
-                align="end"
-              >
-                {/* <DropdownMenuLabel className="font-semibold"><Badge variant="basic" className="px-2 py-1">Hello, {user?.["user_metadata"]["full_name"]} 👋🏻</Badge></DropdownMenuLabel> */}
-                {/* <DropdownMenuSeparator /> */}
-                <Link href="/profile"><DropdownMenuItem className="cursor-pointer"><User className="w-4 h-4 mr-2" /> Profile</DropdownMenuItem></Link>
-                <Link href="/certificates"><DropdownMenuItem className="cursor-pointer"><BookMarked className="w-4 h-4 mr-2" /> Certificates</DropdownMenuItem></Link>
-                <DropdownMenuSeparator />
-                <DropdownMenuItem onClick={handleLogOut} className="cursor-pointer text-red-600"><LogOut className="w-4 h-4 mr-2" /> Logout</DropdownMenuItem>
-              </DropdownMenuContent>
-            </DropdownMenu>
-          </>
-          : <>
-            <Dialog>
-              <DialogTrigger className="flex justify-center items-center">
-                <Badge variant="basic" className="px-4 py-1.5 text-md">
-                  <LogIn className="w-4 h-4 mr-2" /> Login
-                </Badge>
-              </DialogTrigger>
-              <DialogContent>
-                <DialogHeader className="items-center text-center">
-                  <DialogTitle className="mb-4 flex"><LogIn className="h-4 w-4 mr-2" /> Log In</DialogTitle>
-                  <DialogDescription>
-                    <div className="items-center justify-center flex">
-                      <button
-                        onClick={handleLogIn}
-                        aria-label="Sign in with Google"
-                        className="flex bg-blue-500 items-center border border-button-border-light rounded-full p-0.5 pr-4"
-                      >
-                        <div className="flex items-center justify-center bg-white w-12 h-12 rounded-full">
-                          <FcGoogle className="h-8 w-8" />
-                        </div>
-                        <span className="ml-3 text-lg font-bold text-white tracking-wider">Sign in with Google</span>
-                      </button>
-                    </div>
-                    <div className="mt-5 text-center">
-                      Accept our Privacy Policy and Terms & Conditions
-                    </div>
-                  </DialogDescription>
-                </DialogHeader>
-              </DialogContent>
-            </Dialog>
+      <div className="flex justify-end items-center gap-x-2 ml-auto mr-5">
+        <div className="mr-5">
+          <DropdownMenu>
+            <DropdownMenuTrigger asChild>
+              <div className="relative rounded-full inline-flex w-fit">
+                <div
+                  className="absolute bottom-auto left-auto right-0 top-0 z-10 inline-block rotate-0 skew-x-0 skew-y-0 scale-x-100 scale-y-100 rounded-full bg-red-600 p-1.5 text-xs"></div>
+                <div
+                  className="cursor-pointer hover:shadow-none flex items-center justify-center rounded-full bg-primary-700 p-2 text-center text-white shadow-xl dark:text-gray-200">
+                  <Bell className="h-5 w-5" />
+                </div>
+              </div>
+            </DropdownMenuTrigger>
+            <DropdownMenuContent align="end">
+              <DropdownMenuItem className="cursor-pointer">No new notification!</DropdownMenuItem>
+            </DropdownMenuContent>
+          </DropdownMenu>
 
-          </>
-        }
-      </>}
+        </div>
+        {status == "loading" ?
+          <>
+            <Button disabled className="bg-primary-700 hover:bg-primary-800 px-4 py-1.5 text-md rounded-lg text-white">
+              <RotateCw className="animate-spin w-4 h-4 mr-2" /> Login
+            </Button>
+          </> :
+          <>
+            {user ?
+              <>
+                <DropdownMenu>
+                  {/* className="border-2 lg:border-primary-600 bg-white cursor-pointer lg:hover:bg-gray-100 lg:pr-4 lg:pl-3 lg:py-1 lg:rounded-lg" */}
+                  {/* <div className='lg:hover:animate-background lg:rounded-xl lg:bg-gradient-to-r lg:from-green-300 lg:via-blue-500 lg:to-purple-600 lg:p-0.5 lg:shadow-xl lg:transition lg:hover:bg-[length:400%_400%] lg:hover:shadow-sm lg:hover:[animation-duration:_4s]'> */}
+                  <DropdownMenuTrigger asChild className="cursor-pointer">
+                    <div className="flex items-center">
+                      <Avatar>
+                        <AvatarImage src={user?.["user_metadata"]["picture"]} />
+                        <AvatarFallback><User /></AvatarFallback>
+                      </Avatar>
+                      {/* <div className="lg:flex flex-col hidden ml-3 text-left">
+                          <p className="text-sm font-semibold text-gray-600 tracking-tight">
+                            {user?.["user_metadata"]["full_name"]}
+                          </p>
+                          <p className="text-xs flex items-center"><User className="h-3 w-3 mr-1" /> Profile <ChevronDown className="h-3 w-3 ml-2" /></p>
+                        </div> */}
+                    </div>
+                  </DropdownMenuTrigger>
+                  {/* </div> */}
+                  <DropdownMenuContent
+                    align="end"
+                  >
+                    {/* <DropdownMenuLabel className="font-semibold"><Badge variant="basic" className="px-2 py-1">Hello, {user?.["user_metadata"]["full_name"]} 👋🏻</Badge></DropdownMenuLabel> */}
+                    {/* <DropdownMenuSeparator /> */}
+                    <Link href="/profile"><DropdownMenuItem className="cursor-pointer"><User className="w-4 h-4 mr-2" /> Profile</DropdownMenuItem></Link>
+                    <Link href="/profile/certificates"><DropdownMenuItem className="cursor-pointer"><BookMarked className="w-4 h-4 mr-2" /> Certificates</DropdownMenuItem></Link>
+                    <DropdownMenuSeparator />
+                    <DropdownMenuItem onClick={handleLogOut} className="cursor-pointer text-red-600"><LogOut className="w-4 h-4 mr-2" /> Logout</DropdownMenuItem>
+                  </DropdownMenuContent>
+                </DropdownMenu>
+              </>
+              : <>
+                <Dialog>
+                  <DialogTrigger className="flex justify-center items-center">
+                    <Button className="bg-primary-700 hover:bg-primary-800 px-4 py-1.5 text-md rounded-lg text-white">
+                      <LogIn className="w-4 h-4 mr-2" /> Login
+                    </Button>
+                  </DialogTrigger>
+                  <DialogContent>
+                    <DialogHeader className="items-center text-center">
+                      <DialogTitle className="mb-4 flex"><LogIn className="h-4 w-4 mr-2" /> Log In</DialogTitle>
+                      <DialogDescription>
+                        <div className="items-center justify-center flex">
+                          <button
+                            onClick={handleLogIn}
+                            aria-label="Sign in with Google"
+                            className="flex bg-blue-500 items-center border border-button-border-light rounded-full p-0.5 pr-4"
+                          >
+                            <div className="flex items-center justify-center bg-white w-12 h-12 rounded-full">
+                              <FcGoogle className="h-8 w-8" />
+                            </div>
+                            <span className="ml-3 text-lg font-bold text-white tracking-wider">Sign in with Google</span>
+                          </button>
+                        </div>
+                        <div className="mt-5 text-center">
+                          Accept our Privacy Policy and Terms & Conditions
+                        </div>
+                      </DialogDescription>
+                    </DialogHeader>
+                  </DialogContent>
+                </Dialog>
+
+              </>
+            }
+          </>}
       </div>
     </>
   )

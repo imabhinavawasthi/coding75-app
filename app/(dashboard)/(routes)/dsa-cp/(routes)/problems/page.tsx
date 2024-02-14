@@ -63,7 +63,7 @@ const DSAProblems = () => {
 
     return (
         <div className="">
-            <div className="mt-3">
+            <div>
                 <PageHeaders
                     greenHeading="DSA Problems"
                     heading="Practice"

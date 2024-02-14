@@ -1,6 +1,7 @@
 import { Logo } from "@/app/(dashboard)/_components/logo";
 import Image from "next/image";
 import { Separator } from "./ui/separator";
+import Link from "next/link";
 
 const Footer = () => {
     return (
@@ -10,25 +11,25 @@ const Footer = () => {
                 <div className="mx-auto max-w-screen-xl">
                     <div className="md:flex md:justify-between">
                         <div className="mb-6 md:mb-0">
-                            <a href="https://flowbite.com" className="flex items-center">
+                            <Link href="/" className="flex items-center">
                                 <Logo/>
-                            </a>
+                            </Link>
                         </div>
                         <div className="grid grid-cols-2 gap-8 sm:gap-6 sm:grid-cols-3">
                             <div>
                                 <h2 className="mb-6 text-sm font-semibold text-gray-900 uppercase dark:text-white">Resources</h2>
                                 <ul className="text-gray-600 dark:text-gray-400">
                                     <li className="mb-2">
-                                        <a href="https://flowbite.com" className="hover:underline">DSA & CP</a>
+                                        <Link href="/dsa-cp" className="hover:underline">DSA & CP</Link>
                                     </li>
                                     <li className="mb-2">
-                                        <a href="https://tailwindcss.com/" className="hover:underline">Opportunities</a>
+                                        <Link href="/opportunities" className="hover:underline">Opportunities</Link>
                                     </li>
                                     <li className="mb-2">
-                                        <a href="https://tailwindcss.com/" className="hover:underline">Projects</a>
+                                        <Link href="/projects" className="hover:underline">Projects</Link>
                                     </li>
                                     <li className="mb-2">
-                                        <a href="https://tailwindcss.com/" className="hover:underline">Opportunities</a>
+                                        <Link href="/interview-preparation" className="hover:underline">Interview Preparation</Link>
                                     </li>
                                 </ul>
                             </div>
@@ -36,10 +37,10 @@ const Footer = () => {
                                 <h2 className="mb-6 text-sm font-semibold text-gray-900 uppercase dark:text-white">Follow us</h2>
                                 <ul className="text-gray-600 dark:text-gray-400">
                                     <li className="mb-4">
-                                        <a href="https://github.com/themesberg/flowbite" className="hover:underline ">Github</a>
+                                        <a href="#" className="hover:underline ">Github</a>
                                     </li>
                                     <li>
-                                        <a href="https://discord.gg/4eeurUVvTy" className="hover:underline">Discord</a>
+                                        <a href="#" className="hover:underline">Discord</a>
                                     </li>
                                 </ul>
                             </div>
@@ -47,10 +48,10 @@ const Footer = () => {
                                 <h2 className="mb-6 text-sm font-semibold text-gray-900 uppercase dark:text-white">Legal</h2>
                                 <ul className="text-gray-600 dark:text-gray-400">
                                     <li className="mb-4">
-                                        <a href="#" className="hover:underline">Privacy Policy</a>
+                                        <Link href="#" className="hover:underline">Privacy Policy</Link>
                                     </li>
                                     <li>
-                                        <a href="#" className="hover:underline">Terms &amp; Conditions</a>
+                                        <Link href="#" className="hover:underline">Terms &amp; Conditions</Link>
                                     </li>
                                 </ul>
                             </div>

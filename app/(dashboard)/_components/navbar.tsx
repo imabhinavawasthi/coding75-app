@@ -1,4 +1,4 @@
-import { NavbarRoutes } from "@/components/navbar-routes"
+import { NavbarRoutes } from "@/app/(dashboard)/_components/navbar-routes"
 
 import { MobileSidebar } from "./mobile-sidebar"
 

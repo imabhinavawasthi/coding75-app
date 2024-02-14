@@ -5,7 +5,7 @@ import { BookKeyIcon, Code2Icon, ComputerIcon, GitForkIcon, LayoutListIcon, Sear
 const DSACPPage = () => {
     return (
         <div className="">
-            <div className="mt-3">
+            <div>
                 <PageHeaders
                     greenHeading="DSA & CP"
                     heading="Practice"

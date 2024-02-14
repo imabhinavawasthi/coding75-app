@@ -57,6 +57,7 @@ import {
 import { ExternalLink, FileVideo, Settings2 } from "lucide-react"
 import Link from "next/link"
 import { toast } from "sonner"
+import { Label } from "@/components/ui/label"
 
 
 function truncate(s: any) {
@@ -100,14 +101,16 @@ export default function ProblemTable({ data }) {
             cell: ({ row }) => {
                 const problem = row.original
                 return (
-                    <div className="flex items-center">
-                        {problem.Status == "Solved" && <span className="flex w-3 h-3 me-3 bg-green-500 rounded-full"></span>}
-                        {problem.Status == "Trying" && <span className="flex w-3 h-3 me-3 bg-blue-600 rounded-full"></span>}
-                        {problem.Status == "Pending" && <span className="flex w-3 h-3 me-3 bg-yellow-300 rounded-full"></span>}
-                        {problem.Status == "Revise" && <span className="flex w-3 h-3 me-3 bg-indigo-500 rounded-full"></span>}
+                    <div className="flex flex-col items-center">
+                        <div className="mb-2">
+                            {problem.Status == "Solved" && <div className="flex items-center"><span className="flex w-3 h-3 me-3 bg-green-500 rounded-full"></span> Solved</div>}
+                            {problem.Status == "Trying" && <div className="flex items-center"><span className="flex w-3 h-3 me-3 bg-blue-600 rounded-full"></span> Trying</div>}
+                            {problem.Status == "Pending" && <div className="flex items-center"><span className="flex w-3 h-3 me-3 bg-yellow-300 rounded-full"></span> Pending</div>}
+                            {problem.Status == "Revise" && <div className="flex items-center"><span className="flex w-3 h-3 me-3 bg-indigo-500 rounded-full"></span>Revise</div>}
+                        </div>
                         <Select>
-                            <SelectTrigger className="w-28">
-                                <SelectValue defaultValue={problem.Status} placeholder={problem.Status} />
+                            <SelectTrigger className="w-22 border-none h-5 underline">
+                                <p>update</p>
                             </SelectTrigger>
                             <SelectContent>
                                 <SelectGroup>
@@ -348,15 +351,46 @@ export default function ProblemTable({ data }) {
 
     return (
         <div className="w-full">
-            <div className="flex items-center py-4">
-                <Input
-                    placeholder="Search problems..."
-                    value={(table.getColumn("ProblemName")?.getFilterValue() as string) ?? ""}
-                    onChange={(event) =>
-                        table.getColumn("ProblemName")?.setFilterValue(event.target.value)
-                    }
-                    className="max-w-sm"
-                />
+            <div className="flex items-center py-4 gap-x-5">
+                <div className="flex flex-col">
+                    <Label htmlFor="statusfilter" className="mb-2">Filter Status</Label>
+                    <Select
+                        value={(table.getColumn("Status")?.getFilterValue() as string) ?? ""}
+                        onValueChange={(event) => {
+                            if (event == "All") {
+                                table.getColumn("Status")?.setFilterValue("")
+                            }
+                            else {
+                                table.getColumn("Status")?.setFilterValue(event)
+                            }
+                        }
+                        }
+                    >
+                        <SelectTrigger className="w-36" id="statusfilter">
+                            <SelectValue placeholder="All" />
+                        </SelectTrigger>
+                        <SelectContent>
+                            <SelectGroup>
+                                <SelectItem value="All">All</SelectItem>
+                                <SelectItem value="Solved">Solved</SelectItem>
+                                <SelectItem value="Trying">Trying</SelectItem>
+                                <SelectItem value="Pending">Pending</SelectItem>
+                                <SelectItem value="Revise">Revise</SelectItem>
+                            </SelectGroup>
+                        </SelectContent>
+                    </Select>
+                </div>
+                <div className="flex flex-col">
+                    <Label className="mb-2">Search Problem Name</Label>
+                    <Input
+                        placeholder="Search problems..."
+                        value={(table.getColumn("ProblemName")?.getFilterValue() as string) ?? ""}
+                        onChange={(event) =>
+                            table.getColumn("ProblemName")?.setFilterValue(event.target.value)
+                        }
+                        className="w-64"
+                    />
+                </div>
                 <DropdownMenu>
                     <DropdownMenuTrigger asChild>
                         <Button variant="outline" className="ml-auto">
