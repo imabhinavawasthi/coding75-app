@@ -284,7 +284,7 @@ export const NavbarRoutes = () => {
                 <Dialog>
                   <DialogTrigger className="flex justify-center items-center">
                     <Button className="bg-primary-700 hover:bg-primary-800 px-4 py-1.5 text-md rounded-lg text-white">
-                      <LogIn className="w-4 h-4 mr-2" /> Login
+                      <LogIn className="w-4 h-4" /> <span className="hidden ml-2 md:block">Login</span>
                     </Button>
                   </DialogTrigger>
                   <DialogContent>

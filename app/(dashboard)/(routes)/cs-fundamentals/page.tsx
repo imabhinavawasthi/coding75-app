@@ -1,38 +1,64 @@
+import ImageCard3 from "@/components/cards/image-card-3";
 import ResourceCard3 from "@/components/cards/resource-card-3";
 import PageHeaders from "@/components/page-headers/page-headers";
-import UnderConstruction from "@/components/under-construction";
 
 const CSFundamentals = () => {
     return (
-        // <div className="container">
-        //     <div className="mt-3">
-        //         <PageHeaders
-        //             heading="Computer Science Fundamentals 🖥️"
-        //             description="Explore the foundational pillars of Computer Science on our CS Fundamentals page. Delve into the realms of Operating Systems, Computer Networks, Database Management Systems, and Object-Oriented Programming. " />
-        //     </div>
-            
-        //     <div className="mt-5">
-        //         <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
-        //             <div>
-        //                 <ResourceCard3 title={"Operating System"} sub_title={"Complete Detailed Notes for OS"} link={"/cs-fundamentals/operating-system"} tags={["Multiprogramming", "Memory Management", "File Management"]} />
-        //             </div>
-        //             <div>
-        //                 <ResourceCard3 title={"Computer Networks"} sub_title={"Complete Detailed Notes for CN"} link={"/cs-fundamentals/computer-networks"} tags={["OSI Layers", "Protocols", "Networking"]} />
-        //             </div>
-        //             <div>
-        //                 <ResourceCard3 title={"Database Management System"} sub_title={"Learn SQL and DBMS Concepts"} link={"/cs-fundamentals/dbms"} tags={["SQL Queries", "Basics", "Theory"]} />
-        //             </div>
-        //             <div>
-        //                 <ResourceCard3 title={"Object Oriented Programming"} sub_title={"Learn all the important concepts of OOPs"} link={"/cs-fundamentals/oops"} tags={["Abstraction", "Encapsulation", "Polymorphism", "Inheritence"]} />
-        //             </div>
-        //         </div>
-        //     </div>
-        // </div>
-        <div className="container">
         <div>
-            <UnderConstruction />
+            <div>
+                <PageHeaders
+                greenHeading="Fundamentals"
+                    heading="CS"
+                    description="Operating Systems, Computer Networks, Database Management Systems, and Object-Oriented Programming Interview Specific Resources. " />
+            </div>
+            
+            <div className="mt-5 container">
+                <div className="grid grid-cols-1 lg:grid-cols-3 md:grid-cols-2 gap-4">
+                    <div>
+                        <ImageCard3
+                        image="https://zettllhfmtvcunctalyo.supabase.co/storage/v1/object/public/resources/images/operating-system.png"
+                        title="Operating System"
+                        href="/cs-fundamentals/operating-system"
+                        />
+                    </div>
+                    <div>
+                    <ImageCard3
+                        image="https://zettllhfmtvcunctalyo.supabase.co/storage/v1/object/public/resources/images/computer-networks.png"
+                        title="Computer Networks"
+                        href="/cs-fundamentals/computer-networks"
+                        />
+                    </div>
+                    <div>
+                    <ImageCard3
+                        image="https://zettllhfmtvcunctalyo.supabase.co/storage/v1/object/public/resources/images/dbms.png"
+                        title="Database Management System"
+                        href="/cs-fundamentals/dbms"
+                        />
+                    </div>
+                    <div>
+                    <ImageCard3
+                        image="https://zettllhfmtvcunctalyo.supabase.co/storage/v1/object/public/resources/images/oops.png"
+                        title="Object Oriented Programming"
+                        href="/cs-fundamentals/oops"
+                        />
+                    </div>
+                    <div>
+                    <ImageCard3
+                        image="https://zettllhfmtvcunctalyo.supabase.co/storage/v1/object/public/resources/images/sql.png"
+                        title="Structured query language (SQL)"
+                        href="/cs-fundamentals/sql"
+                        />
+                    </div>
+                    <div>
+                    <ImageCard3
+                        image="https://zettllhfmtvcunctalyo.supabase.co/storage/v1/object/public/resources/images/dsa-theory.png"
+                        title="DSA Theory Questions"
+                        href="/cs-fundamentals/dsa"
+                        />
+                    </div>
+                </div>
+            </div>
         </div>
-    </div>
     );
 }
 

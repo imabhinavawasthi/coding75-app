@@ -10,6 +10,7 @@ import { toast } from 'sonner';
 import { Skeleton } from '../../../components/ui/skeleton';
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuSeparator, DropdownMenuTrigger } from '../../../components/ui/dropdown-menu';
 import { Avatar, AvatarFallback, AvatarImage } from '../../../components/ui/avatar'
+import FancyTestimonialSliderPage from './testimonials-page';
 
 export default function CommunityHeader() {
     const [user, setUser] = useState<any>(null)
@@ -61,14 +62,16 @@ export default function CommunityHeader() {
 
     return (
         <div>
-            
+
             <section className="scroll-smooth dark:bg-gray-900">
                 <div className="bg-gradient-to-b from-blue-100 to-transparent dark:from-blue-900 w-full h-full absolute top-0 left-0 z-0"></div>
                 <div className="mt-2 relative mx-auto max-w-screen-xl px-4 sm:px-6 lg:px-8">
                     <div className="flex h-16 items-center justify-between">
-                        <div className="md:flex md:items-center md:gap-12">
-                            <Logo />
-                        </div>
+                        <Link href="/">
+                            <div className="md:flex md:items-center md:gap-12">
+                                <Logo />
+                            </div>
+                        </Link>
 
                         <div className="flex items-center gap-4">
                             <div className="sm:flex sm:gap-4">
@@ -139,21 +142,8 @@ export default function CommunityHeader() {
                         </div>
                     </div>
                     <div className='lg:mb-20 md:mb-20 mb-5'>
-                        <span className="font-semibold text-gray-400 uppercase mb-5">Stats that matter</span>
-                        <dl className="mt-5 grid max-w-screen-md gap-8 mx-auto text-gray-900 sm:grid-cols-3 dark:text-white">
-                            <div className="flex flex-col items-center justify-center">
-                                <dt className="mb-2 text-3xl md:text-4xl font-extrabold"><CountUp end={50000} />+</dt>
-                                <dd className="font-light text-gray-500 dark:text-gray-400">Students</dd>
-                            </div>
-                            <div className="flex flex-col items-center justify-center">
-                                <dt className="mb-2 text-3xl md:text-4xl font-extrabold"><CountUp end={100} />+</dt>
-                                <dd className="font-light text-gray-500 dark:text-gray-400">Colleges</dd>
-                            </div>
-                            <div className="flex flex-col items-center justify-center">
-                                <dt className="mb-2 text-3xl md:text-4xl font-extrabold"><CountUp end={40000} />+</dt>
-                                <dd className="font-light text-gray-500 dark:text-gray-400">Followers</dd>
-                            </div>
-                        </dl>
+                        <span className="font-semibold text-gray-400 uppercase mb-5">Words that matter</span>
+                        <FancyTestimonialSliderPage />
                     </div>
                     <div>
                         <div className="lg:mt-0 mt-10 flex justify-center items-center lg:col-span-6">

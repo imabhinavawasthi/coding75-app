@@ -4,7 +4,6 @@ import { useEffect, useState } from "react";
 import { fetchProjects } from "../(api)/fetchProjects";
 import ProjectCard from "@/components/cards/project-card";
 import Loading from "@/components/loading";
-import PageHeaderProjects from "@/components/page-headers/page-header-projects";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Filter, Shapes } from "lucide-react";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
@@ -18,6 +17,8 @@ import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
 import { PostgrestError } from "@supabase/supabase-js";
 import { Label } from "@/components/ui/label";
 import { Input } from "@/components/ui/input";
+import PageHeadersButton from "@/components/page-headers/page-headers-button";
+import BreadCrumb from "@/app/(dashboard)/_components/breadcrumb";
 
 const ProjectType = (params: any) => {
     const [projectDetails, setProjectsDetails] = useState<any>([])
@@ -67,18 +68,28 @@ const ProjectType = (params: any) => {
 
     return (
         <div>
+            <BreadCrumb links={[
+          {
+            "title": "Projects",
+            "href": "/projects"
+          },
+          {
+            "title": `${projectDetails?projectDetails[0]?.project_type:params.params.projecttype}`,
+            "href": `/projects/${params.params.projecttype}`
+          }
+        ]} />
             <div className="">
                 {
                     projectDetails ?
                         <>
-                            <PageHeaderProjects
+                            <PageHeadersButton
                                 greenHeading="Projects"
                                 heading={projectDetails[0]?.project_type}
                                 description={projectDetails[0]?.project_type_description}
                             />
                         </> :
                         <>
-                            <PageHeaderProjects />
+                            <PageHeadersButton />
                         </>
                 }
                 <div className="mt-3 container">

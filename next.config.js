@@ -1,13 +1,13 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-    // typescript: {
-    //     // !! WARN !!
-    //     // Dangerously allow production builds to successfully complete even if
-    //     // your project has type errors.
-    //     // !! WARN !!
-    //     ignoreBuildErrors: true,
-    //   },
-    
+    webpack: (config) => {
+        config.resolve.alias.canvas = false;
+
+        return config;
+    },
+    images: {
+        domains: ["zettllhfmtvcunctalyo.supabase.co"]
+    }
 }
 
 module.exports = nextConfig
