@@ -13,7 +13,7 @@ const CSFundamentals = () => {
             </div>
             
             <div className="mt-5 container">
-                <div className="grid grid-cols-1 lg:grid-cols-3 md:grid-cols-2 gap-4">
+                <div className="grid grid-cols-1 lg:grid-cols-3 md:grid-cols-2 lg:gap-x-10 lg:px-10 gap-4">
                     <div>
                         <ImageCard3
                         image="https://zettllhfmtvcunctalyo.supabase.co/storage/v1/object/public/resources/images/operating-system.png"

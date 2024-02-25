@@ -1,6 +1,6 @@
 import Footer from "@/components/footer";
-import { Navbar } from "../_components/navbar";
-import { Sidebar } from "../_components/sidebar";
+import { Navbar } from "../_components/sidebar/navbar";
+import { Sidebar } from "../_components/sidebar/sidebar";
 
 const DashboardLayout = ({
   children

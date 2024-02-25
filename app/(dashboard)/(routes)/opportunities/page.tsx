@@ -11,9 +11,9 @@ import { Filter, Info, RotateCcw, Shapes } from 'lucide-react';
 import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle, DialogTrigger } from '@/components/ui/dialog';
 import { Button } from '@/components/ui/button';
 import { Alert, AlertDescription, AlertTitle } from '@/components/ui/alert';
-import InfoBanner from '../../_components/info-banner';
+import InfoBanner from '../../_components/banners/info-banner';
 import { Separator } from '@/components/ui/separator';
-import ErrorBanner from '../../_components/error-banner';
+import ErrorBanner from '../../_components/banners/error-banner';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 

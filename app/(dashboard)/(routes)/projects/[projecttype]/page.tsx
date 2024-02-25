@@ -8,8 +8,8 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/com
 import { Filter, Shapes } from "lucide-react";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import Link from "next/link";
-import InfoBanner from "@/app/(dashboard)/_components/info-banner";
-import ErrorBanner from "@/app/(dashboard)/_components/error-banner";
+import InfoBanner from "@/app/(dashboard)/_components/banners/info-banner";
+import ErrorBanner from "@/app/(dashboard)/_components/banners/error-banner";
 import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
 import { Separator } from "@/components/ui/separator";
 import { Button } from "@/components/ui/button";

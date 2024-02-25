@@ -1,15 +1,14 @@
 "use client"
 
 import { useEffect, useState } from "react";
-import { fetchProblems } from "../../(api)/fetchProblems";
 import Loading from "@/components/loading";
-import PageHeaders from "@/components/page-headers/page-headers";
-import ProblemTable from "../../_components/problem-table";
 import PageHeadersButton from "@/components/page-headers/page-headers-button";
+import { fetchLeetcodePOTDProblems } from "../../(api)/fetchLeetcodePOTDProblems";
+import LeetcodePOTDProblemTable from "../../_components/leetcode-potd-table";
 
 type Problem = {
     ProblemName: string
-    PlatformName: string
+    Date: Date
     ProblemLink: string
     TopicTags: string[]
     CompanyTags: string[]
@@ -21,13 +20,19 @@ type Problem = {
 }
 
 const DSAProblems = () => {
+
+    function formatDate(date){
+        const options: Intl.DateTimeFormatOptions = { year: 'numeric', month: 'short', day: '2-digit' };
+        const formattedDate = (new Date(date))?.toLocaleDateString('en-GB', options);
+        return formattedDate
+    }
     const [problemList, setProblemList] = useState<any[]>([])
     const [loading, setLoading] = useState(true)
 
     useEffect(() => {
         async function fetchProblemsFun() {
             try {
-                const { dsaproblems } = await fetchProblems();
+                const { dsaproblems } = await fetchLeetcodePOTDProblems();
                 if (dsaproblems) {
                     const problems_list: Problem[] = dsaproblems.map((data: any) => {
                         let topic_tags = []
@@ -40,7 +45,7 @@ const DSAProblems = () => {
                         }
                         return {
                             ProblemName: data?.problem_name,
-                            PlatformName: data?.platform,
+                            Date: data?.date,
                             ProblemLink: data?.problem_link,
                             TopicTags: topic_tags,
                             CompanyTags: company_tags,
@@ -66,16 +71,16 @@ const DSAProblems = () => {
         <div className="">
             <div>
                 <PageHeadersButton
-                    greenHeading="DSA Problems"
-                    heading="Practice"
-                    description="Empower your coding journey with a rich collection of DSA Problems, with detailed editorials."
+                    greenHeading=" Editorials"
+                    heading="Leetcode POTD"
+                    description="In-depth LeetCode POTD editorials for efficient problem-solving."
                 />
             </div>
             <div className="lg:container md:container mt-10">
                 {!loading ?
                     <>
                         <div className="w-full h-full overflow-y-scroll px-5">
-                            <ProblemTable data={problemList} />
+                            <LeetcodePOTDProblemTable data={problemList} />
                         </div>
                     </>
                     :

@@ -2,19 +2,18 @@ import { Code2Icon, Link2, VideoIcon } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
 
-const ResourceCard2 = ({ heading, description, link, icon, extra_details, trending_tag = undefined }) => {
+const ResourceCard2 = ({ heading, description, link, icon_link, extra_details, trending_tag = undefined }) => {
     return (
         <div>
             <Link href={link}>
                 <article className="hidden lg:block md:block hover:bg-gray-100 rounded-xl bg-white p-4 ring ring-indigo-50 sm:p-6 lg:p-8">
                     <div className="flex items-start sm:gap-8">
-                        <span className="relative flex shrink-0 overflow-hidden w-15 h-15 rounded-full">
-                            <Image
+                        <span className="relative flex shrink-0 overflow-hidden w-15 h-15">
+                            <img
                                 className="aspect-square object-contain"
-                                alt="company_logo" width="48" height="48" src={icon}
+                                alt="icon" width="48" height="48" src={icon_link}
                             />
                         </span>
-
                         <div>
                             {trending_tag && <div
                                 className="mb-4"
@@ -62,9 +61,9 @@ const ResourceCard2 = ({ heading, description, link, icon, extra_details, trendi
                 <article className="lg:hidden md:hidden hover:bg-gray-100 rounded-xl bg-white p-4 ring ring-indigo-50">
                     <div className="flex justify-center items-center gap-4">
                         <span className="relative flex shrink-0 overflow-hidden w-15 h-15 rounded-full">
-                            <Image
+                            <img
                                 className="aspect-square object-contain"
-                                alt="company_logo" width="48" height="48" src={icon}
+                                alt="icon" width="48" height="48" src={icon_link}
                             />
                         </span>
                         <h3 className="text-lg font-medium sm:text-xl">
@@ -75,28 +74,28 @@ const ResourceCard2 = ({ heading, description, link, icon, extra_details, trendi
                         {description}
                     </p>
                     {extra_details &&
-                                <div className="mt-4 sm:flex sm:items-center sm:gap-2">
-                                    <div className="flex items-center gap-1 text-gray-500">
-                                        <VideoIcon className="h-4 w-4" />
+                        <div className="mt-4 sm:flex sm:items-center sm:gap-2">
+                            <div className="flex items-center gap-1 text-gray-500">
+                                <VideoIcon className="h-4 w-4" />
 
-                                        <p className="text-xs font-medium">Video Editorial</p>
-                                    </div>
+                                <p className="text-xs font-medium">Video Editorial</p>
+                            </div>
 
-                                    <span className="hidden sm:block" aria-hidden="true">&middot;</span>
+                            <span className="hidden sm:block" aria-hidden="true">&middot;</span>
 
-                                    <div className="flex items-center gap-1 text-gray-500">
-                                        <Code2Icon className="h-4 w-4" />
+                            <div className="flex items-center gap-1 text-gray-500">
+                                <Code2Icon className="h-4 w-4" />
 
-                                        <p className="text-xs font-medium">Code</p>
-                                    </div>
-                                    <span className="hidden sm:block" aria-hidden="true">&middot;</span>
+                                <p className="text-xs font-medium">Code</p>
+                            </div>
+                            <span className="hidden sm:block" aria-hidden="true">&middot;</span>
 
-                                    <div className="flex items-center gap-1 text-gray-500">
-                                        <Link2 className="h-4 w-4" />
+                            <div className="flex items-center gap-1 text-gray-500">
+                                <Link2 className="h-4 w-4" />
 
-                                        <p className="text-xs font-medium">Link</p>
-                                    </div>
-                                </div>}
+                                <p className="text-xs font-medium">Link</p>
+                            </div>
+                        </div>}
                 </article>
             </Link>
         </div>

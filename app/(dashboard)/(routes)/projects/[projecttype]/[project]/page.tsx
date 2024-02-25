@@ -2,12 +2,13 @@
 
 import { useEffect, useState } from "react";
 import { fetchProjects } from "../../(api)/fetchProjects";
-import { BookText, BriefcaseIcon, Check, Code, ExternalLink, FileCode2, Link2Icon, FileVideo, Gauge, Shapes, Share2, Terminal, Tv2 } from "lucide-react";
+import { Check, Code, ExternalLink, FileCode2, Link2Icon, FileVideo, Gauge, Shapes, Share2, Terminal, Tv2 } from "lucide-react";
 import ResumeReviewCard from "@/components/cards/resume-review-card";
 import InternshipGuideCard from "@/components/cards/internship-guide-card";
 import Loading from "@/components/loading";
 import PageNotFound from "@/components/page-not-found";
 import { Button } from "@/components/ui/button";
+import DOMPurify from 'dompurify';
 import LinkNext from "next/link";
 import Link from "next/link";
 import { PostgrestError } from "@supabase/supabase-js";
@@ -195,7 +196,7 @@ const Project = (params: any) => {
                                                 <div className="mt-10">
                                                     <div>
                                                         <h3 className="mb-3 text-lg font-bold ">Project Description</h3>
-                                                        <p className="text-gray-900">{project["project_description"]}</p>
+                                                        <p className="text-gray-900 no-more-tailwind"><div dangerouslySetInnerHTML={{ __html: DOMPurify.sanitize(project["project_description"]) }} /></p>
                                                     </div>
                                                 </div>
                                             </div>

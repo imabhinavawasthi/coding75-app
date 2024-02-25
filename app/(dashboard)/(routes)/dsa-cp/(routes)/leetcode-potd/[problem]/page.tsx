@@ -1,8 +1,8 @@
 "use client"
 
 import { useEffect, useState } from "react";
-import { fetchProblem } from "../../../../(api)/fetchProblem";
-import { BookText, BriefcaseIcon, Check, ExternalLink, FileCode2, FileVideo, Gauge, Share2, Tv2 } from "lucide-react";
+import { fetchLeetcodePOTD } from "../../../(api)/fetchLeetcodePOTD";
+import { BookText, BriefcaseIcon, Calendar, Check, ExternalLink, FileCode2, FileVideo, Gauge, Share2, Tv2 } from "lucide-react";
 import ResumeReviewCard from "@/components/cards/resume-review-card";
 import InternshipGuideCard from "@/components/cards/internship-guide-card";
 import Loading from "@/components/loading";
@@ -13,13 +13,17 @@ import BreadCrumb from "@/app/(dashboard)/_components/breadcrumb";
 const Problem = (params: any) => {
     const [problem, setProblem] = useState<any>()
     const [loading, setLoading] = useState(true)
+    const [date, setDate] = useState("")
 
     useEffect(() => {
         async function fetchProblemsFun() {
             try {
-                const { dsaproblem } = await fetchProblem({ problem: params.params.problem });
-                if(dsaproblem){
+                const { dsaproblem } = await fetchLeetcodePOTD({ problem: params.params.problem });
+                if (dsaproblem) {
                     setProblem(dsaproblem[0])
+                    const options: Intl.DateTimeFormatOptions = { year: 'numeric', month: 'short', day: '2-digit' };
+                    const formattedDate = (new Date(dsaproblem[0]["date"]))?.toLocaleDateString('en-GB', options);
+                    setDate(formattedDate)
                 }
                 setLoading(false)
             } catch (error) {
@@ -50,19 +54,19 @@ const Problem = (params: any) => {
                     {problem ?
                         <>
                             <div className="container">
-                            <div className="mt-3">
+                                <div className="mt-3">
                                     <BreadCrumb links={[
                                         {
                                             "title": "DSA CP",
                                             "href": "/dsa-cp"
                                         },
                                         {
-                                            "title": `DSA Problems`,
-                                            "href": `/dsa-cp/problems`
+                                            "title": `Leetcode POTD`,
+                                            "href": `/dsa-cp/leetcode-potd`
                                         },
                                         {
                                             "title": `${problem["problem_name"]}`,
-                                            "href": `/dsa-cp/problems/${params.params.problem}`
+                                            "href": `/dsa-cp/leetcode-potd/${params.params.problem}`
                                         }
                                     ]} />
                                 </div>
@@ -76,8 +80,8 @@ const Problem = (params: any) => {
                                             </div>
                                             <div className="mt-1 flex flex-col sm:mt-0 sm:flex-row sm:flex-wrap sm:space-x-6">
                                                 <div className="mt-4 flex items-center text-sm text-gray-500">
-                                                    <Tv2 className="mr-1.5 h-5 w-5 flex-shrink-0 text-gray-400" aria-hidden="true" />
-                                                    {problem["platform"]}
+                                                    <Calendar className="mr-1.5 h-5 w-5 flex-shrink-0 text-gray-400" aria-hidden="true" />
+                                                    {date}
                                                 </div>
                                                 <div className="mt-4 flex items-center text-sm text-gray-500">
                                                     <Gauge className="mr-1.5 h-5 w-5 flex-shrink-0 text-gray-400" aria-hidden="true" />
@@ -193,27 +197,34 @@ const Problem = (params: any) => {
                                                     <h3 className="mb-3 text-lg font-bold ">Need Help?</h3>
                                                 </div>
                                             </div>
+                                            <div className="mt-5 flex items-center justify-center">
+                                                {problem["video_editorial"] &&
+                                                    <embed className="w-1/2 aspect-video"
+                                                        src={problem["video_editorial"].replace("https://youtu.be/", "https://www.youtube.com/embed/").replace("https://www.youtube.com/watch?v=", "https://www.youtube.com/embed/")}>
+                                                    </embed>
+                                                }
+                                            </div>
                                             <div className="mt-10 flex justify-center">
                                                 <div className="w-full flex justify-center rounded-lg border border-gray-100 bg-gray-100 p-1">
-                                                {problem["editorial"]&&
-                                                    <a
-                                                        href={problem["editorial"]}
-                                                        target="_blank"
-                                                        className="hover:bg-white hover:text-blue-500 inline-flex items-center gap-2 rounded-md px-4 py-2 lg:text-lg text-sm text-gray-500 focus:relative"
-                                                    >
-                                                        <FileCode2 />
-                                                        Editorial
-                                                    </a>}
-                                                    {problem["video_editorial"]&&
-                                                    <a
-                                                        href={problem["video_editorial"]}
-                                                        target="_blank"
-                                                        className="hover:bg-white hover:text-blue-500 inline-flex items-center gap-2 rounded-md px-4 py-2 lg:text-lg text-sm text-gray-500 focus:relative"
-                                                    >
-                                                        <FileVideo />
+                                                    {problem["editorial"] &&
+                                                        <a
+                                                            href={problem["editorial"]}
+                                                            target="_blank"
+                                                            className="hover:bg-white hover:text-blue-500 inline-flex items-center gap-2 rounded-md px-4 py-2 lg:text-lg text-sm text-gray-500 focus:relative"
+                                                        >
+                                                            <FileCode2 />
+                                                            Editorial
+                                                        </a>}
+                                                    {problem["video_editorial"] &&
+                                                        <a
+                                                            href={problem["video_editorial"]}
+                                                            target="_blank"
+                                                            className="hover:bg-white hover:text-blue-500 inline-flex items-center gap-2 rounded-md px-4 py-2 lg:text-lg text-sm text-gray-500 focus:relative"
+                                                        >
+                                                            <FileVideo />
 
-                                                        Video Editorial
-                                                    </a>}
+                                                            Video Editorial
+                                                        </a>}
 
                                                 </div>
                                             </div>

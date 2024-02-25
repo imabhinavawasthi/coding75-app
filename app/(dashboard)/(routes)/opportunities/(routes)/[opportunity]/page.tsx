@@ -9,8 +9,9 @@ import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Skeleton } from "@/components/ui/skeleton";
 import Loading from "@/components/loading";
-import ErrorBanner from "@/app/(dashboard)/_components/error-banner";
+import ErrorBanner from "@/app/(dashboard)/_components/banners/error-banner";
 import DOMPurify from 'dompurify';
+import BreadCrumb from "@/app/(dashboard)/_components/breadcrumb";
 
 const OpportunityPage = (params: any) => {
   const [internshipDetails, setInternshipDetails] = useState<any>([])
@@ -36,7 +37,7 @@ const OpportunityPage = (params: any) => {
         return
       }
       setInternshipDetails(internships);
-      if(internships){
+      if (internships) {
         document.title = `${internships[0]?.internship_title} - ${internships[0]?.company_name}`
       }
       setStatus("done")
@@ -55,7 +56,19 @@ const OpportunityPage = (params: any) => {
       {
         internshipDetails[0] ? <>
           <div className="container">
-            <div className="mt-3 p-3 lg:p-10">
+          <div className="mt-3">
+          <BreadCrumb links={[
+                {
+                  "title": "Opportunities",
+                  "href": "/opportunities"
+                },
+                {
+                  "title": `${internshipDetails[0].company_name}`,
+                  "href": `/opportunities/${params.params.opportunity}`
+                }
+              ]} />
+          </div>
+            <div className="p-3 pt-0 lg:p-10">
               <div>
                 <div className="w-full flex flex-col justify-center items-start h-auto gap-3 p-6 border-gray-500 rounded-xl bg-gray-50 hover:cursor-pointer hover:bg-gray-100 hover:border-gray-600 hover:shadow-lg transition-all duration-500 capitalize">
                   <div className="flex lg:py-2 md:py-1 py-0 gap-3 self-stretch items-start">
