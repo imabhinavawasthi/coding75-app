@@ -2,7 +2,7 @@
 
 import ErrorBanner from "@/app/(dashboard)/_components/banners/error-banner"
 import { Button } from "@/components/ui/button"
-import QuillEditor from '../../../(dashboard)/_components/quill-editor';
+import QuillEditor from '../../../(dashboard)/_components/components/quill-editor';
 import {
     Card,
     CardContent,

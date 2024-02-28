@@ -57,6 +57,7 @@ import { ExternalLink, FileVideo, Settings2 } from "lucide-react"
 import Link from "next/link"
 import { toast } from "sonner"
 import { Label } from "@/components/ui/label"
+import convertGMTtoIST from "@/app/(dashboard)/_components/helpers/GMTToIST"
 
 
 function truncate(s: any) {
@@ -78,12 +79,6 @@ export default function LeetcodePOTDProblemTable({ data }) {
     const [columnVisibility, setColumnVisibility] =
         React.useState<VisibilityState>({})
     const [rowSelection, setRowSelection] = React.useState({})
-
-    function formatDate(date){
-        const options: Intl.DateTimeFormatOptions = { year: 'numeric', month: 'short', day: '2-digit' };
-        const formattedDate = (new Date(date))?.toLocaleDateString('en-GB', options);
-        return formattedDate
-    }
 
     type Problem = {
         ProblemName: string
@@ -188,7 +183,7 @@ export default function LeetcodePOTDProblemTable({ data }) {
                 return (<>
                     <div className="flex items-center">
                         <div className="overflow-clip w-32 text-left">
-                        {formatDate((row.getValue("Date")))}
+                        {convertGMTtoIST((row.getValue("Date")))}
                         </div>
                     </div>
                 </>)

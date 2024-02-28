@@ -1,4 +1,4 @@
-import { Logo } from "@/app/(dashboard)/_components/logo";
+import { Logo } from "@/app/(dashboard)/_components/components/logo";
 import Image from "next/image";
 import { Separator } from "./ui/separator";
 import Link from "next/link";

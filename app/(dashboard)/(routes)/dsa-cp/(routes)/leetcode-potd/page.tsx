@@ -20,12 +20,6 @@ type Problem = {
 }
 
 const DSAProblems = () => {
-
-    function formatDate(date){
-        const options: Intl.DateTimeFormatOptions = { year: 'numeric', month: 'short', day: '2-digit' };
-        const formattedDate = (new Date(date))?.toLocaleDateString('en-GB', options);
-        return formattedDate
-    }
     const [problemList, setProblemList] = useState<any[]>([])
     const [loading, setLoading] = useState(true)
 

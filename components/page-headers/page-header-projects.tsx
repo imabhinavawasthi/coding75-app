@@ -3,7 +3,6 @@
 import { Share2 } from "lucide-react";
 import Image from "next/image";
 import { toast } from "sonner";
-import Feature from "../../app/(dashboard)/_components/img/opportunity-feature.png"
 import Link from "next/link";
 
 const PageHeaderProjects = ({ greenHeading = "Projects", heading = "Develop", description = "Explore a diverse range of projects that span various domains, including web development, mobile app creation, machine learning, and more." }) => {
@@ -35,7 +34,7 @@ const PageHeaderProjects = ({ greenHeading = "Projects", heading = "Develop", de
                             </div>
                         </div>
                     </div>
-                    <Image src={Feature} alt="opportunity-feature" className="col-span-4 shadow-2xl rounded-xl w-full" />
+                    <img src="https://zettllhfmtvcunctalyo.supabase.co/storage/v1/object/public/resources/images/operating-system.png" alt="opportunity-feature" className="col-span-4 shadow-2xl rounded-xl w-full" />
                 </div>
             </header>
         </div>

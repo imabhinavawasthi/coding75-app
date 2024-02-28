@@ -1,7 +1,7 @@
 'use client';
 
 import Typewriter from 'typewriter-effect';
-import { Logo } from '@/app/(dashboard)/_components/logo';
+import { Logo } from '@/app/(dashboard)/_components/components/logo';
 import CountUp from 'react-countup';
 import {
     NavigationMenu,

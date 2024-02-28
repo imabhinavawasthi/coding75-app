@@ -18,7 +18,7 @@ import { PostgrestError } from "@supabase/supabase-js";
 import { Label } from "@/components/ui/label";
 import { Input } from "@/components/ui/input";
 import PageHeadersButton from "@/components/page-headers/page-headers-button";
-import BreadCrumb from "@/app/(dashboard)/_components/breadcrumb";
+import BreadCrumb from "@/app/(dashboard)/_components/components/breadcrumb";
 
 const ProjectType = (params: any) => {
     const [projectDetails, setProjectsDetails] = useState<any>([])

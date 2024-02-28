@@ -7,7 +7,7 @@ import { MultiSelect } from "react-multi-select-component";
 import { company_tags, topic_tags } from "@/components/constants";
 import Loading from "@/components/loading";
 import { useRouter } from 'next/navigation'
-import QuillEditor from "@/app/(dashboard)/_components/quill-editor";
+import QuillEditor from "@/app/(dashboard)/_components/components/quill-editor";
 import { format } from "date-fns"
 import { Calendar as CalendarIcon } from "lucide-react"
 import { cn } from "@/lib/utils"
@@ -54,7 +54,6 @@ const AddProblem = () => {
         return s
     }
 
-
     async function addProblem(e) {
         e.preventDefault()
         if (password != process.env.NEXT_PUBLIC_CODING_75) {
@@ -63,7 +62,9 @@ const AddProblem = () => {
         }
         setLoading(true)
         let slug_url = create_url_slug(problem_name)
-        
+        let dateEpoch
+        if(date?.getTime()!=undefined)
+        dateEpoch = date?.getTime()/1000
         try {
             const { data, error } = await supabase
                 .from('leetcode-potd')
@@ -78,7 +79,7 @@ const AddProblem = () => {
                         editorial: editorial,
                         difficulty: difficulty,
                         slug_url: slug_url,
-                        date: date
+                        date: dateEpoch
                     },
                 ])
                 .select()

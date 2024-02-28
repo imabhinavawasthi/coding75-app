@@ -4,7 +4,7 @@ import { Button } from "@/components/ui/button";
 import supabase from "@/supabase";
 import { useRouter } from 'next/navigation'
 import { useState } from "react";
-import QuillEditor from '../../../(dashboard)/_components/quill-editor';
+import QuillEditor from '../../../(dashboard)/_components/components/quill-editor';
 
 const AddOpportunity = () => {
     const router = useRouter()

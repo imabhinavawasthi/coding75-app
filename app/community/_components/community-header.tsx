@@ -1,7 +1,6 @@
 'use client';
 
-import { Logo } from '@/app/(dashboard)/_components/logo';
-import CountUp from 'react-countup';
+import { Logo } from '@/app/(dashboard)/_components/components/logo';
 import React, { useEffect, useState } from 'react';
 import Link from 'next/link';
 import { BookMarked, Flame, GraduationCap, Lightbulb, LogIn, LogOut, User } from 'lucide-react';

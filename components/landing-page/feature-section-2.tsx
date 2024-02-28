@@ -1,5 +1,4 @@
 import Image from "next/image";
-import Feature from "../../app/(dashboard)/_components/img/opportunity-feature.png"
 import Typewriter from 'typewriter-effect';
 import Link from "next/link";
 
@@ -7,7 +6,7 @@ const FeatureSection2 = () => {
     return (
         <section className="bg-white dark:bg-gray-900 py-24 sm:py-16 md:px-0 px-3">
             <div className="gap-8 items-center py-8 px-4 mx-auto max-w-screen-xl xl:gap-16 md:grid md:grid-cols-2 sm:py-16 lg:px-6">
-                <Image src={Feature} alt="opportunity-feature" className="shadow-2xl rounded-xl w-full"/>
+                <Image src="https://zettllhfmtvcunctalyo.supabase.co/storage/v1/object/public/resources/images/operating-system.png" alt="opportunity-feature" className="shadow-2xl rounded-xl w-full"/>
                 <div className="mt-10">
                     <h2 className="mb-10 text-4xl font-extrabold tracking-tight leading-none md:text-5xl xl:text-6xl dark:text-white"> <Typewriter
                             options={{

@@ -11,7 +11,7 @@ import { Skeleton } from "@/components/ui/skeleton";
 import Loading from "@/components/loading";
 import ErrorBanner from "@/app/(dashboard)/_components/banners/error-banner";
 import DOMPurify from 'dompurify';
-import BreadCrumb from "@/app/(dashboard)/_components/breadcrumb";
+import BreadCrumb from "@/app/(dashboard)/_components/components/breadcrumb";
 
 const OpportunityPage = (params: any) => {
   const [internshipDetails, setInternshipDetails] = useState<any>([])

@@ -5,7 +5,7 @@ import LandingPage from "../../components/landing-page/landing-page";
 import supabase from "@/supabase";
 import { useRouter } from 'next/navigation'
 import { Loader2 } from "lucide-react";
-import { Logo } from "./_components/logo";
+import { Logo } from "./_components/components/logo";
 
 const Home = () => {
   const router = useRouter()

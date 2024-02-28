@@ -1,6 +1,6 @@
 'use client';
 
-import { Logo } from '@/app/(dashboard)/_components/logo';
+import { Logo } from '@/app/(dashboard)/_components/components/logo';
 import {
     NavigationMenu,
     NavigationMenuContent,

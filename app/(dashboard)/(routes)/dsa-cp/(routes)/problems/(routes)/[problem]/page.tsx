@@ -8,7 +8,7 @@ import InternshipGuideCard from "@/components/cards/internship-guide-card";
 import Loading from "@/components/loading";
 import PageNotFound from "@/components/page-not-found";
 import DOMPurify from 'dompurify';
-import BreadCrumb from "@/app/(dashboard)/_components/breadcrumb";
+import BreadCrumb from "@/app/(dashboard)/_components/components/breadcrumb";
 
 const Problem = (params: any) => {
     const [problem, setProblem] = useState<any>()

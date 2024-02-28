@@ -5,7 +5,7 @@ import Image, { StaticImageData } from 'next/image'
 import { Transition } from '@headlessui/react'
 
 interface Testimonial {
-  img: StaticImageData
+  img: string
   quote: string
   name: string
   role: string

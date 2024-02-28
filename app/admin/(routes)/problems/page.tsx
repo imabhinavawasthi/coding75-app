@@ -7,7 +7,7 @@ import { MultiSelect } from "react-multi-select-component";
 import { company_tags, topic_tags } from "@/components/constants";
 import Loading from "@/components/loading";
 import { useRouter } from 'next/navigation'
-import QuillEditor from "@/app/(dashboard)/_components/quill-editor";
+import QuillEditor from "@/app/(dashboard)/_components/components/quill-editor";
 
 const AddProblem = () => {
     const router = useRouter()

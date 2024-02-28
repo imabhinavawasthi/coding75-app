@@ -2,13 +2,14 @@
 
 import { useEffect, useState } from "react";
 import { fetchLeetcodePOTD } from "../../../(api)/fetchLeetcodePOTD";
-import { BookText, BriefcaseIcon, Calendar, Check, ExternalLink, FileCode2, FileVideo, Gauge, Share2, Tv2 } from "lucide-react";
+import { BookText, BriefcaseIcon, Calendar, Check, ExternalLink, FileCode2, FileVideo, Gauge, Share2 } from "lucide-react";
 import ResumeReviewCard from "@/components/cards/resume-review-card";
 import InternshipGuideCard from "@/components/cards/internship-guide-card";
 import Loading from "@/components/loading";
 import PageNotFound from "@/components/page-not-found";
 import DOMPurify from 'dompurify';
-import BreadCrumb from "@/app/(dashboard)/_components/breadcrumb";
+import BreadCrumb from "@/app/(dashboard)/_components/components/breadcrumb";
+import convertGMTtoIST from "@/app/(dashboard)/_components/helpers/GMTToIST";
 
 const Problem = (params: any) => {
     const [problem, setProblem] = useState<any>()
@@ -22,7 +23,7 @@ const Problem = (params: any) => {
                 if (dsaproblem) {
                     setProblem(dsaproblem[0])
                     const options: Intl.DateTimeFormatOptions = { year: 'numeric', month: 'short', day: '2-digit' };
-                    const formattedDate = (new Date(dsaproblem[0]["date"]))?.toLocaleDateString('en-GB', options);
+                    const formattedDate = convertGMTtoIST(new Date(dsaproblem[0]["date"]))
                     setDate(formattedDate)
                 }
                 setLoading(false)
@@ -199,7 +200,7 @@ const Problem = (params: any) => {
                                             </div>
                                             <div className="mt-5 flex items-center justify-center">
                                                 {problem["video_editorial"] &&
-                                                    <embed className="w-1/2 aspect-video"
+                                                    <embed className="lg:w-1/2 md:w-3/4 w-full aspect-video"
                                                         src={problem["video_editorial"].replace("https://youtu.be/", "https://www.youtube.com/embed/").replace("https://www.youtube.com/watch?v=", "https://www.youtube.com/embed/")}>
                                                     </embed>
                                                 }
