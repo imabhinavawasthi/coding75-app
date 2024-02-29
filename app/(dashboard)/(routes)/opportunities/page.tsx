@@ -68,7 +68,7 @@ const OpportunitiesPage = () => {
         let internships = await fetchData()
         setInternshipsList(
             internships.filter((data) => {
-                if (data?.internship_title.toLowerCase().includes(e.target.value.toLowerCase())||data?.company_name.toLowerCase().includes(e.target.value.toLowerCase())) return true; else return false;
+                if (data?.internship_title.toLowerCase().split(" ").join("").includes(e.target.value.toLowerCase().split(" ").join(""))||data?.company_name.toLowerCase().split(" ").join("").includes(e.target.value.toLowerCase().split(" ").join(""))) return true; else return false;
             })
         )
     }

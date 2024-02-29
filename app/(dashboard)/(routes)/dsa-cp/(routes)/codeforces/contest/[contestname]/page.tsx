@@ -1,12 +1,12 @@
 
-const ResourcePage = (params: any) => {
+const ContestPage = (params: any) => {
     return (
         <div className="container">
             <div className="m-5">
-                {params.params.resource}
+                {params.params.contestname}
             </div>
         </div>
     );
 }
 
-export default ResourcePage;
+export default ContestPage;

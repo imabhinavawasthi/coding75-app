@@ -1,4 +1,5 @@
 import Footer from "@/components/footer";
+import AdminNavbar from "./admin-navbar";
 
 const AdminLayout = ({
   children
@@ -7,6 +8,7 @@ const AdminLayout = ({
 }) => {
   return (
     <div className="h-full bg-white">
+      <AdminNavbar/>
         <div className="min-h-full ">
           {children}
         </div>

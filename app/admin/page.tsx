@@ -44,6 +44,8 @@ const Admin = () => {
         Add Problems</Link>
         <Link href="/admin/leetcode-potd">
         Add Leetcode POTD</Link>
+        <Link href="/admin/codeforces">
+        Add Codeforces Problem</Link>
       </div>
     </>
 

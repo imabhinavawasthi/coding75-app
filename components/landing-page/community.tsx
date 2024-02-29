@@ -9,11 +9,11 @@ const Community = () => {
                     <div className="mr-auto place-self-center lg:col-span-6">
                         <h1 className="mb-10 text-4xl font-extrabold tracking-tight leading-none md:text-5xl xl:text-6xl dark:text-white">Join our <span style={{ color: "#27ae60" }}>Exclusive Community</span>. </h1>
                         <p className="max-w-2xl font-light lg:mb-20 text-gray-500 mb-10 md:text-lg lg:text-xl dark:text-gray-400">
-                            <span className="flex items-center mb-4"><Rocket className="w-4 h-4 mr-2" /> Live DSA Classes. </span>
-                            <span className="flex items-center mb-4"><Code className="w-4 h-4 mr-2" /> Live Project Building Sessions. </span>
-                            <span className="flex items-center mb-4"><Briefcase className="w-4 h-4 mr-2" /> Internships and Referrals. </span>
-                            <span className="flex items-center mb-4"><ScrollText className="w-4 h-4 mr-2" />Resume Review and Mock Interviews. </span>
-                            <span className="flex items-center mb-4"><Users className="w-4 h-4 mr-2" />1:1 Mentorship and Doubt Sessions. </span>
+                            <span className="flex items-center mb-2"><Rocket className="w-4 h-4 mr-2" /> Live DSA Classes. </span>
+                            <span className="flex items-center mb-2"><Code className="w-4 h-4 mr-2" /> Live Project Building Sessions. </span>
+                            <span className="flex items-center mb-2"><Briefcase className="w-4 h-4 mr-2" /> Internships and Referrals. </span>
+                            <span className="flex items-center mb-2"><ScrollText className="w-4 h-4 mr-2" />Resume Review and Mock Interviews. </span>
+                            <span className="flex items-center mb-2"><Users className="w-4 h-4 mr-2" />1:1 Mentorship and Doubt Sessions. </span>
                         </p>
                         <div className="lg:mt-20 mt-10 grid lg:grid-cols-2 w-full gap-x-5">
                             <Link href="/community" className="lg:mb-0 mb-5 w-full inline-flex items-center justify-center px-5 py-3 mr-3 text-base font-medium text-center text-white rounded-lg bg-primary-700 hover:bg-primary-800 focus:ring-4 focus:ring-primary-300 dark:focus:ring-primary-900">

@@ -60,7 +60,7 @@ function getCurrentURL() {
     return window.location.href
 }
 
-export default function ProblemTable({ data }) {
+export default function CodeforcesProblemTable({ data }) {
     const [sorting, setSorting] = React.useState<SortingState>([])
     const [columnFilters, setColumnFilters] = React.useState<ColumnFiltersState>(
         []
@@ -71,7 +71,8 @@ export default function ProblemTable({ data }) {
 
     type Problem = {
         ProblemName: string
-        PlatformName: string
+        Submission: number
+        Contest: String
         ProblemLink: string
         TopicTags: string[]
         CompanyTags: string[]
@@ -134,9 +135,9 @@ export default function ProblemTable({ data }) {
                 return (<>
                     <div className="flex items-center">
                         <a href={problem.ProblemLink} target="_blank"><ExternalLink className="h-4 w-4 mr-5" /></a>
-                        <div className="overflow-clip w-64 text-left">
+                        <div className="overflow-clip w-48 text-left">
                             <TooltipProvider delayDuration={0}>
-                                <Link href={"/dsa-cp/problems/" + problem.SlugUrl}>
+                                <Link href={"/dsa-cp/codeforces/" + problem.SlugUrl}>
                                     <Tooltip>
                                         <TooltipTrigger className="underline text-gray-600 text-left tracking-tight font-semibold">
                                             {(row.getValue("ProblemName"))}
@@ -147,6 +148,32 @@ export default function ProblemTable({ data }) {
                                     </Tooltip>
                                 </Link>
                             </TooltipProvider>
+                        </div>
+                    </div>
+                </>)
+            },
+        },
+        {
+            accessorKey: "Submission",
+            enableHiding: false,
+            enableSorting: true,
+            header: ({ column }) => {
+                return (
+                    <Button
+                        variant="ghost"
+                        onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
+                    >
+                        Submission
+                        <CaretSortIcon className="ml-2 h-4 w-4" />
+                    </Button>
+                )
+            },
+            cell: ({ row }) => {
+                const problem = row.original
+                return (<>
+                    <div className="flex items-center">
+                        <div className="overflow-clip w-32 text-left">
+                            {problem.Contest}
                         </div>
                     </div>
                 </>)
@@ -171,30 +198,51 @@ export default function ProblemTable({ data }) {
                 return <div className="items-center text-center">
                     {difficulty == 0 && <div>
                         <span
-                            className="whitespace-nowrap rounded-full bg-green-100 px-2.5 py-0.5 text-sm text-green-700"
+                            className="whitespace-nowrap rounded-full bg-gray-100 px-2.5 py-0.5 text-sm text-gray-700"
                         >
-                            {"Easy"}
+                            {"Newbie"}
                         </span>
                     </div>}
                     {difficulty == 1 && <div>
                         <span
-                            className="whitespace-nowrap rounded-full bg-orange-100 px-2.5 py-0.5 text-sm text-orange-700"
+                            className="whitespace-nowrap rounded-full bg-green-100 px-2.5 py-0.5 text-sm text-green-700"
                         >
-                            {"Medium"}
+                            {"Pupil"}
                         </span>
                     </div>}
                     {difficulty == 2 && <div>
                         <span
-                            className="whitespace-nowrap rounded-full bg-red-100 px-2.5 py-0.5 text-sm text-red-700"
+                            className="whitespace-nowrap rounded-full bg-cyan-100 px-2.5 py-0.5 text-sm text-cyan-700"
                         >
-                            {"Hard"}
+                            {"Specialist"}
                         </span>
                     </div>}
                     {difficulty == 3 && <div>
                         <span
                             className="whitespace-nowrap rounded-full bg-blue-100 px-2.5 py-0.5 text-sm text-blue-700"
                         >
-                            {"Advanced"}
+                            {"Expert"}
+                        </span>
+                    </div>}
+                    {difficulty == 4 && <div>
+                        <span
+                            className="whitespace-nowrap rounded-full bg-violet-100 px-2.5 py-0.5 text-sm text-violet-700"
+                        >
+                            {"Candidate Master"}
+                        </span>
+                    </div>}
+                    {difficulty == 5 && <div>
+                        <span
+                            className="whitespace-nowrap rounded-full bg-orange-100 px-2.5 py-0.5 text-sm text-orange-700"
+                        >
+                            {"Master"}
+                        </span>
+                    </div>}
+                    {difficulty == 6 && <div>
+                        <span
+                            className="whitespace-nowrap rounded-full bg-red-100 px-2.5 py-0.5 text-sm text-red-700"
+                        >
+                            {"Grandmaster"}
                         </span>
                     </div>}
                 </div>
@@ -232,38 +280,38 @@ export default function ProblemTable({ data }) {
                 )
             },
         },
-        {
-            accessorKey: "CompanyTags",
-            header: ({ }) => {
-                return (
-                    <>
-                        Company Tags
-                    </>
-                )
-            },
-            cell: ({ row }) => {
-                const company_tags: [] = row.getValue("CompanyTags")
-                return (
-                    <div>
-                        {company_tags.map((value, index) => (
-                            <div
-                                key={index}
-                                className="mb-2"
-                            >
+        // {
+        //     accessorKey: "CompanyTags",
+        //     header: ({ }) => {
+        //         return (
+        //             <>
+        //                 Company Tags
+        //             </>
+        //         )
+        //     },
+        //     cell: ({ row }) => {
+        //         const company_tags: [] = row.getValue("CompanyTags")
+        //         return (
+        //             <div>
+        //                 {company_tags.map((value, index) => (
+        //                     <div
+        //                         key={index}
+        //                         className="mb-2"
+        //                     >
 
-                                <p className="text-xs">
-                                    <span
-                                        className="whitespace-nowrap rounded-full bg-yellow-100 px-2.5 py-0.5 text-yellow-700 "
-                                    >
-                                        {value}
-                                    </span>
-                                </p>
-                            </div>
-                        ))}
-                    </div>
-                )
-            },
-        },
+        //                         <p className="text-xs">
+        //                             <span
+        //                                 className="whitespace-nowrap rounded-full bg-yellow-100 px-2.5 py-0.5 text-yellow-700 "
+        //                             >
+        //                                 {value}
+        //                             </span>
+        //                         </p>
+        //                     </div>
+        //                 ))}
+        //             </div>
+        //         )
+        //     },
+        // },
         {
             accessorKey: "VideoEditorial",
             header: ({ }) => {
@@ -310,7 +358,7 @@ export default function ProblemTable({ data }) {
                                 Copy Problem Link
                             </DropdownMenuItem>
                             <DropdownMenuSeparator />
-                            <DropdownMenuItem><Link href={"/dsa-cp/problems/" + problem.SlugUrl}>View Problem</Link></DropdownMenuItem>
+                            <DropdownMenuItem><Link href={"/dsa-cp/codeforces/" + problem.SlugUrl}>View Problem</Link></DropdownMenuItem>
                         </DropdownMenuContent>
                     </DropdownMenu>
                 )
@@ -399,10 +447,13 @@ export default function ProblemTable({ data }) {
                         <SelectContent>
                             <SelectGroup>
                                 <SelectItem value="All">All</SelectItem>
-                                <SelectItem value="0">Easy</SelectItem>
-                                <SelectItem value="1">Medium</SelectItem>
-                                <SelectItem value="2">Hard</SelectItem>
-                                <SelectItem value="3">Advanced</SelectItem>
+                                <SelectItem value="0">Newbie</SelectItem>
+                                <SelectItem value="1">Pupil</SelectItem>
+                                <SelectItem value="2">Specialist</SelectItem>
+                                <SelectItem value="3">Expert</SelectItem>
+                                <SelectItem value="4">Candidate Master</SelectItem>
+                                <SelectItem value="5">Master</SelectItem>
+                                <SelectItem value="6">Grandmaster</SelectItem>
                             </SelectGroup>
                         </SelectContent>
                     </Select>

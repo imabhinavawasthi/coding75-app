@@ -12,6 +12,7 @@ import Loading from "@/components/loading";
 import ErrorBanner from "@/app/(dashboard)/_components/banners/error-banner";
 import DOMPurify from 'dompurify';
 import BreadCrumb from "@/app/(dashboard)/_components/components/breadcrumb";
+import { toast } from "sonner";
 
 const OpportunityPage = (params: any) => {
   const [internshipDetails, setInternshipDetails] = useState<any>([])
@@ -24,6 +25,7 @@ const OpportunityPage = (params: any) => {
     const url = getCurrentURL()
     setIsCopied(true)
     navigator.clipboard.writeText(url);
+    toast.info("Opportunity Link Copied!")
     setTimeout(() => {
       setIsCopied(false)
     }, 2000);
@@ -132,7 +134,7 @@ const OpportunityPage = (params: any) => {
                   </p>
                   <div className="hidden lg:block md:block w-[1px] h-3 bg-gray-400">
                   </div>
-                  <p className="flex items-center text-sm text-gray-600 line-clamp-1">
+                  <p className="flex items-center lg:mb-0 md:mb-0 mb-4 text-sm text-gray-600 line-clamp-1">
                     <MapPinIcon className="h-4 w-4 mr-2" aria-hidden="true" />
                     <Badge variant="secondary" className="border border-gray-1000">{internshipDetails[0].internship_location}</Badge>
                   </p>

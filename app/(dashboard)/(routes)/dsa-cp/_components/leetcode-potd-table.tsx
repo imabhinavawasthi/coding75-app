@@ -347,8 +347,7 @@ export default function LeetcodePOTDProblemTable({ data }) {
                                 Copy Problem Link
                             </DropdownMenuItem>
                             <DropdownMenuSeparator />
-                            <DropdownMenuItem><Link href={"/dsa-cp/problems/" + problem.SlugUrl}>View Problem</Link></DropdownMenuItem>
-                            <DropdownMenuItem>View problem details</DropdownMenuItem>
+                            <DropdownMenuItem><Link href={"/dsa-cp/leetcode-potd/" + problem.SlugUrl}>View Problem</Link></DropdownMenuItem>
                         </DropdownMenuContent>
                     </DropdownMenu>
                 )
