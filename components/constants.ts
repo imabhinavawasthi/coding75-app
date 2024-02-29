@@ -154,6 +154,7 @@ export const topic_tags = [
   ["dynamic-programming", "Dynamic Programming"],
   ["math", "Math"],
   ["sorting", "Sorting"],
+  ["interactive", "Interactive"],
   ["greedy", "Greedy"],
   ["depth-first-search", "Depth-First Search"],
   ["binary-search", "Binary Search"],

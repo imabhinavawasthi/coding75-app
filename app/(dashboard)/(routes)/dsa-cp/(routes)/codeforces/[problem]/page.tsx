@@ -50,7 +50,7 @@ const Problem = (params: any) => {
                 : <>
                     {problem ?
                         <>
-                            <div className="container">
+                            <div className="lg:container md:container px-3">
                                 <div className="mt-3">
                                     <BreadCrumb links={[
                                         {

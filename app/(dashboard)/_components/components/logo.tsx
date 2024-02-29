@@ -12,7 +12,7 @@ export const Logo = ({ width = 200, height = 200, white = false }) => {
             height={height}
             width={width}
             alt="logo"
-            src="https://zettllhfmtvcunctalyo.supabase.co/storage/v1/object/public/resources/icons/coding75-dark.png"
+            src="/logo-bg-white.png"
           />
         </>
         :
@@ -21,7 +21,7 @@ export const Logo = ({ width = 200, height = 200, white = false }) => {
             height={height}
             width={width}
             alt="logo"
-            src="https://zettllhfmtvcunctalyo.supabase.co/storage/v1/object/public/resources/icons/coding75-light.png"
+            src="/logo-bg.png"
           />
         </>
       }
@@ -36,7 +36,7 @@ export const Logo = ({ width = 200, height = 200, white = false }) => {
             height={height-50}
             width={width-50}
             alt="logo"
-            src="https://zettllhfmtvcunctalyo.supabase.co/storage/v1/object/public/resources/icons/coding75-dark.png"
+            src="/logo-bg-white.png"
           />
         </>
         :
@@ -45,7 +45,7 @@ export const Logo = ({ width = 200, height = 200, white = false }) => {
             height={height-50}
             width={width-50}
             alt="logo"
-            src="https://zettllhfmtvcunctalyo.supabase.co/storage/v1/object/public/resources/icons/coding75-light.png"
+            src="/logo-bg.png"
           />
         </>
       }

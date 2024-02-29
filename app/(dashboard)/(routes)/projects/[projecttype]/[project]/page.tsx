@@ -62,7 +62,7 @@ const Project = (params: any) => {
                     {
                         project ?
                             <>
-                                <div className="container">
+                                <div className="lg:container md:container px-3">
                                     <div className="p-3 lg:p-10">
                                         <nav className="flex flex-wrap" aria-label="Breadcrumb">
                                             <ol className="inline-flex items-center space-x-1 md:space-x-2 rtl:space-x-reverse">
