@@ -9,7 +9,7 @@ import PageNotFound from "@/components/page-not-found";
 import DOMPurify from 'dompurify';
 import BreadCrumb from "@/app/(dashboard)/_components/components/breadcrumb";
 import Link from "next/link";
-import { fetchCodeforcesProblem } from "../../../(api)/fetchCodeforcesProblem";
+import { fetchCodeforcesProblem } from "../../../(api)/codeforces/fetchCodeforcesProblem";
 
 const Problem = (params: any) => {
     const [problem, setProblem] = useState<any>()
@@ -183,7 +183,7 @@ const Problem = (params: any) => {
                                                 <a
                                                     href={problem["problem_link"]}
                                                     target="_blank"
-                                                    className="inline-flex items-center rounded-md bg-indigo-600 px-5 py-2 text-lg font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
+                                                    className="inline-flex items-center rounded-md bg-primary-700 px-5 py-2 text-lg font-semibold text-white shadow-sm hover:bg-primary-800 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary-700"
                                                 >
                                                     <ExternalLink className="-ml-0.5 mr-1.5 h-5 w-5" aria-hidden="true" />
                                                     Solve

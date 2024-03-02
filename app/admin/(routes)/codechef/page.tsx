@@ -9,7 +9,7 @@ import Loading from "@/components/loading";
 import { useRouter } from 'next/navigation'
 import QuillEditor from "@/app/(dashboard)/_components/components/quill-editor";
 
-const AddCodeforces = () => {
+const AddCodechef = () => {
     const router = useRouter()
     const [problem_name, setProblemName] = useState("")
     const [solution_link, setSolutionLink] = useState("")
@@ -22,7 +22,7 @@ const AddCodeforces = () => {
     const [topic_tag, setTopicTag] = useState([])
     const [company_tag, setCompanyTag] = useState([])
     const [loading, setLoading] = useState(false)
-    const [password,setPassword]=useState("")
+    const [password, setPassword] = useState("")
 
     const company_tags_list = company_tags.map((data) => (
         {
@@ -39,7 +39,7 @@ const AddCodeforces = () => {
     ))
 
     function create_url_slug(name: string) {
-        let s = name.toLowerCase()+" "+Date.now()
+        let s = name.toLowerCase() + " " + Date.now()
         s = s.replace(/([~!@#$%^&*()_+=`{}\[\]\|\\:;'<>,.\/? ])+/g, '-').replace(/^(-)+|(-)+$/g, '');
         return s
     }
@@ -47,7 +47,7 @@ const AddCodeforces = () => {
 
     async function addProblem(e) {
         e.preventDefault()
-        if(password!=process.env.NEXT_PUBLIC_CODING_75){
+        if (password != process.env.NEXT_PUBLIC_CODING_75) {
             alert("Wrong Password")
             return
         }
@@ -55,7 +55,7 @@ const AddCodeforces = () => {
         let slug_url = create_url_slug(problem_name)
         try {
             const { data, error } = await supabase
-                .from('codeforces-contests')
+                .from('codechef-contests')
                 .insert([
                     {
                         company_tags: company_tag,
@@ -79,7 +79,7 @@ const AddCodeforces = () => {
                 setLoading(false)
             } else {
                 console.log(data);
-                router.push(`/dsa-cp/codeforces/${slug_url}`)
+                router.push(`/dsa-cp/codechef/${slug_url}`)
             }
             return { data, error };
         } catch (error) {
@@ -94,7 +94,7 @@ const AddCodeforces = () => {
         <div className="container">
             <div className="mt-5">
                 <h3 className="text-center text-2xl font-semibold text-indigo-700 ">
-                    Add Codeforces Problems
+                    Add Codechef Problems
                 </h3>
                 <div className="mt-5 p-5 border-solid border-2 border-black rounded-lg">
                     <form>
@@ -191,13 +191,13 @@ const AddCodeforces = () => {
                                 name="currency"
                                 className="block w-full rounded-md border-0 p-3 text-gray-900 ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                                 required>
-                                <option value={0}>Newbie</option>
-                                <option value={1}>Pupil</option>
-                                <option value={2}>Specialist</option>
-                                <option value={3}>Expert</option>
-                                <option value={4}>Candidate Master</option>
-                                <option value={5}>Master</option>
-                                <option value={6}>Grandmaster</option>
+                                <option value={0}>1 Star</option>
+                                <option value={1}>2 Star</option>
+                                <option value={2}>3 Star</option>
+                                <option value={3}>4 Star</option>
+                                <option value={4}>5 Star</option>
+                                <option value={5}>6 Star</option>
+                                <option value={6}>7 Star</option>
                             </select>
                         </div>
                         <div className="mt-2">
@@ -228,4 +228,4 @@ const AddCodeforces = () => {
     );
 }
 
-export default AddCodeforces;
+export default AddCodechef;

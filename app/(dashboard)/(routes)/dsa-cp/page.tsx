@@ -16,7 +16,7 @@ const DSACPPage = () => {
                 <div className="grid lg:grid-cols-2 grid-cols-1">
                     <div className="p-5">
                         <ResourceCard2 
-                        heading={"Leetcode POTD Editorial"} 
+                        heading={"Leetcode POTD Editorials"} 
                         description={"In-depth LeetCode POTD editorials for efficient problem-solving."} 
                         link={"/dsa-cp/leetcode-potd"}
                         icon_link={"https://zettllhfmtvcunctalyo.supabase.co/storage/v1/object/public/resources/icons/leetcode.png"} 
@@ -25,10 +25,19 @@ const DSACPPage = () => {
                     </div>
                     <div className="p-5">
                         <ResourceCard2 
-                        heading={"Codeforces Contest Solutions"} 
+                        heading={"Codeforces Contest Editorials"} 
                         description={"Optimize your programming skills with detailed solutions to Codeforces contest problems."} 
                         link={"/dsa-cp/codeforces"}
                         icon_link={"https://zettllhfmtvcunctalyo.supabase.co/storage/v1/object/public/resources/icons/codeforces.svg"} 
+                        extra_details={true} 
+                        />
+                    </div>
+                    <div className="p-5">
+                        <ResourceCard2 
+                        heading={"CodeChef Contest Editorials"} 
+                        description={"Optimize your programming skills with detailed solutions to CodeChef contest problems."} 
+                        link={"/dsa-cp/codechef"}
+                        icon_link={"https://zettllhfmtvcunctalyo.supabase.co/storage/v1/object/public/resources/icons/codechef.png"} 
                         extra_details={true} 
                         />
                     </div>
@@ -45,15 +54,6 @@ const DSACPPage = () => {
                         heading={"Newbie to Specialist CP Sheet"} 
                         description={"Level up your coding journey from newbie to specialist with Coding75's concise CP Sheet."} 
                         link={"/dsa-cp/company-wise-problems"} 
-                        icon_link={"https://zettllhfmtvcunctalyo.supabase.co/storage/v1/object/public/resources/icons/coding75.png"} 
-                        extra_details={false} 
-                        />
-                    </div>
-                    <div className="p-5">
-                        <ResourceCard2 
-                        heading={"coding75 Complete DSA Sheet"} 
-                        description={"Master Data Structures and Algorithms comprehensively with Coding75's complete DSA sheet."} 
-                        link={"/dsa-cp/topic-wise-problems"} 
                         icon_link={"https://zettllhfmtvcunctalyo.supabase.co/storage/v1/object/public/resources/icons/coding75.png"} 
                         extra_details={false} 
                         />

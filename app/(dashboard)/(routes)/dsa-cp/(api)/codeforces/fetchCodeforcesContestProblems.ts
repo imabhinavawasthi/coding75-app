@@ -1,11 +1,11 @@
 import supabase from "@/supabase";
 
-export async function fetchCodeforcesProblems() {
+export async function fetchCodeforcesContestProblems(contest_name:any) {
     try {
         let { data: dsaproblems, error } = await supabase
             .from('codeforces-contests')
             .select('*')
-            .order('solution_link', { ascending: false })
+            .like('contest',contest_name)
         if (error) {
             console.error('Error fetching data:', error);
         } else {

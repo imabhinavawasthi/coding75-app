@@ -7,11 +7,11 @@ import { useEffect } from "react";
 const Contest = () => {
     const router = useRouter()
     useEffect(()=>{
-        router.replace("/dsa-cp/codeforces")
+        router.replace("/dsa-cp/codechef")
     })
     return (
         <div>
-            <Loading title={"Loading Codeforces Problem"}/>
+            <Loading title={"Loading CodeChef Problem"}/>
         </div>
     );
 }

@@ -1,7 +1,7 @@
 "use client"
 
 import { useEffect, useState } from "react";
-import { fetchProblems } from "../../(api)/fetchProblems";
+import { fetchProblems } from "../../(api)/problem/fetchProblems";
 import Loading from "@/components/loading";
 import PageHeaders from "@/components/page-headers/page-headers";
 import ProblemTable from "../../_components/problem-table";

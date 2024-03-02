@@ -3,12 +3,13 @@
 import { useEffect, useState } from "react";
 import Loading from "@/components/loading";
 import PageHeadersButton from "@/components/page-headers/page-headers-button";
-import { fetchLeetcodePOTDProblems } from "../../(api)/leetcode/fetchLeetcodePOTDProblems";
-import LeetcodePOTDProblemTable from "../../_components/leetcode-potd-table";
+import CodechefProblemTable from "../../../../_components/codechef-table"
+import { fetchCodechefContestProblems } from "../../../../(api)/codechef/fetchCodechefContestProblems";
 
 type Problem = {
     ProblemName: string
-    Date: Date
+    Submission: number
+    Contest: String
     ProblemLink: string
     TopicTags: string[]
     CompanyTags: string[]
@@ -19,14 +20,22 @@ type Problem = {
     Difficulty: number
 }
 
-const DSAProblems = () => {
+function extractSubmissionNumber(link) {
+    const regex = /\/submission\/(\d+)/;
+    
+    const match = link.match(regex);
+    
+    return match ? match[1] : 0;
+  }
+
+const ContestPage = ({params}) => {
     const [problemList, setProblemList] = useState<any[]>([])
     const [loading, setLoading] = useState(true)
 
     useEffect(() => {
         async function fetchProblemsFun() {
             try {
-                const { dsaproblems } = await fetchLeetcodePOTDProblems();
+                const { dsaproblems } = await fetchCodechefContestProblems(params.contestname.replaceAll("%20"," "));
                 if (dsaproblems) {
                     const problems_list: Problem[] = dsaproblems.map((data: any) => {
                         let topic_tags = []
@@ -39,10 +48,11 @@ const DSAProblems = () => {
                         }
                         return {
                             ProblemName: data?.problem_name,
-                            Date: data?.date,
+                            Contest: data?.contest,
                             ProblemLink: data?.problem_link,
                             TopicTags: topic_tags,
                             CompanyTags: company_tags,
+                            Submission: extractSubmissionNumber(data?.solution_link),
                             Difficulty: data?.difficulty,
                             Status: "Pending",
                             SlugUrl: data?.slug_url,
@@ -50,6 +60,9 @@ const DSAProblems = () => {
                             VideoEditorial: data?.video_editorial
                         }
                     })
+                    problems_list.sort((a, b) => {
+                        return b.Submission - a.Submission;
+                      });
                     setProblemList(problems_list);
                 }
                 setLoading(false)
@@ -66,15 +79,15 @@ const DSAProblems = () => {
             <div>
                 <PageHeadersButton
                     greenHeading=" Editorials"
-                    heading="Leetcode POTD"
-                    description="In-depth LeetCode POTD editorials for efficient problem-solving."
+                    heading={params.contestname.replaceAll("%20"," ")}
+                    description="In-depth Codechef editorials for efficient problem-solving."
                 />
             </div>
             <div className="lg:container md:container mt-10">
                 {!loading ?
                     <>
                         <div className="w-full h-full overflow-y-scroll px-5">
-                            <LeetcodePOTDProblemTable data={problemList} />
+                            <CodechefProblemTable data={problemList} />
                         </div>
                     </>
                     :
@@ -87,4 +100,4 @@ const DSAProblems = () => {
     );
 }
 
-export default DSAProblems;
+export default ContestPage;

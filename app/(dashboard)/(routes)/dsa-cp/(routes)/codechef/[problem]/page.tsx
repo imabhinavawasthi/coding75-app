@@ -1,30 +1,26 @@
 "use client"
 
 import { useEffect, useState } from "react";
-import { fetchLeetcodePOTD } from "../../../(api)/leetcode/fetchLeetcodePOTD";
-import { BookText, BriefcaseIcon, Calendar, Check, ExternalLink, FileCode2, FileVideo, Gauge, Share2 } from "lucide-react";
+import { BookCheck, BookText, BriefcaseIcon, Check, ExternalLink, FileCode2, FileVideo, Gauge, Share2 } from "lucide-react";
 import ResumeReviewCard from "@/components/cards/resume-review-card";
 import InternshipGuideCard from "@/components/cards/internship-guide-card";
 import Loading from "@/components/loading";
 import PageNotFound from "@/components/page-not-found";
 import DOMPurify from 'dompurify';
 import BreadCrumb from "@/app/(dashboard)/_components/components/breadcrumb";
-import convertGMTtoIST from "@/app/(dashboard)/_components/helpers/GMTToIST";
+import Link from "next/link";
+import { fetchCodechefProblem } from "../../../(api)/codechef/fetchCodechefProblem";
 
 const Problem = (params: any) => {
     const [problem, setProblem] = useState<any>()
     const [loading, setLoading] = useState(true)
-    const [date, setDate] = useState("")
 
     useEffect(() => {
         async function fetchProblemsFun() {
             try {
-                const { dsaproblem } = await fetchLeetcodePOTD({ problem: params.params.problem });
+                const { dsaproblem } = await fetchCodechefProblem({ problem: params.params.problem });
                 if (dsaproblem) {
                     setProblem(dsaproblem[0])
-                    const options: Intl.DateTimeFormatOptions = { year: 'numeric', month: 'short', day: '2-digit' };
-                    const formattedDate = convertGMTtoIST(new Date(dsaproblem[0]["date"]))
-                    setDate(formattedDate)
                 }
                 setLoading(false)
             } catch (error) {
@@ -62,12 +58,12 @@ const Problem = (params: any) => {
                                             "href": "/dsa-cp"
                                         },
                                         {
-                                            "title": `Leetcode POTD`,
-                                            "href": `/dsa-cp/leetcode-potd`
+                                            "title": `Codechef`,
+                                            "href": `/dsa-cp/codechef`
                                         },
                                         {
                                             "title": `${problem["problem_name"]}`,
-                                            "href": `/dsa-cp/leetcode-potd/${params.params.problem}`
+                                            "href": `/dsa-cp/codechef/${params.params.problem}`
                                         }
                                     ]} />
                                 </div>
@@ -80,71 +76,85 @@ const Problem = (params: any) => {
                                                 </h2>
                                             </div>
                                             <div className="mt-1 flex flex-col sm:mt-0 sm:flex-row sm:flex-wrap sm:space-x-6">
-                                                <div className="mt-4 flex items-center text-sm text-gray-500">
-                                                    <Calendar className="mr-1.5 h-5 w-5 flex-shrink-0 text-gray-400" aria-hidden="true" />
-                                                    {date}
+                                                <div className="mt-4 flex items-center text-sm text-gray-500 font-semibold underline">
+                                                    <Link className="flex" href={`/dsa-cp/codechef/contest/${problem["contest"]}`}>
+                                                    <BookCheck className="mr-1.5 h-5 w-5 flex-shrink-0 text-gray-400" aria-hidden="true" />
+                                                    {problem["contest"]}
+                                                    </Link>
                                                 </div>
                                                 <div className="mt-4 flex items-center text-sm text-gray-500">
                                                     <Gauge className="mr-1.5 h-5 w-5 flex-shrink-0 text-gray-400" aria-hidden="true" />
                                                     {problem["difficulty"] == 0 && <div>
                                                         <span
-                                                            className="whitespace-nowrap rounded-full bg-green-100 px-2.5 py-0.5 text-sm text-green-700"
+                                                            className="whitespace-nowrap rounded-full bg-gray-100 px-2.5 py-0.5 text-sm text-gray-700"
                                                         >
-                                                            {"Easy"}
+                                                            {"1 Star"}
                                                         </span>
                                                     </div>}
                                                     {problem["difficulty"] == 1 && <div>
                                                         <span
-                                                            className="whitespace-nowrap rounded-full bg-orange-100 px-2.5 py-0.5 text-sm text-orange-700"
+                                                            className="whitespace-nowrap rounded-full bg-green-100 px-2.5 py-0.5 text-sm text-green-700"
                                                         >
-                                                            {"Medium"}
+                                                            {"2 Star"}
                                                         </span>
                                                     </div>}
                                                     {problem["difficulty"] == 2 && <div>
                                                         <span
-                                                            className="whitespace-nowrap rounded-full bg-red-100 px-2.5 py-0.5 text-sm text-red-700"
+                                                            className="whitespace-nowrap rounded-full bg-blue-100 px-2.5 py-0.5 text-sm text-blue-700"
                                                         >
-                                                            {"Hard"}
+                                                            {"3 Star"}
                                                         </span>
                                                     </div>}
                                                     {problem["difficulty"] == 3 && <div>
                                                         <span
-                                                            className="whitespace-nowrap rounded-full bg-blue-100 px-2.5 py-0.5 text-sm text-blue-700"
+                                                            className="whitespace-nowrap rounded-full bg-purple-100 px-2.5 py-0.5 text-sm text-purple-700"
                                                         >
-                                                            {"Advanced"}
+                                                            {"4 Star"}
+                                                        </span>
+                                                    </div>}
+                                                    {problem["difficulty"] == 4 && <div>
+                                                        <span
+                                                            className="whitespace-nowrap rounded-full bg-yellow-100 px-2.5 py-0.5 text-sm text-yellow-700"
+                                                        >
+                                                            {"5 Star"}
+                                                        </span>
+                                                    </div>}
+                                                    {problem["difficulty"] == 5 && <div>
+                                                        <span
+                                                            className="whitespace-nowrap rounded-full bg-orange-100 px-2.5 py-0.5 text-sm text-orange-700"
+                                                        >
+                                                            {"6 Star"}
+                                                        </span>
+                                                    </div>}
+                                                    {problem["difficulty"] == 6 && <div>
+                                                        <span
+                                                            className="whitespace-nowrap rounded-full bg-red-100 px-2.5 py-0.5 text-sm text-red-700"
+                                                        >
+                                                            {"7 Star"}
                                                         </span>
                                                     </div>}
                                                 </div>
                                                 {problem["company_tags"].length > 0 && <div className="flex flex-wrap mt-4 items-center text-sm text-gray-500">
                                                     <BriefcaseIcon className="mr-1.5 h-5 w-5 flex-shrink-0 text-gray-400" aria-hidden="true" />
                                                     {problem["company_tags"].map((value, index) => (
-                                                        <a
-                                                            key={index}
-                                                            className="mt-1 hover:underline"
-                                                            href={"/dsa-cp/problems/company/" + value.value}>
-
+                                                        
                                                             <span
-
+                                                            key={index}
                                                                 className="ml-2 mr-2 whitespace-nowrap rounded-full bg-purple-100 px-2.5 py-0.5 text-sm text-purple-700"
                                                             >
                                                                 {value.label}
                                                             </span>
-                                                        </a>
                                                     ))}
                                                 </div>}
                                                 {problem["topic_tags"].length > 0 && <div className="flex flex-wrap mt-4 items-center text-sm text-gray-500">
                                                     <BookText className="mr-1.5 h-5 w-5 flex-shrink-0 text-gray-400" aria-hidden="true" />
                                                     {problem["topic_tags"].map((value, index) => (
-                                                        <a
-                                                            key={index}
-                                                            className="mt-1 hover:underline"
-                                                            href={"/dsa-cp/problems/topic/" + value.value}>
                                                             <span
+                                                            key={index}
                                                                 className="ml-2 mr-2 whitespace-nowrap rounded-full bg-yellow-100 px-2.5 py-0.5 text-sm text-yellow-700"
                                                             >
                                                                 {value.label}
                                                             </span>
-                                                        </a>
                                                     ))}
                                                 </div>}
                                             </div>
@@ -181,7 +191,7 @@ const Problem = (params: any) => {
                                             </span>
                                         </div>
                                     </div>
-                                    {problem["problem_description"] &&
+                                    {problem["problem_description"]!="<p><br></p>" && problem["problem_description"]!="" &&
                                         <div>
                                             <div className="mt-10">
                                                 <div>
@@ -191,7 +201,7 @@ const Problem = (params: any) => {
                                             </div>
                                         </div>
                                     }
-                                    {(problem["editorial"] || problem["video_editorial"]) &&
+                                    {(problem["editorial"] || problem["video_editorial"] || problem["solution_link"]) &&
                                         <div>
                                             <div className="mt-10">
                                                 <div>
@@ -215,6 +225,15 @@ const Problem = (params: any) => {
                                                         >
                                                             <FileCode2 />
                                                             Editorial
+                                                        </a>}
+                                                        {problem["solution_link"] &&
+                                                        <a
+                                                            href={problem["solution_link"]}
+                                                            target="_blank"
+                                                            className="hover:bg-white hover:text-blue-500 inline-flex items-center gap-2 rounded-md px-4 py-2 lg:text-lg text-sm text-gray-500 focus:relative"
+                                                        >
+                                                            <FileCode2 />
+                                                            Code Solution
                                                         </a>}
                                                     {problem["video_editorial"] &&
                                                         <a

@@ -3,10 +3,9 @@
 import { useEffect, useState } from "react";
 import Loading from "@/components/loading";
 import PageHeadersButton from "@/components/page-headers/page-headers-button";
-import CodeforcesProblemTable from "../../_components/codeforces-table";
-import { fetchCodeforcesProblems } from "../../(api)/codeforces/fetchCodeforcesProblems";
-import { CaretSortIcon, CheckIcon } from "@radix-ui/react-icons"
-import { cn } from "@/lib/utils"
+import CodechefProblemTable from "../../_components/codechef-table";
+import { fetchCodechefProblems } from "../../(api)/codechef/fetchCodechefProblems"
+import { CaretSortIcon } from "@radix-ui/react-icons"
 import { Button } from "@/components/ui/button"
 import {
     Command,
@@ -37,14 +36,14 @@ type Problem = {
 }
 
 function extractSubmissionNumber(link) {
-    const regex = /\/submission\/(\d+)/;
+    const regex = /\/viewsolution\/(\d+)/;
 
     const match = link.match(regex);
 
     return match ? match[1] : 0;
 }
 
-const CodeforcesProblems = () => {
+const CodechefProblems = () => {
     const [problemList, setProblemList] = useState<any[]>([])
     const [loading, setLoading] = useState(true)
     const [uniqueContests, setUniqueContests] = useState<any>();
@@ -54,7 +53,7 @@ const CodeforcesProblems = () => {
     useEffect(() => {
         async function fetchProblemsFun() {
             try {
-                const { dsaproblems } = await fetchCodeforcesProblems();
+                const { dsaproblems } = await fetchCodechefProblems();
                 if (dsaproblems) {
                     dsaproblems.sort((a, b) => {
                         return extractSubmissionNumber(b?.solution_link) - extractSubmissionNumber(a?.solution_link);
@@ -107,8 +106,8 @@ const CodeforcesProblems = () => {
             <div>
                 <PageHeadersButton
                     greenHeading=" Editorials"
-                    heading="Codeforces"
-                    description="In-depth Codeforces editorials for efficient problem-solving."
+                    heading="CodeChef"
+                    description="In-depth CodeChef editorials for efficient problem-solving."
                 />
             </div>
             <div className="lg:container md:container mt-10">
@@ -139,7 +138,7 @@ const CodeforcesProblems = () => {
                                                     key={contest.value}
                                                     value={contest.value}
                                                     onSelect={(currentValue) => {
-                                                        router.push(`/dsa-cp/codeforces/contest/${contest.label}`)
+                                                        router.push(`/dsa-cp/codechef/contest/${contest.label}`)
                                                         setOpen(false)
                                                     }}
                                                 >
@@ -153,7 +152,7 @@ const CodeforcesProblems = () => {
                         </div>
                         <div className="w-full h-full overflow-y-scroll px-5">
                             <p className="font-bold text-lg">All Problems:</p>
-                            <CodeforcesProblemTable data={problemList} />
+                            <CodechefProblemTable data={problemList} />
                         </div>
                     </>
                     :
@@ -166,4 +165,4 @@ const CodeforcesProblems = () => {
     );
 }
 
-export default CodeforcesProblems;
+export default CodechefProblems;

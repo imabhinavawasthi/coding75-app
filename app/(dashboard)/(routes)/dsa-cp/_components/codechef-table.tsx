@@ -60,7 +60,7 @@ function getCurrentURL() {
     return window.location.href
 }
 
-export default function CodeforcesProblemTable({ data }) {
+export default function CodechefProblemTable({ data }) {
     const [sorting, setSorting] = React.useState<SortingState>([])
     const [columnFilters, setColumnFilters] = React.useState<ColumnFiltersState>(
         []
@@ -137,7 +137,7 @@ export default function CodeforcesProblemTable({ data }) {
                         <a href={problem.ProblemLink} target="_blank"><ExternalLink className="h-4 w-4 mr-5" /></a>
                         <div className="overflow-clip w-48 text-left">
                             <TooltipProvider delayDuration={0}>
-                                <Link href={"/dsa-cp/codeforces/" + problem.SlugUrl}>
+                                <Link href={"/dsa-cp/codechef/" + problem.SlugUrl}>
                                     <Tooltip>
                                         <TooltipTrigger className="underline text-gray-600 text-left tracking-tight font-semibold">
                                             {(row.getValue("ProblemName"))}
@@ -173,8 +173,8 @@ export default function CodeforcesProblemTable({ data }) {
                 return (<>
                     <div className="flex items-center">
                         <div className="overflow-clip w-32 text-left">
-                            <Link className="hover:underline" href={`/dsa-cp/codeforces/contest/${problem.Contest}`}>
-                            {problem.Contest}
+                            <Link className="hover:underline" href={`/dsa-cp/codechef/contest/${problem.Contest}`}>
+                                {problem.Contest}
                             </Link>
                         </div>
                     </div>
@@ -202,49 +202,49 @@ export default function CodeforcesProblemTable({ data }) {
                         <span
                             className="whitespace-nowrap rounded-full bg-gray-100 px-2.5 py-0.5 text-sm text-gray-700"
                         >
-                            {"Newbie"}
+                            {"1 Star"}
                         </span>
                     </div>}
                     {difficulty == 1 && <div>
                         <span
                             className="whitespace-nowrap rounded-full bg-green-100 px-2.5 py-0.5 text-sm text-green-700"
                         >
-                            {"Pupil"}
+                            {"2 Star"}
                         </span>
                     </div>}
                     {difficulty == 2 && <div>
                         <span
-                            className="whitespace-nowrap rounded-full bg-cyan-100 px-2.5 py-0.5 text-sm text-cyan-700"
+                            className="whitespace-nowrap rounded-full bg-blue-100 px-2.5 py-0.5 text-sm text-blue-700"
                         >
-                            {"Specialist"}
+                            {"3 Star"}
                         </span>
                     </div>}
                     {difficulty == 3 && <div>
                         <span
-                            className="whitespace-nowrap rounded-full bg-blue-100 px-2.5 py-0.5 text-sm text-blue-700"
+                            className="whitespace-nowrap rounded-full bg-purple-100 px-2.5 py-0.5 text-sm text-purple-700"
                         >
-                            {"Expert"}
+                            {"4 Star"}
                         </span>
                     </div>}
                     {difficulty == 4 && <div>
                         <span
-                            className="whitespace-nowrap rounded-full bg-violet-100 px-2.5 py-0.5 text-sm text-violet-700"
+                            className="whitespace-nowrap rounded-full bg-yellow-100 px-2.5 py-0.5 text-sm text-yellow-700"
                         >
-                            {"Candidate Master"}
+                            {"5 Star"}
                         </span>
                     </div>}
                     {difficulty == 5 && <div>
                         <span
                             className="whitespace-nowrap rounded-full bg-orange-100 px-2.5 py-0.5 text-sm text-orange-700"
                         >
-                            {"Master"}
+                            {"6 Star"}
                         </span>
                     </div>}
                     {difficulty == 6 && <div>
                         <span
                             className="whitespace-nowrap rounded-full bg-red-100 px-2.5 py-0.5 text-sm text-red-700"
                         >
-                            {"Grandmaster"}
+                            {"7 Star"}
                         </span>
                     </div>}
                 </div>
@@ -360,7 +360,7 @@ export default function CodeforcesProblemTable({ data }) {
                                 Copy Problem Link
                             </DropdownMenuItem>
                             <DropdownMenuSeparator />
-                            <DropdownMenuItem><Link href={"/dsa-cp/codeforces/" + problem.SlugUrl}>View Problem</Link></DropdownMenuItem>
+                            <DropdownMenuItem><Link href={"/dsa-cp/codechef/" + problem.SlugUrl}>View Problem</Link></DropdownMenuItem>
                         </DropdownMenuContent>
                     </DropdownMenu>
                 )
@@ -449,13 +449,13 @@ export default function CodeforcesProblemTable({ data }) {
                         <SelectContent>
                             <SelectGroup>
                                 <SelectItem value="All">All</SelectItem>
-                                <SelectItem value="0">Newbie</SelectItem>
-                                <SelectItem value="1">Pupil</SelectItem>
-                                <SelectItem value="2">Specialist</SelectItem>
-                                <SelectItem value="3">Expert</SelectItem>
-                                <SelectItem value="4">Candidate Master</SelectItem>
-                                <SelectItem value="5">Master</SelectItem>
-                                <SelectItem value="6">Grandmaster</SelectItem>
+                                <SelectItem value="0">1 Star</SelectItem>
+                                <SelectItem value="1">2 Star</SelectItem>
+                                <SelectItem value="2">3 Star</SelectItem>
+                                <SelectItem value="3">4 Star</SelectItem>
+                                <SelectItem value="4">5 Star</SelectItem>
+                                <SelectItem value="5">6 Star</SelectItem>
+                                <SelectItem value="6">7 Star</SelectItem>
                             </SelectGroup>
                         </SelectContent>
                     </Select>
