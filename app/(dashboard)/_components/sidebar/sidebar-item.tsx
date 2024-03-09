@@ -1,6 +1,6 @@
 "use client";
 
-import { LucideIcon } from "lucide-react";
+import { Flame, LucideIcon, Rocket } from "lucide-react";
 import { usePathname } from "next/navigation";
 
 import { cn } from "@/lib/utils";
@@ -42,7 +42,12 @@ export const SidebarItem = ({
             )}
           />
           {label}
-          {/* <span className="inline-flex items-center rounded-md bg-purple-50 px-2 py-1 text-xs font-medium text-purple-700 ring-1 ring-inset ring-purple-700/10">Badge</span> */}
+          {
+            label=="Community"&&
+            <>
+            <span className="inline-flex items-center rounded-md bg-amber-50 px-2 py-1 text-xs font-medium text-amber-700 ring-1 ring-inset ring-amber-700/10">Pro <Flame className="w-4 h-4 ml-1"/></span>
+            </>
+          }
         </div>
         <div
           className={cn(

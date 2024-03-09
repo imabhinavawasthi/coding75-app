@@ -26,7 +26,7 @@ const OperatingSystem = () => {
         <div>
           <PageHeadersButton greenHeading='System' heading='Operating'
           description='Operating system notes, specially designed for interview preparation 🚀'
-          pdf_link='https://zettllhfmtvcunctalyo.supabase.co/storage/v1/object/public/resources/Operating%20System/operating-system-notes.pdf'
+          pdf_link='https://zettllhfmtvcunctalyo.supabase.co/storage/v1/object/public/resources/notes/operating-system-notes.pdf'
           />
         </div>
         <div className='grid grid-cols-10'>
@@ -34,7 +34,7 @@ const OperatingSystem = () => {
           <Worker workerUrl={`https://unpkg.com/pdfjs-dist@${'^3.11.174'}/build/pdf.worker.min.js`}>
             <div className='lg:col-span-8 md:col-span-8 col-span-10' style={{ maxWidth: '100%', minWidth: '100%' }}>
               <Viewer
-                fileUrl={"https://zettllhfmtvcunctalyo.supabase.co/storage/v1/object/public/resources/Operating%20System/operating-system-notes-web.pdf"}
+                fileUrl={"https://zettllhfmtvcunctalyo.supabase.co/storage/v1/object/public/resources/notes/operating-system-notes-web.pdf"}
               />
             </div>
           </Worker>

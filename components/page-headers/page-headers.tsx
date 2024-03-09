@@ -5,7 +5,7 @@ import Image from "next/image";
 import { toast } from "sonner";
 import Link from "next/link";
 
-const PageHeaders = ({ greenHeading = "", heading = "", description = "" }) => {
+const PageHeaders = ({ greenHeading = "", heading = "", description = "", image="" }) => {
     function getCurrentURL() {
         return window.location.href
     }
@@ -34,7 +34,7 @@ const PageHeaders = ({ greenHeading = "", heading = "", description = "" }) => {
                             </div>
                         </div>
                     </div>
-                    <img src="https://zettllhfmtvcunctalyo.supabase.co/storage/v1/object/public/resources/images/operating-system.png" alt="opportunity-feature" className="col-span-4 shadow-2xl rounded-xl w-full" />
+                    <img src={image} alt="opportunity-feature" className="col-span-4 shadow-2xl rounded-xl w-full" />
                 </div>
             </header>
         </div>

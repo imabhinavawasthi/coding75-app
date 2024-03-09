@@ -8,20 +8,30 @@ import { company_tags, topic_tags } from "@/components/constants";
 import Loading from "@/components/loading";
 import { useRouter } from 'next/navigation'
 import QuillEditor from "@/app/(dashboard)/_components/components/quill-editor";
+import { format } from "date-fns"
+import { Calendar as CalendarIcon } from "lucide-react"
+import { cn } from "@/lib/utils"
+import { Calendar } from "@/components/ui/calendar"
+import {
+    Popover,
+    PopoverContent,
+    PopoverTrigger,
+} from "@/components/ui/popover"
 
 const AddProblem = () => {
     const router = useRouter()
     const [problem_name, setProblemName] = useState("")
     const [problem_description, setProblemDescription] = useState("")
     const [problem_link, setProblemLink] = useState("")
-    const [platform, setPlatform] = useState("Leetcode")
     const [video_editorial, setVideoEditorial] = useState("")
     const [editorial, setEditorial] = useState("")
     const [difficulty, setDifficulty] = useState("0")
     const [topic_tag, setTopicTag] = useState([])
     const [company_tag, setCompanyTag] = useState([])
     const [loading, setLoading] = useState(false)
-    const [password,setPassword]=useState("")
+    const [password, setPassword] = useState("")
+    const [date, setDate] = useState<Date>()
+    const [contestName, setContestName] = useState("")
 
     const company_tags_list = company_tags.map((data) => (
         {
@@ -38,23 +48,31 @@ const AddProblem = () => {
     ))
 
     function create_url_slug(name: string) {
-        let s = name.toLowerCase()
-        s = s.replace(/([~!@#$%^&*()_+=`{}\[\]\|\\:;'<>,.\/? ])+/g, '-').replace(/^(-)+|(-)+$/g, '')+Date.now();;
+        const options : Intl.DateTimeFormatOptions = { year: 'numeric', month: 'short', day: '2-digit' };
+        const formattedDate = date?.toLocaleDateString('en-GB', options);
+        let s = name.toLowerCase()+" "+contestName.toLowerCase()+" "+formattedDate
+        s = s.replace(/([~!@#$%^&*()_+=`{}\[\]\|\\:;'<>,.\/? ])+/g, '-').replace(/^(-)+|(-)+$/g, '');
         return s
     }
 
-
     async function addProblem(e) {
         e.preventDefault()
-        if(password!=process.env.NEXT_PUBLIC_CODING_75){
+        if (password != process.env.NEXT_PUBLIC_CODING_75) {
             alert("Wrong Password")
+            return
+        }
+        if(!date){
+            alert("Enter Date")
             return
         }
         setLoading(true)
         let slug_url = create_url_slug(problem_name)
+        let dateEpoch
+        if(date?.getTime()!=undefined)
+        dateEpoch = date?.getTime()/1000
         try {
             const { data, error } = await supabase
-                .from('dsaproblems')
+                .from('leetcode-contests')
                 .insert([
                     {
                         company_tags: company_tag,
@@ -62,11 +80,12 @@ const AddProblem = () => {
                         topic_tags: topic_tag,
                         problem_description: problem_description,
                         problem_link: problem_link,
-                        platform: platform,
                         video_editorial: video_editorial,
                         editorial: editorial,
                         difficulty: difficulty,
-                        slug_url: slug_url
+                        slug_url: slug_url,
+                        date: dateEpoch,
+                        contest_name: contestName
                     },
                 ])
                 .select()
@@ -77,7 +96,7 @@ const AddProblem = () => {
                 setLoading(false)
             } else {
                 console.log(data);
-                router.push(`/dsa-cp/problems/${slug_url}`)
+                router.push(`/dsa-cp/leetcode-contests/${slug_url}`)
             }
             return { data, error };
         } catch (error) {
@@ -92,7 +111,7 @@ const AddProblem = () => {
         <div className="container">
             <div className="mt-5">
                 <h3 className="text-center text-2xl font-semibold text-indigo-700 ">
-                    Add DSA Problems
+                    Add Leetcode Contest
                 </h3>
                 <div className="mt-5 p-5 border-solid border-2 border-black rounded-lg">
                     <form onSubmit={addProblem}>
@@ -123,22 +142,39 @@ const AddProblem = () => {
                                 required />
                         </div>
                         <div className="mt-2">
-                            <select
-                                onChange={(e) => { setPlatform(e.target.value) }}
-                                id="platform"
-                                name="platform"
+                            <input
+                                onChange={(e) => { setContestName(e.target.value) }}
+                                type="text"
+                                name="contest_name"
+                                id="contest_name"
                                 className="block w-full rounded-md border-0 p-3 text-gray-900 ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
-                                required>
-                                <option value="Leetcode">Leetcode</option>
-                                <option value="Geeksforgeeks">GeeksforGeeks</option>
-                                <option value="Coding Ninjas" >Coding Ninjas</option>
-                                <option value="HackerRank" >HackerRank</option>
-                                <option value="HackerEarth" >HackerEarth</option>
-                                <option value="Spoj">Spoj</option>
-                                <option value="Codeforces" >Codeforces</option>
-                                <option value="Codechef" >Codechef</option>
-                                <option value="Others" >Others</option>
-                            </select>
+                                placeholder="Contest Name"
+                                required />
+                        </div>
+                        <div className="mt-2">
+                            <Popover>
+                                <PopoverTrigger asChild>
+                                    <Button
+                                        variant={"outline"}
+                                        className={cn(
+                                            "w-[280px] justify-start text-left font-normal",
+                                            !date && "text-muted-foreground"
+                                        )}
+                                    >
+                                        <CalendarIcon className="mr-2 h-4 w-4" />
+                                        {date ? format(date, "PPP") : <span>Pick Contest date</span>}
+                                    </Button>
+                                </PopoverTrigger>
+                                <PopoverContent className="w-auto p-0">
+                                    <Calendar
+                                        mode="single"
+                                        selected={date}
+                                        onSelect={setDate}
+                                        initialFocus
+                                        required
+                                    />
+                                </PopoverContent>
+                            </Popover>
                         </div>
                         <div className="mt-2">
                             <input
@@ -159,16 +195,6 @@ const AddProblem = () => {
                                 className="block w-full rounded-md border-0 p-3 text-gray-900 ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                                 placeholder="Editorial"
                                  />
-                        </div>
-                        <div className="mt-2">
-                            <p className="text-sm mb-1 ml-1">Select Companies</p>
-                            {/* <pre>{JSON.stringify(company_tag)}</pre> */}
-                            <MultiSelect
-                                options={company_tags_list}
-                                value={company_tag}
-                                onChange={setCompanyTag}
-                                labelledBy="Select Companies"
-                            />
                         </div>
                         <div className="mt-2">
                             <p className="text-sm mb-1 ml-1">Select Topics</p>

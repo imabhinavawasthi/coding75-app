@@ -92,7 +92,7 @@ const ProjectType = (params: any) => {
                             <PageHeadersButton />
                         </>
                 }
-                <div className="mt-3 container">
+                <div className="mt-3 lg:container md:container px-3">
                     <a target="_blank" href="https://telegram.me/cpabhinav">
                         <Alert className='mb-2'>
                             <Shapes className="h-4 w-4 " />

@@ -1,6 +1,7 @@
 import { CodeIcon, Link, LinkIcon, PackageIcon, VideoIcon } from "lucide-react";
+import DOMPurify from 'dompurify';
 
-const ProjectCard = ({ project }) => {
+const ProjectCard = ({ project }:any) => {
     return (
         <div>
 
@@ -47,9 +48,9 @@ const ProjectCard = ({ project }) => {
                     </div>
 
                     <div>
-                        <p className="mt-2 text-sm text-gray-700">{project?.project_description}</p>
+                        <p className="mt-2 text-sm text-gray-700 no-more-tailwind"><div dangerouslySetInnerHTML={{ __html: DOMPurify.sanitize(project?.project_description) }} /></p>
                     </div>
-                    <div className="mt-4 flex flex-wrap gap-2">
+                    <div className="mt-4 flex flex-wrap gap-2"> 
                         {project?.video_link && <a href={project?.video_link} target="_blank" className="rounded bg-basic border flex gap-2 text-xs border-indigo-500 bg-indigo-500 px-3 py-1.5 text-[10px] font-medium text-white">
                             <VideoIcon className="text-xs w-4 h-4" /> Video
                         </a>}

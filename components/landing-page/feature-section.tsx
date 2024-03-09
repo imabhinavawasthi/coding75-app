@@ -1,6 +1,7 @@
 import { Code2Icon, FileJson, SearchCheck, UploadCloud } from 'lucide-react'
 import Features from "../../public/features.png"
 import Image from 'next/image'
+import Link from 'next/link'
 
 const features = [
   {
@@ -51,13 +52,15 @@ export default function FeatureSection() {
                 </dl>
               </div>
             </div>
+            <Link className='hover:scale-75' href="dashboard">
             <Image
-              src={Features}
+              src="https://zettllhfmtvcunctalyo.supabase.co/storage/v1/object/public/resources/images/dashboard.png"
               alt="Product screenshot"
               className="w-[48rem] max-w-none rounded-xl shadow-2xl ring-1 ring-gray-400/10 sm:w-[57rem] md:-ml-4 lg:-ml-0"
               width={2432}
               height={1442}
             />
+            </Link>
           </div>
         </div>
       </div>

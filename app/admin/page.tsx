@@ -36,18 +36,14 @@ const Admin = () => {
   return (
     <>
       <div>
-        <Link href="/admin/opportunity">
-        Add Opportunity</Link>
-        <Link href="/admin/projects">
-        Add Projects</Link>
-        <Link href="/admin/problems">
-        Add Problems</Link>
-        <Link href="/admin/leetcode-potd">
-        Add Leetcode POTD</Link>
-        <Link href="/admin/codeforces">
-        Add Codeforces Problem</Link>
-        <Link href="/admin/codechef">
-        Add Codechef Problem</Link>
+      <section className="bg-white dark:bg-gray-900 mt-5">
+                <div className="px-4 mx-auto max-w-screen-xl">
+                    <div>
+                        <h2 className="mb-4 text-4xl text-center tracking-tight font-extrabold text-gray-900 dark:text-white">Admin <span style={{ color: "#27ae60" }}>Portal</span></h2>
+                        <p className="mb-8 text-center font-light text-gray-500 sm:text-xl dark:text-gray-400">Add Resources, Projects, Opportunities, Problems etc.</p>
+                    </div>
+                </div>
+            </section>
       </div>
     </>
 

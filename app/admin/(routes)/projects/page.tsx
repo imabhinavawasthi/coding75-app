@@ -126,7 +126,7 @@ const NewProject = () => {
                     <CardDescription>Add your new project in one-click.</CardDescription>
                 </CardHeader>
                 <CardContent>
-                    <form id="uploadproject">
+                    <form id="uploadproject" onSubmit={uploadProject}>
                         <div className="grid w-full items-center gap-4">
                             <div className="flex flex-col space-y-1.5">
                                 <Label htmlFor="name">Name*</Label>
@@ -192,12 +192,12 @@ const NewProject = () => {
                         </div>
                         <div className="mt-5">
                             {status == "" ? <>
-                                <Button type="submit" onClick={uploadProject}>Upload</Button>
+                                <Button type="submit" >Upload</Button>
                             </> : <>
                                 {status == "loading" ? <>
                                     <Button><Loader2 className="animate-spin h-4 w-4 mr-2" /> Loading</Button>
                                 </> : <>
-                                    <Button type="submit" className="mb-4" onClick={uploadProject}>Upload</Button>
+                                    <Button type="submit" className="mb-4" >Upload</Button>
                                     <ErrorBanner />
                                 </>}
                             </>}

@@ -60,6 +60,10 @@ const AddProblem = () => {
             alert("Wrong Password")
             return
         }
+        if(!date){
+            alert("Enter Date")
+            return
+        }
         setLoading(true)
         let slug_url = create_url_slug(problem_name)
         let dateEpoch
@@ -108,7 +112,7 @@ const AddProblem = () => {
                     Add Leetcode POTD
                 </h3>
                 <div className="mt-5 p-5 border-solid border-2 border-black rounded-lg">
-                    <form>
+                    <form onSubmit={addProblem}>
                         <div className="mt-2">
                             <input
                                 onChange={(e) => { setProblemName(e.target.value) }}
@@ -155,6 +159,7 @@ const AddProblem = () => {
                                         selected={date}
                                         onSelect={setDate}
                                         initialFocus
+                                        required
                                     />
                                 </PopoverContent>
                             </Popover>
@@ -177,7 +182,7 @@ const AddProblem = () => {
                                 id="editorial"
                                 className="block w-full rounded-md border-0 p-3 text-gray-900 ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                                 placeholder="Editorial"
-                                required />
+                                />
                         </div>
                         <div className="mt-2">
                             <p className="text-sm mb-1 ml-1">Select Companies</p>
@@ -230,7 +235,7 @@ const AddProblem = () => {
                                 ><Loading title="" /></Button>
                             </> : <>
                                 <Button
-                                    onClick={(e) => { addProblem(e) }}
+                                    type="submit"
                                 >Upload</Button></>}
                         </div>
                     </form>

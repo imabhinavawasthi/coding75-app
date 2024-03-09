@@ -1,6 +1,6 @@
 import UnderConstruction from "@/components/under-construction";
 
-const Roadmap = () => {
+const InterviewSheet = () => {
     return (
         <div>
             <UnderConstruction/>
@@ -8,4 +8,4 @@ const Roadmap = () => {
     );
 }
 
-export default Roadmap;
+export default InterviewSheet;

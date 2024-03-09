@@ -2,11 +2,11 @@ import { NavbarRoutes } from "@/app/(dashboard)/_components/sidebar/navbar-route
 
 import { MobileSidebar } from "./mobile-sidebar"
 
-export const Navbar = () => {
+export const Navbar = ({isLogo=false}:any) => {
   return (
     <div className="p-4 border-b h-full flex items-center bg-white shadow-sm" >
       <MobileSidebar />
-      <NavbarRoutes />
+      <NavbarRoutes isLogo={isLogo} />
     </div>
   )
 }

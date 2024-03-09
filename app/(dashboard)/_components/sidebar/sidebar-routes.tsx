@@ -1,6 +1,6 @@
 "use client";
 
-import { BarChart, BookText, Briefcase, Code2, ComputerIcon, GitFork, Layout, List, RocketIcon, Route, UserCheck, Users } from "lucide-react";
+import { BarChart, BookText, Briefcase, Code2, ComputerIcon, GitFork, Layout, List, RocketIcon, Route, ScrollText, UserCheck, Users } from "lucide-react";
 import { usePathname } from "next/navigation";
 
 import { SidebarItem } from "./sidebar-item";
@@ -11,20 +11,15 @@ const guestRoutes = [
     label: "Dashboard",
     href: "/dashboard",
   },
+  // {
+  //   icon: BookText,
+  //   label: "Resources",
+  //   href: "/resources",
+  // },
   {
-    icon: BookText,
-    label: "Resources",
-    href: "/resources",
-  },
-  {
-    icon: Route,
-    label: "Roadmaps",
-    href: "/roadmaps",
-  },
-  {
-    icon: Briefcase,
-    label: "Job/Internships",
-    href: "/opportunities",
+    icon: RocketIcon,
+    label: "DSA & CP",
+    href: "/dsa-cp",
   },
   {
     icon: Code2,
@@ -32,14 +27,24 @@ const guestRoutes = [
     href: "/projects",
   },
   {
-    icon: RocketIcon,
-    label: "DSA & CP",
-    href: "/dsa-cp",
+    icon: Briefcase,
+    label: "Job/Internships",
+    href: "/opportunities",
   },
   {
     icon: ComputerIcon,
     label: "CS Fundamentals",
     href: "/cs-fundamentals",
+  },
+  {
+    icon: UserCheck,
+    label: "Interview Preparation",
+    href: "/interview-preparation",
+  },
+  {
+    icon: ScrollText,
+    label: "Resume Builder",
+    href: "/resume",
   },
   {
     icon: GitFork,

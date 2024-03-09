@@ -1,6 +1,6 @@
 import UnderConstruction from "@/components/under-construction";
 
-const Roadmap = () => {
+const CPSpecialistSheet = () => {
     return (
         <div>
             <UnderConstruction/>
@@ -8,4 +8,4 @@ const Roadmap = () => {
     );
 }
 
-export default Roadmap;
+export default CPSpecialistSheet;

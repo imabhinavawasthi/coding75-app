@@ -23,41 +23,92 @@ import { Avatar, AvatarFallback, AvatarImage } from '../ui/avatar';
 
 const components: { title: string; href: string; description: string }[] = [
     {
-        title: "Alert Dialog",
-        href: "/docs/primitives/alert-dialog",
-        description:
-            "A modal dialog that interrupts the user with important content and expects a response.",
+      title: "CS Fundamentals",
+      href: "/cs-fundamentals",
+      description:
+        "Operating Systems, Computer Networks, Database Management Systems, and Object-Oriented Programming Interview Specific Resources.",
     },
     {
-        title: "Hover Card",
-        href: "/docs/primitives/hover-card",
-        description:
-            "For sighted users to preview content available behind a link.",
+      title: "Resume Builder",
+      href: "/resume",
+      description:
+        "Create an ATS Friendly Latex Resume 🚀",
     },
     {
-        title: "Progress",
-        href: "/docs/primitives/progress",
-        description:
-            "Displays an indicator showing the completion progress of a task, typically displayed as a progress bar.",
+      title: "System Design",
+      href: "/system-design",
+      description:
+        "Important System Design Topics for Interviews.",
     },
     {
-        title: "Scroll-area",
-        href: "/docs/primitives/scroll-area",
-        description: "Visually or semantically separates content.",
+      title: "Interview Preparation Guide",
+      href: "/interview-preparation/guide",
+      description: "Amazing Guide for Interview Preparation 🎯.",
+    },
+  ]
+  
+  const dsa: { title: string; href: string; description: string }[] = [
+    {
+      title: "Leetcode Daily Problem",
+      href: "/dsa-cp/leetcode-potd",
+      description:
+        "In-depth LeetCode POTD editorials for efficient problem-solving.",
     },
     {
-        title: "Tabs",
-        href: "/docs/primitives/tabs",
-        description:
-            "A set of layered sections of content—known as tab panels—that are displayed one at a time.",
+      title: "Codeforces Editorials",
+      href: "/dsa-cp/codeforces",
+      description:
+        "In-depth Codeforces editorials for efficient problem-solving.",
     },
     {
-        title: "Tooltip",
-        href: "/docs/primitives/tooltip",
-        description:
-            "A popup that displays information related to an element when the element receives keyboard focus or the mouse hovers over it.",
+      title: "CodeChef Editorials",
+      href: "/dsa-cp/codechef",
+      description:
+        "In-depth Codechef editorials for efficient problem-solving.",
     },
-]
+    {
+      title: "DSA Placement Sheet",
+      href: "/dsa-cp/interview-sheet",
+      description: "Amazing DSA Placement Sheet for Interview Preparation.",
+    },
+  ]
+  
+  const projects: { title: string; href: string; description: string }[] = [
+    {
+      title: "Basic Frontend Projects",
+      href: "/projects/basicfrontend",
+      description:
+        "Frontend Projects for Beginners with HTML, CSS and Javascript.",
+    },
+    {
+      title: "ReactJS Projects",
+      href: "/projects/reactjs",
+      description:
+        "Build interactive and responsive user interfaces using the powerful React library.",
+    },
+    {
+      title: "Next.js Projects",
+      href: "/projects/nextjs",
+      description:
+        "Server-side rendering, code splitting, and simplified routing for efficient web applications.",
+    },
+    {
+      title: "MERN Stack Projects",
+      href: "/projects/mern",
+      description: "Create dynamic full-stack web applications with MongoDB, Express, React, and Node.js.",
+    },
+    {
+      title: "Flutter Projects",
+      href: "/projects/flutter",
+      description:
+        "Craft beautiful and responsive cross-platform mobile applications with Flutter.",
+    },
+    {
+      title: "Machine Learning Projects",
+      href: "/projects/ml",
+      description: "Explore real-world applications, diverse algorithms, and hands-on experiences to master the art of AI.",
+    },
+  ]
 
 
 export default function HeaderSection() {
@@ -119,44 +170,82 @@ export default function HeaderSection() {
                         </div>
 
                         <div className="hidden z-40 md:block">
+                        <div className="lg:flex md:flex hidden justify-center items-center">
                             <NavigationMenu className='z-10 relative'>
                                 <NavigationMenuList>
                                     <NavigationMenuItem>
-                                        <NavigationMenuTrigger className={NavMenuCSS}>Components</NavigationMenuTrigger>
+                                        <NavigationMenuTrigger className='bg-transparent'>Coding Resources</NavigationMenuTrigger>
                                         <NavigationMenuContent>
-                                            <ul className="ul-no-list-style grid w-[400px] gap-3 p-4 md:w-[500px] md:grid-cols-2 lg:w-[600px] ">
-                                                {components.map((component) => (
-                                                    <ListItem
-                                                        className='ol-no-list-style'
-                                                        key={component.title}
-                                                        title={component.title}
-                                                        href={component.href}
-                                                    >
-                                                        {component.description}
-                                                    </ListItem>
-                                                ))}
+                                            <ul className="grid gap-3 p-4 md:w-[400px] lg:w-[500px] lg:grid-cols-[.75fr_1fr]">
+                                                <li className="row-span-3">
+                                                    <NavigationMenuLink asChild>
+                                                        <Link
+                                                            className="flex h-full w-full select-none flex-col justify-end rounded-md bg-gradient-to-b from-muted/50 to-muted p-6 no-underline outline-none focus:shadow-md"
+                                                            href="/community"
+                                                        >
+                                                            <div className="mb-2 mt-4 text-lg font-medium">
+                                                                coding75 Pro Community 🚀
+                                                            </div>
+                                                            <p className="text-sm leading-tight text-muted-foreground">
+                                                                Learn from the Experts, Engage with Peers, Be a Pro! 🎯
+                                                            </p>
+                                                        </Link>
+                                                    </NavigationMenuLink>
+                                                </li>
+                                                <ListItem description="Stay ahead in your coding career by exploring the vast array of opportunities." href="/opportunities" title="Internships 🎯" />
+                                                <ListItem description="Explore a diverse range of projects that span various domains, including web development, mobile app creation, machine learning, and more." href="/projects" title="Projects 👨🏻‍💻" />
+                                                <ListItem description="Empower your coding journey with a rich collection of Data Structures and Competitive Programming resources, thoughtfully assembled to guide coding enthusiasts of varying skill levels through their learning journey." href="/dsa-cp" title="Data Structures & Algorithms 🚀" />
                                             </ul>
                                         </NavigationMenuContent>
                                     </NavigationMenuItem>
                                     <NavigationMenuItem>
-                                        <NavigationMenuTrigger className={NavMenuCSS}>Components</NavigationMenuTrigger>
+                                        <NavigationMenuTrigger className='bg-transparent'>Interview Preparation</NavigationMenuTrigger>
                                         <NavigationMenuContent>
-                                            <ul className="ul-no-list-style grid w-[400px] gap-3 p-4 md:w-[500px] md:grid-cols-2 lg:w-[600px] ">
+                                            <ul className="grid w-[400px] gap-3 p-4 md:w-[500px] md:grid-cols-2 lg:w-[600px] ">
                                                 {components.map((component) => (
                                                     <ListItem
-                                                        className='ol-no-list-style'
                                                         key={component.title}
                                                         title={component.title}
                                                         href={component.href}
-                                                    >
-                                                        {component.description}
-                                                    </ListItem>
+                                                        description={component.description}
+                                                    />
+                                                ))}
+                                            </ul>
+                                        </NavigationMenuContent>
+                                    </NavigationMenuItem>
+                                    <NavigationMenuItem className="hidden lg:flex">
+                                        <NavigationMenuTrigger className='bg-transparent'>DSA & CP</NavigationMenuTrigger>
+                                        <NavigationMenuContent>
+                                            <ul className="grid w-[400px] gap-3 p-4 md:w-[500px] md:grid-cols-2 lg:w-[600px] ">
+                                                {dsa.map((component) => (
+                                                    <ListItem
+                                                        key={component.title}
+                                                        title={component.title}
+                                                        href={component.href}
+                                                        description={component.description}
+                                                    />
+                                                ))}
+                                            </ul>
+                                        </NavigationMenuContent>
+                                    </NavigationMenuItem>
+                                    <NavigationMenuItem className="hidden lg:flex">
+                                        <NavigationMenuTrigger className='bg-transparent'>Projects</NavigationMenuTrigger>
+                                        <NavigationMenuContent>
+                                            <ul className="grid w-[400px] gap-3 p-4 md:w-[500px] md:grid-cols-2 lg:w-[600px] ">
+                                                {projects.map((component) => (
+                                                    <ListItem
+                                                        key={component.title}
+                                                        title={component.title}
+                                                        href={component.href}
+                                                        description={component.description}
+                                                    />
                                                 ))}
                                             </ul>
                                         </NavigationMenuContent>
                                     </NavigationMenuItem>
                                 </NavigationMenuList>
                             </NavigationMenu>
+                        </div>
                         </div>
 
                         <div className="flex items-center gap-4">
@@ -270,28 +359,19 @@ export default function HeaderSection() {
 }
 
 
-const ListItem = React.forwardRef<
-    React.ElementRef<"a">,
-    React.ComponentPropsWithoutRef<"a">
->(({ className, title, children, ...props }, ref) => {
+const ListItem = (({ title, href, description }) => {
     return (
-        <li>
-            <NavigationMenuLink asChild>
-                <a
-                    ref={ref}
-                    className={cn(
-                        "block select-none space-y-1 rounded-md p-3 leading-none no-underline outline-none transition-colors hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground",
-                        className
-                    )}
-                    {...props}
-                >
-                    <div className="text-sm font-medium leading-none">{title}</div>
-                    <p className="line-clamp-2 text-sm leading-snug text-muted-foreground">
-                        {children}
-                    </p>
-                </a>
-            </NavigationMenuLink>
-        </li>
+      <li>
+        <NavigationMenuLink asChild>
+          <Link
+            href={href}
+            className="block select-none space-y-1 rounded-md p-3 leading-none no-underline outline-none transition-colors hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground">
+            <div className="text-sm font-medium leading-none">{title}</div>
+            <p className="line-clamp-2 text-sm leading-snug text-muted-foreground">
+              {description}
+            </p>
+          </Link>
+        </NavigationMenuLink>
+      </li>
     )
-})
-ListItem.displayName = "ListItem"
+  })
