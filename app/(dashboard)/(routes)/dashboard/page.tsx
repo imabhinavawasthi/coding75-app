@@ -100,7 +100,7 @@ export default function DashboardPage() {
         <div className="mt-10">
           <p className="mb-2 text-md text-gray-600 font-semibold">coding75 Exclusives</p>
           <div className="grid gap-4 md:grid-cols-3">
-            <div>
+            <div className="hidden md:block">
               <ImageFlipCard
                 image1="https://zettllhfmtvcunctalyo.supabase.co/storage/v1/object/public/resources/images/resume-1.png"
                 image2="https://zettllhfmtvcunctalyo.supabase.co/storage/v1/object/public/resources/images/resume-2.png"
@@ -110,15 +110,14 @@ export default function DashboardPage() {
                 href_text="Build Resume"
               />
             </div>
-            <div className="col-span-2 mx-10">
+            <div className="col-span-2 md:mx-10">
               <Card>
                 <CardHeader>
-                  <h2 className="text-base font-semibold leading-7 text-primary-600">1:1 Mentorship Community 🚀</h2>
+                  <h2 className="text-base font-semibold leading-7 text-primary-600">Learn from the Experts, Engage with Peers, Be a Pro! 🚀</h2>
                   <p className="mt-2 text-3xl font-bold tracking-tight text-gray-900 sm:text-4xl flex items-center">coding75 Pro <Rocket className="ml-2 text-primary-600" /></p>
                 </CardHeader>
                 <CardContent>
                   <div>
-
                     <dl className="space-y-4 text-base leading-7 text-gray-600 lg:max-w-none">
                       {features.map((feature) => (
                         <div key={feature.name} className="relative pl-9">
@@ -130,7 +129,7 @@ export default function DashboardPage() {
                         </div>
                       ))}
                     </dl>
-                    <Link href="/community">
+                    <Link href="/pro">
                        <Button className="flex items-center mt-5 bg-primary-600 hover:bg-primary-700 text-white">
                         Join coding75 Pro <ChevronRight className="h-4 w-4 animate-ping"/>
                        </Button>

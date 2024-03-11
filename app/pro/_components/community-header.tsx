@@ -122,11 +122,11 @@ export default function CommunityHeader() {
                 </div>
                 <div className="py-16 relative px-4 mx-auto max-w-screen-xl text-center lg:py-16 lg:px-12">
                     <div className="inline-flex justify-between items-center py-1 px-1 pr-4 mb-7 text-sm text-gray-700 bg-gray-100 rounded-full dark:bg-gray-800 dark:text-white hover:bg-gray-200 dark:hover:bg-gray-700" role="alert">
-                        <span className="text-xs bg-primary-600 rounded-full text-white px-4 py-1.5 mr-3">Recently Added</span> <span className="text-sm font-medium">1:1 Mock Interviews </span>
+                        <span className="text-xs bg-primary-600 rounded-full text-white px-4 py-1.5 mr-3">Recently Added</span> <span className="text-sm font-medium">1:1 Mock Interviews</span>
                         <Flame className='h-4 w-4 ml-3' />
                     </div>
                     <h1 className="mb-4 text-4xl font-extrabold tracking-tight leading-none text-gray-900 md:text-5xl lg:text-6xl dark:text-white">
-                        <strong><span className='text-transparent bg-clip-text hover:animate-background bg-gradient-to-r from-green-500 via-blue-500 to-purple-600 transition hover:bg-[length:400%_400%] hover:[animation-duration:_4s] hover:cursor-pointer'>Coding75 Pro Community.</span></strong>
+                        <strong><span className='text-transparent bg-clip-text hover:animate-background bg-gradient-to-r from-green-500 via-blue-500 to-purple-600 transition hover:bg-[length:400%_400%] hover:[animation-duration:_4s] hover:cursor-pointer'>Coding75 Pro   </span>  🚀.</strong>
                     </h1>
                     <p className="mb-8 text-lg font-normal text-gray-500 lg:text-xl sm:px-16 xl:px-48 dark:text-gray-400">Learn from the <strong>Experts</strong>, Engage with <strong>Peers</strong>, Be a <strong>Pro</strong>!</p>
                     <div className="flex flex-col mb-8 lg:mb-16 space-y-4 sm:flex-row sm:justify-center sm:space-y-0 sm:space-x-4">

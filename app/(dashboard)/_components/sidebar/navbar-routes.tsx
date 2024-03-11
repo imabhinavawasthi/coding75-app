@@ -9,12 +9,11 @@ import {
   NavigationMenuLink,
   NavigationMenuList,
   NavigationMenuTrigger,
-  navigationMenuTriggerStyle,
 } from "@/components/ui/navigation-menu"
 import React, { useEffect, useState } from "react";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
 import supabase from "@/supabase";
-import { Bell, BookMarked, ChevronDown, LogIn, LogOut, Megaphone, RotateCcw, RotateCw, User } from "lucide-react";
+import { Bell, BookMarked, LogIn, LogOut, RotateCw, User } from "lucide-react";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -128,10 +127,9 @@ const projects: { title: string; href: string; description: string }[] = [
 export const NavbarRoutes = ({isLogo=false}:any) => {
   const [user, setUser] = useState<any>(null)
   const pathname = usePathname();
-  const router = useRouter()
   const [status, setStatus] = useState("loading")
 
-  async function handleLogOut(e) {
+  async function handleLogOut(e: any) {
     e.preventDefault()
     toast.info('Logging you out...')
     try {
@@ -243,10 +241,10 @@ export const NavbarRoutes = ({isLogo=false}:any) => {
                     <NavigationMenuLink asChild>
                       <Link
                         className="flex h-full w-full select-none flex-col justify-end rounded-md bg-gradient-to-b from-muted/50 to-muted p-6 no-underline outline-none focus:shadow-md"
-                        href="/community"
+                        href="/pro"
                       >
                         <div className="mb-2 mt-4 text-lg font-medium">
-                          coding75 Pro Community 🚀
+                          coding75 Pro 🚀
                         </div>
                         <p className="text-sm leading-tight text-muted-foreground">
                         Learn from the Experts, Engage with Peers, Be a Pro! 🎯

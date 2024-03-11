@@ -43,7 +43,7 @@ export const SidebarItem = ({
           />
           {label}
           {
-            label=="Community"&&
+            href=="/pro"&&
             <>
             <span className="inline-flex items-center rounded-md bg-amber-50 px-2 py-1 text-xs font-medium text-amber-700 ring-1 ring-inset ring-amber-700/10">Pro <Flame className="w-4 h-4 ml-1"/></span>
             </>

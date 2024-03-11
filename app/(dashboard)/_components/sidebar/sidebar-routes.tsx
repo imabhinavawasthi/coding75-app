@@ -1,6 +1,6 @@
 "use client";
 
-import { BarChart, BookText, Briefcase, Code2, ComputerIcon, GitFork, Layout, List, RocketIcon, Route, ScrollText, UserCheck, Users } from "lucide-react";
+import { BarChart, BookText, Briefcase, Code2, ComputerIcon, Flame, GitFork, Layout, List, RocketIcon, Route, ScrollText, UserCheck, Users } from "lucide-react";
 import { usePathname } from "next/navigation";
 
 import { SidebarItem } from "./sidebar-item";
@@ -52,9 +52,9 @@ const guestRoutes = [
     href: "/system-design",
   },
   {
-    icon: Users,
-    label: "Community",
-    href: "/community",
+    icon: Flame,
+    label: "Coding 75",
+    href: "/pro",
   },
 ];
 

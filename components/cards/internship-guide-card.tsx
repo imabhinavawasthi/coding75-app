@@ -26,7 +26,7 @@ const InternshipGuideCard = () => {
                         Internship guide for students and freshers - get opportunities with ease!
                         </p>
 
-                        <a href="/community/internship-guide" className="mt-4 font-bold flex">Get it now <Download/> </a>
+                        <a href="/interview-preparation/guide" className="mt-4 font-bold flex">Get it now <Download/> </a>
                     </div>
                 </div>
             </div>

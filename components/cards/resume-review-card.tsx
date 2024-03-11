@@ -14,19 +14,19 @@ const ResumeReviewCard = () => {
                     >
                         <FileCheck2 className="h-10 w-10 sm:h-12 sm:w-12"/>
 
-                        <h2 className="mt-4 text-xl font-medium sm:text-2xl">Resume Review</h2>
+                        <h2 className="mt-4 text-xl font-medium sm:text-2xl">Resume Builder</h2>
                     </div>
 
                     <div
                         className="absolute p-4 opacity-0 transition-opacity group-hover:relative group-hover:opacity-100 sm:p-6 lg:p-8"
                     >
-                        <h3 className="mt-4 text-xl font-medium sm:text-2xl">Get You Resume Reviewed</h3>
+                        <h3 className="mt-4 text-xl font-medium sm:text-2xl">Build Resume & Get It Reviewed</h3>
 
                         <p className="mt-4 text-sm sm:text-base">
                         Polish your resume for tech opportunities - students and freshers!
                         </p>
 
-                        <a href="/community/resume-review" className="mt-4 font-bold flex">Upload <Upload/> </a>
+                        <a href="/resume" className="mt-4 font-bold flex">Build <Upload/> </a>
                     </div>
                 </div>
             </div>
