@@ -1,7 +1,7 @@
 "use client"
 
 import { cn } from '@/lib/utils';
-import { Award, Briefcase, Code2, ExternalLink, Minus, Plus, RotateCw, SaveAll, School, ScrollText, Trash2Icon, User2, Workflow } from 'lucide-react';
+import { Award, Briefcase, Check, Code2, ExternalLink, Minus, Plus, RotateCw, SaveAll, School, ScrollText, Trash2Icon, UploadCloud, User2, Workflow } from 'lucide-react';
 import {
     Card,
     CardContent,
@@ -32,36 +32,43 @@ const resumeButtons = [
         icon: User2,
         label: "Personal Details",
         tab: "personal-details",
+        changeKey: "personalDetailsChange"
     },
     {
         icon: School,
         label: "Education",
         tab: "education",
+        changeKey: "educationDetailsChange"
     },
     {
         icon: Briefcase,
         label: "Experience",
         tab: "experience",
+        changeKey: "experienceDetailsChange"
     },
     {
         icon: Code2,
         label: "Projects",
         tab: "projects",
+        changeKey: "projectDetailsChange"
     },
     {
         icon: Award,
         label: "Achievements",
         tab: "achievements",
+        changeKey: "achievementDetailsChange"
     },
     {
         icon: Workflow,
         label: "Skills",
         tab: "skills",
+        changeKey: "skillDetailsChange"
     },
     {
         icon: Plus,
-        label: "Extra Curricular Activities",
+        label: "Extra Curricular",
         tab: "extra-curricular",
+        changeKey: "extraCurricularDetailsChange"
     },
 ];
 
@@ -73,6 +80,7 @@ interface statusType {
     projectDetails: "pending" | "loading" | "done" | "error",
     achievementDetails: "pending" | "loading" | "done" | "error",
     extraCurricularDetails: "pending" | "loading" | "done" | "error",
+    skillDetails: "pending" | "loading" | "done" | "error",
 }
 
 interface updateChangeType {
@@ -82,6 +90,7 @@ interface updateChangeType {
     projectDetailsChange: boolean;
     achievementDetailsChange: boolean;
     extraCurricularDetailsChange: boolean;
+    skillDetailsChange: boolean;
 }
 
 interface personalDetailsType {
@@ -134,6 +143,13 @@ interface extraCurricularDetailsType {
     details: any;
 }
 
+interface skillDetailsType {
+    technologiesAndFrameworks: any;
+    languages: any;
+    developerTools: any;
+    relevantCoursework: any;
+}
+
 const Resume = () => {
     const [currentTab, setCurrentTab] = useState('personal-details')
     const [user, setUser] = useState<any>(null)
@@ -144,7 +160,8 @@ const Resume = () => {
         experienceDetails: "pending",
         projectDetails: "pending",
         achievementDetails: "pending",
-        extraCurricularDetails: "pending"
+        extraCurricularDetails: "pending",
+        skillDetails: "pending"
     })
 
     const [updateChange, setUpdateChange] = useState<updateChangeType>(
@@ -154,7 +171,8 @@ const Resume = () => {
             experienceDetailsChange: false,
             projectDetailsChange: false,
             achievementDetailsChange: false,
-            extraCurricularDetailsChange: false
+            extraCurricularDetailsChange: false,
+            skillDetailsChange: false
         }
     )
 
@@ -227,6 +245,15 @@ const Resume = () => {
             details: [
                 undefined
             ]
+        }
+    )
+
+    const [skillDetails, setSkillDetails] = useState<skillDetailsType>(
+        {
+            technologiesAndFrameworks: undefined,
+            languages: undefined,
+            developerTools: undefined,
+            relevantCoursework: undefined
         }
     )
 
@@ -500,6 +527,33 @@ const Resume = () => {
         }
     }
 
+    async function loadSkillDetails(user_email) {
+        try {
+            let { data, error } = await supabase
+                .from('resume-details')
+                .select("skills")
+                .eq('user_email', user_email);
+
+            if (error) {
+                console.log(error);
+                setStatus({
+                    ...status,
+                    loadData: "error"
+                })
+            } else {
+                if (data && data.length > 0) {
+                    setSkillDetails(data[0]?.['skills'])
+                }
+            }
+        } catch (e) {
+            console.log(e);
+            setStatus({
+                ...status,
+                loadData: "error"
+            })
+        }
+    }
+
     async function loadDetails() {
         setStatus({
             ...status,
@@ -566,6 +620,7 @@ const Resume = () => {
                     loadProjectsDetails(user_email)
                     loadAchievementDetails(user_email)
                     loadExtraCurricularDetails(user_email)
+                    loadSkillDetails(user_email)
                     setStatus({
                         ...status,
                         loadData: "done"
@@ -904,6 +959,52 @@ const Resume = () => {
         })
     }
 
+    async function handleSubmitSkillDetails(e) {
+        e.preventDefault()
+        setStatus({
+            ...status,
+            skillDetails: "loading"
+        })
+        try {
+            const { data, error } = await supabase
+                .from('resume-details')
+                .update([
+                    {
+                        skills: skillDetails
+                    }
+                ])
+                .eq('user_email', user.email);
+
+            if (error) {
+                console.log(error);
+                toast.error("Something went wrong")
+                setStatus({
+                    ...status,
+                    skillDetails: "error"
+                })
+                return;
+            } else {
+                toast.info("Skill Details Saved")
+            }
+        } catch (e) {
+            console.log(e);
+            toast.error("Something went wrong")
+            setStatus({
+                ...status,
+                skillDetails: "error"
+            })
+            return;
+        }
+        setUpdateChange({
+            ...updateChange,
+            skillDetailsChange: false
+        })
+        setStatus({
+            ...status,
+            skillDetails: "done"
+        })
+    }
+
     return (
         <>
             {/* <div>
@@ -966,10 +1067,23 @@ const Resume = () => {
                                                 <div>
                                                     <ul className="flex-column space-y space-y-4 text-sm font-medium text-gray-500 dark:text-gray-400 md:me-4 mb-4 md:mb-0">
                                                         {resumeButtons.map((tab, index) => (
-                                                            <li key={index}>
+                                                            <li className='w-full' key={index}>
                                                                 <button onClick={() => { setCurrentTab(tab.tab) }} className={cn("hover:border hoverborder-gray-600 inline-flex items-center px-4 py-3 rounded-lg hover:text-gray-900 bg-gray-50 hover:bg-gray-100 w-full dark:bg-gray-800 dark:hover:bg-gray-700 dark:hover:text-white", currentTab == tab.tab && "hover:text-primary-900 text-primary-800 bg-primary-100 hover:bg-primary-200 border border-primary-600")}>
                                                                     <tab.icon className="w-5 h-5 me-2" />
                                                                     {tab.label}
+                                                                    <span className='text-xs text-right flex ml-auto'>
+                                                                        {updateChange[tab.changeKey] ? <>
+                                                                            <span className='text-yellow-600 flex items-center'>
+                                                                            <UploadCloud className='h-4 w-4 mr-1' /> unsaved
+                                                                            </span>
+                                                                        </>:
+                                                                        <>
+                                                                        <span className='text-green-600 flex items-center'>
+                                                                        <Check className='h-4 w-4 mr-1' /> saved
+                                                                        </span>
+                                                                        </>
+                                                                        }
+                                                                    </span>
                                                                 </button>
                                                             </li>
                                                         ))}
@@ -2129,6 +2243,115 @@ const Resume = () => {
                                                                         className='text-sm text-blue-600 flex items-center'>
                                                                         <Plus className='mr-1 h-3 w-3' /> Add New Activity
                                                                     </button>
+                                                                </div>
+                                                            </div>
+                                                        </CardContent>
+                                                    </Card>
+                                                </form>
+                                            }
+                                            {
+                                                currentTab == "skills" &&
+                                                <form onSubmit={handleSubmitSkillDetails}>
+                                                    <Card className="w-full shadow-lg rounded-2xl min-h-screen">
+                                                        <CardHeader>
+                                                            <div className="flex">
+                                                                <div>
+                                                                    <CardTitle className='mb-2'>Skill Details</CardTitle>
+                                                                    <CardDescription>Enter your skill details.</CardDescription>
+                                                                </div>
+                                                                <div className='flex-grow'></div>
+                                                                <div className='flex items-center justify-end'>
+                                                                    {
+                                                                        updateChange.skillDetailsChange &&
+                                                                        <p className='mr-2 text-gray-600 text-sm'>unsaved changes *</p>
+                                                                    }
+                                                                    {
+                                                                        status.skillDetails == "loading" ?
+                                                                            <>
+                                                                                <Button className='bg-primary-600 hover:bg-primary-700' variant="basic"><RotateCw className='animate-spin h-4 w-4 mr-2' /> Saving...</Button>
+                                                                            </>
+                                                                            :
+                                                                            <>
+                                                                                <Button className='bg-primary-600 hover:bg-primary-700' variant="basic"><SaveAll className='h-4 w-4 mr-2' /> Save</Button>
+                                                                            </>
+                                                                    }
+                                                                </div>
+                                                            </div>
+                                                        </CardHeader>
+                                                        <Separator />
+                                                        <CardContent className='mt-5'>
+                                                            <div className="grid w-full items-center gap-4">
+                                                                <div className="flex flex-col space-y-1.5">
+                                                                    <Label htmlFor="techs">Technologies/Frameworks*</Label>
+                                                                    <Input
+                                                                        value={skillDetails?.technologiesAndFrameworks}
+                                                                        onChange={(e) => {
+                                                                            setUpdateChange(
+                                                                                {
+                                                                                    ...updateChange,
+                                                                                    skillDetailsChange: true
+                                                                                }
+                                                                            )
+                                                                            setSkillDetails({
+                                                                                ...skillDetails,
+                                                                                technologiesAndFrameworks: e.target.value
+                                                                            })
+                                                                        }}
+                                                                        required type='text' id="techs" placeholder="ReactJS, NodeJS, Bootstrap CSS, Tailwind CSS" />
+                                                                </div>
+                                                                <div className="flex flex-col space-y-1.5">
+                                                                    <Label htmlFor="techlanguages">Languagess*</Label>
+                                                                    <Input
+                                                                        value={skillDetails?.languages}
+                                                                        onChange={(e) => {
+                                                                            setUpdateChange(
+                                                                                {
+                                                                                    ...updateChange,
+                                                                                    skillDetailsChange: true
+                                                                                }
+                                                                            )
+                                                                            setSkillDetails({
+                                                                                ...skillDetails,
+                                                                                languages: e.target.value
+                                                                            })
+                                                                        }}
+                                                                        required type='text' id="techlanguages" placeholder="C++, HTML/CSS, JavaScript" />
+                                                                </div>
+                                                                <div className="flex flex-col space-y-1.5">
+                                                                    <Label htmlFor="devtools">Developer Tools*</Label>
+                                                                    <Input
+                                                                        value={skillDetails?.developerTools}
+                                                                        onChange={(e) => {
+                                                                            setUpdateChange(
+                                                                                {
+                                                                                    ...updateChange,
+                                                                                    skillDetailsChange: true
+                                                                                }
+                                                                            )
+                                                                            setSkillDetails({
+                                                                                ...skillDetails,
+                                                                                developerTools: e.target.value
+                                                                            })
+                                                                        }}
+                                                                        required type='text' id="devtools" placeholder="VS Code, Figma, Firebase, Github, MongoDB" />
+                                                                </div>
+                                                                <div className="flex flex-col space-y-1.5">
+                                                                    <Label htmlFor="coursework">Relevant Coursework*</Label>
+                                                                    <Input
+                                                                        value={skillDetails?.relevantCoursework}
+                                                                        onChange={(e) => {
+                                                                            setUpdateChange(
+                                                                                {
+                                                                                    ...updateChange,
+                                                                                    skillDetailsChange: true
+                                                                                }
+                                                                            )
+                                                                            setSkillDetails({
+                                                                                ...skillDetails,
+                                                                                relevantCoursework: e.target.value
+                                                                            })
+                                                                        }}
+                                                                        required type='text' id="coursework" placeholder="Data Structures, Algorithms, Object Oriented Programming, Computer Networks" />
                                                                 </div>
                                                             </div>
                                                         </CardContent>
