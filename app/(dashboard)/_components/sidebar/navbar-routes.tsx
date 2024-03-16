@@ -33,6 +33,7 @@ import {
 import { toast } from "sonner";
 import { usePathname, useRouter } from "next/navigation";
 import { Button } from "@/components/ui/button";
+import { InstagramLogoIcon, LinkedInLogoIcon } from "@radix-ui/react-icons";
 
 const components: { title: string; href: string; description: string }[] = [
   {
@@ -307,6 +308,22 @@ export const NavbarRoutes = ({isLogo=false}:any) => {
         </NavigationMenu>
       </div>
       <div className="flex justify-end items-center gap-x-2 ml-auto mr-5">
+      <div className="mr-5">
+          <DropdownMenu>
+              <div className="relative">
+              <a href="/" target="_blank"><LinkedInLogoIcon className="w-6 h-6 text-blue-600"/></a>
+              </div>
+          </DropdownMenu>
+
+        </div>
+        <div className="mr-5">
+          <DropdownMenu>
+              <div className="relative">
+              <a href="/" target="_blank"><InstagramLogoIcon className="w-6 h-6 text-blue-600"/></a>
+              </div>
+          </DropdownMenu>
+
+        </div>
         <div className="mr-5">
           <DropdownMenu>
             <DropdownMenuTrigger asChild>
@@ -358,7 +375,6 @@ export const NavbarRoutes = ({isLogo=false}:any) => {
                     {/* <DropdownMenuLabel className="font-semibold"><Badge variant="basic" className="px-2 py-1">Hello, {user?.["user_metadata"]["full_name"]} 👋🏻</Badge></DropdownMenuLabel> */}
                     {/* <DropdownMenuSeparator /> */}
                     <Link href="/profile"><DropdownMenuItem className="cursor-pointer"><User className="w-4 h-4 mr-2" /> Profile</DropdownMenuItem></Link>
-                    <Link href="/profile/certificates"><DropdownMenuItem className="cursor-pointer"><BookMarked className="w-4 h-4 mr-2" /> Certificates</DropdownMenuItem></Link>
                     <DropdownMenuSeparator />
                     <DropdownMenuItem onClick={handleLogOut} className="cursor-pointer text-red-600"><LogOut className="w-4 h-4 mr-2" /> Logout</DropdownMenuItem>
                   </DropdownMenuContent>

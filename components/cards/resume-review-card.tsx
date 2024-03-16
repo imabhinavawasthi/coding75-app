@@ -1,4 +1,4 @@
-import { FileCheck2, Upload } from "lucide-react";
+import { FileCheck2, Rocket, Upload } from "lucide-react";
 
 const ResumeReviewCard = () => {
     return (
@@ -12,7 +12,7 @@ const ResumeReviewCard = () => {
                     <div
                         className="p-4 !pt-0 transition-opacity group-hover:absolute group-hover:opacity-0 sm:p-6 lg:p-8"
                     >
-                        <FileCheck2 className="h-10 w-10 sm:h-12 sm:w-12"/>
+                        <FileCheck2 className="h-10 w-10 sm:h-12 sm:w-12" />
 
                         <h2 className="mt-4 text-xl font-medium sm:text-2xl">Resume Builder</h2>
                     </div>
@@ -23,10 +23,10 @@ const ResumeReviewCard = () => {
                         <h3 className="mt-4 text-xl font-medium sm:text-2xl">Build Resume & Get It Reviewed</h3>
 
                         <p className="mt-4 text-sm sm:text-base">
-                        Polish your resume for tech opportunities - students and freshers!
+                            Polish your resume for tech opportunities - students and freshers!
                         </p>
 
-                        <a href="/resume" className="mt-4 font-bold flex">Build <Upload/> </a>
+                        <a href="/resume" className="mt-4 font-bold flex">Build <Rocket className="ml-2" /> </a>
                     </div>
                 </div>
             </div>

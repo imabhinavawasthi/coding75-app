@@ -15,9 +15,7 @@ const InterviewPreparation = () => {
                     />
             <div className="mt-3">
                 <div className="grid h-full grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-                <div>
-                        <ProductCard icon={BookText} title={"Interview Preparation Guide"} description={"Perfect Guide for Interview Preparation 🔥"} href={"/interview-preparation/guide"} tags={["Roadmap", "Guidance", "Interview Experience"]} />
-                    </div>
+                
                     <div>
                         <ProductCard icon={Rocket} title={"DSA Resources"} description={"Top Interview DSA Problems"} href={"/dsa-cp"} tags={["Problem Sheets", "DSA Guide", "Company Wise Problems"]} />
                     </div>
@@ -29,6 +27,9 @@ const InterviewPreparation = () => {
                     </div>
                     <div>
                         <ProductCard icon={Monitor} title={"CS Fundamentals"} description={"Curated Notes and Resources for CS Subjects"} href={"/cs-fundamentals"} tags={["Operating System", "Computer Networks", "DBMS", "OOPs"]} />
+                    </div>
+                    <div>
+                        <ProductCard icon={BookText} title={"Interview Preparation Guide"} description={"Perfect Guide for Interview Preparation 🔥"} href={"/interview-preparation/guide"} tags={["Roadmap", "Guidance", "Interview Experience"]} />
                     </div>
                     <div>
                         <ProductCard icon={GitBranch} title={"System Design"} description={"Important System Design Topics for Interviews"} href={"/system-design"} tags={["Low Level Design", "High Level Design", "Interview Questions"]} />

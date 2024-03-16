@@ -1,7 +1,7 @@
 'use client'
 
 import { useState, useRef, useEffect } from 'react'
-import Image, { StaticImageData } from 'next/image'
+import Image from 'next/image'
 import { Transition } from '@headlessui/react'
 
 interface Testimonial {
@@ -34,7 +34,7 @@ export default function FancyTestimonialsSlider({ testimonials }: { testimonials
   }, [])  
 
   return (
-    <div className="w-full max-w-3xl mx-auto text-center mt-10">
+    <div className="w-full max-w-3xl mx-auto overflow-hidden text-center mt-10">
       {/* Testimonial image */}
       <div className="relative h-32">
         <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[480px] h-[480px] pointer-events-none before:absolute before:inset-0 before:bg-gradient-to-b before:from-primary-300/25 before:via-primary-300/5 before:via-25% before:to-primary-500/0 before:to-75% before:rounded-full before:-z-10">

@@ -48,10 +48,10 @@ const Footer = () => {
                                 <h2 className="mb-6 text-sm font-semibold text-gray-900 uppercase dark:text-white">Legal</h2>
                                 <ul className="text-gray-600 dark:text-gray-400">
                                     <li className="mb-4">
-                                        <Link href="#" className="hover:underline">Privacy Policy</Link>
+                                        <a target="_blank" href="https://crackdsa.com/privacy/" className="hover:underline">Privacy Policy</a>
                                     </li>
                                     <li>
-                                        <Link href="#" className="hover:underline">Terms &amp; Conditions</Link>
+                                        <a target="_blank" href="https://crackdsa.com/terms/" className="hover:underline">Terms &amp; Conditions</a>
                                     </li>
                                 </ul>
                             </div>

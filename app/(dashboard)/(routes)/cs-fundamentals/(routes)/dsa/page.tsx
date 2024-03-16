@@ -1,6 +1,6 @@
 import UnderConstruction from "@/components/under-construction";
 
-const ComputerNetworks = () => {
+const DSA = () => {
     return (
         <>
         <UnderConstruction/>
@@ -8,4 +8,4 @@ const ComputerNetworks = () => {
     );
 }
 
-export default ComputerNetworks;
+export default DSA;

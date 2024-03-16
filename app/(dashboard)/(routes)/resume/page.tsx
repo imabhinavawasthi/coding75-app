@@ -1,7 +1,7 @@
 "use client"
 
 import { cn } from '@/lib/utils';
-import { Award, Briefcase, Check, Code2, ExternalLink, Minus, Plus, RotateCw, SaveAll, School, ScrollText, Trash2Icon, UploadCloud, User2, Workflow } from 'lucide-react';
+import { AlertCircle, Award, Briefcase, Check, Code2, ExternalLink, Minus, Plus, RotateCw, SaveAll, School, ScrollText, Trash2Icon, UploadCloud, User2, Workflow } from 'lucide-react';
 import {
     Card,
     CardContent,
@@ -26,49 +26,57 @@ import {
     TooltipProvider,
     TooltipTrigger,
 } from "@/components/ui/tooltip"
+import { createResume } from './make-resume';
 
 const resumeButtons = [
     {
         icon: User2,
         label: "Personal Details",
         tab: "personal-details",
-        changeKey: "personalDetailsChange"
+        changeKey: "personalDetailsChange",
+        completeKey: "personalDetailsComplete"
     },
     {
         icon: School,
         label: "Education",
         tab: "education",
-        changeKey: "educationDetailsChange"
+        changeKey: "educationDetailsChange",
+        completeKey: "educationDetailsComplete"
     },
     {
         icon: Briefcase,
         label: "Experience",
         tab: "experience",
-        changeKey: "experienceDetailsChange"
+        changeKey: "experienceDetailsChange",
+        completeKey: "experienceDetailsComplete"
     },
     {
         icon: Code2,
         label: "Projects",
         tab: "projects",
-        changeKey: "projectDetailsChange"
+        changeKey: "projectDetailsChange",
+        completeKey: "projectDetailsComplete"
     },
     {
         icon: Award,
         label: "Achievements",
         tab: "achievements",
-        changeKey: "achievementDetailsChange"
+        changeKey: "achievementDetailsChange",
+        completeKey: "achievementDetailsComplete"
     },
     {
         icon: Workflow,
         label: "Skills",
         tab: "skills",
-        changeKey: "skillDetailsChange"
+        changeKey: "skillDetailsChange",
+        completeKey: "skillDetailsComplete"
     },
     {
         icon: Plus,
         label: "Extra Curricular",
         tab: "extra-curricular",
-        changeKey: "extraCurricularDetailsChange"
+        changeKey: "extraCurricularDetailsChange",
+        completeKey: "extraCurricularDetailsComplete"
     },
 ];
 
@@ -91,6 +99,17 @@ interface updateChangeType {
     achievementDetailsChange: boolean;
     extraCurricularDetailsChange: boolean;
     skillDetailsChange: boolean;
+}
+
+interface completeType {
+    personalDetailsComplete: boolean;
+    educationDetailsComplete: boolean;
+    experienceDetailsComplete: boolean;
+    projectDetailsComplete: boolean;
+    achievementDetailsComplete: boolean;
+    extraCurricularDetailsComplete: boolean;
+    skillDetailsComplete: boolean;
+    loading: boolean;
 }
 
 interface personalDetailsType {
@@ -173,6 +192,19 @@ const Resume = () => {
             achievementDetailsChange: false,
             extraCurricularDetailsChange: false,
             skillDetailsChange: false
+        }
+    )
+
+    const [complete, setComplete] = useState<completeType>(
+        {
+            personalDetailsComplete: true,
+            educationDetailsComplete: true,
+            experienceDetailsComplete: true,
+            projectDetailsComplete: true,
+            achievementDetailsComplete: true,
+            extraCurricularDetailsComplete: true,
+            skillDetailsComplete: true,
+            loading: true
         }
     )
 
@@ -554,6 +586,21 @@ const Resume = () => {
         }
     }
 
+    useEffect(()=>{
+        setComplete(
+            {
+                personalDetailsComplete: personalDetails?.fullName!=undefined ? true : false,
+                educationDetailsComplete: (educationDetails?.length > 0 && educationDetails?.[0].universityName != undefined) ? true : false,
+                experienceDetailsComplete: (experienceDetails?.length > 0 && experienceDetails?.[0].companyName != undefined) ? true : false,
+                projectDetailsComplete: (projectDetails?.length > 0 && projectDetails?.[0]?.projectName != undefined) ? true : false,
+                achievementDetailsComplete: (achievementDetails?.details?.length==1&& achievementDetails?.details?.[0] == undefined) ? true : false,
+                extraCurricularDetailsComplete: (extraCurricularDetails?.details?.length==1&& extraCurricularDetails?.details?.[0] == undefined) ? true : false,
+                skillDetailsComplete: (skillDetails?.developerTools != undefined) ? true : false,
+                loading: false
+            }
+        )
+    },[personalDetails, socialLinks, skillDetails, educationDetails, experienceDetails, extraCurricularDetails, achievementDetails, projectDetails])
+
     async function loadDetails() {
         setStatus({
             ...status,
@@ -588,22 +635,23 @@ const Resume = () => {
                                 { user_email: user_email },
                             ])
                             .select();
-
                         if (error) {
                             console.log(error);
-                            toast.error("Some Error Happened")
-                            setStatus({
-                                ...status,
-                                loadData: "error"
-                            })
+                            // toast.error("Some Error Happened")
+                            // setStatus({
+                            //     ...status,
+                            //     loadData: "error"
+                            // })
                         } else {
                             setStatus({
                                 ...status,
                                 loadData: "done"
                             })
                         }
+                        location.reload()
                     } catch (e) {
                         console.log(e);
+                        location.reload()
                         toast.error("Some Error Happened")
                         setStatus({
                             ...status,
@@ -674,6 +722,10 @@ const Resume = () => {
                 })
                 return;
             } else {
+                setComplete({
+                    ...complete,
+                    personalDetailsComplete: true
+                })
                 toast.info("Personal Details Saved")
             }
         } catch (e) {
@@ -754,6 +806,10 @@ const Resume = () => {
                 })
                 return;
             } else {
+                setComplete({
+                    ...complete,
+                    educationDetailsComplete: true
+                })
                 toast.info("Education Details Saved")
             }
         } catch (e) {
@@ -800,6 +856,10 @@ const Resume = () => {
                 })
                 return;
             } else {
+                setComplete({
+                    ...complete,
+                    experienceDetailsComplete: true
+                })
                 toast.info("Experience Details Saved")
             }
         } catch (e) {
@@ -846,6 +906,10 @@ const Resume = () => {
                 })
                 return;
             } else {
+                setComplete({
+                    ...complete,
+                    projectDetailsComplete: true
+                })
                 toast.info("Project Details Saved")
             }
         } catch (e) {
@@ -892,6 +956,10 @@ const Resume = () => {
                 })
                 return;
             } else {
+                setComplete({
+                    ...complete,
+                    achievementDetailsComplete: true
+                })
                 toast.info("Achivements Details Saved")
             }
         } catch (e) {
@@ -938,6 +1006,10 @@ const Resume = () => {
                 })
                 return;
             } else {
+                setComplete({
+                    ...complete,
+                    extraCurricularDetailsComplete: true
+                })
                 toast.info("Extra Curricular Details Saved")
             }
         } catch (e) {
@@ -984,6 +1056,10 @@ const Resume = () => {
                 })
                 return;
             } else {
+                setComplete({
+                    ...complete,
+                    skillDetailsComplete: true
+                })
                 toast.info("Skill Details Saved")
             }
         } catch (e) {
@@ -1005,6 +1081,13 @@ const Resume = () => {
         })
     }
 
+    async function createResumeUtil(e) {
+        e.preventDefault()
+        const resume = await createResume(user.email)
+        navigator.clipboard.writeText(resume);
+        console.log(resume);
+    }
+
     return (
         <>
             {/* <div>
@@ -1022,23 +1105,41 @@ const Resume = () => {
                                 {
                                     user != null &&
                                     <>
-                                        <TooltipProvider delayDuration={0} >
-                                            <Tooltip>
-                                                <TooltipTrigger asChild>
-                                                    <button
-                                                        className="inline-flex items-center justify-center gap-1.5 rounded-lg border border-gray-400 bg-white px-5 py-3 text-gray-500 transition hover:text-gray-700 focus:outline-none focus:ring"
-                                                        type="button"
-                                                        disabled
-                                                    >
-                                                        <span className="text-sm font-medium"> Download Resume </span>
-                                                        <ExternalLink className="h-4 w-4" />
-                                                    </button>
-                                                </TooltipTrigger>
-                                                <TooltipContent side="bottom">
-                                                    <p>Fill All the Fields to Download Resume</p>
-                                                </TooltipContent>
-                                            </Tooltip>
-                                        </TooltipProvider>
+                                        {
+                                            (complete.achievementDetailsComplete &&
+                                                complete.educationDetailsComplete &&
+                                                complete.experienceDetailsComplete &&
+                                                complete.extraCurricularDetailsComplete &&
+                                                complete.personalDetailsComplete &&
+                                                complete.projectDetailsComplete &&
+                                                complete.skillDetailsComplete) ?
+                                                <button
+                                                    className="inline-flex items-center justify-center gap-1.5 rounded-lg border border-gray-400 bg-white px-5 py-3 text-gray-500 transition hover:text-gray-700 focus:outline-none focus:ring"
+                                                    type="button"
+                                                    onClick={createResumeUtil}
+                                                >
+                                                    <span className="text-sm font-medium"> Build Resume </span>
+                                                    <ExternalLink className="h-4 w-4" />
+                                                </button>
+                                                :
+                                                <TooltipProvider delayDuration={0} >
+                                                    <Tooltip>
+                                                        <TooltipTrigger asChild>
+                                                            <button
+                                                                className="inline-flex items-center justify-center gap-1.5 rounded-lg border border-gray-400 bg-white px-5 py-3 text-gray-500 transition hover:text-gray-700 focus:outline-none focus:ring"
+                                                                type="button"
+                                                                disabled
+                                                            >
+                                                                <span className="text-sm font-medium"> Build Resume </span>
+                                                                <ExternalLink className="h-4 w-4" />
+                                                            </button>
+                                                        </TooltipTrigger>
+                                                        <TooltipContent side="bottom">
+                                                            <p>Complete All the Fields to Build Resume</p>
+                                                        </TooltipContent>
+                                                    </Tooltip>
+                                                </TooltipProvider>
+                                        }
                                     </>
 
                                 }
@@ -1071,19 +1172,42 @@ const Resume = () => {
                                                                 <button onClick={() => { setCurrentTab(tab.tab) }} className={cn("hover:border hoverborder-gray-600 inline-flex items-center px-4 py-3 rounded-lg hover:text-gray-900 bg-gray-50 hover:bg-gray-100 w-full dark:bg-gray-800 dark:hover:bg-gray-700 dark:hover:text-white", currentTab == tab.tab && "hover:text-primary-900 text-primary-800 bg-primary-100 hover:bg-primary-200 border border-primary-600")}>
                                                                     <tab.icon className="w-5 h-5 me-2" />
                                                                     {tab.label}
-                                                                    <span className='text-xs text-right flex ml-auto'>
-                                                                        {updateChange[tab.changeKey] ? <>
-                                                                            <span className='text-yellow-600 flex items-center'>
-                                                                            <UploadCloud className='h-4 w-4 mr-1' /> unsaved
-                                                                            </span>
-                                                                        </>:
+                                                                    {
+                                                                        complete.loading?
                                                                         <>
-                                                                        <span className='text-green-600 flex items-center'>
-                                                                        <Check className='h-4 w-4 mr-1' /> saved
-                                                                        </span>
-                                                                        </>
-                                                                        }
+                                                                        <span className='text-xs text-right ml-auto text-blue-600 flex items-center'>
+                                                                        <RotateCw className='animate-spin h-4 w-4 mr-1' /> loading
                                                                     </span>
+                                                                        
+                                                                        </>
+                                                                        :
+                                                                        <>
+                                                                        {
+                                                                        (complete[tab.completeKey] == false && updateChange[tab.changeKey] == false) ?
+                                                                            <>
+                                                                                <span className='text-xs text-right ml-auto text-amber-600 flex items-center'>
+                                                                                    <AlertCircle className='h-4 w-4 mr-1' /> incomplete
+                                                                                </span>
+                                                                            </>
+                                                                            :
+                                                                            <>
+                                                                                <span className='text-xs text-right flex ml-auto'>
+                                                                                    {updateChange[tab.changeKey] ? <>
+                                                                                        <span className='text-yellow-600 flex items-center'>
+                                                                                            <UploadCloud className='h-4 w-4 mr-1' /> unsaved
+                                                                                        </span>
+                                                                                    </> :
+                                                                                        <>
+                                                                                            <span className='text-green-600 flex items-center'>
+                                                                                                <Check className='h-4 w-4 mr-1' /> saved
+                                                                                            </span>
+                                                                                        </>
+                                                                                    }
+                                                                                </span>
+                                                                            </>
+                                                                    }
+                                                                        </>
+                                                                    }
                                                                 </button>
                                                             </li>
                                                         ))}

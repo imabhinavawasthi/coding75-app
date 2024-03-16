@@ -1,4 +1,4 @@
-import { BookCheck, Download, FileCheck2, Upload } from "lucide-react";
+import { BookCheck, ChevronRight, Download, FileCheck2, Upload } from "lucide-react";
 
 const InternshipGuideCard = () => {
     return (
@@ -14,19 +14,19 @@ const InternshipGuideCard = () => {
                     >
                         <BookCheck className="h-10 w-10 sm:h-12 sm:w-12"/>
 
-                        <h2 className="mt-4 text-xl font-medium sm:text-2xl">Internship Guide</h2>
+                        <h2 className="mt-4 text-xl font-medium sm:text-2xl">Live DSA & CP Classes</h2>
                     </div>
 
                     <div
                         className="absolute p-4 opacity-0 transition-opacity group-hover:relative group-hover:opacity-100 sm:p-6 lg:p-8"
                     >
-                        <h3 className="mt-4 text-xl font-medium sm:text-2xl">Get Your Internship Guide</h3>
+                        <h3 className="mt-4 text-xl font-medium sm:text-2xl">Join coding75 Pro 🚀</h3>
 
                         <p className="mt-4 text-sm sm:text-base">
-                        Internship guide for students and freshers - get opportunities with ease!
+                        Live DSA & CP Classes with Doubt & Practice Sessions
                         </p>
 
-                        <a href="/interview-preparation/guide" className="mt-4 font-bold flex">Get it now <Download/> </a>
+                        <a href="/pro" className="mt-4 font-bold flex">Join <ChevronRight/> </a>
                     </div>
                 </div>
             </div>

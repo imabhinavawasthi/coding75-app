@@ -24,9 +24,9 @@ const CSFundamentals = () => {
                     </div>
                     <div>
                         <ImageCard3
-                            image="https://zettllhfmtvcunctalyo.supabase.co/storage/v1/object/public/resources/images/computer-networks.png"
-                            title="Computer Networks"
-                            href="/cs-fundamentals/computer-networks"
+                            image="https://zettllhfmtvcunctalyo.supabase.co/storage/v1/object/public/resources/images/oops.png"
+                            title="Object Oriented Programming"
+                            href="/cs-fundamentals/oops"
                         />
                     </div>
                     <div>
@@ -38,9 +38,9 @@ const CSFundamentals = () => {
                     </div>
                     <div>
                         <ImageCard3
-                            image="https://zettllhfmtvcunctalyo.supabase.co/storage/v1/object/public/resources/images/oops.png"
-                            title="Object Oriented Programming"
-                            href="/cs-fundamentals/oops"
+                            image="https://zettllhfmtvcunctalyo.supabase.co/storage/v1/object/public/resources/images/computer-networks.png"
+                            title="Computer Networks"
+                            href="/cs-fundamentals/computer-networks"
                         />
                     </div>
                     <div>

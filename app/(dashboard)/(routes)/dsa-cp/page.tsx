@@ -51,7 +51,7 @@ const DSACPPage = () => {
                         extra_details={true} 
                         />
                     </div>
-                    <div className="p-5">
+                    {/* <div className="p-5">
                         <ResourceCard2 
                         heading={"Newbie to Specialist CP Sheet"} 
                         description={"Level up your coding journey from newbie to specialist with Coding75's concise CP Sheet."} 
@@ -67,7 +67,7 @@ const DSACPPage = () => {
                         link={"/dsa-cp/interview-sheet"} 
                         icon_link={"https://zettllhfmtvcunctalyo.supabase.co/storage/v1/object/public/resources/icons/dsa-sheets.png"} 
                         extra_details={false} />
-                    </div>
+                    </div> */}
                 </div>
             </div>
         </div>
