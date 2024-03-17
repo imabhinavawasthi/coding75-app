@@ -51,7 +51,7 @@ const Pricing = () => {
                                     <span>1:1<span className="font-semibold"> Mentorship</span> Sessions</span>
                                 </li>
                             </ul>
-                            <a href="https://telegram.me/cpabhinav" target="_blank" className="text-white bg-primary-600 hover:bg-primary-700 focus:ring-4 focus:ring-primary-200 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:text-white  dark:focus:ring-primary-900">Join Now</a>
+                            <a href="https://telegram.me/coding75" target="_blank" className="text-white bg-primary-600 hover:bg-primary-700 focus:ring-4 focus:ring-primary-200 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:text-white  dark:focus:ring-primary-900">Join Now</a>
                         </div>
                         <div className='scale-105'>
                             <div className='hover:animate-background rounded-xl bg-gradient-to-r from-green-300 via-blue-500 to-purple-600 p-0.5 shadow-xl transition hover:bg-[length:400%_400%] hover:shadow-sm hover:[animation-duration:_4s]'>
@@ -93,7 +93,7 @@ const Pricing = () => {
                                             <span>1:1<span className="font-semibold"> Mentorship</span> Sessions</span>
                                         </li>
                                     </ul>
-                                    <a href="#" className="text-white bg-primary-600 hover:bg-primary-700 focus:ring-4 focus:ring-primary-200 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:text-white  dark:focus:ring-primary-900">Join Now</a>
+                                    <a className="text-white bg-primary-600 hover:bg-primary-700 focus:ring-4 focus:ring-primary-200 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:text-white  dark:focus:ring-primary-900">Launching Soon ⏰</a>
                                 </div>
                             </div>
                         </div>
@@ -138,8 +138,8 @@ const Pricing = () => {
                                     <span>Personalised<span className="font-semibold"> preparation plan</span> for 1 year</span>
                                 </li>
                             </ul>
-                            <a href="#" className="text-white bg-primary-600 hover:bg-primary-700 focus:ring-4 focus:ring-primary-200 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:text-white  dark:focus:ring-primary-900">
-                                Join Now
+                            <a className="text-white bg-primary-600 hover:bg-primary-700 focus:ring-4 focus:ring-primary-200 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:text-white  dark:focus:ring-primary-900">
+                            Launching Soon ⏰
                             </a>
                         </div>
                     </div>

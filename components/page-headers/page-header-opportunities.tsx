@@ -15,7 +15,7 @@ const PageHeaderCompanyList = ({ focusHeading = "", heading = "", description = 
     }
     return (
         <div>
-            <header className="bg-web px-5 py-8">
+            <header className="bg-web px-5">
                 <div className="mx-auto max-w-screen-xl px-4 py-8 sm:px-6 sm:py-12 lg:px-8">
                     <div className="sm:flex sm:items-center sm:justify-between">
                         <div className="mr-auto place-self-center lg:col-span-7">

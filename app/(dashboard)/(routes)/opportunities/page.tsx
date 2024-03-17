@@ -7,7 +7,7 @@ import Loading from '@/components/loading';
 import PageHeaderCompanyList from '@/components/page-headers/page-header-opportunities';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
-import { Filter, Info, RotateCcw, Shapes } from 'lucide-react';
+import { ChevronDown, Filter, Info, RotateCcw, Shapes } from 'lucide-react';
 import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle, DialogTrigger } from '@/components/ui/dialog';
 import { Button } from '@/components/ui/button';
 import { Alert, AlertDescription, AlertTitle } from '@/components/ui/alert';
@@ -68,7 +68,7 @@ const OpportunitiesPage = () => {
         let internships = await fetchData()
         setInternshipsList(
             internships.filter((data) => {
-                if (data?.internship_title.toLowerCase().split(" ").join("").includes(e.target.value.toLowerCase().split(" ").join(""))||data?.company_name.toLowerCase().split(" ").join("").includes(e.target.value.toLowerCase().split(" ").join(""))) return true; else return false;
+                if (data?.internship_title.toLowerCase().split(" ").join("").includes(e.target.value.toLowerCase().split(" ").join("")) || data?.company_name.toLowerCase().split(" ").join("").includes(e.target.value.toLowerCase().split(" ").join(""))) return true; else return false;
             })
         )
     }
@@ -89,6 +89,12 @@ const OpportunitiesPage = () => {
                     heading="Launch Your Career Journey 🚀"
                 />
             </div>
+            <a href="#opportunities">
+                <div className='flex text-blue-600 mt-10 mb-5 font-light items-center justify-center'>
+                    <ChevronDown className='animate-ping mr-2 h-4 w-4' /> Explore Open Opportunities
+                </div>
+            </a>
+
 
             <div className='container mt-4'>
                 <a target="_blank" href="https://telegram.me/cpabhinav">
@@ -181,7 +187,7 @@ const OpportunitiesPage = () => {
                         </div>
                     </div>
                     <div className="flex flex-col col-span-4 lg:col-span-3">
-                        <div>
+                        <div id="opportunities">
                             <Label>Search Opportunities</Label>
                             <Input className='mb-5' onChange={(e) => {
                                 if (e.target.value != "") {

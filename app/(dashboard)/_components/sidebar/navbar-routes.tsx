@@ -13,7 +13,7 @@ import {
 import React, { useEffect, useState } from "react";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
 import supabase from "@/supabase";
-import { Bell, BookMarked, LogIn, LogOut, RotateCw, User } from "lucide-react";
+import { Bell, BookMarked, LogIn, LogOut, MessageSquarePlusIcon, RotateCw, Send, User, YoutubeIcon } from "lucide-react";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -34,6 +34,7 @@ import { toast } from "sonner";
 import { usePathname, useRouter } from "next/navigation";
 import { Button } from "@/components/ui/button";
 import { InstagramLogoIcon, LinkedInLogoIcon } from "@radix-ui/react-icons";
+import { feedback_form, linkedin_link, telegram_link, youtube_link } from "@/components/social-links";
 
 const components: { title: string; href: string; description: string }[] = [
   {
@@ -308,10 +309,11 @@ export const NavbarRoutes = ({isLogo=false}:any) => {
         </NavigationMenu>
       </div>
       <div className="flex justify-end items-center gap-x-2 ml-auto mr-5">
+      <div className="hidden md:flex items-center">
       <div className="mr-5">
           <DropdownMenu>
               <div className="relative">
-              <a href="/" target="_blank"><LinkedInLogoIcon className="w-6 h-6 text-blue-600"/></a>
+              <a href={linkedin_link} target="_blank"><LinkedInLogoIcon className="w-6 h-6 text-[#0077B5]"/></a>
               </div>
           </DropdownMenu>
 
@@ -319,11 +321,18 @@ export const NavbarRoutes = ({isLogo=false}:any) => {
         <div className="mr-5">
           <DropdownMenu>
               <div className="relative">
-              <a href="/" target="_blank"><InstagramLogoIcon className="w-6 h-6 text-blue-600"/></a>
+              <a href={telegram_link} target="_blank"><Send className="w-6 h-6 text-[#0088cc]"/></a>
               </div>
           </DropdownMenu>
-
         </div>
+        <div className="mr-5">
+          <DropdownMenu>
+              <div className="relative">
+              <a href={youtube_link} target="_blank"><YoutubeIcon strokeWidth={1} className="w-7 h-7 text-red-600"/></a>
+              </div>
+          </DropdownMenu>
+        </div>
+      </div>
         <div className="mr-5">
           <DropdownMenu>
             <DropdownMenuTrigger asChild>
@@ -337,7 +346,7 @@ export const NavbarRoutes = ({isLogo=false}:any) => {
               </div>
             </DropdownMenuTrigger>
             <DropdownMenuContent align="end">
-              <DropdownMenuItem className="cursor-pointer">No new notification!</DropdownMenuItem>
+              <DropdownMenuItem className="cursor-pointer">Welcome to coding75!</DropdownMenuItem>
             </DropdownMenuContent>
           </DropdownMenu>
 
@@ -375,6 +384,7 @@ export const NavbarRoutes = ({isLogo=false}:any) => {
                     {/* <DropdownMenuLabel className="font-semibold"><Badge variant="basic" className="px-2 py-1">Hello, {user?.["user_metadata"]["full_name"]} 👋🏻</Badge></DropdownMenuLabel> */}
                     {/* <DropdownMenuSeparator /> */}
                     <Link href="/profile"><DropdownMenuItem className="cursor-pointer"><User className="w-4 h-4 mr-2" /> Profile</DropdownMenuItem></Link>
+                    <a href={feedback_form} target="_blank"><DropdownMenuItem className="cursor-pointer"><MessageSquarePlusIcon className="w-4 h-4 mr-2" /> Submit Feedback</DropdownMenuItem></a>
                     <DropdownMenuSeparator />
                     <DropdownMenuItem onClick={handleLogOut} className="cursor-pointer text-red-600"><LogOut className="w-4 h-4 mr-2" /> Logout</DropdownMenuItem>
                   </DropdownMenuContent>

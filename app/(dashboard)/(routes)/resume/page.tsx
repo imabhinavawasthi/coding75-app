@@ -589,13 +589,13 @@ const Resume = () => {
     useEffect(()=>{
         setComplete(
             {
-                personalDetailsComplete: personalDetails?.fullName!=undefined ? true : false,
-                educationDetailsComplete: (educationDetails?.length > 0 && educationDetails?.[0].universityName != undefined) ? true : false,
-                experienceDetailsComplete: (experienceDetails?.length > 0 && experienceDetails?.[0].companyName != undefined) ? true : false,
+                personalDetailsComplete: personalDetails?.fullName ? true : false,
+                educationDetailsComplete: (educationDetails?.length > 0 && educationDetails?.[0].universityName) ? true : false,
+                experienceDetailsComplete: (experienceDetails?.length > 0 && experienceDetails?.[0].companyName) ? true : false,
                 projectDetailsComplete: (projectDetails?.length > 0 && projectDetails?.[0]?.projectName != undefined) ? true : false,
-                achievementDetailsComplete: (achievementDetails?.details?.length==1&& achievementDetails?.details?.[0] == undefined) ? true : false,
-                extraCurricularDetailsComplete: (extraCurricularDetails?.details?.length==1&& extraCurricularDetails?.details?.[0] == undefined) ? true : false,
-                skillDetailsComplete: (skillDetails?.developerTools != undefined) ? true : false,
+                achievementDetailsComplete: (achievementDetails?.details?.[0]) ? true : false,
+                extraCurricularDetailsComplete: (extraCurricularDetails?.details?.[0]) ? true : false,
+                skillDetailsComplete: (skillDetails?.developerTools) ? true : false,
                 loading: false
             }
         )
