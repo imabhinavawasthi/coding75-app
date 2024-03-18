@@ -3,6 +3,7 @@ import CommunityHeader from "./_components/community-header";
 import FAQS from "./_components/faq";
 import Features from "./_components/features";
 import Pricing from "./_components/pricing";
+import TeamSection from "./_components/team-section";
 
 const CommunityPage = () => {
   return (
@@ -12,6 +13,9 @@ const CommunityPage = () => {
       </div>
       <div id="features">
         <Features />
+      </div>
+      <div id="mentors">
+        <TeamSection />
       </div>
       <div id="pricing">
         <Pricing />

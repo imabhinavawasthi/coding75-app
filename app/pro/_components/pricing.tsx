@@ -1,7 +1,7 @@
 "use client"
 
 import { Badge } from '@/components/ui/badge';
-import { Check, Flame, Gem, Rocket, X } from 'lucide-react';
+import { Check, Gem, Rocket, X } from 'lucide-react';
 import CountUp from 'react-countup';
 
 const Pricing = () => {
