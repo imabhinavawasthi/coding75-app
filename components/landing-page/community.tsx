@@ -29,15 +29,21 @@ const Community = () => {
                             </div>
                         </div>
                     </div>
-                    <div className="lg:mt-0 mt-10 flex justify-center items-center lg:col-span-6 h-[300px]">
+                    <div className="lg:mt-0 mt-10 flex justify-center items-center lg:col-span-6 h-[330px] aspect-video">
                         <div className="w-full h-full hover:animate-background rounded-xl bg-gradient-to-r from-green-300 via-blue-500 to-purple-600 p-0.5 shadow-xl transition hover:bg-[length:400%_400%] hover:shadow-sm hover:[animation-duration:_4s] z-40">
-                            <iframe
+                            {/* <iframe
                                 className="w-full h-full rounded-xl p-1"
                                 src="https://www.youtube.com/embed/q9oxkhweXY4?si=zqQDV5F_tK2kCP-E"
                                 title="YouTube video player"
                                 allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
                                 allowFullScreen>
-                            </iframe>
+                            </iframe> */}
+                            <Link href="/pro">
+                            <img
+                            className="cursor-pointer w-full h-full rounded-xl p-1"
+                                src="https://zettllhfmtvcunctalyo.supabase.co/storage/v1/object/public/resources/pictures/coding75-pro.png"
+                                alt="coding75-pro" />
+                                </Link>
                         </div>
                     </div>
                 </div>

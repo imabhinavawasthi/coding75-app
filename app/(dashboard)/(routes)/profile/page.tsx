@@ -82,7 +82,8 @@ const Profile = () => {
                             </p>
                         </div>
                         <div className="flex mt-5 justify-center items-center">
-                            <Button variant="outline" className="md:w-[400px] sm:w-full flex items-center"><ScrollText className="mr-2" /> Update Resume</Button>
+                            <Link href="/resume">
+                            <Button variant="outline" className="md:w-[400px] sm:w-full flex items-center"><ScrollText className="mr-2" /> Update Resume</Button></Link>
                         </div>
                         <Separator className="mt-10"/>
                         <div className="md:flex mt-5 justify-center items-center">

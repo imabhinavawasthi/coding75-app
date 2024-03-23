@@ -138,7 +138,7 @@ export default function TeamSection() {
                     <div></div>
                     <div className="text-center items-center text-gray-500 dark:text-gray-400">
                         <img className="mx-auto mb-4 w-36 h-36 rounded-full"
-                            src="https://zettllhfmtvcunctalyo.supabase.co/storage/v1/object/public/resources/pictures/yash.png"
+                            src="https://zettllhfmtvcunctalyo.supabase.co/storage/v1/object/public/resources/pictures/yash-2.png"
                             alt="Picture" />
                         <h3 className="mb-1 text-2xl font-bold tracking-tight text-gray-900 dark:text-white">
                             Yash Bhatia

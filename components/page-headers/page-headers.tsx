@@ -1,7 +1,6 @@
 "use client"
 
 import { Share2 } from "lucide-react";
-import Image from "next/image";
 import { toast } from "sonner";
 import Link from "next/link";
 
@@ -34,7 +33,7 @@ const PageHeaders = ({ greenHeading = "", heading = "", description = "", image=
                             </div>
                         </div>
                     </div>
-                    <img src={image} alt="opportunity-feature" className="col-span-4 shadow-2xl rounded-xl w-full" />
+                    <img src={image} alt="opportunity-feature" className="hidden md:block col-span-4 shadow-2xl rounded-xl w-full" />
                 </div>
             </header>
         </div>

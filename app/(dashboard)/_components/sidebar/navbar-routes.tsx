@@ -36,6 +36,7 @@ import { Button } from "@/components/ui/button";
 import { LinkedInLogoIcon } from "@radix-ui/react-icons";
 import { feedback_form, linkedin_link, telegram_link, youtube_link } from "@/components/social-links";
 import { Skeleton } from "@/components/ui/skeleton";
+import { Logo } from "../components/logo";
 
 const components: { title: string; href: string; description: string }[] = [
   {
@@ -127,7 +128,8 @@ const projects: { title: string; href: string; description: string }[] = [
 ]
 
 
-export const NavbarRoutes = ({isLogo=false}:any) => {
+export const NavbarRoutes = ({ isLogo = false }: any) => {
+  const [notificationOpen, setNotificationOpen] = useState(false)
   const [user, setUser] = useState<any>(null)
   const pathname = usePathname();
   const [status, setStatus] = useState("loading")
@@ -219,19 +221,19 @@ export const NavbarRoutes = ({isLogo=false}:any) => {
         </div>
       </div>
       {
-        isLogo&&
+        isLogo &&
         <div className="justify-start gap-x-2 ml-5 mr-5 hidden md:flex lg:flex">
-        <div>
-          <Link href="/">
-            <Image
-              height={150}
-              width={150}
-              alt="logo"
-              src="/logo-bg.png"
-            />
-          </Link>
+          <div>
+            <Link href="/">
+              <Image
+                height={150}
+                width={150}
+                alt="logo"
+                src="/logo-bg.png"
+              />
+            </Link>
+          </div>
         </div>
-      </div>
       }
       <div className="lg:flex md:flex hidden justify-center items-center">
         <NavigationMenu>
@@ -250,7 +252,7 @@ export const NavbarRoutes = ({isLogo=false}:any) => {
                           coding75 Pro 🚀
                         </div>
                         <p className="text-sm leading-tight text-muted-foreground">
-                        Learn from the Experts, Engage with Peers, Be a Pro! 🎯
+                          Learn from the Experts, Engage with Peers, Be a Pro! 🎯
                         </p>
                       </Link>
                     </NavigationMenuLink>
@@ -310,36 +312,49 @@ export const NavbarRoutes = ({isLogo=false}:any) => {
         </NavigationMenu>
       </div>
       <div className="flex justify-end items-center gap-x-2 ml-auto mr-5">
-      <div className="hidden md:flex items-center">
-      <div className="mr-5">
-          <DropdownMenu>
+        <div className="hidden md:flex items-center">
+          <div className="mr-5">
+            <DropdownMenu>
               <div className="relative">
-              <a href={linkedin_link} target="_blank"><LinkedInLogoIcon className="w-6 h-6 text-[#0077B5]"/></a>
+                <a href={linkedin_link} target="_blank">
+                  <svg className="w-7 h-7" xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 256 256"><path fill="#0a66c2" d="M218.123 218.127h-37.931v-59.403c0-14.165-.253-32.4-19.728-32.4c-19.756 0-22.779 15.434-22.779 31.369v60.43h-37.93V95.967h36.413v16.694h.51a39.907 39.907 0 0 1 35.928-19.733c38.445 0 45.533 25.288 45.533 58.186zM56.955 79.27c-12.157.002-22.014-9.852-22.016-22.009c-.002-12.157 9.851-22.014 22.008-22.016c12.157-.003 22.014 9.851 22.016 22.008A22.013 22.013 0 0 1 56.955 79.27m18.966 138.858H37.95V95.967h37.97zM237.033.018H18.89C8.58-.098.125 8.161-.001 18.471v219.053c.122 10.315 8.576 18.582 18.89 18.474h218.144c10.336.128 18.823-8.139 18.966-18.474V18.454c-.147-10.33-8.635-18.588-18.966-18.453" /></svg>
+                </a>
               </div>
-          </DropdownMenu>
+            </DropdownMenu>
 
-        </div>
-        <div className="mr-5">
-          <DropdownMenu>
+          </div>
+          <div className="mr-5">
+            <DropdownMenu>
               <div className="relative">
-              <a href={telegram_link} target="_blank"><Send className="w-6 h-6 text-[#0088cc]"/></a>
+                <a href={telegram_link} target="_blank">
+                  <svg className="w-8 h-8" xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 256 256"><defs><linearGradient id="logosTelegram0" x1="50%" x2="50%" y1="0%" y2="100%"><stop offset="0%" stop-color="#2aabee" /><stop offset="100%" stop-color="#229ed9" /></linearGradient></defs><path fill="url(#logosTelegram0)" d="M128 0C94.06 0 61.48 13.494 37.5 37.49A128.038 128.038 0 0 0 0 128c0 33.934 13.5 66.514 37.5 90.51C61.48 242.506 94.06 256 128 256s66.52-13.494 90.5-37.49c24-23.996 37.5-56.576 37.5-90.51c0-33.934-13.5-66.514-37.5-90.51C194.52 13.494 161.94 0 128 0" /><path fill="#fff" d="M57.94 126.648c37.32-16.256 62.2-26.974 74.64-32.152c35.56-14.786 42.94-17.354 47.76-17.441c1.06-.017 3.42.245 4.96 1.49c1.28 1.05 1.64 2.47 1.82 3.467c.16.996.38 3.266.2 5.038c-1.92 20.24-10.26 69.356-14.5 92.026c-1.78 9.592-5.32 12.808-8.74 13.122c-7.44.684-13.08-4.912-20.28-9.63c-11.26-7.386-17.62-11.982-28.56-19.188c-12.64-8.328-4.44-12.906 2.76-20.386c1.88-1.958 34.64-31.748 35.26-34.45c.08-.338.16-1.598-.6-2.262c-.74-.666-1.84-.438-2.64-.258c-1.14.256-19.12 12.152-54 35.686c-5.1 3.508-9.72 5.218-13.88 5.128c-4.56-.098-13.36-2.584-19.9-4.708c-8-2.606-14.38-3.984-13.82-8.41c.28-2.304 3.46-4.662 9.52-7.072" /></svg>
+                </a>
               </div>
-          </DropdownMenu>
-        </div>
-        <div className="mr-5">
-          <DropdownMenu>
+            </DropdownMenu>
+          </div>
+          <div className="mr-5">
+            <DropdownMenu>
               <div className="relative">
-              <a href={youtube_link} target="_blank"><YoutubeIcon strokeWidth={1} className="w-7 h-7 text-red-600"/></a>
+                <a href={youtube_link} target="_blank">
+                  <svg className="w-8 h-8" xmlns="http://www.w3.org/2000/svg" width="1.43em" height="1em" viewBox="0 0 256 180"><path fill="#f00" d="M250.346 28.075A32.18 32.18 0 0 0 227.69 5.418C207.824 0 127.87 0 127.87 0S47.912.164 28.046 5.582A32.18 32.18 0 0 0 5.39 28.24c-6.009 35.298-8.34 89.084.165 122.97a32.18 32.18 0 0 0 22.656 22.657c19.866 5.418 99.822 5.418 99.822 5.418s79.955 0 99.82-5.418a32.18 32.18 0 0 0 22.657-22.657c6.338-35.348 8.291-89.1-.164-123.134" /><path fill="#fff" d="m102.421 128.06l66.328-38.418l-66.328-38.418z" /></svg>
+                </a>
               </div>
-          </DropdownMenu>
+            </DropdownMenu>
+          </div>
         </div>
-      </div>
         <div className="mr-5">
           <DropdownMenu>
-            <DropdownMenuTrigger asChild>
+            <DropdownMenuTrigger onClick={(e) => {
+                e.preventDefault()
+                setNotificationOpen(true)
+              }} asChild>
               <div className="relative rounded-full inline-flex w-fit">
-                <div
-                  className="absolute bottom-auto left-auto right-0 top-0 z-10 inline-block rotate-0 skew-x-0 skew-y-0 scale-x-100 scale-y-100 rounded-full bg-red-600 p-1.5 text-xs"></div>
+                {
+                  notificationOpen == false &&
+                  <div
+                    className="absolute bottom-auto left-auto right-0 top-0 z-10 inline-block rotate-0 skew-x-0 skew-y-0 scale-x-100 scale-y-100 rounded-full bg-red-600 p-1.5 text-xs"></div>
+                }
+
                 <div
                   className="cursor-pointer hover:shadow-none flex items-center justify-center rounded-full bg-primary-700 p-2 text-center text-white shadow-xl dark:text-gray-200">
                   <Bell className="h-5 w-5" />
@@ -350,7 +365,6 @@ export const NavbarRoutes = ({isLogo=false}:any) => {
               <DropdownMenuItem className="cursor-pointer">Welcome to coding75!</DropdownMenuItem>
             </DropdownMenuContent>
           </DropdownMenu>
-
         </div>
         {status == "loading" ?
           <>
@@ -392,29 +406,41 @@ export const NavbarRoutes = ({isLogo=false}:any) => {
               : <>
                 <Dialog>
                   <DialogTrigger className="flex justify-center items-center">
-                    <Button className="bg-primary-700 hover:bg-primary-800 px-4 py-1.5 text-md rounded-lg text-white">
+                    <Button variant="outline" className="md:bg-primary-700 md:rounded-lg md:hover:bg-primary-800 px-4 py-1.5 text-md rounded-full md:text-white md:hover:text-white">
                       <LogIn className="w-4 h-4" /> <span className="hidden ml-2 md:block">Login</span>
                     </Button>
                   </DialogTrigger>
                   <DialogContent>
                     <DialogHeader className="items-center text-center">
-                      <DialogTitle className="mb-4 flex"><LogIn className="h-4 w-4 mr-2" /> Log In</DialogTitle>
                       <DialogDescription>
                         <div className="items-center justify-center flex">
-                          <button
-                            onClick={handleLogIn}
-                            aria-label="Sign in with Google"
-                            className="flex bg-blue-500 items-center border border-button-border-light rounded-full p-0.5 pr-4"
-                          >
-                            <div className="flex items-center justify-center bg-white w-12 h-12 rounded-full">
-                              <FcGoogle className="h-8 w-8" />
+                          <div className="px-6 sm:px-0 max-w-sm">
+                            <div className="max-w-xl mb-5 lg:max-w-3xl">
+                              <div className="block text-blue-600">
+                                <Logo width={150} height={40} />
+                              </div>
+
+                              <h1 className="mt-6 font-bold text-gray-900 text-lg md:text-2xl">
+                                Welcome to coding75 🚀
+                              </h1>
+
+                              <p className="mt-4 leading-relaxed text-gray-500">
+                                Login to explore amazing coding resources, build your ATS friendly resume, explore internships and much more...
+                              </p>
                             </div>
-                            <span className="ml-3 text-lg font-bold text-white tracking-wider">Sign in with Google</span>
-                          </button>
+                            <button
+                              onClick={handleLogIn}
+                              type="button" className="text-white w-full  bg-[#4285F4] hover:bg-[#4285F4]/90 focus:ring-4 focus:outline-none focus:ring-[#4285F4]/50 font-medium rounded-lg text-sm px-5 py-2.5 text-center inline-flex items-center justify-between mr-2 mb-2"><svg class="mr-2 -ml-1 w-4 h-4" aria-hidden="true" focusable="false" data-prefix="fab" data-icon="google" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 488 512"><path fill="currentColor" d="M488 261.8C488 403.3 391.1 504 248 504 110.8 504 0 393.2 0 256S110.8 8 248 8c66.8 0 123 24.5 166.3 64.9l-67.5 64.9C258.5 52.6 94.3 116.6 94.3 256c0 86.5 69.1 156.6 153.7 156.6 98.2 0 135-70.4 140.8-106.9H248v-85.3h236.1c2.3 12.7 3.9 24.9 3.9 41.4z"></path>
+                              </svg>Sign up with Google<div></div>
+                            </button>
+                          </div>
                         </div>
-                        <div className="mt-5 text-center">
-                          Accept our Privacy Policy and Terms & Conditions
-                        </div>
+                        <p className="mt-5 text-center text-sm text-gray-500">
+                          By creating an account, you agree to our &nbsp;
+                          <a href="https://crackdsa.com/terms/" target="_blank" className="text-gray-700 underline"> terms and conditions </a>
+                          and &nbsp;
+                          <a href="https://crackdsa.com/privacy/" target="_blank" className="text-gray-700 underline">privacy policy</a>.
+                        </p>
                       </DialogDescription>
                     </DialogHeader>
                   </DialogContent>
