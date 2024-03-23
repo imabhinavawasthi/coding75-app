@@ -1,6 +1,6 @@
 import supabase from "@/supabase"
 
-let latexHeader =`%-------------------------------------------
+let latexHeader = `%-------------------------------------------
 %%%%%%%  Created Using coding75.com/resume  %%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 \\documentclass[letterpaper,11pt]{article}
@@ -110,8 +110,6 @@ const personalDetailCreator = (personalDetails, socialLinks) => {
     return template
 }
 
-
-// {cllgName:'',course:'',location:'',year:''}
 const educationCreator = (data) => {
     if (data == null || data.length == 0) {
         return ''
@@ -119,24 +117,24 @@ const educationCreator = (data) => {
 
     let info = ``
     data.map((val) => {
-        info += `\\resumeSubheading {${formatter(val?.cllgName)}}{${formatter(val?.location)}} {${formatter(val?.course)}}{${formatter(val?.year)}}` + `\n`
+        info += `\\resumeSubheading 
+{${formatter(val?.universityName)}}
+{${formatter(val?.fromDate)} ${(val?.fromDate && val?.toDate) ? ` -- ` : ``} ${formatter(val?.toDate)}} 
+{${formatter(val?.degreeName)} in ${formatter(val?.branch)} ${val?.score ? `(${formatter(val?.score)})` : ``}}
+{${formatter(val?.location)}}` + `\n`
     })
-
     let template =
         `
-   \\section{Education}
-  \\resumeSubHeadingListStart
-    ${info}
-  \\resumeSubHeadingListEnd
+\\section{Education}
+\\resumeSubHeadingListStart
+${info}
+\\resumeSubHeadingListEnd
     `
-
     return template
 
 }
 
-[{ projectName: '', tech: '', link: '', points: [''] }]
-
-const projectsSection = (data) => {
+const projectsCreator = (data) => {
     if (data == null || data.length == 0) {
         return ''
     }
@@ -145,20 +143,23 @@ const projectsSection = (data) => {
     for (let i = 0; i < data.length; i++) {
         let point = ``
 
-        data[i]['points'].map((val) => {
+        data[i]['details'].map((val) => {
             if (val.trim().length > 0) {
                 point += `\\resumeItem{${formatter(val)}}` + `\n`
             }
         })
 
-        let project = `
-        \\resumeProjectHeading {\\textbf{${formatter(data[i]?.projectName)}} $|$ \\emph{${formatter(data[i]?.tech)}}}{\\href{${formatter(data[i]?.link)}}{\\underline{link}}}
-          ${point.trim().length > 0 ?
+        let project =
+            `        
+\\resumeProjectHeading 
+{\\textbf{${formatter(data[i]?.projectName)}} $|$ \\emph{${formatter(data[i]?.techStack)}} $|$ {{\\href{${formatter(data[i]?.deployLink)}} {\\underline{Deloy}}}} {{\\href{${formatter(data[i]?.githubLink)}} {\\underline{Github}}}}}
+{${formatter(data[i]?.fromDate)} ${(data[i]?.fromDate && data[i]?.toDate) ? ` -- ` : ``} ${formatter(data[i]?.toDate)}} 
+${point.trim().length > 0 ?
                 `
-            \\resumeItemListStart
-                ${point}
-            \\resumeItemListEnd
-            `
+\\resumeItemListStart
+${point}
+\\resumeItemListEnd
+`
                 :
                 ``
             }
@@ -182,7 +183,7 @@ const projectsSection = (data) => {
     return template
 
 }
-// {company:'',role:'',location:'',date:'',points:['']}
+
 const experienceCreator = (data) => {
     if (data == null || data.length == 0) {
         return ''
@@ -193,17 +194,22 @@ const experienceCreator = (data) => {
         let point = ``
 
 
-        data[i]['points'].map((val) => {
+        data[i]['details'].map((val) => {
             if (val.trim().length > 0) {
                 point += `\\resumeItem{${formatter(val)}}` + `\n`
             }
         })
 
         let experience = `
-        \\resumeSubheading {${formatter(data[i]?.company)} | ${formatter(data[i]?.role)}}{${formatter(data[i]?.date)}}{${formatter(data[i]?.location)}}{}
+        \\resumeSubheading 
+{${formatter(data[i]?.companyName)}}
+{${formatter(data[i]?.fromDate)} ${(data[i]?.fromDate && data[i]?.toDate) ? ` -- ` : ``} ${formatter(data[i]?.toDate)}} 
+{${formatter(data[i]?.jobRole)}} 
+{${formatter(data[i]?.location)}}
         ${point.trim().length > 0 ?
                 `
             \\resumeItemListStart
+            \\small{\\setlength\\itemsep{-4pt}}
                 ${point}
             \\resumeItemListEnd
             `
@@ -211,8 +217,10 @@ const experienceCreator = (data) => {
                 ``
             }
         `
-
-        experiences += experience + `\n`
+        if(i!=data.length-1)
+        experiences += experience + `\\vspace{-6pt}`  + `\n`
+    else
+    experiences += experience + `\n`
 
 
     }
@@ -230,28 +238,54 @@ const experienceCreator = (data) => {
 
 }
 
+const skillsCreator = (data) => {
 
-// {name:'',points:['']}
-const achievementCreator = (data) => {
+    if (data == null || data.length == 0) {
+        return ''
+    }
+    let skills = ``
+    if (data?.languages)
+        skills += `\\textbf{Languages}{: ${formatter(data?.languages)}} \\\\` + `\n`
+    if (data?.developerTools)
+        skills += `\\textbf{Developer Tools}{: ${formatter(data?.developerTools)}} \\\\` + `\n`
+    if (data?.relevantCoursework)
+        skills += `\\textbf{Relevant Coursework}{: ${formatter(data?.relevantCoursework)}} \\\\` + `\n`
+    if (data?.technologiesAndFrameworks)
+        skills += `\\textbf{Technologies and Frameworks}{: ${formatter(data?.technologiesAndFrameworks)}} \\\\` + `\n`
+
+
+    let template =
+        `
+        \\section{Technical Skills}
+    \\begin{itemize}[leftmargin=0.15in, label={}]
+        \\small{\\item{
+            ${skills}
+        }}
+    \\end{itemize}
+    `
+
+    return template
+
+}
+
+const achievementCreator = (data, name) => {
     if (data == null || data.length == 0) {
         return ''
     }
     let achievements = ``
 
-    for (let i = 0; i < data.length; i++) {
+    for (let i = 0; i < data?.['details'].length; i++) {
         let point = ``
 
-        data[i]['points'].map((val) => {
-            if (val.trim().length > 0) {
-                point += `\\resumeItem{${formatter(val)}}` + `\n`
-            }
-        })
+        point += `\\resumeItem{${formatter(data?.['details']?.[i])}}` + `\n` 
+        if(i!=data?.['details'].length-1)
+        point+= `\\vspace{-10pt}` + `\n`
 
         let achievement = `
-        \\resumeProjectHeading {\\textbf{${formatter(data[i]?.name)}}}{}
         ${point.trim().length > 0 ?
                 `
             \\resumeItemListStart
+            \\small{\\setlength\\itemsep{-4pt}}
                 ${point}
             \\resumeItemListEnd
             `
@@ -268,37 +302,10 @@ const achievementCreator = (data) => {
 
     let template =
         `
-    \\section{Achievement}
-    \\resumeSubHeadingListStart
+    \\section{${name}}
+    \\resumeSubHeadingListStart 
         ${achievements}
     \\resumeSubHeadingListEnd
-    `
-
-    return template
-
-}
-
-// {skillName:'',skillValue:''}
-const skillsCreator = (data) => {
-
-    if (data == null || data.length == 0) {
-        return ''
-    }
-    let skills = ``
-
-    data.map((val) => {
-        skills += `\\textbf{${formatter(val?.skillName)}}{: ${formatter(val?.skillValue)}} \\\\` + `\n`
-    })
-
-
-    let template =
-        `
-        \\section{Technical Skills}
-    \\begin{itemize}[leftmargin=0.15in, label={}]
-        \\small{\\item{
-            ${skills}
-        }}
-    \\end{itemize}
     `
 
     return template
@@ -338,7 +345,7 @@ async function loadPersonalDetails(user_email) {
             .eq('user_email', user_email);
 
         if (error) {
-            alert(error);
+            console.log(error);
         } else {
             if (data && data.length > 0) {
                 return data[0]?.['personal_details']
@@ -346,7 +353,7 @@ async function loadPersonalDetails(user_email) {
 
         }
     } catch (e) {
-        alert(e);
+        console.log(e);
     }
 }
 
@@ -358,28 +365,160 @@ async function loadSocialLinks(user_email) {
             .eq('user_email', user_email);
 
         if (error) {
-            alert(error);
+            console.log(error);
         } else {
             if (data && data.length > 0) {
                 return data[0]?.['social_links']
             }
         }
     } catch (e) {
-        alert(e);
+        console.log(e);
+    }
+}
+
+async function loadEducationDetails(user_email) {
+    try {
+        let { data, error } = await supabase
+            .from('resume-details')
+            .select("education")
+            .eq('user_email', user_email);
+
+        if (error) {
+            console.log(error);
+        } else {
+            if (data && data.length > 0) {
+                return data[0]?.['education']
+            }
+        }
+    } catch (e) {
+        console.log(e);
+    }
+}
+
+async function loadProjectDetails(user_email) {
+    try {
+        let { data, error } = await supabase
+            .from('resume-details')
+            .select("projects")
+            .eq('user_email', user_email);
+
+        if (error) {
+            console.log(error);
+        } else {
+            if (data && data.length > 0) {
+                return data[0]?.['projects']
+            }
+        }
+    } catch (e) {
+        console.log(e);
+    }
+}
+
+async function loadExperienceDetails(user_email) {
+    try {
+        let { data, error } = await supabase
+            .from('resume-details')
+            .select("experience")
+            .eq('user_email', user_email);
+
+        if (error) {
+            console.log(error);
+        } else {
+            if (data && data.length > 0) {
+                return data[0]?.['experience']
+            }
+        }
+    } catch (e) {
+        console.log(e);
+    }
+}
+
+async function loadSkillDetails(user_email) {
+    try {
+        let { data, error } = await supabase
+            .from('resume-details')
+            .select("skills")
+            .eq('user_email', user_email);
+
+        if (error) {
+            console.log(error);
+        } else {
+            if (data && data.length > 0) {
+                return data[0]?.['skills']
+            }
+        }
+    } catch (e) {
+        console.log(e);
+    }
+}
+
+async function loadAchievementDetails(user_email) {
+    try {
+        let { data, error } = await supabase
+            .from('resume-details')
+            .select("achievements")
+            .eq('user_email', user_email);
+
+        if (error) {
+            console.log(error);
+        } else {
+            if (data && data.length > 0) {
+                return data[0]?.['achievements']
+            }
+        }
+    } catch (e) {
+        console.log(e);
+    }
+}
+
+async function loadECDetails(user_email) {
+    try {
+        let { data, error } = await supabase
+            .from('resume-details')
+            .select("extra_curricular")
+            .eq('user_email', user_email);
+
+        if (error) {
+            console.log(error);
+        } else {
+            if (data && data.length > 0) {
+                return data[0]?.['extra_curricular']
+            }
+        }
+    } catch (e) {
+        console.log(e);
     }
 }
 
 export async function createResume(user_email) {
     const personalDetailData = await loadPersonalDetails(user_email)
     const socialLinksData = await loadSocialLinks(user_email)
+    const educationDetailsData = await loadEducationDetails(user_email)
+    const projectDetailsData = await loadProjectDetails(user_email)
+    const experienceDetailsData = await loadExperienceDetails(user_email)
+    const skillDetailsData = await loadSkillDetails(user_email)
+    const achievementDetailsData = await loadAchievementDetails(user_email)
+    const ecDetailsData = await loadECDetails(user_email)
 
     const personalDetail = personalDetailCreator(personalDetailData, socialLinksData)
+    const educationDetail = educationCreator(educationDetailsData)
+    const projectDetail = projectsCreator(projectDetailsData)
+    const experienceDetail = experienceCreator(experienceDetailsData)
+    const skillDetail = skillsCreator(skillDetailsData)
+    const achievementDetail = achievementCreator(achievementDetailsData, "Achievements")
+    const ecDetail = achievementCreator(ecDetailsData, "Extra Curricular")
 
     let template =
         `
     ${latexHeader}
     \\begin{document}
     ${personalDetail}
+    ${educationDetail}
+    ${experienceDetail}
+    ${projectDetail}
+    ${skillDetail}
+    ${achievementDetail}
+    ${ecDetail}
     \\end{document}
     `
     return template

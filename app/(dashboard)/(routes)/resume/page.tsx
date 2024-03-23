@@ -172,6 +172,7 @@ interface skillDetailsType {
 const Resume = () => {
     const [currentTab, setCurrentTab] = useState('personal-details')
     const [user, setUser] = useState<any>(null)
+    const [createResumeStatus, setCreateResumeStatus] = useState("pending")
     const [status, setStatus] = useState<statusType>({
         loadData: "pending",
         personalDetails: "pending",
@@ -586,7 +587,7 @@ const Resume = () => {
         }
     }
 
-    useEffect(()=>{
+    useEffect(() => {
         setComplete(
             {
                 personalDetailsComplete: personalDetails?.fullName ? true : false,
@@ -599,7 +600,7 @@ const Resume = () => {
                 loading: false
             }
         )
-    },[personalDetails, socialLinks, skillDetails, educationDetails, experienceDetails, extraCurricularDetails, achievementDetails, projectDetails])
+    }, [personalDetails, socialLinks, skillDetails, educationDetails, experienceDetails, extraCurricularDetails, achievementDetails, projectDetails])
 
     async function loadDetails() {
         setStatus({
@@ -1083,9 +1084,38 @@ const Resume = () => {
 
     async function createResumeUtil(e) {
         e.preventDefault()
+        setCreateResumeStatus("loading")
         const resume = await createResume(user.email)
         navigator.clipboard.writeText(resume);
         console.log(resume);
+        const base64EncodedContent = btoa(resume);
+        const form = document.createElement('form');
+        form.method = 'post';
+        form.action = 'https://www.overleaf.com/docs';
+        form.target = '_blank';
+        form.className = "hidden"
+
+        // Create an input field for snip_uri
+        const inputUri = document.createElement('input');
+        inputUri.type = 'text';
+        inputUri.name = 'snip_uri';
+        inputUri.value = `data:application/x-tex;base64,${base64EncodedContent}`;
+        inputUri.className = "hidden"
+
+        // Create an input field for snip_name
+        const inputName = document.createElement('input');
+        inputName.type = 'text';
+        inputName.name = 'snip_name';
+        inputName.value = `${personalDetails?.fullName.slice(0,personalDetails?.fullName.indexOf(' ')).toLowerCase()}_resume_coding75`;
+        inputName.className = "hidden"
+        // Append the input fields to the form
+        form.appendChild(inputUri);
+        form.appendChild(inputName);
+
+        // Submit the form
+        document.body.appendChild(form);
+        form.submit();
+        setCreateResumeStatus("pending")
     }
 
     return (
@@ -1098,7 +1128,7 @@ const Resume = () => {
                     <div className="mx-auto mb-5 px-4 sm:px-6 py-4 lg:px-8">
                         <div className="sm:flex sm:items-center sm:justify-between">
                             <div className="text-center sm:text-left">
-                                <h1 className="text-2xl font-bold text-gray-900 sm:text-3xl flex items-center justify-center"><ScrollText className='mr-2' /> Resume Builder</h1>
+                                <h1 className="text-2xl mr-5 font-bold text-gray-900 sm:text-3xl flex items-center justify-center"><ScrollText className='mr-2' /> Resume Builder</h1>
                                 <p className="mt-1.5 text-sm text-gray-500">Create an ATS Friendly Latex Resume 🚀</p>
                             </div>
                             <div className="mt-4 flex flex-col gap-4 sm:mt-0 sm:flex-row sm:items-center">
@@ -1116,10 +1146,22 @@ const Resume = () => {
                                                 <button
                                                     className="inline-flex items-center justify-center gap-1.5 rounded-lg border border-gray-400 bg-white px-5 py-3 text-gray-500 transition hover:text-gray-700 focus:outline-none focus:ring"
                                                     type="button"
+                                                    disabled={createResumeStatus == "loading"}
                                                     onClick={createResumeUtil}
                                                 >
-                                                    <span className="text-sm font-medium"> Build Resume </span>
-                                                    <ExternalLink className="h-4 w-4" />
+                                                    <span className="text-sm flex items-center font-medium">
+                                                        {
+                                                            createResumeStatus == "loading" ?
+                                                                <>
+                                                                    <RotateCw className='h-4 w-4 animate-spin mr-2' /> Building Resume
+                                                                </>
+                                                                :
+                                                                <>
+                                                                    Build Resume <ExternalLink className="h-4 w-4 ml-2" />
+                                                                </>
+                                                        }
+                                                    </span>
+
                                                 </button>
                                                 :
                                                 <TooltipProvider delayDuration={0} >
@@ -1173,40 +1215,40 @@ const Resume = () => {
                                                                     <tab.icon className="w-5 h-5 me-2" />
                                                                     {tab.label}
                                                                     {
-                                                                        complete.loading?
-                                                                        <>
-                                                                        <span className='text-xs text-right ml-auto text-blue-600 flex items-center'>
-                                                                        <RotateCw className='animate-spin h-4 w-4 mr-1' /> loading
-                                                                    </span>
-                                                                        
-                                                                        </>
-                                                                        :
-                                                                        <>
-                                                                        {
-                                                                        (complete[tab.completeKey] == false && updateChange[tab.changeKey] == false) ?
+                                                                        complete.loading ?
                                                                             <>
-                                                                                <span className='text-xs text-right ml-auto text-amber-600 flex items-center'>
-                                                                                    <AlertCircle className='h-4 w-4 mr-1' /> incomplete
+                                                                                <span className='text-xs text-right ml-auto text-blue-600 flex items-center'>
+                                                                                    <RotateCw className='animate-spin h-4 w-4 mr-1' /> loading
                                                                                 </span>
+
                                                                             </>
                                                                             :
                                                                             <>
-                                                                                <span className='text-xs text-right flex ml-auto'>
-                                                                                    {updateChange[tab.changeKey] ? <>
-                                                                                        <span className='text-yellow-600 flex items-center'>
-                                                                                            <UploadCloud className='h-4 w-4 mr-1' /> unsaved
-                                                                                        </span>
-                                                                                    </> :
+                                                                                {
+                                                                                    (complete[tab.completeKey] == false && updateChange[tab.changeKey] == false) ?
                                                                                         <>
-                                                                                            <span className='text-green-600 flex items-center'>
-                                                                                                <Check className='h-4 w-4 mr-1' /> saved
+                                                                                            <span className='text-xs text-right ml-auto text-amber-600 flex items-center'>
+                                                                                                <AlertCircle className='h-4 w-4 mr-1' /> incomplete
                                                                                             </span>
                                                                                         </>
-                                                                                    }
-                                                                                </span>
+                                                                                        :
+                                                                                        <>
+                                                                                            <span className='text-xs text-right flex ml-auto'>
+                                                                                                {updateChange[tab.changeKey] ? <>
+                                                                                                    <span className='text-yellow-600 flex items-center'>
+                                                                                                        <UploadCloud className='h-4 w-4 mr-1' /> unsaved
+                                                                                                    </span>
+                                                                                                </> :
+                                                                                                    <>
+                                                                                                        <span className='text-green-600 flex items-center'>
+                                                                                                            <Check className='h-4 w-4 mr-1' /> saved
+                                                                                                        </span>
+                                                                                                    </>
+                                                                                                }
+                                                                                            </span>
+                                                                                        </>
+                                                                                }
                                                                             </>
-                                                                    }
-                                                                        </>
                                                                     }
                                                                 </button>
                                                             </li>
