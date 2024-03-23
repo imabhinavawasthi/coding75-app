@@ -13,7 +13,7 @@ import {
 import React, { useEffect, useState } from "react";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
 import supabase from "@/supabase";
-import { Bell, BookMarked, LogIn, LogOut, MessageSquarePlusIcon, RotateCw, Send, User, YoutubeIcon } from "lucide-react";
+import { Bell, LogIn, LogOut, MessageSquarePlusIcon, RotateCw, Send, User, YoutubeIcon } from "lucide-react";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -31,10 +31,11 @@ import {
   DialogTrigger,
 } from "@/components/ui/dialog"
 import { toast } from "sonner";
-import { usePathname, useRouter } from "next/navigation";
+import { usePathname } from "next/navigation";
 import { Button } from "@/components/ui/button";
-import { InstagramLogoIcon, LinkedInLogoIcon } from "@radix-ui/react-icons";
+import { LinkedInLogoIcon } from "@radix-ui/react-icons";
 import { feedback_form, linkedin_link, telegram_link, youtube_link } from "@/components/social-links";
+import { Skeleton } from "@/components/ui/skeleton";
 
 const components: { title: string; href: string; description: string }[] = [
   {
@@ -353,9 +354,7 @@ export const NavbarRoutes = ({isLogo=false}:any) => {
         </div>
         {status == "loading" ?
           <>
-            <Button disabled className="bg-primary-700 hover:bg-primary-800 px-4 py-1.5 text-md rounded-lg text-white">
-              <RotateCw className="animate-spin w-4 h-4 mr-2" /> Login
-            </Button>
+            <Skeleton className='h-12 w-12 rounded-full' />
           </> :
           <>
             {user ?

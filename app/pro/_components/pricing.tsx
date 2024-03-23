@@ -1,10 +1,33 @@
 "use client"
 
 import { Badge } from '@/components/ui/badge';
+import supabase from '@/supabase';
 import { Check, Gem, Rocket, X } from 'lucide-react';
+import { useEffect, useState } from 'react';
 import CountUp from 'react-countup';
 
 const Pricing = () => {
+    const [launchDate, setLaunchDate] = useState<any>()
+    async function getLaunchDate() {
+        try {
+            let { data, error } = await supabase
+                .from('constants')
+                .select('launch_date')
+
+            if (error) {
+                console.error('Error fetching data:', error);
+            }
+            else {
+                setLaunchDate(data?.[0]?.launch_date)
+            }
+
+        } catch (error) {
+            console.error('An error occurred:', error);
+        }
+    }
+    useEffect(() => {
+        getLaunchDate()
+    }, [])
     return (
         <div>
             <section>
@@ -94,6 +117,15 @@ const Pricing = () => {
                                         </li>
                                     </ul>
                                     <a className="text-white bg-primary-600 hover:bg-primary-700 focus:ring-4 focus:ring-primary-200 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:text-white  dark:focus:ring-primary-900">Launching Soon ⏰</a>
+                                    {
+                                        launchDate &&
+                                        <p className='mt-4 font-semibold tracking-tight'>
+                                            Next Batch Starting on &nbsp;
+                                             <span className='text-blue-600 font-bold'>{launchDate}</span> - &nbsp;
+                                             <span className='text-green-600 font-bold'>Beginner Friendly</span>
+                                             .
+                                        </p>
+                                    }
                                 </div>
                             </div>
                         </div>
@@ -139,8 +171,17 @@ const Pricing = () => {
                                 </li>
                             </ul>
                             <a className="text-white bg-primary-600 hover:bg-primary-700 focus:ring-4 focus:ring-primary-200 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:text-white  dark:focus:ring-primary-900">
-                            Launching Soon ⏰
+                                Launching Soon ⏰
                             </a>
+                            {
+                                        launchDate &&
+                                        <p className='mt-4 font-semibold tracking-tight'>
+                                            Next Batch Starting on &nbsp;
+                                             <span className='text-blue-600 font-bold'>{launchDate}</span> - 
+                                             <span className='text-amber-600 font-bold'>1:1 Personalized Plan Included</span>
+                                             .
+                                        </p>
+                                    }
                         </div>
                     </div>
                 </div>

@@ -23,7 +23,7 @@ export default function FancyTestimonialsSlider({ testimonials }: { testimonials
       setActive(active + 1 === testimonials.length ? 0 : active => active + 1)
     }, autorotateTiming)
     return () => clearInterval(interval)
-  }, [active, autorotate])
+  }, [active, autorotate, testimonials.length])
 
   const heightFix = () => {
     if (testimonialsRef.current && testimonialsRef.current.parentElement) testimonialsRef.current.parentElement.style.height = `${testimonialsRef.current.clientHeight}px`
@@ -31,7 +31,7 @@ export default function FancyTestimonialsSlider({ testimonials }: { testimonials
 
   useEffect(() => {
     heightFix()
-  }, [])  
+  }, [])
 
   return (
     <div className="w-full max-w-3xl mx-auto overflow-hidden text-center mt-10">
@@ -52,10 +52,10 @@ export default function FancyTestimonialsSlider({ testimonials }: { testimonials
                 leaveFrom="opacity-100 rotate-0"
                 leaveTo="opacity-0 rotate-[60deg]"
               >
-                <Image className="relative top-11 left-1/2 -translate-x-1/2 object-contain" src={testimonial.img} width={90} height={90} alt={testimonial.name} />
+                <Image className="relative top-11 left-1/2 -translate-x-1/2 object-contain" src={testimonial.img} width={200} height={200} alt={testimonial.name} />
               </Transition>
             ))}
-            
+
           </div>
         </div>
       </div>
@@ -90,7 +90,7 @@ export default function FancyTestimonialsSlider({ testimonials }: { testimonials
             className={`inline-flex justify-center whitespace-nowrap rounded-full px-3 py-1.5 m-1.5 text-xs shadow-sm focus-visible:outline-none focus-visible:ring focus-visible:ring-primary-300 dark:focus-visible:ring-slate-600 transition-colors duration-150 ${active === index ? 'bg-primary-500 text-white shadow-primary-950/10' : 'bg-white hover:bg-primary-100 text-slate-900'}`}
             onClick={() => { setActive(index); setAutorotate(false); }}
           >
-            <span>{testimonial.name}</span> <span className={`${active === index ? 'text-primary-200' : 'text-slate-300'}`}>-</span> <span>{testimonial.role}</span>
+            <span>{testimonial.name}</span> <span className={`${active === index ? 'text-primary-200' : 'text-slate-300'}`}>, &nbsp;</span> <span>{testimonial.role}</span>
           </button>
         ))}
 

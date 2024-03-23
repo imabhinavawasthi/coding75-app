@@ -18,7 +18,7 @@ const Problem = (params: any) => {
         async function fetchProblemsFun() {
             try {
                 const { dsaproblem } = await fetchProblem({ problem: params.params.problem });
-                if(dsaproblem){
+                if (dsaproblem) {
                     setProblem(dsaproblem[0])
                 }
                 setLoading(false)
@@ -50,7 +50,7 @@ const Problem = (params: any) => {
                     {problem ?
                         <>
                             <div className="lg:container md:container px-3">
-                            <div className="mt-3">
+                                <div className="mt-3">
                                     <BreadCrumb links={[
                                         {
                                             "title": "DSA CP",
@@ -113,33 +113,30 @@ const Problem = (params: any) => {
                                                 {problem["company_tags"].length > 0 && <div className="flex flex-wrap mt-4 items-center text-sm text-gray-500">
                                                     <BriefcaseIcon className="mr-1.5 h-5 w-5 flex-shrink-0 text-gray-400" aria-hidden="true" />
                                                     {problem["company_tags"].map((value, index) => (
-                                                        <a
+                                                        <div
                                                             key={index}
-                                                            className="mt-1 hover:underline"
-                                                            href={"/dsa-cp/problems/company/" + value.value}>
-
+                                                            className="mt-1">
                                                             <span
 
                                                                 className="ml-2 mr-2 whitespace-nowrap rounded-full bg-purple-100 px-2.5 py-0.5 text-sm text-purple-700"
                                                             >
                                                                 {value.label}
                                                             </span>
-                                                        </a>
+                                                        </div>
                                                     ))}
                                                 </div>}
                                                 {problem["topic_tags"].length > 0 && <div className="flex flex-wrap mt-4 items-center text-sm text-gray-500">
                                                     <BookText className="mr-1.5 h-5 w-5 flex-shrink-0 text-gray-400" aria-hidden="true" />
                                                     {problem["topic_tags"].map((value, index) => (
-                                                        <a
+                                                        <div
                                                             key={index}
-                                                            className="mt-1 hover:underline"
-                                                            href={"/dsa-cp/problems/topic/" + value.value}>
+                                                            className="mt-1">
                                                             <span
                                                                 className="ml-2 mr-2 whitespace-nowrap rounded-full bg-yellow-100 px-2.5 py-0.5 text-sm text-yellow-700"
                                                             >
                                                                 {value.label}
                                                             </span>
-                                                        </a>
+                                                        </div>
                                                     ))}
                                                 </div>}
                                             </div>
@@ -165,7 +162,7 @@ const Problem = (params: any) => {
                                             </span>}
 
                                             <span className="ml-3">
-                                            <a
+                                                <a
                                                     href={problem["problem_link"]}
                                                     target="_blank"
                                                     className="inline-flex items-center rounded-md bg-primary-700 px-5 py-2 text-lg font-semibold text-white shadow-sm hover:bg-primary-800 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary-700"
@@ -195,25 +192,25 @@ const Problem = (params: any) => {
                                             </div>
                                             <div className="mt-10 flex justify-center">
                                                 <div className="w-full flex justify-center rounded-lg border border-gray-100 bg-gray-100 p-1">
-                                                {problem["editorial"]&&
-                                                    <a
-                                                        href={problem["editorial"]}
-                                                        target="_blank"
-                                                        className="hover:bg-white hover:text-blue-500 inline-flex items-center gap-2 rounded-md px-4 py-2 lg:text-lg text-sm text-gray-500 focus:relative"
-                                                    >
-                                                        <FileCode2 />
-                                                        Editorial
-                                                    </a>}
-                                                    {problem["video_editorial"]&&
-                                                    <a
-                                                        href={problem["video_editorial"]}
-                                                        target="_blank"
-                                                        className="hover:bg-white hover:text-blue-500 inline-flex items-center gap-2 rounded-md px-4 py-2 lg:text-lg text-sm text-gray-500 focus:relative"
-                                                    >
-                                                        <FileVideo />
+                                                    {problem["editorial"] &&
+                                                        <a
+                                                            href={problem["editorial"]}
+                                                            target="_blank"
+                                                            className="hover:bg-white hover:text-blue-500 inline-flex items-center gap-2 rounded-md px-4 py-2 lg:text-lg text-sm text-gray-500 focus:relative"
+                                                        >
+                                                            <FileCode2 />
+                                                            Editorial
+                                                        </a>}
+                                                    {problem["video_editorial"] &&
+                                                        <a
+                                                            href={problem["video_editorial"]}
+                                                            target="_blank"
+                                                            className="hover:bg-white hover:text-blue-500 inline-flex items-center gap-2 rounded-md px-4 py-2 lg:text-lg text-sm text-gray-500 focus:relative"
+                                                        >
+                                                            <FileVideo />
 
-                                                        Video Editorial
-                                                    </a>}
+                                                            Video Editorial
+                                                        </a>}
 
                                                 </div>
                                             </div>

@@ -8,28 +8,34 @@ import FancyTestimonialsSlider from './testimonials'
   
     const testimonials = [
       {
-        img: "https://zettllhfmtvcunctalyo.supabase.co/storage/v1/object/public/resources/icons/google.svg.png",
-        quote: "The ability to capture responses is a game-changer. If a user gets tired of the sign up and leaves, that data is still persisted. Additionally, it's great to select between formats.",
-        name: 'Abhinav Awasthi',
-        role: 'SDE Intern at Google'
+        img: "https://zettllhfmtvcunctalyo.supabase.co/storage/v1/object/public/resources/pictures/service-now.png",
+        quote: "I have attended the live DSA sessions and they are very useful. The concepts are explained thoroughly and doubts are resolved well, which helped me to get prepared for my placements and interviews.",
+        name: 'Aditya Chaudhary',
+        role: 'Intern at Service Now'
       },
       {
-        img: "https://zettllhfmtvcunctalyo.supabase.co/storage/v1/object/public/resources/icons/google.svg.png",
-        quote: "Having the power to capture user feedback is revolutionary. Even if a participant abandons the sign-up process midway, their valuable input remains intact.",
-        name: 'Nick V',
-        role: 'Malika Inc.'
+        img: "https://zettllhfmtvcunctalyo.supabase.co/storage/v1/object/public/resources/pictures/microsoft.png",
+        quote: "Live project building sessions helped me a lot to put some good projects in my resume, with good resume review and mock interviews sessions, I got selected in microsoft internship.",
+        name: 'Jatin Pal',
+        role: 'SWE Intern at Microsoft.'
       },
       {
-        img: "https://zettllhfmtvcunctalyo.supabase.co/storage/v1/object/public/resources/icons/google.svg.png",
-        quote: "The functionality to capture responses is a true game-changer. Even if a user becomes fatigued during sign-up and abandons the process, their information remains stored.",
-        name: 'Amelia W',
-        role: 'Panda AI'
+        img: "https://zettllhfmtvcunctalyo.supabase.co/storage/v1/object/public/resources/pictures/paisabazaar.svg",
+        quote: "I used to attend live classes of DSA and CS Fundamentals, which made my basics of DSA and CS very clear, and I got my first internship in my second year.",
+        name: 'Aditya Pandey',
+        role: 'Intern at paisabazaar.com'
       },
       {
-        img: "https://zettllhfmtvcunctalyo.supabase.co/storage/v1/object/public/resources/icons/google.svg.png",
-        quote: "The functionality to capture responses is a true game-changer. Even if a user becomes fatigued during sign-up and abandons the process, their information remains stored.",
-        name: 'Amelia W',
-        role: 'Panda AI'
+        img: "https://zettllhfmtvcunctalyo.supabase.co/storage/v1/object/public/resources/pictures/gfg.png",
+        quote: "I have attended the live DSA&CP sessions and they are very useful. All the concepts are explained thoroughly and doubts are resolved well. I was able to reach ACM ICPC Regionals and grab an SDE internship at GeeksForGeeks.",
+        name: 'Ripan Roy',
+        role: 'SDE Intern Offer from GFG'
+      },
+      {
+        img: "https://zettllhfmtvcunctalyo.supabase.co/storage/v1/object/public/resources/pictures/juspay.png",
+        quote: "I was struggling with DSA, but after joining regular DSA and CP classes, I started solving problems and worked on my problem solving skills, and I was able to clear coding round of Juspay..",
+        name: 'Aman Verma',
+        role: 'Intern at Juspay'
       }
     ]
   

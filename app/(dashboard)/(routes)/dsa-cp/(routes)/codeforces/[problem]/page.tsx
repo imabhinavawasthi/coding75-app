@@ -149,12 +149,15 @@ const Problem = (params: any) => {
                                                 {problem["topic_tags"].length > 0 && <div className="flex flex-wrap mt-4 items-center text-sm text-gray-500">
                                                     <BookText className="mr-1.5 h-5 w-5 flex-shrink-0 text-gray-400" aria-hidden="true" />
                                                     {problem["topic_tags"].map((value, index) => (
-                                                            <span
+                                                        <div
                                                             key={index}
+                                                            className="mt-1">
+                                                            <span
                                                                 className="ml-2 mr-2 whitespace-nowrap rounded-full bg-yellow-100 px-2.5 py-0.5 text-sm text-yellow-700"
                                                             >
                                                                 {value.label}
                                                             </span>
+                                                        </div>
                                                     ))}
                                                 </div>}
                                             </div>
