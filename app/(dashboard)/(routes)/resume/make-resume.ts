@@ -99,11 +99,11 @@ const personalDetailCreator = (personalDetails, socialLinks) => {
         %-----------Personal Details-----------
 
     \\begin{center}
-    {\\Huge \\scshape Abhinav Awasthi} \\\\ \\vspace{1pt}
-    Kanpur, India - 208021 \\\\ \\vspace{1pt}
-    \\small \\raisebox{-0.1\\height}\\faPhone\\ 9935859460 ~ \\href{mailto:awasthiabhinav744@gmail.com}{\\raisebox{-0.2\\height}\\faEnvelope\\  \\underline{awasthiabhinav744@gmail.com}} ~ 
-    \\href{https://linkedin.com/in/abhinavawasthi01/}{\\raisebox{-0.2\\height}\\faLinkedin\\ \\underline{/abhinavawasthi01}}  ~
-    \\href{https://github.com/imabhinavawasthi}{\\raisebox{-0.2\\height}\\faGithub\ \\underline{/imabhinavawasthi}}
+    {\\Huge \\scshape ${personalDetails?.fullName}} \\\\ \\vspace{1pt}
+    ${personalDetails?.address} - ${personalDetails?.pincode} \\\\ \\vspace{1pt}
+    \\small \\raisebox{-0.1\\height}\\faPhone\\ ${personalDetails?.contactNumber} ~ \\href{mailto:${personalDetails?.email}}{\\raisebox{-0.2\\height}\\faEnvelope\\  \\underline{${personalDetails?.email}}} ~ 
+    \\href{${socialLinks?.linkedin}}{\\raisebox{-0.2\\height}\\faLinkedin\\ \\underline{Linkedin}}  ~
+    \\href{${socialLinks?.github}}{\\raisebox{-0.2\\height}\\faGithub\ \\underline{Github}}
     \\vspace{-8pt}
     \\end{center}
     `
@@ -217,10 +217,10 @@ const experienceCreator = (data) => {
                 ``
             }
         `
-        if(i!=data.length-1)
-        experiences += experience + `\\vspace{-6pt}`  + `\n`
-    else
-    experiences += experience + `\n`
+        if (i != data.length - 1)
+            experiences += experience + `\\vspace{-6pt}` + `\n`
+        else
+            experiences += experience + `\n`
 
 
     }
@@ -277,9 +277,9 @@ const achievementCreator = (data, name) => {
     for (let i = 0; i < data?.['details'].length; i++) {
         let point = ``
 
-        point += `\\resumeItem{${formatter(data?.['details']?.[i])}}` + `\n` 
-        if(i!=data?.['details'].length-1)
-        point+= `\\vspace{-10pt}` + `\n`
+        point += `\\resumeItem{${formatter(data?.['details']?.[i])}}` + `\n`
+        if (i != data?.['details'].length - 1)
+            point += `\\vspace{-10pt}` + `\n`
 
         let achievement = `
         ${point.trim().length > 0 ?
