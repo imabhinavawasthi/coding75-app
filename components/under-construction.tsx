@@ -12,7 +12,7 @@ const UnderConstruction = () => {
                         <p className="mt-4 text-gray-500">
                         Our Team is in the process of crafting valuable resources on this page. Stay tuned for amazing resources!
                         </p>
-                        <p className="mt-2 text-gray-500">Interested in contributing your expertise to make this resource even better? Mail us at <a className="text-indigo-400" href="mailto:helloss@crackdsa.com">helloss@crackdsa.com</a> or Whatsapp <a className="text-indigo-400" target="_blank" href="https://wa.me/message/TPN76XLWVOWDB1">Here</a></p>
+                        <p className="mt-2 text-gray-500">Interested in contributing your expertise to make this resource even better? Mail us at <a className="text-indigo-400" href="mailto:info@coding75.com">info@coding75.com</a> or Whatsapp <a className="text-indigo-400" target="_blank" href="https://wa.me/message/TPN76XLWVOWDB1">Here</a></p>
 
                         <a
                             href="/dashboard"

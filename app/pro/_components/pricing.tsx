@@ -121,9 +121,9 @@ const Pricing = () => {
                                         launchDate &&
                                         <p className='mt-4 font-semibold tracking-tight'>
                                             Next Batch Starting on &nbsp;
-                                             <span className='text-blue-600 font-bold'>{launchDate}</span> - &nbsp;
-                                             <span className='text-green-600 font-bold'>Beginner Friendly</span>
-                                             .
+                                            <span className='text-blue-600 font-bold'>{launchDate}</span> - &nbsp;
+                                            <span className='text-green-600 font-bold'>Beginner Friendly</span>
+                                            .
                                         </p>
                                     }
                                 </div>
@@ -174,14 +174,14 @@ const Pricing = () => {
                                 Launching Soon ⏰
                             </a>
                             {
-                                        launchDate &&
-                                        <p className='mt-4 font-semibold tracking-tight'>
-                                            Next Batch Starting on &nbsp;
-                                             <span className='text-blue-600 font-bold'>{launchDate}</span> - 
-                                             <span className='text-amber-600 font-bold'>1:1 Personalized Plan Included</span>
-                                             .
-                                        </p>
-                                    }
+                                launchDate &&
+                                <p className='mt-4 font-semibold tracking-tight'>
+                                    Next Batch Starting on &nbsp;
+                                    <span className='text-blue-600 font-bold'>{launchDate}</span> -
+                                    <span className='text-amber-600 font-bold'>1:1 Personalized Plan Included</span>
+                                    .
+                                </p>
+                            }
                         </div>
                     </div>
                 </div>
