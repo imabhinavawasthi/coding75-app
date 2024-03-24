@@ -311,7 +311,7 @@ export const NavbarRoutes = ({ isLogo = false }: any) => {
           </NavigationMenuList>
         </NavigationMenu>
       </div>
-      <div className="flex justify-end items-center gap-x-2 ml-auto mr-5">
+      <div className="flex justify-end items-center gap-x-2 ml-auto md:mr-5">
         <div className="hidden md:flex items-center">
           <div className="mr-5">
             <DropdownMenu>
@@ -342,12 +342,12 @@ export const NavbarRoutes = ({ isLogo = false }: any) => {
             </DropdownMenu>
           </div>
         </div>
-        <div className="mr-5">
+        <div className="md:mr-5">
           <DropdownMenu>
             <DropdownMenuTrigger onClick={(e) => {
-                e.preventDefault()
-                setNotificationOpen(true)
-              }} asChild>
+              e.preventDefault()
+              setNotificationOpen(true)
+            }} asChild>
               <div className="relative rounded-full inline-flex w-fit">
                 {
                   notificationOpen == false &&
@@ -357,7 +357,7 @@ export const NavbarRoutes = ({ isLogo = false }: any) => {
 
                 <div
                   className="cursor-pointer hover:shadow-none flex items-center justify-center rounded-full bg-primary-700 p-2 text-center text-white shadow-xl dark:text-gray-200">
-                  <Bell className="h-5 w-5" />
+                  <Bell className="md:h-5 md:w-5 h-3 w-3" />
                 </div>
               </div>
             </DropdownMenuTrigger>
