@@ -212,8 +212,8 @@ export const NavbarRoutes = ({ isLogo = false }: any) => {
         <div>
           <Link href="/">
             <Image
-              height={120}
-              width={120}
+              height={170}
+              width={170}
               alt="logo"
               src="/logo-bg.png"
             />
