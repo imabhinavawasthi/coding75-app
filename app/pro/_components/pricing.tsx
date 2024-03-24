@@ -81,7 +81,7 @@ const Pricing = () => {
                                 <div className="shadow-2xl z-40 flex flex-col p-6 mx-auto max-w-lg text-center text-gray-900 bg-white rounded-lg border border-gray-100 dark:border-gray-600 xl:p-8 dark:bg-gray-800 dark:text-white">
                                     <div className='mb-2'><Badge className='bg-primary-100 text-primary-700 rounded-sm text-center'>Most Popular <Rocket className='h-4 w-4 ml-2' /></Badge></div>
                                     <h3 className="mb-4 text-2xl font-semibold">Pro</h3>
-                                    <p className="font-light text-gray-500 sm:text-lg dark:text-gray-400">Relevant for multiple users, extended & premium support.</p>
+                                    <p className="font-light text-gray-500 sm:text-lg dark:text-gray-400">Relevant for beginners, live classes and mentorship sessions.</p>
                                     <div className="flex justify-center items-baseline my-8">
                                         <span className="mr-2 text-5xl font-extrabold">₹499</span>
                                         <span className="text-gray-500 dark:text-gray-400">/month</span>

@@ -1086,8 +1086,6 @@ const Resume = () => {
         e.preventDefault()
         setCreateResumeStatus("loading")
         const resume = await createResume(user.email)
-        navigator.clipboard.writeText(resume);
-        console.log(resume);
         const base64EncodedContent = btoa(resume);
         const form = document.createElement('form');
         form.method = 'post';
