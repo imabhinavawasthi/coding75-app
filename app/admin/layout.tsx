@@ -23,20 +23,20 @@ const AdminLayout = ({
     try {
       const { data, error } = await supabase.auth.getUser();
       if (data) {
-        // if (data.user) {
-        //   setUser(data.user)
-        //   console.log(data.user.email);
-        //   if(process.env.NEXT_PUBLIC_CRACKDSA_AUTHORISED_USERS?.includes(String(data.user.email))){
-        //     setStatus("done")
-        //   }
-        //   else{
-        //     router.push("/")
-        //   }
-        // }
-        // else {
-        //   router.push("/")
-        //   setUser(null)
-        // }
+        if (data.user) {
+          setUser(data.user)
+          console.log(data.user.email);
+          if(process.env.NEXT_PUBLIC_CRACKDSA_AUTHORISED_USERS?.includes(String(data.user.email))){
+            setStatus("done")
+          }
+          else{
+            router.push("/")
+          }
+        }
+        else {
+          router.push("/")
+          setUser(null)
+        }
         setStatus("done")
       }
       else {
