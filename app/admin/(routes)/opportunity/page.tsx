@@ -22,10 +22,12 @@ const AddOpportunity = () => {
     const [password, setPassword] = useState("")
     const [status, setStatus] = useState("done")
 
-    function create_url_slug(name: string) {
+    function create_url_slug(name: string, company_name:string) {
         let s = name.toLowerCase()
+        let cn = company_name.toLowerCase()
+        cn = cn.replace(/([~!@#$%^&*()_+=`{}\[\]\|\\:;'<>,.\/? ])+/g, '-').replace(/^(-)+|(-)+$/g, '');
         s = s.replace(/([~!@#$%^&*()_+=`{}\[\]\|\\:;'<>,.\/? ])+/g, '-').replace(/^(-)+|(-)+$/g, '');
-        s = s + "-" + Math.floor((new Date()).getTime() / 1000).toString()
+        s = cn + "-" + s + "-" + Math.floor((new Date()).getTime() / 1000).toString()
         return s
     }
 
@@ -38,7 +40,7 @@ const AddOpportunity = () => {
         }
         let batches = batch_eligible.split(",")
         let batches_int = batches.map((value) => { return parseInt(value) })
-        let slug_url = create_url_slug(internship_title)
+        let slug_url = create_url_slug(internship_title,company_name)
         try {
             const { data, error } = await supabase
                 .from('internships')
@@ -94,9 +96,6 @@ const AddOpportunity = () => {
                                 required />
                         </div>
                         <div className="mt-2">
-                            <QuillEditor value={internship_description} onChange={(e) => { setInternshipDescription(e) }} />
-                        </div>
-                        <div className="mt-2">
                             <input
                                 onChange={(e) => { setCompanyName(e.target.value) }}
                                 type="text"
@@ -105,6 +104,9 @@ const AddOpportunity = () => {
                                 className="block w-full rounded-md border-0 p-3 text-gray-900 ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                                 placeholder="Company Name"
                                 required />
+                        </div>
+                        <div className="mt-2">
+                            <QuillEditor value={internship_description} onChange={(e) => { setInternshipDescription(e) }} />
                         </div>
                         <div className="mt-2">
                             <input
