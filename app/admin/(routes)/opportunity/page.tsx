@@ -5,6 +5,8 @@ import supabase from "@/supabase";
 import { useRouter } from 'next/navigation'
 import { useState } from "react";
 import QuillEditor from '../../../(dashboard)/_components/components/quill-editor';
+import { toast } from "sonner";
+import { RotateCw } from "lucide-react";
 
 const AddOpportunity = () => {
     const router = useRouter()
@@ -18,6 +20,7 @@ const AddOpportunity = () => {
     const [apply_link, setApplyLink] = useState("")
     const [stipend, setStipend] = useState("")
     const [password, setPassword] = useState("")
+    const [status, setStatus] = useState("done")
 
     function create_url_slug(name: string) {
         let s = name.toLowerCase()
@@ -28,7 +31,7 @@ const AddOpportunity = () => {
 
     async function AddOpportunity(e: any) {
         e.preventDefault()
-        
+        setStatus("loading")
         if (password != process.env.NEXT_PUBLIC_CODING_75) {
             alert("Wrong Password")
             return
@@ -58,6 +61,8 @@ const AddOpportunity = () => {
             if (error) {
                 alert('Error adding problem:');
                 console.error('An error occurred:', error);
+                toast.error("Error")
+                setStatus("done")
             } else {
                 router.push(`/opportunities/${slug_url}`)
             }
@@ -65,6 +70,8 @@ const AddOpportunity = () => {
         } catch (error) {
             alert('Error adding problem:');
             console.error('An error occurred:', error);
+            setStatus("done")
+            toast.error("Error")
         }
     }
 
@@ -172,8 +179,17 @@ const AddOpportunity = () => {
                         </div>
                         <div className="mt-2">
                             <Button
+                            variant="outline"
+                            className="flex items-center"
+                            disabled={status=="loading"}
                                 type="submit"
-                            >Upload</Button>
+                            >
+                                {
+                                 status=="loading"&&
+                                 <RotateCw className="animate-spin h-4 w-4 mr-2"/>
+                                }
+                                Upload
+                            </Button>
                         </div>
                     </form>
                 </div>
