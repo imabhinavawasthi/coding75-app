@@ -4,6 +4,12 @@ import FAQS from "./_components/faq";
 import Features from "./_components/features";
 import Pricing from "./_components/pricing";
 import TeamSection from "./_components/team-section";
+import { Metadata } from "next";
+
+export const metadata: Metadata = {
+  title: 'coding75 Pro 🚀',
+  description: 'coding75 Pro - Live DSA Classes, CS Fundaentals, Projects and much more.',
+}
 
 const CommunityPage = () => {
   return (

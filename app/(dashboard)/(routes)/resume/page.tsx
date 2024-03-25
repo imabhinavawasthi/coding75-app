@@ -1104,7 +1104,7 @@ const Resume = () => {
         const inputName = document.createElement('input');
         inputName.type = 'text';
         inputName.name = 'snip_name';
-        inputName.value = `${personalDetails?.fullName.slice(0,personalDetails?.fullName.indexOf(' ')).toLowerCase()}_resume_coding75`;
+        inputName.value = `${personalDetails?.fullName.slice(0, personalDetails?.fullName.indexOf(' ')).toLowerCase()}_resume_coding75`;
         inputName.className = "hidden"
         // Append the input fields to the form
         form.appendChild(inputUri);
@@ -1121,13 +1121,22 @@ const Resume = () => {
             {/* <div>
         <Navbar isLogo={true}/>
         </div> */}
+            <div className="mt-10 flex md:hidden justify-center items-center">
+                <div className="w-[calc(90%)] aspect-video hover:animate-background rounded-xl bg-gradient-to-r from-green-300 via-blue-500 to-purple-600 p-0.5 shadow-xl transition hover:bg-[length:400%_400%] hover:shadow-sm hover:[animation-duration:_4s] z-40">
+                    <img
+                        className="cursor-pointer w-full h-full rounded-xl p-1"
+                        src="https://zettllhfmtvcunctalyo.supabase.co/storage/v1/object/public/resources/pictures/resume-builder.png"
+                        alt="coding75-pro" />
+                </div>
+            </div>
             <div className='mt-5 lg:container md:container px-3 overflow-y-scroll'>
                 <header >
                     <div className="mx-auto mb-5 px-4 sm:px-6 py-4 lg:px-8">
                         <div className="sm:flex sm:items-center sm:justify-between">
-                            <div className="text-center sm:text-left">
-                                <h1 className="text-2xl mr-5 font-bold text-gray-900 sm:text-3xl flex items-center justify-center"><ScrollText className='mr-2' /> Resume Builder</h1>
+                            <div className="text-left sm:text-left">
+                                <h1 className="text-2xl mr-5 font-bold text-gray-900 sm:text-3xl flex items-center text-left justify-start"><ScrollText className='mr-2' /> Resume Builder</h1>
                                 <p className="mt-1.5 text-sm text-gray-500">Create an ATS Friendly Latex Resume 🚀</p>
+                                <p className="mt-2 text-sm text-gray-500">Having difficulty in making resume? <a className='underline text-red-600 font-semibold' href="https://youtu.be/VLZ1YCw5cY8" target="_blank">Watch Walkthrough</a> 🎯</p>
                             </div>
                             <div className="mt-4 flex flex-col gap-4 sm:mt-0 sm:flex-row sm:items-center">
                                 {
@@ -2530,16 +2539,40 @@ const Resume = () => {
                 }
                 {
                     status.loadData == "error" &&
-                    <div className='mt-20 flex justify-center items-center'>
+                    <div className='mt-20 mb-20 flex justify-center items-center'>
                         <ErrorBanner />
                     </div>
                 }
                 {
                     status.loadData == "loading" &&
-                    <div className='mt-20 flex justify-center items-center'>
+                    <div className='mt-20 mb-20 flex justify-center items-center'>
                         <Loading title="Loading Details" />
                     </div>
                 }
+            </div>
+            <div className='mt-10'>
+                <div className='grid md:grid-cols-2 gap-x-5'>
+                    <div className="lg:mt-0 flex justify-center items-center">
+                        <div className="w-[calc(90%)] aspect-video hover:animate-background rounded-xl bg-gradient-to-r from-green-300 via-blue-500 to-purple-600 p-0.5 shadow-xl transition hover:bg-[length:400%_400%] hover:shadow-sm hover:[animation-duration:_4s] z-40">
+                            <img
+                                className="cursor-pointer w-full h-full rounded-xl p-1"
+                                src="https://zettllhfmtvcunctalyo.supabase.co/storage/v1/object/public/resources/pictures/resume-builder.png"
+                                alt="coding75-pro" />
+                        </div>
+                    </div>
+                    <div className="lg:mt-0 mt-10 flex justify-center items-center">
+                        <div className="w-[calc(90%)] aspect-video hover:animate-background rounded-xl bg-gradient-to-r from-green-300 via-blue-500 to-purple-600 p-0.5 shadow-xl transition hover:bg-[length:400%_400%] hover:shadow-sm hover:[animation-duration:_4s] z-40">
+                            <iframe
+                                className="w-full h-full rounded-xl p-1"
+                                src="https://youtu.be/VLZ1YCw5cY8"
+                                title="YouTube video player"
+                                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                                allowFullScreen>
+                            </iframe>
+                        </div>
+                    </div>
+
+                </div>
             </div>
         </>
     );

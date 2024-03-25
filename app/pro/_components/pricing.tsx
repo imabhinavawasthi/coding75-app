@@ -5,22 +5,51 @@ import supabase from '@/supabase';
 import { Check, Gem, Rocket, X } from 'lucide-react';
 import { useEffect, useState } from 'react';
 import CountUp from 'react-countup';
+import { toast } from 'sonner';
 
 const Pricing = () => {
     const [launchDate, setLaunchDate] = useState<any>()
+    const [surveyFilled, setSurveyFilled] = useState(false)
+    const [courseInterest, setCourseInterest] = useState<any>({
+        yes: 0,
+        no: 0
+    })
+    const [DBID, setDBID] = useState<any>()
     async function getLaunchDate() {
         try {
             let { data, error } = await supabase
                 .from('constants')
-                .select('launch_date')
+                .select('id,launch_date,course_interest,course_not_interested')
 
             if (error) {
                 console.error('Error fetching data:', error);
             }
             else {
                 setLaunchDate(data?.[0]?.launch_date)
+                setDBID(data?.[0]?.id)
+                setCourseInterest({
+                    yes: data?.[0]?.course_interest,
+                    no: data?.[0]?.course_not_interested,
+                })
             }
-
+        } catch (error) {
+            console.error('An error occurred:', error);
+        }
+    }
+    async function updateCourseInterest(yes: boolean) {
+        try {
+            if (yes) {
+                await supabase
+                    .from('constants')
+                    .update({ course_interest: courseInterest.yes + 1 })
+                    .eq('id', DBID)
+            }
+            else {
+                await supabase
+                    .from('constants')
+                    .update({ course_not_interested: courseInterest.no + 1 })
+                    .eq('id', DBID)
+            }
         } catch (error) {
             console.error('An error occurred:', error);
         }
@@ -125,6 +154,44 @@ const Pricing = () => {
                                             <span className='text-green-600 font-bold'>Beginner Friendly</span>
                                             .
                                         </p>
+                                    }
+                                    {
+                                        surveyFilled == false &&
+                                        <div className='mt-5'>
+                                            <p className='font-semibold tracking-tight'>
+                                                Survey: Are you interested in joining this?
+                                            </p>
+                                            <span className="mt-3 inline-flex -space-x-px overflow-hidden rounded-md border bg-white shadow-sm">
+                                                <button
+                                                    onClick={(e)=>{
+                                                        e.preventDefault()
+                                                        setSurveyFilled(true)
+                                                        updateCourseInterest(true)
+                                                        toast.info("Response Saved!")
+                                                    } }
+                                                    className="inline-block px-4 py-2 text-sm font-medium text-gray-700 hover:bg-gray-50 focus:relative"
+                                                >
+                                                    Yes ✅
+                                                </button>
+                                                <button
+                                                onClick={(e)=>{
+                                                    e.preventDefault()
+                                                    setSurveyFilled(true)
+                                                    updateCourseInterest(false)
+                                                    toast.info("Response Saved!")
+                                                } }
+                                                    className="inline-block px-4 py-2 text-sm font-medium text-gray-700 hover:bg-gray-50 focus:relative"
+                                                >
+                                                    No ❌
+                                                </button>
+                                            </span>
+                                        </div>
+                                    }
+                                    {
+                                        surveyFilled == true &&
+                                        <p className='mt-5 font-semibold tracking-tight'>
+                                                Response Saved, Thanks!!
+                                            </p>
                                     }
                                 </div>
                             </div>
