@@ -40,7 +40,7 @@ export default function DashboardHeader() {
                 </svg>
                 <span className="sr-only">Light bulb</span>
               </span>
-              <span>After a year of hard work, we've successfully launched our website! We would greatly appreciate it if you could take a moment to visit our site and share your valuable feedback with us <a href="https://forms.gle/S5KKUyrUqi1WzZCJ6" target="_blank" className="inline font-medium text-blue-600 underline dark:text-blue-500 underline-offset-2 decoration-600 dark:decoration-500 decoration-solid hover:no-underline">here</a>.</span>
+              <span>After a year of hard work, we&apos;ve successfully launched our website! We would greatly appreciate it if you could take a moment to visit our site and share your valuable feedback with us <a href="https://forms.gle/S5KKUyrUqi1WzZCJ6" target="_blank" className="inline font-medium text-blue-600 underline dark:text-blue-500 underline-offset-2 decoration-600 dark:decoration-500 decoration-solid hover:no-underline">here</a>.</span>
             </p>
           </div>
         </div>
