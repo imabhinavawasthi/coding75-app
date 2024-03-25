@@ -25,7 +25,7 @@ export default function RootLayout({
         <meta property="og:title" content="coding75 | Powered by crackDSA" />
         <meta property="og:description" content="Coding DSA MERN Projects Interview Preparation: Free Resources for College Students" />
         <meta property="og:image" content="/og.png" />
-        <link rel="icon" href="/logo.svg" />
+        {/* <link rel="icon" href="/logo.svg" /> */}
       </head>
       <body className={inter.className}>
         <NextTopLoader
