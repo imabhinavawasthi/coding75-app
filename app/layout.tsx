@@ -18,6 +18,15 @@ export default function RootLayout({
 }) {
   return (
     <html className='scroll-smooth' lang="en">
+      <head>
+        <title>coding75 | Powered by crackDSA</title>
+        <meta name="description" content="Coding DSA MERN Projects Interview Preparation: Free Resources for College Students" />
+        <meta name="keywords" content="Coding, DSA, Competitive Programming, CP, Interviews, coding75, crackDSA, learn coding" />
+        <meta property="og:title" content="coding75 | Powered by crackDSA" />
+        <meta property="og:description" content="Coding DSA MERN Projects Interview Preparation: Free Resources for College Students" />
+        <meta property="og:image" content="/og.png" />
+        <link rel="icon" href="/logo.svg" />
+      </head>
       <body className={inter.className}>
         <NextTopLoader
           color="#2563eb"
