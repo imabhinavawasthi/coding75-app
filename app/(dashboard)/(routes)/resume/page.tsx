@@ -2564,7 +2564,7 @@ const Resume = () => {
                         <div className="w-[calc(90%)] aspect-video hover:animate-background rounded-xl bg-gradient-to-r from-green-300 via-blue-500 to-purple-600 p-0.5 shadow-xl transition hover:bg-[length:400%_400%] hover:shadow-sm hover:[animation-duration:_4s] z-40">
                             <iframe
                                 className="w-full h-full rounded-xl p-1"
-                                src="https://youtu.be/VLZ1YCw5cY8"
+                                src="https://www.youtube.com/embed/VLZ1YCw5cY8?si=HwnCoDC0ypeiUUEb"
                                 title="YouTube video player"
                                 allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
                                 allowFullScreen>
