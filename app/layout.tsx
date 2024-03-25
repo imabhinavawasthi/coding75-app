@@ -7,7 +7,7 @@ import NextTopLoader from 'nextjs-toploader';
 const inter = Inter({ subsets: ['latin'] })
 
 export const metadata: Metadata = {
-  title: 'coding75 App',
+  title: 'coding75 | Powered by crackDSA',
   description: 'Coding DSA MERN Projects Interview Preparation: Free Resources for College Students',
 }
 
@@ -19,11 +19,8 @@ export default function RootLayout({
   return (
     <html className='scroll-smooth' lang="en">
       <head>
-        <title>coding75 | Powered by crackDSA</title>
         <meta name="description" content="Coding DSA MERN Projects Interview Preparation: Free Resources for College Students" />
-        <meta name="keywords" content="Coding, DSA, Competitive Programming, CP, Interviews, coding75, crackDSA, learn coding" />
-        <meta property="og:title" content="coding75 | Powered by crackDSA" />
-        <meta property="og:description" content="Coding DSA MERN Projects Interview Preparation: Free Resources for College Students" />
+        <meta name="keywords" content="Coding, DSA, Competitive Programming, CP, Interviews, coding75, crackDSA, learn coding, coding75, coding 75, coding75.com, crackdsa" />
         <meta property="og:image" content="/og.png" />
         {/* <link rel="icon" href="/logo.svg" /> */}
       </head>
