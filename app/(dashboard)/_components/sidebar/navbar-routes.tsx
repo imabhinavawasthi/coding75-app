@@ -210,7 +210,7 @@ export const NavbarRoutes = ({ isLogo = false }: any) => {
     <>
       <div className="flex justify-end gap-x-2 ml-auto mr-5 md:hidden lg:hidden">
         <div>
-          <Link href="/">
+          <Link href="/dashboard">
             <Image
               height={170}
               width={170}
@@ -224,7 +224,7 @@ export const NavbarRoutes = ({ isLogo = false }: any) => {
         isLogo &&
         <div className="justify-start gap-x-2 ml-5 mr-5 hidden md:flex lg:flex">
           <div>
-            <Link href="/">
+            <Link href="/dashboard">
               <Image
                 height={150}
                 width={150}

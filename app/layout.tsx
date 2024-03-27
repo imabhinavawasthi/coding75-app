@@ -24,7 +24,7 @@ export default function RootLayout({
         <meta property="og:image" content="/og.png" />
         {/* <link rel="icon" href="/logo.svg" /> */}
       </head>
-      <body className={inter.className}>
+      <body className={inter.className+" no-scrollbar"}>
         <NextTopLoader
           color="#2563eb"
           height={4}
