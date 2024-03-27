@@ -36,7 +36,7 @@ const PageHeaderProjects = ({ greenHeading = "Projects", heading = "Develop", de
                     <img
                         src="https://zettllhfmtvcunctalyo.supabase.co/storage/v1/object/public/resources/images/projects.png"
                         alt="opportunity-feature"
-                        className="col-span-4 shadow-2xl rounded-xl w-full"
+                        className="col-span-4 shadow-2xl rounded-xl w-full hidden md:flex"
                     />
                 </div>
             </header>

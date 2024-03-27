@@ -9,7 +9,7 @@ export const Sidebar = () => {
     <div className="no-scrollbar h-full border-r flex flex-col overflow-y-auto bg-white shadow-sm" >
       <div className="p-6">
         <Link
-          href="/"
+          href="/dashboard"
         >
           <Logo />
         </Link>

@@ -44,7 +44,7 @@ const PageHeaderCompanyList = ({ focusHeading = "", heading = "", description = 
                                 </div>
                             </div>
                         </div>
-                        <div className="lg:ml-20 md:ml-10 md:mr-10 lg:mr-20 ml-5 mr-5 mt-10 flex flex-col gap-4 sm:mt-0 sm:flex-row sm:items-center">
+                        <div className="lg:ml-20 hidden md:ml-10 md:mr-10 lg:mr-20 ml-5 mr-5 mt-10 md:flex flex-col gap-4 sm:mt-0 sm:flex-row sm:items-center">
                             <div className="grid grid-cols-2 gap-x-10 md:gap-x-20 lg:gap-x-20 gap-y-6">
                                 <Image
                                     width={150}

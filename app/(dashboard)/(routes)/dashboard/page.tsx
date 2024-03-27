@@ -63,10 +63,10 @@ export default function DashboardPage() {
               icon={ChefHat}
             />
             <DashboardCard
-              title="Interview Preparation Sheet"
-              heading="Placement Sheet"
-              description="Important Interview Problems for Placements"
-              href="/dsa-cp/interview-sheet"
+              title="Interview Preparation"
+              heading="CP Specialist Sheet"
+              description="Handpicked Important CP Problems from Codeforces & Codechef"
+              href="/dsa-cp/sheets/specialist-sheet"
               icon={LineChart}
             />
           </div>

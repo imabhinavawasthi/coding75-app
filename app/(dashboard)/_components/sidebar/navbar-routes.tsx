@@ -88,6 +88,16 @@ const dsa: { title: string; href: string; description: string }[] = [
     href: "/dsa-cp/interview-sheet",
     description: "Amazing DSA Placement Sheet for Interview Preparation.",
   },
+  {
+    title: "DSA/CP Problem Sheets",
+    href: "/dsa-cp/sheets",
+    description: "DSA/CP Sheet specially designed for Placement Preparation.",
+  },
+  {
+    title: "CP Specialist Sheet",
+    href: "/dsa-cp/sheets/specialist-sheet",
+    description: "Hand Picked CP Problems with Video Editorials 🚀.",
+  },
 ]
 
 const projects: { title: string; href: string; description: string }[] = [
@@ -126,7 +136,6 @@ const projects: { title: string; href: string; description: string }[] = [
     description: "Explore real-world applications, diverse algorithms, and hands-on experiences to master the art of AI.",
   },
 ]
-
 
 export const NavbarRoutes = ({ isLogo = false }: any) => {
   const [notificationOpen, setNotificationOpen] = useState(false)
@@ -210,7 +219,7 @@ export const NavbarRoutes = ({ isLogo = false }: any) => {
     <>
       <div className="flex justify-end gap-x-2 ml-auto mr-5 md:hidden lg:hidden">
         <div>
-          <Link href="/">
+          <Link href="/dashboard">
             <Image
               height={170}
               width={170}
@@ -224,7 +233,7 @@ export const NavbarRoutes = ({ isLogo = false }: any) => {
         isLogo &&
         <div className="justify-start gap-x-2 ml-5 mr-5 hidden md:flex lg:flex">
           <div>
-            <Link href="/">
+            <Link href="/dashboard">
               <Image
                 height={150}
                 width={150}
