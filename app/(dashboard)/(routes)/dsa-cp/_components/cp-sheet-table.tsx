@@ -50,7 +50,7 @@ import {
     TableHeader,
     TableRow,
 } from "@/components/ui/table"
-import { Bookmark, ExternalLink, FileCode, FileVideo, Settings2 } from "lucide-react"
+import { Bookmark, ExternalLink, FileCode, FileVideo } from "lucide-react"
 import Link from "next/link"
 import { toast } from "sonner"
 import { Label } from "@/components/ui/label"
