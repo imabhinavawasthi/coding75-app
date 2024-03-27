@@ -56,6 +56,7 @@ const Sheet = (params) => {
     const [fullScreen, setFullScreen] = useState(false)
     const [refresh, setRefresh] = useState(0)
     const [difficulty, setDifficulty] = useState<number>(0)
+    const [difficultyMax, setDifficultyMax] = useState<number>(0)
     const [problemStatus, setProblemStatus] = useState<ProblemStatusType>({
         Bookmark: [""],
         Revise: [""],
@@ -132,7 +133,7 @@ const Sheet = (params) => {
                     sheetDescription: dsaproblems?.[0]?.sheet_description
                 })
                 const problems_list: ProblemType[] = dsaproblems.map((data: any) => {
-                    if (difficulty != 0 && difficulty != data?.difficulty) return {
+                    if (difficulty != 0 && (data?.difficulty>difficultyMax||data?.difficulty<difficulty)) return {
                         id: null,
                         ProblemName: "null",
                         Submission: "null",
@@ -316,57 +317,37 @@ const Sheet = (params) => {
                                 {
                                     !fullScreen &&
                                     <Tabs defaultValue="0" className="md:container mt-5 px-5 w-full flex overflow-scroll">
-                                        <TabsList className="grid w-full grid-cols-10">
+                                        <TabsList className="grid w-full grid-cols-5">
                                             <TabsTrigger
                                                 onClick={(e) => {
                                                     setDifficulty(0)
+                                                    setDifficultyMax(0)
                                                 }}
                                                 value="0">All</TabsTrigger>
                                             <TabsTrigger
                                                 onClick={(e) => {
                                                     setDifficulty(800)
+                                                    setDifficultyMax(1000)
                                                 }}
-                                                value="800">800</TabsTrigger>
-                                            <TabsTrigger
-                                                onClick={(e) => {
-                                                    setDifficulty(900)
-                                                }}
-                                                value="900">900</TabsTrigger>
-                                            <TabsTrigger
-                                                onClick={(e) => {
-                                                    setDifficulty(1000)
-                                                }}
-                                                value="1000">1000</TabsTrigger>
+                                                value="1000">800 - 1000</TabsTrigger>
                                             <TabsTrigger
                                                 onClick={(e) => {
                                                     setDifficulty(1100)
+                                                    setDifficultyMax(1200)
                                                 }}
-                                                value="1100">1100</TabsTrigger>
-                                            <TabsTrigger
-                                                onClick={(e) => {
-                                                    setDifficulty(1200)
-                                                }}
-                                                value="1200">1200</TabsTrigger>
+                                                value="1200">1100 - 1200</TabsTrigger>
                                             <TabsTrigger
                                                 onClick={(e) => {
                                                     setDifficulty(1300)
+                                                    setDifficultyMax(1400)
                                                 }}
-                                                value="1300">1300</TabsTrigger>
-                                            <TabsTrigger
-                                                onClick={(e) => {
-                                                    setDifficulty(1400)
-                                                }}
-                                                value="1400">1400</TabsTrigger>
+                                                value="1400">1300 - 1400</TabsTrigger>
                                             <TabsTrigger
                                                 onClick={(e) => {
                                                     setDifficulty(1500)
+                                                    setDifficultyMax(1600)
                                                 }}
-                                                value="1500">1500</TabsTrigger>
-                                            <TabsTrigger
-                                                onClick={(e) => {
-                                                    setDifficulty(1600)
-                                                }}
-                                                value="1600">1600</TabsTrigger>
+                                                value="1600">1500 - 1600</TabsTrigger>
                                         </TabsList>
                                     </Tabs>
                                 }
