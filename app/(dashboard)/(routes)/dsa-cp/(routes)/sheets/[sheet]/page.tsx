@@ -4,7 +4,7 @@ import ErrorBanner from "@/app/(dashboard)/_components/banners/error-banner";
 import LoginRequiredPage from "@/app/(dashboard)/_components/components/login-required";
 import Loading from "@/components/loading";
 import supabase from "@/supabase";
-import { Fullscreen, Rocket, RotateCcw } from "lucide-react";
+import { Clock, Fullscreen, Rocket, RotateCcw } from "lucide-react";
 import Link from "next/link";
 import { useEffect, useState } from "react";
 import { fetchSheet } from "../../../(api)/sheets/fetchSheet";
@@ -223,6 +223,9 @@ const Sheet = (params) => {
     }
     useEffect(() => {
         checkUser()
+        setTimeout(() => {
+            setRefresh(refresh+1)
+        }, 1000);
     }, [])
 
     useEffect(() => {
@@ -282,118 +285,129 @@ const Sheet = (params) => {
             }
             {
                 status.getUser == "done" &&
-                <div>
-                    {
-                        user != null ?
-                            <>
-                                <div className="md:container mt-5 px-5 flex items-center">
-                                    <p className="flex items-center text-sm">Problem status not updated? <button onClick={(e) => { e.preventDefault(); setRefresh(refresh + 1) }} className="ml-2 flex items-center text-xs">reload now <RotateCcw className="ml-1 h-2 w-2" /></button></p>
-                                    {
-                                        fullScreen ?
-                                            <Button onClick={(e) => {
-                                                e.preventDefault();
-                                                setFullScreen(false)
-                                            }} variant={"outline"} className="flex items-center ml-auto">
-                                                <Fullscreen className="h-4 w-4 mr-2" /> Default Mode
-                                            </Button> :
-                                            <Button onClick={(e) => {
-                                                e.preventDefault();
-                                                setFullScreen(true)
-                                            }} variant={"outline"} className="flex items-center ml-auto">
-                                                <Fullscreen className="h-4 w-4 mr-2" /> Full Screen Mode
-                                            </Button>
-                                    }
-                                </div>
-                                {
-                                    !fullScreen &&
-                                    <Tabs defaultValue="0" className="md:container mt-5 px-5 w-full flex overflow-scroll">
-                                        <TabsList className="grid w-full grid-cols-10">
-                                            <TabsTrigger
-                                                onClick={(e) => {
-                                                    setDifficulty(0)
-                                                }}
-                                                value="0">All</TabsTrigger>
-                                            <TabsTrigger
-                                                onClick={(e) => {
-                                                    setDifficulty(800)
-                                                }}
-                                                value="800">800</TabsTrigger>
-                                            <TabsTrigger
-                                                onClick={(e) => {
-                                                    setDifficulty(900)
-                                                }}
-                                                value="900">900</TabsTrigger>
-                                            <TabsTrigger
-                                                onClick={(e) => {
-                                                    setDifficulty(1000)
-                                                }}
-                                                value="1000">1000</TabsTrigger>
-                                            <TabsTrigger
-                                                onClick={(e) => {
-                                                    setDifficulty(1100)
-                                                }}
-                                                value="1100">1100</TabsTrigger>
-                                            <TabsTrigger
-                                                onClick={(e) => {
-                                                    setDifficulty(1200)
-                                                }}
-                                                value="1200">1200</TabsTrigger>
-                                            <TabsTrigger
-                                                onClick={(e) => {
-                                                    setDifficulty(1300)
-                                                }}
-                                                value="1300">1300</TabsTrigger>
-                                            <TabsTrigger
-                                                onClick={(e) => {
-                                                    setDifficulty(1400)
-                                                }}
-                                                value="1400">1400</TabsTrigger>
-                                            <TabsTrigger
-                                                onClick={(e) => {
-                                                    setDifficulty(1500)
-                                                }}
-                                                value="1500">1500</TabsTrigger>
-                                            <TabsTrigger
-                                                onClick={(e) => {
-                                                    setDifficulty(1600)
-                                                }}
-                                                value="1600">1600</TabsTrigger>
-                                        </TabsList>
-                                    </Tabs>
-                                }
-                                {
-                                    status.getSheetData == "done" &&
-                                    <div className="md:container mt-5 px-5">
-                                        <CPSheetTable tableData={problems} user_email={user?.email} fullScreen={fullScreen} />
-                                    </div>
-                                }
-                                {
-                                    (status.getSheetData == "loading" || status.getSheetData == "pending") &&
-                                    <div className="md:container px-5">
-                                        <Loading title={"Loading Sheet Data"} />
-                                        <Skeleton className="h-10 mt-5 w-full" />
-                                        <Skeleton className="h-10 mt-5 w-1/2" />
-                                        <Skeleton className="h-10 mt-5 w-full" />
-                                        <Skeleton className="h-10 mt-5 w-full" />
-                                        <Skeleton className="h-10 mt-5 w-3/4" />
-                                        <Skeleton className="h-10 mt-5 w-full" />
-                                        <Skeleton className="h-10 mt-5 w-1/2" />
-                                        <Skeleton className="h-10 mt-5 w-full" />
-                                    </div>
-                                }
-                                {
-                                    status.getSheetData == "error" &&
-                                    <div className="container mt-20">
-                                        <ErrorBanner />
-                                    </div>
-                                }
-                            </>
-                            :
-                            <>
-                                <LoginRequiredPage />
-                            </>
-                    }
+                <>
+                <div className="mt-20 flex items-center justify-center">
+                    <Clock className="h-4 w-4 mr-2"/> Sheet will be published at 6PM
                 </div>
+                </>
+                // <div>
+                //     {
+                //         user != null ?
+                //             <>
+                //                 <div className="md:container mt-5 px-5 flex items-center">
+                //                     {
+                //                         refresh==0?
+                //                         <p className="flex items-center text-sm">Loading User Data <RotateCcw className="animate-spin ml-2 h-3 w-3" /> </p>
+                //                         :
+                //                         <p className="flex items-center text-sm">Problem status not updated? <button onClick={(e) => { e.preventDefault(); setRefresh(refresh + 1) }} className="ml-2 flex items-center text-xs">reload now <RotateCcw className="ml-1 h-2 w-2" /></button></p>
+                //                     }
+                                    
+                //                     {
+                //                         fullScreen ?
+                //                             <Button onClick={(e) => {
+                //                                 e.preventDefault();
+                //                                 setFullScreen(false)
+                //                             }} variant={"outline"} className="flex items-center ml-auto">
+                //                                 <Fullscreen className="h-4 w-4 mr-2" /> Default Mode
+                //                             </Button> :
+                //                             <Button onClick={(e) => {
+                //                                 e.preventDefault();
+                //                                 setFullScreen(true)
+                //                             }} variant={"outline"} className="flex items-center ml-auto">
+                //                                 <Fullscreen className="h-4 w-4 mr-2" /> Full Screen Mode
+                //                             </Button>
+                //                     }
+                //                 </div>
+                //                 {
+                //                     !fullScreen &&
+                //                     <Tabs defaultValue="0" className="md:container mt-5 px-5 w-full flex overflow-scroll">
+                //                         <TabsList className="grid w-full grid-cols-10">
+                //                             <TabsTrigger
+                //                                 onClick={(e) => {
+                //                                     setDifficulty(0)
+                //                                 }}
+                //                                 value="0">All</TabsTrigger>
+                //                             <TabsTrigger
+                //                                 onClick={(e) => {
+                //                                     setDifficulty(800)
+                //                                 }}
+                //                                 value="800">800</TabsTrigger>
+                //                             <TabsTrigger
+                //                                 onClick={(e) => {
+                //                                     setDifficulty(900)
+                //                                 }}
+                //                                 value="900">900</TabsTrigger>
+                //                             <TabsTrigger
+                //                                 onClick={(e) => {
+                //                                     setDifficulty(1000)
+                //                                 }}
+                //                                 value="1000">1000</TabsTrigger>
+                //                             <TabsTrigger
+                //                                 onClick={(e) => {
+                //                                     setDifficulty(1100)
+                //                                 }}
+                //                                 value="1100">1100</TabsTrigger>
+                //                             <TabsTrigger
+                //                                 onClick={(e) => {
+                //                                     setDifficulty(1200)
+                //                                 }}
+                //                                 value="1200">1200</TabsTrigger>
+                //                             <TabsTrigger
+                //                                 onClick={(e) => {
+                //                                     setDifficulty(1300)
+                //                                 }}
+                //                                 value="1300">1300</TabsTrigger>
+                //                             <TabsTrigger
+                //                                 onClick={(e) => {
+                //                                     setDifficulty(1400)
+                //                                 }}
+                //                                 value="1400">1400</TabsTrigger>
+                //                             <TabsTrigger
+                //                                 onClick={(e) => {
+                //                                     setDifficulty(1500)
+                //                                 }}
+                //                                 value="1500">1500</TabsTrigger>
+                //                             <TabsTrigger
+                //                                 onClick={(e) => {
+                //                                     setDifficulty(1600)
+                //                                 }}
+                //                                 value="1600">1600</TabsTrigger>
+                //                         </TabsList>
+                //                     </Tabs>
+                //                 }
+                //                 {
+                //                     status.getSheetData == "done" &&
+                //                     <div className="md:container mt-5 px-5">
+                //                         <CPSheetTable tableData={problems} user_email={user?.email} fullScreen={fullScreen} />
+                //                     </div>
+                //                 }
+                //                 {
+                //                     (status.getSheetData == "loading" || status.getSheetData == "pending") &&
+                //                     <div className="md:container px-5">
+                //                         <Loading title={"Loading Sheet Data"} />
+                //                         <Skeleton className="h-10 mt-5 w-full" />
+                //                         <Skeleton className="h-10 mt-5 w-1/2" />
+                //                         <Skeleton className="h-10 mt-5 w-full" />
+                //                         <Skeleton className="h-10 mt-5 w-full" />
+                //                         <Skeleton className="h-10 mt-5 w-3/4" />
+                //                         <Skeleton className="h-10 mt-5 w-full" />
+                //                         <Skeleton className="h-10 mt-5 w-1/2" />
+                //                         <Skeleton className="h-10 mt-5 w-full" />
+                //                     </div>
+                //                 }
+                //                 {
+                //                     status.getSheetData == "error" &&
+                //                     <div className="container mt-20">
+                //                         <ErrorBanner />
+                //                     </div>
+                //                 }
+                //             </>
+                //             :
+                //             <>
+                //                 <LoginRequiredPage />
+                //             </>
+                //     }
+                // </div>
             }
             {
                 status.getUser == "loading" &&
