@@ -94,8 +94,8 @@ const dsa: { title: string; href: string; description: string }[] = [
     description: "DSA/CP Sheet specially designed for Placement Preparation.",
   },
   {
-    title: "CP Specialist Sheet",
-    href: "/dsa-cp/sheets/specialist-sheet",
+    title: "Newbie to Expert Sheet",
+    href: "/dsa-cp/sheets/expert-sheet",
     description: "Hand Picked CP Problems with Video Editorials 🚀.",
   },
 ]

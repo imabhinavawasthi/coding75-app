@@ -16,9 +16,9 @@ const InterviewPreparation = () => {
                     <div>
                         <ProductCard 
                         icon={Rocket} 
-                        title={"Newbie → Specialist CP Sheet"} 
+                        title={"Newbie → Expert CP Sheet"} 
                         description={"Hand Picked Codeforces Problems with Video Editorials"} 
-                        href={"/dsa-cp/sheets/specialist-sheet"} 
+                        href={"/dsa-cp/sheets/expert-sheet"} 
                         href_text={"Start Solving"}
                         />
                     </div>

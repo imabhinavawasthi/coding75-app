@@ -64,9 +64,9 @@ export default function DashboardPage() {
             />
             <DashboardCard
               title="Interview Preparation"
-              heading="CP Specialist Sheet"
+              heading="CP Expert Sheet"
               description="Handpicked Important CP Problems from Codeforces & Codechef"
-              href="/dsa-cp/sheets/specialist-sheet"
+              href="/dsa-cp/sheets/expert-sheet"
               icon={LineChart}
             />
           </div>
