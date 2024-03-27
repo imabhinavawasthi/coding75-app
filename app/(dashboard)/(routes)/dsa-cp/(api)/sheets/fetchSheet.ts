@@ -4,7 +4,7 @@ export async function fetchSheet() {
     try {
 
         let { data: dsaproblems, error } = await supabase
-            .from('specialist_sheet')
+            .from('expert_sheet')
             .select('*')
 
         if (error) {
