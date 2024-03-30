@@ -90,7 +90,7 @@ const OpportunityPage = (params: any) => {
                           </p>
                           <div className="hidden lg:block md:block w-[1px] h-3 bg-gray-400">
                           </div>
-                          <p className="items-center  overflow-scroll lg:mb-0 md:mb-0 mb-4 flex gap-x-1 text-sm text-gray-600">
+                          <p className="items-center lg:mb-0 md:mb-0 mb-4 flex gap-x-1 text-sm text-gray-600">
                             <CalendarIcon className="h-4 w-4 mr-2" aria-hidden="true" /> Batch Eligible: {internshipDetails[0].batch_eligible.map((data) => {
                               return <>
                                 <Badge variant="basic">{data}</Badge>
@@ -125,7 +125,7 @@ const OpportunityPage = (params: any) => {
                   </p>
                   <div className="hidden lg:block md:block w-[1px] h-3 bg-gray-400">
                   </div>
-                  <p className="items-center  overflow-scroll lg:mb-0 md:mb-0 mb-4 flex gap-x-1 text-sm text-gray-600">
+                  <p className="items-center lg:mb-0 md:mb-0 mb-4 flex gap-x-1 text-sm text-gray-600">
                     <CalendarIcon className="h-4 w-4 mr-2" aria-hidden="true" /> Batch Eligible: {internshipDetails[0].batch_eligible.map((data) => {
                       return <>
                         <Badge variant="basic">{data}</Badge>

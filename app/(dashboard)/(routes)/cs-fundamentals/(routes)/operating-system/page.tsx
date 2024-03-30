@@ -11,7 +11,7 @@ const OperatingSystem = () => {
   return (
     <>
       <div className='lg:container md:container px-3'>
-        <div className='overflow-x-scroll'>
+        <div className=''>
         <BreadCrumb links={[
           {
             "title": "CS Fundamentals",

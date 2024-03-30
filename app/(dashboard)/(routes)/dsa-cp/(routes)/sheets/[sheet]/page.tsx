@@ -132,6 +132,7 @@ const Sheet = (params) => {
                     sheetName: dsaproblems?.[0]?.sheet_title,
                     sheetDescription: dsaproblems?.[0]?.sheet_description
                 })
+                document.title = `${dsaproblems?.[0]?.sheet_title} - coding75` || "DSA & CP Sheets"
                 const problems_list: ProblemType[] = dsaproblems.map((data: any) => {
                     if (difficulty != 0 && (data?.difficulty>difficultyMax||data?.difficulty<difficulty)) return {
                         id: null,
@@ -226,12 +227,17 @@ const Sheet = (params) => {
         checkUser()
         setTimeout(() => {
             setRefresh(refresh+1)
-        }, 1000);
+        }, 3000);
     }, [])
 
     useEffect(() => {
+        initialiseUser(user?.email)
+    }, [difficulty, refresh])
+
+
+    useEffect(()=>{
         fetchSheetProblems(problemStatus)
-    }, [difficulty, refresh, problemStatus])
+    },[problemStatus])
 
     return (
         <div>
@@ -354,7 +360,7 @@ const Sheet = (params) => {
                                 {
                                     status.getSheetData == "done" &&
                                     <div className="md:container mt-5 px-5">
-                                        <CPSheetTable tableData={problems} user_email={user?.email} fullScreen={fullScreen} />
+                                        <CPSheetTable tableData={problems} user_email={user?.email} fullScreen={fullScreen} refresh={refresh} />
                                     </div>
                                 }
                                 {

@@ -50,7 +50,7 @@ import {
     TableHeader,
     TableRow,
 } from "@/components/ui/table"
-import { Bookmark, ExternalLink, FileCode, FileVideo } from "lucide-react"
+import { Bookmark, ExternalLink, FileCode, FileVideo, RotateCw } from "lucide-react"
 import Link from "next/link"
 import { toast } from "sonner"
 import { Label } from "@/components/ui/label"
@@ -85,7 +85,7 @@ function getRowColorClass(status) {
     }
 }
 
-export default function CPSheetTable({ tableData, user_email, fullScreen }) {
+export default function CPSheetTable({ tableData, user_email, fullScreen, refresh }) {
     const [data, setData] = React.useState<ProblemType[]>(tableData ? tableData : [])
 
     const [sorting, setSorting] = React.useState<SortingState>([])
@@ -108,7 +108,11 @@ export default function CPSheetTable({ tableData, user_email, fullScreen }) {
                             e.preventDefault()
                             toggleBookmark(problem?.ProblemLink, problem?.Bookmark, user_email)
                         }}>
-                            <Bookmark fill={problem?.Bookmark ? "#ADD8E6" : "#FFFFFF"} className="h-6 w-6" />
+                            {
+                                refresh != 0 ?
+                                    <Bookmark fill={problem?.Bookmark ? "#ADD8E6" : "#FFFFFF"} className="h-6 w-6" /> :
+                                    <RotateCw className="animate-spin h-4 w-4" />
+                            }
                         </button>
                     </div>
                 )
@@ -124,28 +128,32 @@ export default function CPSheetTable({ tableData, user_email, fullScreen }) {
                     <div className="flex items-center">
                         <div className="flex flex-col items-center">
                             <div className="mb-2">
-                                {problem.Status == "Solved" && <div className="flex items-center"><span className="flex w-3 h-3 me-3 bg-green-500 rounded-full"></span> Solved</div>}
-                                {problem.Status == "Trying" && <div className="flex items-center"><span className="flex w-3 h-3 me-3 bg-yellow-600 rounded-full"></span> Trying</div>}
-                                {problem.Status == "Pending" && <div className="flex items-center"><span className="flex w-3 h-3 me-3 bg-blue-300 rounded-full"></span> Pending</div>}
-                                {problem.Status == "Revise" && <div className="flex items-center"><span className="flex w-3 h-3 me-3 bg-orange-500 rounded-full"></span>Revise</div>}
+                                {refresh == 0 && <div className="flex items-center"><RotateCw className="animate-spin flex w-3 h-3 me-3" />Loading Status</div>}
+                                {refresh != 0 && problem.Status == "Solved" && <div className="flex items-center"><span className="flex w-3 h-3 me-3 bg-green-500 rounded-full"></span> Solved</div>}
+                                {refresh != 0 && problem.Status == "Trying" && <div className="flex items-center"><span className="flex w-3 h-3 me-3 bg-yellow-600 rounded-full"></span> Trying</div>}
+                                {refresh != 0 && problem.Status == "Pending" && <div className="flex items-center"><span className="flex w-3 h-3 me-3 bg-blue-300 rounded-full"></span> Pending</div>}
+                                {refresh != 0 && problem.Status == "Revise" && <div className="flex items-center"><span className="flex w-3 h-3 me-3 bg-orange-500 rounded-full"></span>Revise</div>}
                             </div>
-                            <Select
-                                onValueChange={(e) => {
-                                    updateStatus(problem?.ProblemLink, problem.Status, e)
-                                }}
-                            >
-                                <SelectTrigger className="w-22 border-none h-5 underline">
-                                    <p>update</p>
-                                </SelectTrigger>
-                                <SelectContent>
-                                    <SelectGroup>
-                                        <SelectItem value="Solved">Solved</SelectItem>
-                                        <SelectItem value="Trying">Trying</SelectItem>
-                                        <SelectItem value="Pending">Pending</SelectItem>
-                                        <SelectItem value="Revise">Revise</SelectItem>
-                                    </SelectGroup>
-                                </SelectContent>
-                            </Select>
+                            {
+                                refresh != 0 &&
+                                <Select
+                                    onValueChange={(e) => {
+                                        updateStatus(problem?.ProblemLink, problem.Status, e)
+                                    }}
+                                >
+                                    <SelectTrigger className="w-22 border-none h-5 underline">
+                                        <p>update</p>
+                                    </SelectTrigger>
+                                    <SelectContent>
+                                        <SelectGroup>
+                                            <SelectItem value="Solved">Solved</SelectItem>
+                                            <SelectItem value="Trying">Trying</SelectItem>
+                                            <SelectItem value="Pending">Pending</SelectItem>
+                                            <SelectItem value="Revise">Revise</SelectItem>
+                                        </SelectGroup>
+                                    </SelectContent>
+                                </Select>
+                            }
                         </div>
                     </div>
                 )
