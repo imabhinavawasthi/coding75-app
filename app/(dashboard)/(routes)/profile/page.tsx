@@ -156,7 +156,6 @@ const Profile = () => {
             }
             const data = await response.json();
             let ok = false;
-            console.log(data?.result);
             if (data?.result) {
                 for (let i = 0; i < data?.result?.length; i++) {
                     if (data?.result[i]?.commentatorHandle == inputCodeforcesId &&

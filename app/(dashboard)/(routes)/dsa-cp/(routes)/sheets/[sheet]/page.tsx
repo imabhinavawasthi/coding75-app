@@ -97,7 +97,6 @@ const Sheet = (params) => {
 
             }
             else if (users && users?.length >= 0) {
-                console.log(users[0]);
                 setProblemStatus({
                     ...problemStatus,
                     Bookmark: users[0]?.bookmarked_problems,
@@ -229,7 +228,7 @@ const Sheet = (params) => {
         setTimeout(() => {
             initialiseUser(user?.email,false)
             setRefresh(refresh+1)
-        }, 3000);
+        }, 2000);
     }, [])
 
     useEffect(() => {
