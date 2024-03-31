@@ -8,6 +8,6 @@ export const feedback_form = "https://forms.gle/S5KKUyrUqi1WzZCJ6"
 
 export const whatsapp_link = "https://wa.me/message/TPN76XLWVOWDB1"
 
-export const codeforces_blog = "https://codeforces.com/blog/entry/100265"
+export const codeforces_blog = "https://codeforces.com/blog/entry/127811"
 
-export const codeforces_api_comments = "https://codeforces.com/api/blogEntry.comments?blogEntryId=100265"
+export const codeforces_api_comments = "https://codeforces.com/api/blogEntry.comments?blogEntryId=127811"
