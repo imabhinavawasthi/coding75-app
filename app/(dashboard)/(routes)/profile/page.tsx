@@ -151,7 +151,8 @@ const Profile = () => {
         try {
             const response = await fetch(codeforces_api_comments);
             if (!response.ok) {
-                toast.error("Some error occured")
+                toast.error("Codeforces API is not responding")
+                return;
             }
             const data = await response.json();
             let ok = false;
@@ -177,7 +178,7 @@ const Profile = () => {
             }
         } catch (error) {
             console.error('Error fetching blog posts:', error);
-            toast.error("Some error occured")
+            toast.error("Codeforces API is not responding")
         }
     }
 
