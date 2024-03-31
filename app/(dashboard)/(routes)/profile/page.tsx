@@ -174,10 +174,18 @@ const Profile = () => {
             }
             else {
                 toast.error("Comment not found with given verification code!")
+                setStatus({
+                    ...status,
+                    checkVerification: "pending"
+                })
             }
         } catch (error) {
             console.error('Error fetching blog posts:', error);
             toast.error("Codeforces API is not responding")
+            setStatus({
+                ...status,
+                checkVerification: "pending"
+            })
         }
     }
 
