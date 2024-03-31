@@ -74,7 +74,7 @@ const Sheet = (params) => {
     })
     const [problems, setProblems] = useState<ProblemType[]>([])
 
-    async function initialiseUser(email) {
+    async function initialiseUser(email, loadIcon=true) {
         let { data: users, error } = await supabase
             .from('users')
             .select('*')
@@ -97,7 +97,6 @@ const Sheet = (params) => {
 
             }
             else if (users && users?.length >= 0) {
-                console.log(users[0]);
                 setProblemStatus({
                     ...problemStatus,
                     Bookmark: users[0]?.bookmarked_problems,
@@ -113,14 +112,15 @@ const Sheet = (params) => {
                     Trying: users[0]?.trying_problems,
                     Pending: users[0]?.pending_problems,
                     Solved: users[0]?.solved_problems
-                })
+                },loadIcon)
                 return;
             }
         }
-        fetchSheetProblems(problemStatus)
+        fetchSheetProblems(problemStatus,loadIcon)
     }
 
-    async function fetchSheetProblems(problemStatus) {
+    async function fetchSheetProblems(problemStatus, loadIcon=true) {
+        if(loadIcon)
         setStatus({
             ...status,
             getSheetData: "loading"
@@ -226,13 +226,19 @@ const Sheet = (params) => {
     useEffect(() => {
         checkUser()
         setTimeout(() => {
+            initialiseUser(user?.email,false)
             setRefresh(refresh+1)
-        }, 3000);
+        }, 2000);
     }, [])
 
     useEffect(() => {
         initialiseUser(user?.email)
-    }, [difficulty, refresh])
+    }, [difficulty])
+
+    useEffect(() => {
+        if(refresh>1)
+        initialiseUser(user?.email)
+    }, [refresh])
 
 
     useEffect(()=>{
