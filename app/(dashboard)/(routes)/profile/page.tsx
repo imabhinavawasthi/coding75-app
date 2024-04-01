@@ -27,20 +27,12 @@ import {
 import { Label } from "@/components/ui/label";
 import { Input } from "@/components/ui/input";
 import ErrorBanner from "../../_components/banners/error-banner";
-import { codeforces_api_comments, codeforces_blog, telegram_link } from "@/components/social-links";
-
-interface alertMessageType {
-    codeforces: any
-}
+import { codeforces_problem } from "@/components/social-links";
 
 interface statusType {
     getUser: "loading" | "done" | "error",
     codeforces: "loading" | "done" | "error" | "pending" | "verification",
     checkVerification: "loading" | "pending" | "done"
-}
-
-function generateRandomSixDigitNumber() {
-    return Math.floor(100000 + Math.random() * 900000);
 }
 
 
@@ -53,12 +45,8 @@ const Profile = () => {
         checkVerification: "pending"
     })
     const [launchDate, setLaunchDate] = useState<any>()
-    const [verificationCode, setVerificationCode] = useState(generateRandomSixDigitNumber())
     const [codeforcesId, setCodeforcesId] = useState<any>(null)
     const [inputCodeforcesId, setInputCodeforcesId] = useState<any>(null)
-    const [alertMessage, setAlertMessage] = useState<alertMessageType>({
-        codeforces: null
-    })
 
     async function getLaunchDate() {
         try {
@@ -149,17 +137,19 @@ const Profile = () => {
             checkVerification: "loading"
         })
         try {
-            const response = await fetch(codeforces_api_comments);
+            const response = await fetch(`https://codeforces.com/api/user.status?handle=${inputCodeforcesId}&from=1&count=1`);
             if (!response.ok) {
                 toast.error("Codeforces API is not responding")
                 return;
             }
             const data = await response.json();
+            console.log(data);
             let ok = false;
             if (data?.result) {
                 for (let i = 0; i < data?.result?.length; i++) {
-                    if (data?.result[i]?.commentatorHandle == inputCodeforcesId &&
-                        data?.result[i]?.text.includes(verificationCode)) {
+                    if (data?.result[i]?.problem?.contestId == 108 &&
+                        data?.result[i]?.problem?.name == "Palindromic Times"
+                        && data?.result[i]?.verdict == "COMPILATION_ERROR") {
                         ok = true
                         break;
                     }
@@ -173,7 +163,7 @@ const Profile = () => {
                 }, 2000);
             }
             else {
-                toast.error("Comment not found with given verification code!")
+                toast.error("Submission not found for given problem!")
                 setStatus({
                     ...status,
                     checkVerification: "pending"
@@ -337,15 +327,15 @@ const Profile = () => {
                                                             </div>
                                                             :
                                                             <div>
-                                                                To verify that this <strong>({inputCodeforcesId})</strong> codeforces account is owned by you, please upvote and comment a verification code on this blog entry with your codeforces id.
+                                                                To verify that this <strong>({inputCodeforcesId})</strong> codeforces account is owned by you, please do a compilation error submission for the below given problem with your codeforces id.
                                                                 <br />
-                                                                → Blog Link: <a className="font-semibold underline tracking-tight" href={codeforces_blog} target="_blank">{codeforces_blog}</a>
+                                                                → Blog Link: <a className="font-semibold underline tracking-tight" href={codeforces_problem} target="_blank">{codeforces_problem}</a>
                                                                 <br />
-                                                                → Verification Code: <strong>{verificationCode}</strong>
+                                                                → You can simply submit any invalid text, to make a compilation error submission 
                                                                 <br />
-                                                                Simply add a comment with your verification code, check other comments for example.
+                                                                Here is an example submission: <a className="font-semibold underline tracking-tight" href={"https://codeforces.com/contest/108/submission/254453403"} target="_blank">{"https://codeforces.com/contest/108/submission/254453403"}</a>
                                                                 <div className="mt-5 border rounded-xl border-1 border-gray-400 p-2 tracking-tighter font-semibold">
-                                                                    If commented,
+                                                                    If submission is done,
                                                                     <button className="text-green-600 mx-1" onClick={verifyCodeforces}>click here</button>
                                                                     to check verification status.
                                                                 </div>
