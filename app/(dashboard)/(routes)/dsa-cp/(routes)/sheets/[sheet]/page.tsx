@@ -192,7 +192,7 @@ const Sheet = (params) => {
     async function checkUser() {
         try {
             const { data, error } = await supabase.auth.getUser();
-            if (error && error?.status != 401) {
+            if (error && error?.status != 401 && error?.status != 403) {
                 setStatus({
                     ...status,
                     getUser: "error"
