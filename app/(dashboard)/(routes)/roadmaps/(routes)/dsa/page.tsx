@@ -1,5 +1,5 @@
-import PageHeaders from "@/components/page-headers/page-headers";
-import Feature3 from "../../../../_components/img/feature3.png"
+// import PageHeaders from "@/components/page-headers/page-headers";
+// import Feature3 from "../../../../_components/img/feature3.png"
 
 
 {/* <span className="bg-blue-100 text-blue-800 text-sm font-medium me-2 px-2.5 py-0.5 rounded dark:bg-blue-900 dark:text-blue-300 ms-3">Latest</span> */ }
@@ -11,10 +11,11 @@ const DSARoadmap = () => {
     return (
         <div>
             <div>
-                <PageHeaders
+                {/* <PageHeaders
                     heading="DSA Mastery Roadmap 🚀"
                     description="Explore step-by-step concepts, solve beginner-friendly challenges, and build a solid foundation for your coding journey. Start your adventure to algorithmic mastery today!"
-                />
+                image={Feature3}
+                /> */}
                 <div className="mt-5 container">
                     <div>
                         <p id="level0" className="text-xl font-bold mb-10">Complete DSA Mastery Roadmap 🚀</p>

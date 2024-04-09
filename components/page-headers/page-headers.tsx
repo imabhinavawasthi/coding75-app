@@ -3,8 +3,9 @@
 import { Share2 } from "lucide-react";
 import { toast } from "sonner";
 import Link from "next/link";
+import Image from "next/image";
 
-const PageHeaders = ({ greenHeading = "", heading = "", description = "", image="" }) => {
+const PageHeaders = ({ greenHeading = "", heading = "", description = "", image }) => {
     function getCurrentURL() {
         return window.location.href
     }
@@ -33,7 +34,7 @@ const PageHeaders = ({ greenHeading = "", heading = "", description = "", image=
                             </div>
                         </div>
                     </div>
-                    <img src={image} alt="opportunity-feature" className="hidden md:block col-span-4 shadow-2xl rounded-xl w-full" />
+                    <Image src={image} alt="opportunity-feature" className="hidden md:block col-span-4 shadow-2xl rounded-xl w-full" />
                 </div>
             </header>
         </div>

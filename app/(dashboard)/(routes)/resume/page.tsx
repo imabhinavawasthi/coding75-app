@@ -27,6 +27,8 @@ import {
     TooltipTrigger,
 } from "@/components/ui/tooltip"
 import { createResume } from './make-resume';
+import resumeBuilderPic from "../../../../public/images/resume-builder.png"
+import Image from 'next/image';
 
 const resumeButtons = [
     {
@@ -1123,9 +1125,9 @@ const Resume = () => {
         </div> */}
             <div className="mt-10 flex md:hidden justify-center items-center">
                 <div className="w-[calc(90%)] aspect-video hover:animate-background rounded-xl bg-gradient-to-r from-green-300 via-blue-500 to-purple-600 p-0.5 shadow-xl transition hover:bg-[length:400%_400%] hover:shadow-sm hover:[animation-duration:_4s] z-40">
-                    <img
+                    <Image
                         className="cursor-pointer w-full h-full rounded-xl p-1"
-                        src="https://zettllhfmtvcunctalyo.supabase.co/storage/v1/object/public/resources/pictures/resume-builder.png"
+                        src={resumeBuilderPic}
                         alt="coding75-pro" />
                 </div>
             </div>
@@ -2554,9 +2556,9 @@ const Resume = () => {
                 <div className='grid md:grid-cols-2 gap-x-5'>
                     <div className="lg:mt-0 flex justify-center items-center">
                         <div className="w-[calc(90%)] aspect-video hover:animate-background rounded-xl bg-gradient-to-r from-green-300 via-blue-500 to-purple-600 p-0.5 shadow-xl transition hover:bg-[length:400%_400%] hover:shadow-sm hover:[animation-duration:_4s] z-40">
-                            <img
+                            <Image
                                 className="cursor-pointer w-full h-full rounded-xl p-1"
-                                src="https://zettllhfmtvcunctalyo.supabase.co/storage/v1/object/public/resources/pictures/resume-builder.png"
+                                src={resumeBuilderPic}
                                 alt="coding75-pro" />
                         </div>
                     </div>

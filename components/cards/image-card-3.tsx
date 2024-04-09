@@ -1,11 +1,12 @@
 import { ArrowBigRight, MoveRight } from "lucide-react";
+import Image from "next/image";
 import Link from "next/link";
 
-const ImageCard3 = ({ image = "", title = "", description = "", href = "" }) => {
+const ImageCard3 = ({ image, title = "", description = "", href = "" }) => {
     return (
         <div>
             <Link href={href} className="group cursor-pointer">
-                <img
+                <Image
                     src={image}
                     alt="image"
                     className="aspect-video  hover:scale-110 w-full rounded-xl object-cover shadow-2xl transition group-hover:grayscale-[50%]"

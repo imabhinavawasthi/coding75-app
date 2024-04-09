@@ -3,6 +3,8 @@
 import { Share2 } from "lucide-react";
 import { toast } from "sonner";
 import Link from "next/link";
+import ProjectFeature from "../../public/images/projects.png"
+import Image from "next/image";
 
 const PageHeaderProjects = ({ greenHeading = "Projects", heading = "Develop", description = "Explore a diverse range of projects that span various domains, including web development, mobile app creation, machine learning, and more." }) => {
     function getCurrentURL() {
@@ -33,8 +35,8 @@ const PageHeaderProjects = ({ greenHeading = "Projects", heading = "Develop", de
                             </div>
                         </div>
                     </div>
-                    <img
-                        src="https://zettllhfmtvcunctalyo.supabase.co/storage/v1/object/public/resources/images/projects.png"
+                    <Image
+                        src={ProjectFeature}
                         alt="opportunity-feature"
                         className="col-span-4 shadow-2xl rounded-xl w-full hidden md:flex"
                     />

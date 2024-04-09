@@ -6,7 +6,7 @@ const nextConfig = {
         return config;
     },
     images: {
-        domains: ["zettllhfmtvcunctalyo.supabase.co"]
+        domains: ["zettllhfmtvcunctalyo.supabase.co","upload.wikimedia.org"]
     }
 }
 

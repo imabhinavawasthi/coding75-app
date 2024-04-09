@@ -26,7 +26,7 @@ const OperatingSystem = () => {
         <div>
           <PageHeadersButton greenHeading='System' heading='Operating'
           description='Operating system notes, specially designed for interview preparation 🚀'
-          pdf_link='https://zettllhfmtvcunctalyo.supabase.co/storage/v1/object/public/resources/notes/operating-system-notes.pdf'
+          pdf_link='https://topmate.io/abhinavawasthi/918228'
           />
         </div>
         <div className='grid grid-cols-10'>

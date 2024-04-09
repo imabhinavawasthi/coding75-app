@@ -1,3 +1,4 @@
+import Image from "next/image";
 import Link from "next/link";
 
 const ImageFlipCard = ({title, description, href, image1, image2, href_text}:any) => {
@@ -5,13 +6,13 @@ const ImageFlipCard = ({title, description, href, image1, image2, href_text}:any
         <div>
             <Link href={href} className="group relative block">
                 <div className="relative h-[500px]">
-                    <img
+                    <Image
                         src={image1}
                         alt=""
                         className="absolute inset-0 h-full w-full object-cover opacity-100 group-hover:opacity-0"
                     />
 
-                    <img
+                    <Image
                         src={image2}
                         alt=""
                         className="absolute inset-0 h-full w-full object-cover opacity-0 group-hover:opacity-100"
