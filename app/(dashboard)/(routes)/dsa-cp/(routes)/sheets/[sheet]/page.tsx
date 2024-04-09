@@ -225,7 +225,7 @@ const Sheet = (params) => {
     useEffect(() => {
         checkUser()
         setTimeout(() => {
-            initialiseUser(user?.email, false)
+            initialiseUser(user?.email)
             setRefresh(refresh + 1)
         }, 2000);
     }, [])
