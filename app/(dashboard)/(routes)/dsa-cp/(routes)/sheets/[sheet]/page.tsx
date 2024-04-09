@@ -74,7 +74,7 @@ const Sheet = (params) => {
     })
     const [problems, setProblems] = useState<ProblemType[]>([])
 
-    async function initialiseUser(email, loadIcon=true) {
+    async function initialiseUser(email, loadIcon = true) {
         let { data: users, error } = await supabase
             .from('users')
             .select('*')
@@ -112,19 +112,19 @@ const Sheet = (params) => {
                     Trying: users[0]?.trying_problems,
                     Pending: users[0]?.pending_problems,
                     Solved: users[0]?.solved_problems
-                },loadIcon)
+                }, loadIcon)
                 return;
             }
         }
-        fetchSheetProblems(problemStatus,loadIcon)
+        fetchSheetProblems(problemStatus, loadIcon)
     }
 
-    async function fetchSheetProblems(problemStatus, loadIcon=true) {
-        if(loadIcon)
-        setStatus({
-            ...status,
-            getSheetData: "loading"
-        })
+    async function fetchSheetProblems(problemStatus, loadIcon = true) {
+        if (loadIcon)
+            setStatus({
+                ...status,
+                getSheetData: "loading"
+            })
         try {
             const { dsaproblems } = await fetchSheet();
             if (dsaproblems) {
@@ -134,7 +134,7 @@ const Sheet = (params) => {
                 })
                 document.title = `${dsaproblems?.[0]?.sheet_title} - coding75` || "DSA & CP Sheets"
                 const problems_list: ProblemType[] = dsaproblems.map((data: any) => {
-                    if (difficulty != 0 && (data?.difficulty>difficultyMax||data?.difficulty<difficulty)) return {
+                    if (difficulty != 0 && (data?.difficulty > difficultyMax || data?.difficulty < difficulty)) return {
                         id: null,
                         ProblemName: "null",
                         Submission: "null",
@@ -150,16 +150,15 @@ const Sheet = (params) => {
                         topic_tags = data?.topic_tags?.map((topic) => (topic.label)).slice(0, 3)
                     }
 
-                    function getStatus(link): string {
-                        if (problemStatus?.Solved.includes(data?.problem_link))
-                            return "Solved"
-                        if (problemStatus?.Revise.includes(data?.problem_link))
-                            return "Revise"
-                        if (problemStatus?.Trying.includes(data?.problem_link))
-                            return "Trying"
-
-                        return "Pending"
-                    }
+                    let status_pre
+                    if (problemStatus?.Solved.includes(data?.problem_link))
+                        status_pre = "Solved"
+                    else if (problemStatus?.Revise.includes(data?.problem_link))
+                        status_pre = "Revise"
+                    else if (problemStatus?.Trying.includes(data?.problem_link))
+                        status_pre = "Trying"
+                    else
+                        status_pre = "Pending"
 
                     return {
                         id: data?.id,
@@ -168,7 +167,7 @@ const Sheet = (params) => {
                         ProblemLink: data?.problem_link,
                         TopicTags: topic_tags,
                         Difficulty: data?.difficulty,
-                        Status: getStatus(data?.problem_link),
+                        Status: status_pre,
                         Bookmark: problemStatus?.Bookmark.includes(data?.problem_link),
                         VideoEditorial: data?.video_link
                     }
@@ -192,7 +191,7 @@ const Sheet = (params) => {
     async function checkUser() {
         try {
             const { data, error } = await supabase.auth.getUser();
-            if (error && error?.status != 401) {
+            if (error && error?.status != 401 && error?.status != 403) {
                 setStatus({
                     ...status,
                     getUser: "error"
@@ -226,8 +225,8 @@ const Sheet = (params) => {
     useEffect(() => {
         checkUser()
         setTimeout(() => {
-            initialiseUser(user?.email,false)
-            setRefresh(refresh+1)
+            initialiseUser(user?.email)
+            setRefresh(refresh + 1)
         }, 2000);
     }, [])
 
@@ -236,14 +235,14 @@ const Sheet = (params) => {
     }, [difficulty])
 
     useEffect(() => {
-        if(refresh>1)
-        initialiseUser(user?.email)
+        if (refresh > 1)
+            initialiseUser(user?.email)
     }, [refresh])
 
 
-    useEffect(()=>{
+    useEffect(() => {
         fetchSheetProblems(problemStatus)
-    },[problemStatus])
+    }, [problemStatus])
 
     return (
         <div>
@@ -304,12 +303,12 @@ const Sheet = (params) => {
                             <>
                                 <div className="md:container mt-5 px-5 flex items-center">
                                     {
-                                        refresh==0?
-                                        <p className="flex items-center text-sm">Loading User Data <RotateCcw className="animate-spin ml-2 h-3 w-3" /> </p>
-                                        :
-                                        <p className="flex items-center text-sm">Problem status not updated? <button onClick={(e) => { e.preventDefault(); setRefresh(refresh + 1) }} className="ml-2 flex items-center text-xs">reload now <RotateCcw className="ml-1 h-2 w-2" /></button></p>
+                                        refresh == 0 ?
+                                            <p className="flex items-center text-sm">Loading User Data <RotateCcw className="animate-spin ml-2 h-3 w-3" /> </p>
+                                            :
+                                            <p className="flex items-center text-sm">Problem status not updated? <button onClick={(e) => { e.preventDefault(); setRefresh(refresh + 1) }} className="ml-2 flex items-center text-xs">reload now <RotateCcw className="ml-1 h-2 w-2" /></button></p>
                                     }
-                                    
+
                                     {
                                         fullScreen ?
                                             <Button onClick={(e) => {

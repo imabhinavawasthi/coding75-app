@@ -51,14 +51,9 @@ import {
     TableRow,
 } from "@/components/ui/table"
 import { Bookmark, ExternalLink, FileCode, FileVideo, RotateCw } from "lucide-react"
-import Link from "next/link"
 import { toast } from "sonner"
 import { Label } from "@/components/ui/label"
 import supabase from "@/supabase"
-
-function getCurrentURL() {
-    return window.location.href
-}
 
 interface ProblemType {
     id: any;
@@ -330,7 +325,6 @@ export default function CPSheetTable({ tableData, user_email, fullScreen, refres
         onSortingChange: setSorting,
         onColumnFiltersChange: setColumnFilters,
         getCoreRowModel: getCoreRowModel(),
-        getPaginationRowModel: getPaginationRowModel(),
         getSortedRowModel: getSortedRowModel(),
         getFilteredRowModel: getFilteredRowModel(),
         onColumnVisibilityChange: setColumnVisibility,
@@ -704,7 +698,7 @@ export default function CPSheetTable({ tableData, user_email, fullScreen, refres
                             onChange={(event) =>
                                 table.getColumn("ProblemName")?.setFilterValue(event.target.value)
                             }
-                            className="lg:w-64 w-full "
+                            className="lg:w-64 w-full"
                         />
                     </div>
                     <div className="grid md:grid-cols-3 grid-cols-2 gap-x-5 lg:mt-0 mt-3 ">
@@ -762,7 +756,7 @@ export default function CPSheetTable({ tableData, user_email, fullScreen, refres
                             </TableRow>
                         ))}
                     </TableHeader>
-                    <TableBody>
+                    <TableBody >
                         {table.getRowModel().rows?.length ? (
                             table.getRowModel().rows.map((row) => (
                                 <TableRow
@@ -797,7 +791,7 @@ export default function CPSheetTable({ tableData, user_email, fullScreen, refres
                 <div className="flex-1 text-sm text-muted-foreground">
                     Total {table.getFilteredRowModel().rows.length} Problems
                 </div>
-                <div className="space-x-2">
+                {/* <div className="space-x-2">
                     <Button
                         variant="outline"
                         size="sm"
@@ -814,7 +808,7 @@ export default function CPSheetTable({ tableData, user_email, fullScreen, refres
                     >
                         Next
                     </Button>
-                </div>
+                </div> */}
             </div>
         </div>
     )
