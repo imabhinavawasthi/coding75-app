@@ -1,1 +1,0 @@
-export const opportunityFeature = "https://zettllhfmtvcunctalyo.supabase.co/storage/v1/object/public/resources/images/operating-system.png"

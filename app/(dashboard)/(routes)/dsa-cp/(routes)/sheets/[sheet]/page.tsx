@@ -85,6 +85,7 @@ const Sheet = (params) => {
         }
         else {
             if (users && users?.length == 0) {
+                if(email==null)return;
                 const { data, error } = await supabase
                     .from('users')
                     .insert([
@@ -223,11 +224,14 @@ const Sheet = (params) => {
         }
     }
     useEffect(() => {
-        checkUser()
-        setTimeout(() => {
-            initialiseUser(user?.email)
-            setRefresh(refresh + 1)
-        }, 2000);
+        async function refreshFun() {
+            await checkUser()
+            setTimeout(() => {
+                initialiseUser(user?.email, false)
+                setRefresh(refresh + 1)
+            }, 2000);
+        }
+        refreshFun()
     }, [])
 
     useEffect(() => {

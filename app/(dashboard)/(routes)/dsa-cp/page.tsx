@@ -2,6 +2,10 @@ import ProductCard from "@/components/cards/product-card";
 import ResourceCard2 from "@/components/cards/resource-card-2";
 import PageHeaders from "@/components/page-headers/page-headers";
 import { Code2, Rocket } from "lucide-react";
+import FeaturePic from "../../../../public/images/dsa-cp-feature.png"
+import CodeforcesLogo from "../../../../public/logos/codeforces.svg"
+import CodechefLogo from "../../../../public/logos/codechef.png"
+import LeetcodeLogo from "../../../../public/logos/leetcode.png"
 
 const DSACPPage = () => {
     return (
@@ -11,7 +15,7 @@ const DSACPPage = () => {
                     greenHeading="DSA & CP"
                     heading="Practice"
                     description="Empower your coding journey with a rich collection of Data Structures and Competitive Programming resources, thoughtfully assembled to guide coding enthusiasts of varying skill levels through their learning journey."
-                    image="https://zettllhfmtvcunctalyo.supabase.co/storage/v1/object/public/resources/images/dsa-cp-feature.png"
+                    image={FeaturePic}
                 />
             </div>
             <div className="mt-3 lg:container md:container px-3">
@@ -51,7 +55,7 @@ const DSACPPage = () => {
                             heading={"Leetcode POTD Editorials"}
                             description={"In-depth LeetCode POTD editorials for efficient problem-solving."}
                             link={"/dsa-cp/leetcode-potd"}
-                            icon_link={"https://zettllhfmtvcunctalyo.supabase.co/storage/v1/object/public/resources/icons/leetcode.png"}
+                            icon_link={LeetcodeLogo}
                             extra_details={true}
                         />
                     </div>
@@ -60,7 +64,7 @@ const DSACPPage = () => {
                             heading={"Codeforces Contest Editorials"}
                             description={"Optimize your programming skills with detailed solutions to Codeforces contest problems."}
                             link={"/dsa-cp/codeforces"}
-                            icon_link={"https://zettllhfmtvcunctalyo.supabase.co/storage/v1/object/public/resources/icons/codeforces.svg"}
+                            icon_link={CodeforcesLogo}
                             extra_details={true}
                         />
                     </div>
@@ -69,7 +73,7 @@ const DSACPPage = () => {
                             heading={"CodeChef Contest Editorials"}
                             description={"Optimize your programming skills with detailed solutions to CodeChef contest problems."}
                             link={"/dsa-cp/codechef"}
-                            icon_link={"https://zettllhfmtvcunctalyo.supabase.co/storage/v1/object/public/resources/icons/codechef.png"}
+                            icon_link={CodechefLogo}
                             extra_details={true}
                         />
                     </div>
@@ -78,7 +82,7 @@ const DSACPPage = () => {
                             heading={"Leetcode Contest Editorials"}
                             description={"In-depth LeetCode Contest editorials for efficient problem-solving."}
                             link={"/dsa-cp/leetcode-contests"}
-                            icon_link={"https://zettllhfmtvcunctalyo.supabase.co/storage/v1/object/public/resources/icons/leetcode.png"}
+                            icon_link={LeetcodeLogo}
                             extra_details={true}
                         />
                     </div>

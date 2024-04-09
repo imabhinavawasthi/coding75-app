@@ -26,7 +26,7 @@ const DBMS = () => {
         <div>
           <PageHeadersButton greenHeading='Management System' heading='Database'
           description='DBMS notes, specially designed for interview preparation 🚀'
-          pdf_link='https://zettllhfmtvcunctalyo.supabase.co/storage/v1/object/public/resources/notes/dbms-notes.pdf'
+          pdf_link='https://topmate.io/abhinavawasthi/918246'
           />
         </div>
         <div className='grid grid-cols-10'>

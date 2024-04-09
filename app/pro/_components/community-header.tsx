@@ -10,6 +10,8 @@ import { Skeleton } from '../../../components/ui/skeleton';
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuSeparator, DropdownMenuTrigger } from '../../../components/ui/dropdown-menu';
 import { Avatar, AvatarFallback, AvatarImage } from '../../../components/ui/avatar'
 import FancyTestimonialSliderPage from './testimonials-page';
+import coding75ProImage from "../../../public/images/coding75-pro.png"
+import Image from 'next/image';
 
 export default function CommunityHeader() {
     const [user, setUser] = useState<any>(null)
@@ -153,9 +155,9 @@ export default function CommunityHeader() {
                                     allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
                                     allowFullScreen>
                                 </iframe> */}
-                            <img
+                            <Image
                             className="cursor-pointer w-full h-full rounded-xl p-1"
-                                src="https://zettllhfmtvcunctalyo.supabase.co/storage/v1/object/public/resources/pictures/coding75-pro.png"
+                                src={coding75ProImage}
                                 alt="coding75-pro" />
                             </div>
                         </div>

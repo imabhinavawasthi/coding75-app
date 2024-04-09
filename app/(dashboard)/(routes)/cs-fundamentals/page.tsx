@@ -1,5 +1,12 @@
 import ImageCard3 from "@/components/cards/image-card-3";
 import PageHeaders from "@/components/page-headers/page-headers";
+import OS from "../../../../public/images/operating-system.png"
+import CS from "../../../../public/images/computer-fundamentals.png"
+import OOPS from "../../../../public/images/oops.png"
+import CN from "../../../../public/images/computer-networks.png"
+import SQL from "../../../../public/images/sql.png"
+import DSA from "../../../../public/images/dsa-theory.png"
+import DBMS from "../../../../public/images/dbms.png"
 
 const CSFundamentals = () => {
     return (
@@ -9,7 +16,7 @@ const CSFundamentals = () => {
                     greenHeading="Fundamentals"
                     heading="CS"
                     description="Operating Systems, Computer Networks, Database Management Systems, and Object-Oriented Programming Interview Specific Resources. "
-                    image="https://zettllhfmtvcunctalyo.supabase.co/storage/v1/object/public/resources/images/computer-fundamentals.png"
+                    image={CS}
                 />
             </div>
 
@@ -17,42 +24,42 @@ const CSFundamentals = () => {
                 <div className="grid grid-cols-1 lg:grid-cols-3 md:grid-cols-2 lg:gap-x-10 lg:px-10 gap-4">
                     <div>
                         <ImageCard3
-                            image="https://zettllhfmtvcunctalyo.supabase.co/storage/v1/object/public/resources/images/operating-system.png"
+                            image={OS}
                             title="Operating System"
                             href="/cs-fundamentals/operating-system"
                         />
                     </div>
                     <div>
                         <ImageCard3
-                            image="https://zettllhfmtvcunctalyo.supabase.co/storage/v1/object/public/resources/images/oops.png"
+                            image={OOPS}
                             title="Object Oriented Programming"
                             href="/cs-fundamentals/oops"
                         />
                     </div>
                     <div>
                         <ImageCard3
-                            image="https://zettllhfmtvcunctalyo.supabase.co/storage/v1/object/public/resources/images/dbms.png"
+                            image={DBMS}
                             title="Database Management System"
                             href="/cs-fundamentals/dbms"
                         />
                     </div>
                     <div>
                         <ImageCard3
-                            image="https://zettllhfmtvcunctalyo.supabase.co/storage/v1/object/public/resources/images/computer-networks.png"
+                            image={CN}
                             title="Computer Networks"
                             href="/cs-fundamentals/computer-networks"
                         />
                     </div>
                     <div>
                         <ImageCard3
-                            image="https://zettllhfmtvcunctalyo.supabase.co/storage/v1/object/public/resources/images/sql.png"
+                            image={SQL}
                             title="Structured query language (SQL)"
                             href="/cs-fundamentals/sql"
                         />
                     </div>
                     <div>
                         <ImageCard3
-                            image="https://zettllhfmtvcunctalyo.supabase.co/storage/v1/object/public/resources/images/dsa-theory.png"
+                            image={DSA}
                             title="DSA Theory Questions"
                             href="/cs-fundamentals/dsa"
                         />

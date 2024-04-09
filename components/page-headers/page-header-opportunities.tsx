@@ -3,6 +3,7 @@ import Image from "next/image";
 import Typewriter from 'typewriter-effect';
 import { toast } from "sonner";
 import Link from "next/link";
+import { AmazonLogo, AtlassianLogo, GoogleLogo, LinkedinLogo, MicrosoftLogo, SwiggyLogo } from "../social-links";
 
 const PageHeaderCompanyList = ({ focusHeading = "", heading = "", description = "" }) => {
     function getCurrentURL() {
@@ -49,37 +50,37 @@ const PageHeaderCompanyList = ({ focusHeading = "", heading = "", description = 
                                 <Image
                                     width={150}
                                     height={150}
-                                    src="https://zettllhfmtvcunctalyo.supabase.co/storage/v1/object/public/resources/icons/google.svg.png"
+                                    src={GoogleLogo}
                                     alt="google"
                                 />
                                 <Image
                                     width={150}
                                     height={150}
-                                    src="https://zettllhfmtvcunctalyo.supabase.co/storage/v1/object/public/resources/icons/linkedin.svg.png"
+                                    src={LinkedinLogo}
                                     alt="linkedin"
                                 />
                                 <Image
                                     width={150}
                                     height={150}
-                                    src="https://zettllhfmtvcunctalyo.supabase.co/storage/v1/object/public/resources/icons/atlassian.svg.png"
+                                    src={AtlassianLogo}
                                     alt="atlassian"
                                 />
                                 <Image
                                     width={150}
                                     height={150}
-                                    src="https://zettllhfmtvcunctalyo.supabase.co/storage/v1/object/public/resources/icons/swiggy.svg.png"
+                                    src={SwiggyLogo}
                                     alt="swiggy"
                                 />
                                 <Image
                                     width={150}
                                     height={150}
-                                    src="https://zettllhfmtvcunctalyo.supabase.co/storage/v1/object/public/resources/icons/microsoft.svg.png"
+                                    src={MicrosoftLogo}
                                     alt="microsoft"
                                 />
                                 <Image
                                     width={150}
                                     height={150}
-                                    src="https://zettllhfmtvcunctalyo.supabase.co/storage/v1/object/public/resources/icons/amazon.svg.png"
+                                    src={AmazonLogo}
                                     alt="amazon"
                                 />
                             </div>

@@ -52,7 +52,7 @@ export default function FancyTestimonialsSlider({ testimonials }: { testimonials
                 leaveFrom="opacity-100 rotate-0"
                 leaveTo="opacity-0 rotate-[60deg]"
               >
-                <Image className="relative top-11 left-1/2 -translate-x-1/2 object-contain" src={testimonial.img} width={200} height={200} alt={testimonial.name} />
+                <img className="relative top-11 left-1/2 -translate-x-1/2 object-contain" src={testimonial.img} width={200} height={200} alt={testimonial.name} />
               </Transition>
             ))}
 

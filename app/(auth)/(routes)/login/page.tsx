@@ -6,6 +6,8 @@ import { useEffect } from "react";
 import { useRouter } from 'next/navigation'
 import { Logo } from "@/app/(dashboard)/_components/components/logo";
 import Link from "next/link";
+import loginPic from "../../../../public/images/login.jpg"
+import Image from "next/image";
 
 const LogIn = () => {
     const router = useRouter()
@@ -60,9 +62,9 @@ const LogIn = () => {
             <section className="bg-white">
                 <div className="lg:grid lg:min-h-screen lg:grid-cols-2 grid-cols-1">
                     <section className="relative flex h-32 items-end bg-gray-900 lg:h-full">
-                        <img
+                        <Image
                             alt=""
-                            src="https://zettllhfmtvcunctalyo.supabase.co/storage/v1/object/public/resources/pictures/login.jpg"
+                            src={loginPic}
                             className="absolute inset-0 h-full w-full object-cover opacity-80"
                         />
 

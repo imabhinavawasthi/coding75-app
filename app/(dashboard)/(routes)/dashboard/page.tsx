@@ -8,6 +8,8 @@ import ImageFlipCard from "@/components/cards/image-flip-card";
 import { Card, CardContent, CardHeader } from "@/components/ui/card";
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
+import Image1 from "../../../../public/images/resume-1.png"
+import Image2 from "../../../../public/images/resume-2.png"
 
 const features = [
   {
@@ -102,8 +104,8 @@ export default function DashboardPage() {
           <div className="grid gap-4 md:grid-cols-3">
             <div className="hidden md:block">
               <ImageFlipCard
-                image1="https://zettllhfmtvcunctalyo.supabase.co/storage/v1/object/public/resources/images/resume-1.png"
-                image2="https://zettllhfmtvcunctalyo.supabase.co/storage/v1/object/public/resources/images/resume-2.png"
+                image1={Image1}
+                image2={Image2}
                 title="Resume Builder"
                 description="Create an ATS Friendly Latex Resume 🚀"
                 href="/resume"

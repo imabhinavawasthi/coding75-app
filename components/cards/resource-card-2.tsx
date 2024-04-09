@@ -9,7 +9,7 @@ const ResourceCard2 = ({ heading, description, link, icon_link, extra_details, t
                 <article className="hidden lg:block md:block hover:bg-gray-100 rounded-xl bg-white p-4 ring ring-indigo-50 sm:p-6 lg:p-8">
                     <div className="flex items-start sm:gap-8">
                         <span className="relative flex shrink-0 overflow-hidden w-15 h-15">
-                            <img
+                            <Image
                                 className="aspect-square object-contain"
                                 alt="icon" width="48" height="48" src={icon_link}
                             />
