@@ -85,7 +85,7 @@ const Sheet = (params) => {
         }
         else {
             if (users && users?.length == 0) {
-                if(email==null)return;
+                if (email == null) return;
                 const { data, error } = await supabase
                     .from('users')
                     .insert([
@@ -223,13 +223,10 @@ const Sheet = (params) => {
             })
         }
     }
+
     useEffect(() => {
         async function refreshFun() {
             await checkUser()
-            setTimeout(() => {
-                initialiseUser(user?.email, false)
-                setRefresh(refresh + 1)
-            }, 2000);
         }
         refreshFun()
     }, [])
@@ -239,14 +236,8 @@ const Sheet = (params) => {
     }, [difficulty])
 
     useEffect(() => {
-        if (refresh > 1)
-            initialiseUser(user?.email)
+        initialiseUser(user?.email)
     }, [refresh])
-
-
-    useEffect(() => {
-        fetchSheetProblems(problemStatus)
-    }, [problemStatus])
 
     return (
         <div>
@@ -306,13 +297,7 @@ const Sheet = (params) => {
                         user != null ?
                             <>
                                 <div className="md:container mt-5 px-5 flex items-center">
-                                    {
-                                        refresh == 0 ?
-                                            <p className="flex items-center text-sm">Loading User Data <RotateCcw className="animate-spin ml-2 h-3 w-3" /> </p>
-                                            :
-                                            <p className="flex items-center text-sm">Problem status not updated? <button onClick={(e) => { e.preventDefault(); setRefresh(refresh + 1) }} className="ml-2 flex items-center text-xs">reload now <RotateCcw className="ml-1 h-2 w-2" /></button></p>
-                                    }
-
+                                    <p className="flex items-center text-sm">Problem status not updated? <button onClick={(e) => { e.preventDefault(); setRefresh(refresh + 1) }} className="ml-2 flex items-center text-xs">reload now <RotateCcw className="ml-1 h-2 w-2" /></button></p>
                                     {
                                         fullScreen ?
                                             <Button onClick={(e) => {

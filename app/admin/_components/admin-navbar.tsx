@@ -11,7 +11,7 @@ const AdminNavbar = ({ user }) => {
                     <div className="flex flex-wrap justify-between items-center">
                         <div className="flex justify-start items-center">
                             <Link href="/admin" className="flex mr-4">
-                                <Image src={coding75Light} className="mr-3 h-12" alt="FlowBite Logo" />
+                                <Image src={coding75Light} className="mr-3 w-40 object-contain" alt="FlowBite Logo" />
                             </Link>
                         </div>
                         <div className="flex items-center lg:order-2">
