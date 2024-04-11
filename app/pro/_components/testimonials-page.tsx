@@ -26,6 +26,12 @@ import FancyTestimonialsSlider from './testimonials'
         role: 'Intern at paisabazaar.com'
       },
       {
+        img: "https://upload.wikimedia.org/wikipedia/commons/thumb/1/1b/OpenText_logo.svg/2560px-OpenText_logo.svg.png",
+        quote: "Attending the DSA and C++ lectures has truly been a game-changer for me. The guidance and regular doubt-clearing sessions were invaluable, helping me breeze through coding challenges and interview rounds with confidence. ",
+        name: 'Priyanshu Singh',
+        role: 'Software Engineer Intern at OpenText'
+      },
+      {
         img: "https://media.geeksforgeeks.org/wp-content/cdn-uploads/20210420155809/gfg-new-logo.png",
         quote: "I have attended the live DSA&CP sessions and they are very useful. All the concepts are explained thoroughly and doubts are resolved well. I was able to reach ACM ICPC Regionals and grab an SDE internship at GeeksForGeeks.",
         name: 'Ripan Roy',
