@@ -50,7 +50,7 @@ import {
     TableHeader,
     TableRow,
 } from "@/components/ui/table"
-import { Bookmark, ExternalLink, FileCode, FileVideo, RotateCw } from "lucide-react"
+import { Bookmark, ExternalLink, FileCode, FileVideo, PanelTopOpen, RotateCw } from "lucide-react"
 import { toast } from "sonner"
 import { Label } from "@/components/ui/label"
 import supabase from "@/supabase"
@@ -82,6 +82,7 @@ function getRowColorClass(status) {
 
 export default function CPSheetTable({ tableData, user_email, fullScreen, refresh }) {
     const [data, setData] = React.useState<ProblemType[]>(tableData ? tableData : [])
+    const [numberOfRows, setNumberOfRows] = React.useState(10)
 
     const [sorting, setSorting] = React.useState<SortingState>([])
     const [columnFilters, setColumnFilters] = React.useState<ColumnFiltersState>(
@@ -103,11 +104,7 @@ export default function CPSheetTable({ tableData, user_email, fullScreen, refres
                             e.preventDefault()
                             toggleBookmark(problem?.ProblemLink, problem?.Bookmark, user_email)
                         }}>
-                            {
-                                refresh != 0 ?
-                                    <Bookmark fill={problem?.Bookmark ? "#ADD8E6" : "#FFFFFF"} className="h-6 w-6" /> :
-                                    <RotateCw className="animate-spin h-4 w-4" />
-                            }
+                            <Bookmark fill={problem?.Bookmark ? "#ADD8E6" : "#FFFFFF"} className="h-6 w-6" />
                         </button>
                     </div>
                 )
@@ -123,14 +120,12 @@ export default function CPSheetTable({ tableData, user_email, fullScreen, refres
                     <div className="flex items-center">
                         <div className="flex flex-col items-center">
                             <div className="mb-2">
-                                {refresh == 0 && <div className="flex items-center"><RotateCw className="animate-spin flex w-3 h-3 me-3" />Loading Status</div>}
-                                {refresh != 0 && problem.Status == "Solved" && <div className="flex items-center"><span className="flex w-3 h-3 me-3 bg-green-500 rounded-full"></span> Solved</div>}
-                                {refresh != 0 && problem.Status == "Trying" && <div className="flex items-center"><span className="flex w-3 h-3 me-3 bg-yellow-600 rounded-full"></span> Trying</div>}
-                                {refresh != 0 && problem.Status == "Pending" && <div className="flex items-center"><span className="flex w-3 h-3 me-3 bg-blue-300 rounded-full"></span> Pending</div>}
-                                {refresh != 0 && problem.Status == "Revise" && <div className="flex items-center"><span className="flex w-3 h-3 me-3 bg-orange-500 rounded-full"></span>Revise</div>}
+                                {problem.Status == "Solved" && <div className="flex items-center"><span className="flex w-3 h-3 me-3 bg-green-500 rounded-full"></span> Solved</div>}
+                                {problem.Status == "Trying" && <div className="flex items-center"><span className="flex w-3 h-3 me-3 bg-yellow-600 rounded-full"></span> Trying</div>}
+                                {problem.Status == "Pending" && <div className="flex items-center"><span className="flex w-3 h-3 me-3 bg-blue-300 rounded-full"></span> Pending</div>}
+                                {problem.Status == "Revise" && <div className="flex items-center"><span className="flex w-3 h-3 me-3 bg-orange-500 rounded-full"></span>Revise</div>}
                             </div>
                             {
-                                refresh != 0 &&
                                 <Select
                                     onValueChange={(e) => {
                                         updateStatus(problem?.ProblemLink, problem.Status, e)
@@ -326,6 +321,7 @@ export default function CPSheetTable({ tableData, user_email, fullScreen, refres
         onColumnFiltersChange: setColumnFilters,
         getCoreRowModel: getCoreRowModel(),
         getSortedRowModel: getSortedRowModel(),
+        // getPaginationRowModel: getPaginationRowModel(),
         getFilteredRowModel: getFilteredRowModel(),
         onColumnVisibilityChange: setColumnVisibility,
         onRowSelectionChange: setRowSelection,
@@ -525,24 +521,17 @@ export default function CPSheetTable({ tableData, user_email, fullScreen, refres
                 toast.error("Some error occurred")
             }
             else {
-                const tempData: ProblemType[] = data.map((problem) => {
-                    if (problem?.ProblemLink == problem_link) {
+                const updatedData = data.map((problem) => {
+                    if (problem?.ProblemLink === problem_link) {
                         return {
-                            id: problem?.id,
-                            ProblemName: problem?.ProblemName,
-                            Submission: problem?.Submission,
-                            ProblemLink: problem?.ProblemLink,
-                            TopicTags: problem?.TopicTags,
+                            ...problem,
                             Status: to,
-                            Bookmark: problem?.Bookmark,
-                            VideoEditorial: problem?.VideoEditorial,
-                            Difficulty: problem?.Difficulty,
-                        }
+                        };
                     }
-                    else
-                        return problem
-                })
-                setData(tempData)
+                    return problem;
+                });
+            
+                setData(updatedData);
             }
         }
         if (to == "Trying") {
@@ -758,7 +747,7 @@ export default function CPSheetTable({ tableData, user_email, fullScreen, refres
                     </TableHeader>
                     <TableBody >
                         {table.getRowModel().rows?.length ? (
-                            table.getRowModel().rows.map((row) => (
+                            table.getRowModel().rows.slice(0,numberOfRows).map((row) => (
                                 <TableRow
                                     key={row.id}
                                     data-state={row.getIsSelected() && "selected"}
@@ -787,9 +776,9 @@ export default function CPSheetTable({ tableData, user_email, fullScreen, refres
                     </TableBody>
                 </Table>
             </div>
-            <div className="flex items-center justify-end space-x-2 py-4">
+            <div className="flex items-center justify-end space-x-2 pt-4">
                 <div className="flex-1 text-sm text-muted-foreground">
-                    Total {table.getFilteredRowModel().rows.length} Problems
+                    Total {Math.min(table.getFilteredRowModel().rows.length,numberOfRows)} / {table.getFilteredRowModel().rows.length} Problems
                 </div>
                 {/* <div className="space-x-2">
                     <Button
@@ -810,6 +799,18 @@ export default function CPSheetTable({ tableData, user_email, fullScreen, refres
                     </Button>
                 </div> */}
             </div>
+            {
+                table.getFilteredRowModel().rows.length>numberOfRows
+                &&
+                <div className="flex items-center justify-center">
+                    <button onClick={(e)=>{
+                        e.preventDefault()
+                        setNumberOfRows(numberOfRows+10)
+                    }} className="flex items-center text-blue-600">
+                        <PanelTopOpen className="h-4 w-4 mr-2"/> Load More Problems
+                    </button>
+                </div>
+            }
         </div>
     )
 }
