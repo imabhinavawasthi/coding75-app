@@ -8,6 +8,7 @@ import yashPic from "../../../public/pictures/yash.png"
 import abhinavPic from "../../../public/pictures/abhinav.jpeg"
 import amarPic from "../../../public/pictures/amar.jpeg"
 import harshitPic from "../../../public/pictures/harshit.png"
+import jwalaPic from "../../../public/pictures/jwala.jpeg"
 
 //logos
 import inducedAI from "../../../public/logos/inducedai.png"
@@ -193,6 +194,46 @@ export default function TeamSection() {
                         <ul className="flex justify-center mt-4 space-x-4">
                             <li>
                                 <a href="https://www.linkedin.com/in/gaudsuraj/" target="_blank" className="text-[#0077B5] hover:text-gray-900 dark:hover:text-white">
+                                    <LinkedInLogoIcon className="h-6 w-6" />
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+                    <div className="text-center items-center text-gray-500 dark:text-gray-400">
+                        <Image className="mx-auto mb-4 w-36 h-36 rounded-full"
+                            src={jwalaPic}
+                            alt="Picture" />
+                        <h3 className="mb-1 text-2xl font-bold tracking-tight text-gray-900 dark:text-white">
+                        Jwala Chorasiya
+                        </h3>
+                        <p className="flex justify-center items-center">
+                            Software Developer I. @
+                            <img className="object-contain w-24 ml-2" alt="propreturns"
+                                src="https://image4.owler.com/logo/propreturns-_owler_20210826_171408_original.png" />
+                        </p>
+                        <p className="flex mt-1 justify-center items-center">
+                            Former SWE I. @
+                            <img
+                                className="object-contain w-48 ml-2"
+                                alt="jp morgan"
+                                src="https://www.jpmorganchase.com/content/dam/shared/logos/jpmc-logo-290x20px.png" />
+                        </p>
+                        <p className="flex mt-2 text-sm justify-center items-center">
+                            Worked with-
+                        </p>
+                        <p className="flex mt-1 mb-1 justify-center items-center">
+                            <img className="object-contain w-24 ml-2" alt="codechef" 
+                            src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSy16sMmLUotlWm6Jcbo-JMVTOozfd7Sn_f294NNEai6w&s" />
+                        </p>
+                        <p className="flex text-sm justify-center items-center">
+                            Mentored more than 3000 students.
+                        </p>
+                        <p className="flex text-sm justify-center items-center">
+                            Cracked International Offer of JP Morgan, United Kingdom | AWS Certified | ICPC&apos;22 Regionalist
+                        </p>
+                        <ul className="flex justify-center mt-4 space-x-4">
+                            <li>
+                                <a href="https://www.linkedin.com/in/jwalapc/" target="_blank" className="text-[#0077B5] hover:text-gray-900 dark:hover:text-white">
                                     <LinkedInLogoIcon className="h-6 w-6" />
                                 </a>
                             </li>
