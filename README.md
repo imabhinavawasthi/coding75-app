@@ -1,34 +1,43 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# Coding75
 
-## Getting Started
+Coding75.com is a comprehensive platform dedicated to providing top-notch resources for interview preparation, specifically tailored for coding and computer science enthusiasts. It is a part of CrackDSA.com, an initiative aimed at creating resources for students and organizing live sessions and webinars.
 
-First, run the development server:
+Visit us at [coding75.com](https://coding75.com).
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-```
+![Landing Page](https://coding75.com/_next/image?url=%2F_next%2Fstatic%2Fmedia%2Fdashboard.997c7b6e.png&w=3840&q=75)
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## Features
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+- **DSA/CP Content**: Access editorials for Codeforces, CodeChef, and LeetCode, along with comprehensive sheets for Competitive Programming (CP) and Data Structures and Algorithms (DSA).
+- **Projects**: Explore a curated list of projects ranging from beginner to advanced levels, designed to enhance your coding skills.
+- **CS Fundamentals**: Dive into fundamental notes for Operating Systems (OS), Computer Networks (CN), and more.
+- **Resume Builder**: Utilize our tool to craft professional resumes tailored for tech industry interviews.
+- **And Much More**: Coding75 is your one-stop destination for a complete interview preparation package.
 
-This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
+## Tech Stack
 
-## Learn More
+- **Frontend Framework**: Next.js
+- **Styling**: Tailwind CSS
+- **Component Library**: Shadcn
+- **Database and Backend APIs**: Supabase
 
-To learn more about Next.js, take a look at the following resources:
+## Installation
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+To run Coding75 locally, follow these steps:
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
+1. Clone this repository.
+2. Install dependencies using `npm install`.
+3. Start the development server using `npm run dev`.
+4. Access Coding75 at `http://localhost:3000`.
 
-## Deploy on Vercel
+## Contributing
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+We welcome contributions to Coding75! If you have any ideas or suggestions, feel free to reach out to us via email at info@coding75.com. Additionally, you can join our WhatsApp group for the open-source community of Coding75. Stay tuned for the link update.
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+## License
+
+This project is licensed under the [MIT License](LICENSE).
+
+## Acknowledgements
+
+We extend our gratitude to all contributors and supporters who help make Coding75 a valuable resource for interview preparation.

@@ -2,6 +2,8 @@ export const telegram_link= "https://telegram.me/coding75"
 
 export const linkedin_link = "https://in.linkedin.com/company/crackdsa"
 
+export const github_link = "https://github.com/imabhinavawasthi/coding75-app"
+
 export const youtube_link = "https://youtube.com/@crackdsa"
 
 export const feedback_form = "https://forms.gle/S5KKUyrUqi1WzZCJ6"
