@@ -58,8 +58,8 @@ const OpportunityPage = (params: any) => {
       {
         internshipDetails[0] ? <>
           <div className="lg:container md:container px-3">
-          <div className="mt-3">
-          <BreadCrumb links={[
+            <div className="mt-3">
+              <BreadCrumb links={[
                 {
                   "title": "Opportunities",
                   "href": "/opportunities"
@@ -69,7 +69,7 @@ const OpportunityPage = (params: any) => {
                   "href": `/opportunities/${params.params.opportunity}`
                 }
               ]} />
-          </div>
+            </div>
             <div className="p-3 pt-0 lg:p-10">
               <div>
                 <div className="w-full flex flex-col justify-center items-start h-auto gap-3 p-6 border-gray-500 rounded-xl bg-gray-50 hover:cursor-pointer hover:bg-gray-100 hover:border-gray-600 hover:shadow-lg transition-all duration-500 capitalize">
@@ -91,11 +91,25 @@ const OpportunityPage = (params: any) => {
                           <div className="hidden lg:block md:block w-[1px] h-3 bg-gray-400">
                           </div>
                           <p className="items-center lg:mb-0 md:mb-0 mb-4 flex gap-x-1 text-sm text-gray-600">
-                            <CalendarIcon className="h-4 w-4 mr-2" aria-hidden="true" /> Batch Eligible: {internshipDetails[0].batch_eligible.map((data) => {
-                              return <>
-                                <Badge variant="basic">{data}</Badge>
+                            <CalendarIcon className="h-4 w-4 mr-2" aria-hidden="true" />
+                            {
+                              internshipDetails?.[0]?.batch_eligible &&
+                              <>
+                                Batch Eligible: {internshipDetails?.[0]?.batch_eligible?.map((data) => {
+                                  return <>
+                                    <Badge variant="basic">{data}</Badge>
+                                  </>
+                                })}
                               </>
-                            })}
+                            }
+                            {
+                              <>
+                                {internshipDetails?.[0]?.experience &&
+                                  <>
+                                    Experience Required:  <Badge variant="basic">{internshipDetails?.[0]?.experience}</Badge>
+                                  </>}
+                              </>
+                            }
                           </p>
                           <div className="hidden lg:block md:block w-[1px] h-3 bg-gray-400">
                           </div>
@@ -112,13 +126,24 @@ const OpportunityPage = (params: any) => {
                             </p></>}
                         </div>
                       </div>
+                      <div>
+                      {internshipDetails[0]?.skills &&
+                        <p className="lg:mb-0 mt-5 flex md:mb-0 gap-x-1 text-sm text-gray-600">
+                            
+                            Skills: {internshipDetails[0]?.skills?.slice(0, 4)?.map((data) => {
+                                return <>
+                                    <Badge className="mr-2 mb-1" variant="outline">{data}</Badge>
+                                </>
+                            })}
+                        </p>}
+                      </div>
                     </div>
 
                   </div>
 
                 </div>
               </div>
-              <div className="mt-5 mb-10 lg:hidden md:hidden w-full flex gap-3 justify-between items-stretch flex-wrap">
+              <div className="mt-5 lg:hidden md:hidden w-full flex gap-3 justify-between items-stretch flex-wrap">
                 <div className="lg:flex md:flex grid  gap-x-2 items-center">
                   <p className="flex items-center lg:mb-0 md:mb-0 mb-4 text-sm text-gray-600">
                     <BriefcaseIcon className="h-4 w-4 mr-2" aria-hidden="true" /><Badge variant="destructive">{internshipDetails[0].company_name}</Badge>
@@ -126,11 +151,25 @@ const OpportunityPage = (params: any) => {
                   <div className="hidden lg:block md:block w-[1px] h-3 bg-gray-400">
                   </div>
                   <p className="items-center lg:mb-0 md:mb-0 mb-4 flex gap-x-1 text-sm text-gray-600">
-                    <CalendarIcon className="h-4 w-4 mr-2" aria-hidden="true" /> Batch Eligible: {internshipDetails[0].batch_eligible.map((data) => {
-                      return <>
-                        <Badge variant="basic">{data}</Badge>
+                    <CalendarIcon className="h-4 w-4 mr-2" aria-hidden="true" />
+                    {
+                      internshipDetails?.[0]?.batch_eligible &&
+                      <>
+                        Batch Eligible: {internshipDetails?.[0]?.batch_eligible?.map((data) => {
+                          return <>
+                            <Badge variant="basic">{data}</Badge>
+                          </>
+                        })}
                       </>
-                    })}
+                    }
+                    {
+                      <>
+                        {internshipDetails?.[0]?.experience &&
+                          <>
+                            <Badge variant="basic">{internshipDetails?.[0]?.experience}</Badge>
+                          </>}
+                      </>
+                    }
                   </p>
                   <div className="hidden lg:block md:block w-[1px] h-3 bg-gray-400">
                   </div>
@@ -147,6 +186,14 @@ const OpportunityPage = (params: any) => {
                     </p></>}
                 </div>
               </div>
+              {internshipDetails[0]?.skills &&
+                <p className="lg:hidden md:hidden lg:mb-0 md:mb-0 mb-4 gap-x-1 text-sm text-gray-600">
+                  {internshipDetails[0]?.skills?.map((data) => {
+                    return <>
+                      <Badge className="mr-1 mb-1" variant="outline">{data}</Badge>
+                    </>
+                  })}
+                </p>}
               <div className="mt-5 justify-center items-center flex">
                 {isCopied ? <span className="ml-3">
                   <Button
