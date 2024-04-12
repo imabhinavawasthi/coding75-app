@@ -297,7 +297,7 @@ const Sheet = (params) => {
                         user != null ?
                             <>
                                 <div className="md:container mt-5 px-5 flex items-center">
-                                    <p className="flex items-center text-sm">Problem status not updated? <button onClick={(e) => { e.preventDefault(); setRefresh(refresh + 1) }} className="ml-2 flex items-center text-xs">reload now <RotateCcw className="ml-1 h-2 w-2" /></button></p>
+                                    <p className="flex items-center text-sm mr-5">Problem status not updated? <button onClick={(e) => { e.preventDefault(); setRefresh(refresh + 1) }} className="ml-2 flex items-center text-xs">reload now <RotateCcw className="ml-1 h-2 w-2" /></button></p>
                                     {
                                         fullScreen ?
                                             <Button onClick={(e) => {
@@ -316,8 +316,8 @@ const Sheet = (params) => {
                                 </div>
                                 {
                                     !fullScreen &&
-                                    <Tabs defaultValue="0" className="md:container mt-5 px-5 w-full flex overflow-scroll">
-                                        <TabsList className="grid w-full grid-cols-5">
+                                    <Tabs defaultValue="0" className="mb-14 md:mb-0 md:container mt-5 px-5 w-full flex">
+                                        <TabsList className="gap-y-2 grid w-full grid-cols-2 md:grid-cols-5">
                                             <TabsTrigger
                                                 onClick={(e) => {
                                                     setDifficulty(0)
