@@ -13,6 +13,15 @@ import ErrorBanner from "@/app/(dashboard)/_components/banners/error-banner";
 import DOMPurify from 'dompurify';
 import BreadCrumb from "@/app/(dashboard)/_components/components/breadcrumb";
 import { toast } from "sonner";
+import {
+  Breadcrumb,
+  BreadcrumbItem,
+  BreadcrumbLink,
+  BreadcrumbList,
+  BreadcrumbPage,
+  BreadcrumbSeparator,
+} from "@/components/ui/breadcrumb"
+
 
 const OpportunityPage = (params: any) => {
   const [internshipDetails, setInternshipDetails] = useState<any>([])
@@ -59,16 +68,21 @@ const OpportunityPage = (params: any) => {
         internshipDetails[0] ? <>
           <div className="lg:container md:container px-3">
             <div className="mt-3">
-              <BreadCrumb links={[
-                {
-                  "title": "Opportunities",
-                  "href": "/opportunities"
-                },
-                {
-                  "title": `${internshipDetails[0].company_name}`,
-                  "href": `/opportunities/${params.params.opportunity}`
-                }
-              ]} />
+              <Breadcrumb>
+                <BreadcrumbList>
+                  <BreadcrumbItem>
+                    <BreadcrumbLink href="/dashboard">Dashboard</BreadcrumbLink>
+                  </BreadcrumbItem>
+                  <BreadcrumbSeparator />
+                  <BreadcrumbItem>
+                    <BreadcrumbLink href="/opportunities">Opportunities</BreadcrumbLink>
+                  </BreadcrumbItem>
+                  <BreadcrumbSeparator />
+                  <BreadcrumbItem>
+                    <BreadcrumbPage>{internshipDetails[0].company_name}</BreadcrumbPage>
+                  </BreadcrumbItem>
+                </BreadcrumbList>
+              </Breadcrumb>
             </div>
             <div className="p-3 pt-0 lg:p-10">
               <div>
@@ -127,15 +141,15 @@ const OpportunityPage = (params: any) => {
                         </div>
                       </div>
                       <div>
-                      {internshipDetails[0]?.skills &&
-                        <p className="lg:mb-0 mt-5 flex md:mb-0 gap-x-1 text-sm text-gray-600">
-                            
+                        {internshipDetails[0]?.skills &&
+                          <p className="lg:mb-0 mt-5 flex md:mb-0 gap-x-1 text-sm text-gray-600">
+
                             Skills: {internshipDetails[0]?.skills?.slice(0, 4)?.map((data) => {
-                                return <>
-                                    <Badge className="mr-2 mb-1" variant="outline">{data}</Badge>
-                                </>
+                              return <>
+                                <Badge className="mr-2 mb-1" variant="outline">{data}</Badge>
+                              </>
                             })}
-                        </p>}
+                          </p>}
                       </div>
                     </div>
 
