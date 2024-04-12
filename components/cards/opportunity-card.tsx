@@ -3,7 +3,7 @@
 import Link from "next/link";
 import { Badge } from "../ui/badge";
 
-const OpportunityCard = ({ title, company_name, location, company_logo, apply_link, batch_eligible, url_slug }) => {
+const OpportunityCard = ({ title, company_name, location, company_logo, apply_link, batch_eligible, url_slug, experience, skills }) => {
     return (
         <div>
             <Link href={`/opportunities/${url_slug}`}>
@@ -41,13 +41,18 @@ const OpportunityCard = ({ title, company_name, location, company_logo, apply_li
                                     </p>
                                     <div className="hidden lg:block md:block w-[1px] h-3 bg-gray-400">
                                     </div>
-                                    <p className="lg:mb-0 overflow-hidden md:mb-0 mb-4 flex gap-x-1 text-sm text-gray-600">
-                                        Batch: {batch_eligible.map((data) => {
-                                            return <>
-                                                <Badge variant="basic">{data}</Badge>
-                                            </>
-                                        })}
-                                    </p>
+                                    {batch_eligible &&
+                                        <p className="lg:mb-0 md:mb-0 mb-4 gap-x-1 text-sm text-gray-600">
+                                            Batch: {batch_eligible?.map((data) => {
+                                                return <>
+                                                    <Badge className="mr-1 mb-1" variant="basic">{data}</Badge>
+                                                </>
+                                            })}
+                                        </p>}
+                                    {experience &&
+                                        <p className="lg:mb-0 overflow-hidden md:mb-0 mb-4 flex gap-x-1 text-sm text-gray-600">
+                                            <Badge variant="basic">{experience}</Badge>
+                                        </p>}
                                     <div className="hidden lg:block md:block w-[1px] h-3 bg-gray-400">
                                     </div>
                                     <p className="text-sm text-gray-600 line-clamp-1">
@@ -57,6 +62,14 @@ const OpportunityCard = ({ title, company_name, location, company_logo, apply_li
                             </div>
                         </div>
                     </div>
+                    {skills &&
+                        <p className="lg:mb-0 md:mb-0 gap-x-1 text-sm text-gray-600">
+                            {skills?.map((data) => {
+                                return <>
+                                    <Badge className="mr-1 mb-1" variant="outline">{data}</Badge>
+                                </>
+                            })}
+                        </p>}
                 </div>
             </Link>
         </div>

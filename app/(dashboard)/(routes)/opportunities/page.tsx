@@ -215,6 +215,8 @@ const OpportunitiesPage = () => {
                                                 apply_link={internship?.apply_link}
                                                 batch_eligible={internship?.batch_eligible}
                                                 url_slug={internship?.url_slug}
+                                                experience={internship?.experience}
+                                                skills={internship?.skills}
                                             />
                                         </div>
                                     ))}

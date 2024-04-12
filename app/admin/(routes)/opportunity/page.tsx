@@ -15,6 +15,8 @@ const AddOpportunity = () => {
     const [company_name, setCompanyName] = useState("")
     const [company_logo, setCompanyLogo] = useState("")
     const [batch_eligible, setBatchEligible] = useState("")
+    const [skills, setSkills] = useState("")
+    const [experience, setExperience] = useState("")
     const [internship_duration, setInternshipDuration] = useState("Duration Not Specified")
     const [internship_location, setInternshipLocation] = useState("Location Not Specified")
     const [apply_link, setApplyLink] = useState("")
@@ -40,6 +42,7 @@ const AddOpportunity = () => {
         }
         let batches = batch_eligible.split(",")
         let batches_int = batches.map((value) => { return parseInt(value) })
+        let skillsArray = skills.split(",")
         let slug_url = create_url_slug(internship_title,company_name)
         try {
             const { data, error } = await supabase
@@ -50,12 +53,14 @@ const AddOpportunity = () => {
                         internship_description: String(internship_description),
                         company_name: company_name,
                         company_logo: company_logo,
-                        batch_eligible: batches_int,
+                        batch_eligible: batch_eligible?batches_int:null,
                         internship_duration: internship_duration,
                         internship_location: internship_location,
                         apply_link: apply_link,
                         url_slug: slug_url,
-                        stipend: stipend
+                        stipend: stipend,
+                        skills: skills?skillsArray:null,
+                        experience: experience
                     },
                 ])
                 .select()
@@ -156,7 +161,27 @@ const AddOpportunity = () => {
                                 id="batch_eligible"
                                 className="block w-full rounded-md border-0 p-3 text-gray-900 ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                                 placeholder="Batch Eligible"
-                                required />
+                                />
+                        </div>
+                        <div className="mt-2">
+                            <input
+                                onChange={(e) => { setExperience(e.target.value) }}
+                                type="text"
+                                name="experience"
+                                id="experience"
+                                className="block w-full rounded-md border-0 p-3 text-gray-900 ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                                placeholder="Experience"
+                                />
+                        </div>
+                        <div className="mt-2">
+                            <input
+                                onChange={(e) => { setSkills(e.target.value) }}
+                                type="text"
+                                name="skills"
+                                id="skills"
+                                className="block w-full rounded-md border-0 p-3 text-gray-900 ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                                placeholder="Skills"
+                                />
                         </div>
                         <div className="mt-2">
                             <input

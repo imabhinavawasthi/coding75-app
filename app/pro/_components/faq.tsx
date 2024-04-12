@@ -18,11 +18,11 @@ const faqs = [
     },
     {
         key: "Will there be development related sessions?",
-        value: "Yes, we will have weekly project building sessions on tech stacks like MERN Stack, Next.JS, and Python, enabling hands-on experience and practical application of concepts."
+        value: "Yes, we will have weekly project building sessions on tech stacks like MERN Stack, Next.JS, Java, and Python, enabling hands-on experience and practical application of concepts."
     },
     {
         key: "Where to buy the pro plan from?",
-        value: "Visit the pricing section and make your payment. After payment is done, you will receive an email inviting you to join our community group, where all the details regarding classes and sessions are shared. Pro plans are available on a subscription basis, with options for monthly or yearly plans that can be renewed for continued access to our resources."
+        value: "Visit the pricing section and make your payment. After payment is done, you will receive an email inviting you to join our community group and you will get access to pro portal in our website- coding75.com, where all the details regarding classes and sessions are shared. Pro plans are available on a subscription basis, with options for monthly or yearly plans that can be renewed for continued access to our resources."
     },
     {
         key: "Is there any community support?",

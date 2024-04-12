@@ -335,6 +335,25 @@ export default function CPSheetTable({ tableData, user_email, fullScreen, refres
 
     async function toggleBookmark(problem_link, current, user_email) {
         if (current) {
+            const preData = data
+                const tempData: ProblemType[] = data.map((problem) => {
+                    if (problem?.ProblemLink == problem_link) {
+                        return {
+                            id: problem?.id,
+                            ProblemName: problem?.ProblemName,
+                            Submission: problem?.Submission,
+                            ProblemLink: problem?.ProblemLink,
+                            TopicTags: problem?.TopicTags,
+                            Status: problem?.Status,
+                            Bookmark: !current,
+                            VideoEditorial: problem?.VideoEditorial,
+                            Difficulty: problem?.Difficulty,
+                        }
+                    }
+                    else
+                        return problem
+                })
+                setData(tempData)
             const { data: res, error } = await supabase
                 .from('users')
                 .select('bookmarked_problems')
@@ -342,8 +361,8 @@ export default function CPSheetTable({ tableData, user_email, fullScreen, refres
 
             if (res) {
                 let updated_bookmarked = res?.[0]?.bookmarked_problems
-                if (updated_bookmarked.indexOf(problem_link) != -1)
-                    updated_bookmarked = updated_bookmarked.filter((res) => {
+                if (updated_bookmarked?.indexOf(problem_link) != -1)
+                    updated_bookmarked = updated_bookmarked?.filter((res) => {
                         if (res != problem_link) return true
                     })
                 const { error } = await supabase
@@ -352,36 +371,39 @@ export default function CPSheetTable({ tableData, user_email, fullScreen, refres
                     .eq('user_email', user_email)
                     .select();
                 if (error) {
-                    console.log(error);
+                    setData(preData)
                     toast.error("Some error occurred")
+                    return;
                 }
                 else {
-                    const tempData: ProblemType[] = data.map((problem) => {
-                        if (problem?.ProblemLink == problem_link) {
-                            return {
-                                id: problem?.id,
-                                ProblemName: problem?.ProblemName,
-                                Submission: problem?.Submission,
-                                ProblemLink: problem?.ProblemLink,
-                                TopicTags: problem?.TopicTags,
-                                Status: problem?.Status,
-                                Bookmark: !current,
-                                VideoEditorial: problem?.VideoEditorial,
-                                Difficulty: problem?.Difficulty,
-                            }
-                        }
-                        else
-                            return problem
-                    })
-                    setData(tempData)
+                    
                 }
             }
             else {
-                console.log(error);
+                setData(preData)
                 toast.error("Some error occurred")
             }
         }
         else {
+            const preData = data
+            const tempData: ProblemType[] = data.map((problem) => {
+                if (problem?.ProblemLink == problem_link) {
+                    return {
+                        id: problem?.id,
+                        ProblemName: problem?.ProblemName,
+                        Submission: problem?.Submission,
+                        ProblemLink: problem?.ProblemLink,
+                        TopicTags: problem?.TopicTags,
+                        Status: problem?.Status,
+                        Bookmark: !current,
+                        VideoEditorial: problem?.VideoEditorial,
+                        Difficulty: problem?.Difficulty,
+                    }
+                }
+                else
+                    return problem
+            })
+            setData(tempData)
             const { data: res, error } = await supabase
                 .from('users')
                 .select('bookmarked_problems')
@@ -396,46 +418,41 @@ export default function CPSheetTable({ tableData, user_email, fullScreen, refres
                     .eq('user_email', user_email)
                     .select();
                 if (error) {
-                    console.log(error);
                     toast.error("Some error occurred")
+                    setData(preData)
+                    return;
                 }
                 else {
-                    const tempData: ProblemType[] = data.map((problem) => {
-                        if (problem?.ProblemLink == problem_link) {
-                            return {
-                                id: problem?.id,
-                                ProblemName: problem?.ProblemName,
-                                Submission: problem?.Submission,
-                                ProblemLink: problem?.ProblemLink,
-                                TopicTags: problem?.TopicTags,
-                                Status: problem?.Status,
-                                Bookmark: !current,
-                                VideoEditorial: problem?.VideoEditorial,
-                                Difficulty: problem?.Difficulty,
-                            }
-                        }
-                        else
-                            return problem
-                    })
-                    setData(tempData)
+                    
                 }
             }
             else {
-                console.log(error);
+                setData(preData)
                 toast.error("Some error occurred")
             }
         }
     }
 
     async function updateStatus(problem_link, from, to) {
+        const preData = data
+        const updatedData = data.map((problem) => {
+            if (problem?.ProblemLink === problem_link) {
+                return {
+                    ...problem,
+                    Status: to,
+                };
+            }
+            return problem;
+        });
+        setData(updatedData);
         if (from == "Pending") {
             const { data: res } = await supabase
                 .from('users')
                 .select('pending_problems')
                 .eq('user_email', user_email)
             let updated = res?.[0]?.pending_problems
-            if (updated.indexOf(problem_link) != -1)
-                updated = updated.filter((res) => {
+            if (updated?.indexOf(problem_link) != -1)
+                updated = updated?.filter((res) => {
                     if (res != problem_link) return true
                 })
             const { error } = await supabase
@@ -445,6 +462,8 @@ export default function CPSheetTable({ tableData, user_email, fullScreen, refres
                 .select();
             if (error) {
                 toast.error("Some error occurred")
+                setData(preData);
+                return;
             }
         }
         if (from == "Trying") {
@@ -453,8 +472,8 @@ export default function CPSheetTable({ tableData, user_email, fullScreen, refres
                 .select('trying_problems')
                 .eq('user_email', user_email)
             let updated = res?.[0]?.trying_problems
-            if (updated.indexOf(problem_link) != -1)
-                updated = updated.filter((res) => {
+            if (updated?.indexOf(problem_link) != -1)
+                updated = updated?.filter((res) => {
                     if (res != problem_link) return true
                 })
             const { error } = await supabase
@@ -464,6 +483,8 @@ export default function CPSheetTable({ tableData, user_email, fullScreen, refres
                 .select();
             if (error) {
                 toast.error("Some error occurred")
+                setData(preData);
+                return;
             }
         }
         if (from == "Revise") {
@@ -472,8 +493,8 @@ export default function CPSheetTable({ tableData, user_email, fullScreen, refres
                 .select('revise_problems')
                 .eq('user_email', user_email)
             let updated = res?.[0]?.revise_problems
-            if (updated.indexOf(problem_link) != -1)
-                updated = updated.filter((res) => {
+            if (updated?.indexOf(problem_link) != -1)
+                updated = updated?.filter((res) => {
                     if (res != problem_link) return true
                 })
             const { error } = await supabase
@@ -483,6 +504,8 @@ export default function CPSheetTable({ tableData, user_email, fullScreen, refres
                 .select();
             if (error) {
                 toast.error("Some error occurred")
+                setData(preData);
+                return;
             }
         }
         if (from == "Solved") {
@@ -491,8 +514,8 @@ export default function CPSheetTable({ tableData, user_email, fullScreen, refres
                 .select('solved_problems')
                 .eq('user_email', user_email)
             let updated = res?.[0]?.solved_problems
-            if (updated.indexOf(problem_link) != -1)
-                updated = updated.filter((res) => {
+            if (updated?.indexOf(problem_link) != -1)
+                updated = updated?.filter((res) => {
                     if (res != problem_link) return true
                 })
             const { error } = await supabase
@@ -502,6 +525,8 @@ export default function CPSheetTable({ tableData, user_email, fullScreen, refres
                 .select();
             if (error) {
                 toast.error("Some error occurred")
+                setData(preData);
+                return;
             }
         }
 
@@ -519,19 +544,11 @@ export default function CPSheetTable({ tableData, user_email, fullScreen, refres
                 .select();
             if (error) {
                 toast.error("Some error occurred")
+                setData(preData);
+                return;
             }
             else {
-                const updatedData = data.map((problem) => {
-                    if (problem?.ProblemLink === problem_link) {
-                        return {
-                            ...problem,
-                            Status: to,
-                        };
-                    }
-                    return problem;
-                });
-            
-                setData(updatedData);
+                
             }
         }
         if (to == "Trying") {
@@ -548,26 +565,11 @@ export default function CPSheetTable({ tableData, user_email, fullScreen, refres
                 .select();
             if (error) {
                 toast.error("Some error occurred")
+                setData(preData);
+                return;
             }
             else {
-                const tempData: ProblemType[] = data.map((problem) => {
-                    if (problem?.ProblemLink == problem_link) {
-                        return {
-                            id: problem?.id,
-                            ProblemName: problem?.ProblemName,
-                            Submission: problem?.Submission,
-                            ProblemLink: problem?.ProblemLink,
-                            TopicTags: problem?.TopicTags,
-                            Status: to,
-                            Bookmark: problem?.Bookmark,
-                            VideoEditorial: problem?.VideoEditorial,
-                            Difficulty: problem?.Difficulty,
-                        }
-                    }
-                    else
-                        return problem
-                })
-                setData(tempData)
+                
             }
         }
         if (to == "Revise") {
@@ -584,26 +586,11 @@ export default function CPSheetTable({ tableData, user_email, fullScreen, refres
                 .select();
             if (error) {
                 toast.error("Some error occurred")
+                setData(preData);
+                return;
             }
             else {
-                const tempData: ProblemType[] = data.map((problem) => {
-                    if (problem?.ProblemLink == problem_link) {
-                        return {
-                            id: problem?.id,
-                            ProblemName: problem?.ProblemName,
-                            Submission: problem?.Submission,
-                            ProblemLink: problem?.ProblemLink,
-                            TopicTags: problem?.TopicTags,
-                            Status: to,
-                            Bookmark: problem?.Bookmark,
-                            VideoEditorial: problem?.VideoEditorial,
-                            Difficulty: problem?.Difficulty,
-                        }
-                    }
-                    else
-                        return problem
-                })
-                setData(tempData)
+                
             }
         }
         if (to == "Solved") {
@@ -620,30 +607,13 @@ export default function CPSheetTable({ tableData, user_email, fullScreen, refres
                 .select();
             if (error) {
                 toast.error("Some error occurred")
+                setData(preData);
+                return;
             }
             else {
-                const tempData: ProblemType[] = data.map((problem) => {
-                    if (problem?.ProblemLink == problem_link) {
-                        return {
-                            id: problem?.id,
-                            ProblemName: problem?.ProblemName,
-                            Submission: problem?.Submission,
-                            ProblemLink: problem?.ProblemLink,
-                            TopicTags: problem?.TopicTags,
-                            Status: to,
-                            Bookmark: problem?.Bookmark,
-                            VideoEditorial: problem?.VideoEditorial,
-                            Difficulty: problem?.Difficulty,
-                        }
-                    }
-                    else
-                        return problem
-                })
-                setData(tempData)
+                
             }
         }
-
-
     }
 
     return (
