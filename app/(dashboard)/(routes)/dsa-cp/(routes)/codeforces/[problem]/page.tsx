@@ -10,6 +10,14 @@ import DOMPurify from 'dompurify';
 import BreadCrumb from "@/app/(dashboard)/_components/components/breadcrumb";
 import Link from "next/link";
 import { fetchCodeforcesProblem } from "../../../(api)/codeforces/fetchCodeforcesProblem";
+import {
+    Breadcrumb,
+    BreadcrumbItem,
+    BreadcrumbLink,
+    BreadcrumbList,
+    BreadcrumbPage,
+    BreadcrumbSeparator,
+} from "@/components/ui/breadcrumb"
 
 const Problem = (params: any) => {
     const [problem, setProblem] = useState<any>()
@@ -52,20 +60,21 @@ const Problem = (params: any) => {
                         <>
                             <div className="lg:container md:container px-3">
                                 <div className="mt-3">
-                                    <BreadCrumb links={[
-                                        {
-                                            "title": "DSA CP",
-                                            "href": "/dsa-cp"
-                                        },
-                                        {
-                                            "title": `Codeforces`,
-                                            "href": `/dsa-cp/codeforces`
-                                        },
-                                        {
-                                            "title": `${problem["problem_name"]}`,
-                                            "href": `/dsa-cp/codeforces/${params.params.problem}`
-                                        }
-                                    ]} />
+                                <Breadcrumb>
+                                        <BreadcrumbList>
+                                            <BreadcrumbItem>
+                                                <BreadcrumbLink href="/dashboard">Dashboard</BreadcrumbLink>
+                                            </BreadcrumbItem>
+                                            <BreadcrumbSeparator />
+                                            <BreadcrumbItem>
+                                                <BreadcrumbLink href="/dsa-cp">DSA CP</BreadcrumbLink>
+                                            </BreadcrumbItem>
+                                            <BreadcrumbSeparator />
+                                            <BreadcrumbItem>
+                                                <BreadcrumbLink href="/dsa-cp/codeforces">Codeforces</BreadcrumbLink>
+                                            </BreadcrumbItem>
+                                        </BreadcrumbList>
+                                    </Breadcrumb>
                                 </div>
                                 <div className="p-3 lg:mt-5">
                                     <div className="lg:flex lg:items-center lg:justify-between">
@@ -194,6 +203,43 @@ const Problem = (params: any) => {
                                             </span>
                                         </div>
                                     </div>
+                                    {(problem["editorial"] || problem["video_editorial"] || problem["solution_link"]) &&
+                                        <div>
+                                            <div className="mt-10 flex justify-center">
+                                                <div className="w-full flex justify-center rounded-lg border border-gray-100 bg-gray-100 p-1">
+                                                    {problem["editorial"] &&
+                                                        <a
+                                                            href={problem["editorial"]}
+                                                            target="_blank"
+                                                            className="hover:bg-white hover:text-blue-500 inline-flex items-center gap-2 rounded-md px-4 py-2 lg:text-lg text-sm text-gray-500 focus:relative"
+                                                        >
+                                                            <FileCode2 />
+                                                            Editorial
+                                                        </a>}
+                                                        {problem["solution_link"] &&
+                                                        <a
+                                                            href={problem["solution_link"]}
+                                                            target="_blank"
+                                                            className="hover:bg-white hover:text-blue-500 inline-flex items-center gap-2 rounded-md px-4 py-2 lg:text-lg text-sm text-gray-500 focus:relative"
+                                                        >
+                                                            <FileCode2 />
+                                                            Code Solution
+                                                        </a>}
+                                                    {problem["video_editorial"] &&
+                                                        <a
+                                                            href={problem["video_editorial"]}
+                                                            target="_blank"
+                                                            className="hover:bg-white hover:text-blue-500 inline-flex items-center gap-2 rounded-md px-4 py-2 lg:text-lg text-sm text-gray-500 focus:relative"
+                                                        >
+                                                            <FileVideo />
+
+                                                            Video Editorial
+                                                        </a>}
+
+                                                </div>
+                                            </div>
+                                        </div>
+                                    }
                                     {problem["problem_description"] &&
                                         <div>
                                             <div className="mt-10">

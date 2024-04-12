@@ -10,6 +10,14 @@ import DOMPurify from 'dompurify';
 import BreadCrumb from "@/app/(dashboard)/_components/components/breadcrumb";
 import Link from "next/link";
 import { fetchCodechefProblem } from "../../../(api)/codechef/fetchCodechefProblem";
+import {
+    Breadcrumb,
+    BreadcrumbItem,
+    BreadcrumbLink,
+    BreadcrumbList,
+    BreadcrumbPage,
+    BreadcrumbSeparator,
+} from "@/components/ui/breadcrumb"
 
 const Problem = (params: any) => {
     const [problem, setProblem] = useState<any>()
@@ -52,20 +60,21 @@ const Problem = (params: any) => {
                         <>
                             <div className="lg:container md:container px-3">
                                 <div className="mt-3">
-                                    <BreadCrumb links={[
-                                        {
-                                            "title": "DSA CP",
-                                            "href": "/dsa-cp"
-                                        },
-                                        {
-                                            "title": `Codechef`,
-                                            "href": `/dsa-cp/codechef`
-                                        },
-                                        {
-                                            "title": `${problem["problem_name"]}`,
-                                            "href": `/dsa-cp/codechef/${params.params.problem}`
-                                        }
-                                    ]} />
+                                    <Breadcrumb>
+                                        <BreadcrumbList>
+                                            <BreadcrumbItem>
+                                                <BreadcrumbLink href="/dashboard">Dashboard</BreadcrumbLink>
+                                            </BreadcrumbItem>
+                                            <BreadcrumbSeparator />
+                                            <BreadcrumbItem>
+                                                <BreadcrumbLink href="/dsa-cp">DSA CP</BreadcrumbLink>
+                                            </BreadcrumbItem>
+                                            <BreadcrumbSeparator />
+                                            <BreadcrumbItem>
+                                                <BreadcrumbLink href="/dsa-cp/codechef">Codechef</BreadcrumbLink>
+                                            </BreadcrumbItem>
+                                        </BreadcrumbList>
+                                    </Breadcrumb>
                                 </div>
                                 <div className="p-3 lg:mt-5">
                                     <div className="lg:flex lg:items-center lg:justify-between">
@@ -78,8 +87,8 @@ const Problem = (params: any) => {
                                             <div className="mt-1 flex flex-col sm:mt-0 sm:flex-row sm:flex-wrap sm:space-x-6">
                                                 <div className="mt-4 flex items-center text-sm text-gray-500 font-semibold underline">
                                                     <Link className="flex" href={`/dsa-cp/codechef/contest/${problem["contest"]}`}>
-                                                    <BookCheck className="mr-1.5 h-5 w-5 flex-shrink-0 text-gray-400" aria-hidden="true" />
-                                                    {problem["contest"]}
+                                                        <BookCheck className="mr-1.5 h-5 w-5 flex-shrink-0 text-gray-400" aria-hidden="true" />
+                                                        {problem["contest"]}
                                                     </Link>
                                                 </div>
                                                 <div className="mt-4 flex items-center text-sm text-gray-500">
@@ -137,13 +146,13 @@ const Problem = (params: any) => {
                                                 {problem["company_tags"].length > 0 && <div className="flex flex-wrap mt-4 items-center text-sm text-gray-500">
                                                     <BriefcaseIcon className="mr-1.5 h-5 w-5 flex-shrink-0 text-gray-400" aria-hidden="true" />
                                                     {problem["company_tags"].map((value, index) => (
-                                                        
-                                                            <span
+
+                                                        <span
                                                             key={index}
-                                                                className="ml-2 mr-2 whitespace-nowrap rounded-full bg-purple-100 px-2.5 py-0.5 text-sm text-purple-700"
-                                                            >
-                                                                {value.label}
-                                                            </span>
+                                                            className="ml-2 mr-2 whitespace-nowrap rounded-full bg-purple-100 px-2.5 py-0.5 text-sm text-purple-700"
+                                                        >
+                                                            {value.label}
+                                                        </span>
                                                     ))}
                                                 </div>}
                                                 {problem["topic_tags"].length > 0 && <div className="flex flex-wrap mt-4 items-center text-sm text-gray-500">
@@ -194,7 +203,44 @@ const Problem = (params: any) => {
                                             </span>
                                         </div>
                                     </div>
-                                    {problem["problem_description"]!="<p><br></p>" && problem["problem_description"]!="" &&
+                                    {(problem["editorial"] || problem["video_editorial"] || problem["solution_link"]) &&
+                                        <div>
+                                            <div className="mt-10 flex justify-center">
+                                                <div className="w-full flex justify-center rounded-lg border border-gray-100 bg-gray-100 p-1">
+                                                    {problem["editorial"] &&
+                                                        <a
+                                                            href={problem["editorial"]}
+                                                            target="_blank"
+                                                            className="hover:bg-white hover:text-blue-500 inline-flex items-center gap-2 rounded-md px-4 py-2 lg:text-lg text-sm text-gray-500 focus:relative"
+                                                        >
+                                                            <FileCode2 />
+                                                            Editorial
+                                                        </a>}
+                                                    {problem["solution_link"] &&
+                                                        <a
+                                                            href={problem["solution_link"]}
+                                                            target="_blank"
+                                                            className="hover:bg-white hover:text-blue-500 inline-flex items-center gap-2 rounded-md px-4 py-2 lg:text-lg text-sm text-gray-500 focus:relative"
+                                                        >
+                                                            <FileCode2 />
+                                                            Code Solution
+                                                        </a>}
+                                                    {problem["video_editorial"] &&
+                                                        <a
+                                                            href={problem["video_editorial"]}
+                                                            target="_blank"
+                                                            className="hover:bg-white hover:text-blue-500 inline-flex items-center gap-2 rounded-md px-4 py-2 lg:text-lg text-sm text-gray-500 focus:relative"
+                                                        >
+                                                            <FileVideo />
+
+                                                            Video Editorial
+                                                        </a>}
+
+                                                </div>
+                                            </div>
+                                        </div>
+                                    }
+                                    {problem["problem_description"] != "<p><br></p>" && problem["problem_description"] != "" &&
                                         <div>
                                             <div className="mt-10">
                                                 <div>
@@ -229,7 +275,7 @@ const Problem = (params: any) => {
                                                             <FileCode2 />
                                                             Editorial
                                                         </a>}
-                                                        {problem["solution_link"] &&
+                                                    {problem["solution_link"] &&
                                                         <a
                                                             href={problem["solution_link"]}
                                                             target="_blank"
