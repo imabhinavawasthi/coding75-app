@@ -144,7 +144,7 @@ const OpportunityPage = (params: any) => {
                         {internshipDetails[0]?.skills &&
                           <p className="lg:mb-0 mt-5 flex md:mb-0 gap-x-1 text-sm text-gray-600">
 
-                            Skills: {internshipDetails[0]?.skills?.slice(0, 4)?.map((data) => {
+                            Skills: {internshipDetails[0]?.skills?.map((data) => {
                               return <>
                                 <Badge className="mr-2 mb-1" variant="outline">{data}</Badge>
                               </>
