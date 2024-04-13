@@ -142,7 +142,7 @@ const OpportunityPage = (params: any) => {
                       </div>
                       <div>
                         {internshipDetails[0]?.skills &&
-                          <p className="lg:mb-0 mt-5 flex md:mb-0 gap-x-1 text-sm text-gray-600">
+                          <p className="md:flex hidden lg:mb-0 mt-5 md:mb-0 gap-x-1 text-sm text-gray-600">
 
                             Skills: {internshipDetails[0]?.skills?.map((data) => {
                               return <>
