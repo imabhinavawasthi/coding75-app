@@ -33,8 +33,27 @@ const OpportunityPage = (params: any) => {
   function copyurl() {
     const url = getCurrentURL()
     setIsCopied(true)
-    navigator.clipboard.writeText(url);
-    toast.info("Opportunity Link Copied!")
+    let shareText : any = `📌 **${internshipDetails[0]?.internship_title}**\n**${internshipDetails[0]?.company_name}**\n`
+    if(internshipDetails[0]?.batch_eligible){
+      shareText+="**Batch: "
+      for(let i=0;i<internshipDetails[0]?.batch_eligible.length;i++){
+        shareText=shareText+(internshipDetails?.[0]?.batch_eligible[i].toString())
+        if(i!=internshipDetails[0]?.batch_eligible.length-1){
+          shareText+=", "
+        }
+        else{
+          shareText+="**"
+        }
+      }
+    }else if(internshipDetails[0]?.experience){
+      shareText+="**Experience Required: "
+      shareText=shareText+internshipDetails?.[0]?.experience.toString()
+      shareText+="**"
+    }
+    shareText+=`\n\n`
+    shareText+=url;
+    navigator.clipboard.writeText(shareText);
+    toast.info("Opportunity Details Copied!")
     setTimeout(() => {
       setIsCopied(false)
     }, 2000);
@@ -67,7 +86,7 @@ const OpportunityPage = (params: any) => {
       {
         internshipDetails[0] ? <>
           <div className="lg:container md:container px-3">
-            <div className="mt-3">
+            <div className="mt-3 mb-5 md:mb-0">
               <Breadcrumb>
                 <BreadcrumbList>
                   <BreadcrumbItem>
@@ -149,7 +168,8 @@ const OpportunityPage = (params: any) => {
                                 <Badge className="mr-2 mb-1" variant="outline">{data}</Badge>
                               </>
                             })}
-                          </p>}
+                          </p>
+                        }
                       </div>
                     </div>
 
@@ -200,14 +220,16 @@ const OpportunityPage = (params: any) => {
                     </p></>}
                 </div>
               </div>
-              {internshipDetails[0]?.skills &&
+              {
+                internshipDetails[0]?.skills &&
                 <p className="lg:hidden md:hidden lg:mb-0 md:mb-0 mb-4 gap-x-1 text-sm text-gray-600">
                   {internshipDetails[0]?.skills?.map((data) => {
                     return <>
                       <Badge className="mr-1 mb-1" variant="outline">{data}</Badge>
                     </>
                   })}
-                </p>}
+                </p>
+              }
               <div className="mt-5 justify-center items-center flex">
                 {isCopied ? <span className="ml-3">
                   <Button
