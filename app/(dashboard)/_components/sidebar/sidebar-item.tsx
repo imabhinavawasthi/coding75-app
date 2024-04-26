@@ -72,7 +72,10 @@ export const SidebarItem = ({
             )}
           />
           {label}
-          {/* <span className="inline-flex items-center rounded-md bg-purple-50 px-2 py-1 text-xs font-medium text-purple-700 ring-1 ring-inset ring-purple-700/10">Badge</span> */}
+          {
+            href=="/pro"&&
+            <span className="inline-flex items-center rounded-md bg-purple-50 px-2 py-1 text-xs font-medium text-purple-700 ring-1 ring-inset ring-purple-700/10">Pro <Flame className="w-4 h-4 ml-1" /></span>
+          }
         </div>
         <div
           className={cn(
