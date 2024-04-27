@@ -1,11 +1,12 @@
 "use client";
 
-import { BarChart, BookText, Briefcase, Code2, ComputerIcon, Flame, GitFork, Layout, List, RocketIcon, Route, ScrollText, UserCheck, Users } from "lucide-react";
+import { BarChart, BookText, Briefcase, Calendar, Code, Code2, Code2Icon, ComputerIcon, Flame, GitFork, GraduationCap, Layout, LayoutDashboard, List, ListVideo, RocketIcon, Route, ScrollText, User, UserCheck, Users } from "lucide-react";
 import { usePathname } from "next/navigation";
 
 import { SidebarItem } from "./sidebar-item";
+import { DashboardIcon } from "@radix-ui/react-icons";
 
-const guestRoutes = [
+const siteRoutes = [
   {
     icon: Layout,
     label: "Dashboard",
@@ -58,25 +59,105 @@ const guestRoutes = [
   },
 ];
 
-const teacherRoutes = [
+const classroomRoutes = [
   {
-    icon: List,
-    label: "Courses",
-    href: "/teacher/courses",
+    icon: LayoutDashboard,
+    label: "Pro Dashboard",
+    href: "/classroom/dashboard",
   },
   {
-    icon: BarChart,
-    label: "Analytics",
-    href: "/teacher/analytics",
+    icon: Calendar,
+    label: "Calender",
+    href: "/classroom/calender",
   },
+  {
+    icon: ListVideo,
+    label: "Live Classes",
+    href: "/classroom/live",
+  },
+  {
+    icon: BookText,
+    label: "Class Material",
+    href: "/classroom/resources",
+  },
+  {
+    icon: ScrollText,
+    label: "Resume Review",
+    href: "/classroom/resume-review",
+  },
+  {
+    icon: GraduationCap,
+    label: "1:1 Mentorship",
+    href: "/classroom/mentorship",
+  },
+  {
+    icon: Code2Icon,
+    label: "Live Project Building",
+    href: "/classroom/projects",
+  },
+  {
+    icon: ComputerIcon,
+    label: "CS Fundamental",
+    href: "/classroom/cs-fundamental",
+  },
+  {
+    icon: UserCheck,
+    label: "Subscription Details",
+    href: "/classroom/subscription",
+  },
+]
+
+const adminRoutes = [
+  {
+    icon: User,
+    label: "Admin Home",
+    href: "/admin",
+  },
+  {
+    icon: Briefcase,
+    label: "Add Opportunity",
+    href: "/admin/opportunity",
+  },
+  {
+    icon: Code,
+    label: "Add Leetcode POTD",
+    href: "/admin/leetcode-potd",
+  },
+  {
+    icon: Code2Icon,
+    label: "Add Leetcode Contest",
+    href: "/admin/leetcode-contests",
+  },
+  {
+    icon: Code,
+    label: "Add Codeforces",
+    href: "/admin/codeforces",
+  },
+  {
+    icon: Code,
+    label: "Add Codechef",
+    href: "/admin/codechef",
+  },
+  {
+    icon: Code2,
+    label: "Add Projects",
+    href: "/admin/projects",
+  },
+  {
+    icon: Code2,
+    label: "Add DSA Problem",
+    href: "/admin/problems",
+  }
 ]
 
 export const SidebarRoutes = () => {
   const pathname = usePathname();
 
-  const isTeacherPage = pathname?.includes("/teacher");
+  const isClassroomPage = pathname?.startsWith("/classroom");
 
-  const routes = isTeacherPage ? teacherRoutes : guestRoutes;
+  const isAdminPage = pathname?.startsWith("/admin")
+
+  const routes = isClassroomPage ? classroomRoutes : isAdminPage ? adminRoutes : siteRoutes;
 
   return (
     <div className="flex flex-col w-full">
