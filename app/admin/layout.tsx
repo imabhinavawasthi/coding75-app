@@ -1,13 +1,13 @@
 "use client"
 
 import Footer from "@/components/footer";
-import AdminNavbar from "./_components/admin-navbar";
-import SideTabs from "./_components/side-tabs";
 import { useEffect, useState } from "react";
 import { usePathname, useRouter } from "next/navigation";
 import supabase from "@/supabase";
 import { toast } from "sonner";
 import Loading from "@/components/loading";
+import { Sidebar } from "../(dashboard)/_components/sidebar/sidebar";
+import { Navbar } from "../(dashboard)/_components/sidebar/navbar";
 
 const AdminLayout = ({
   children
@@ -60,20 +60,21 @@ const AdminLayout = ({
    :
    <>
     <div className="h-full bg-white">
-      <AdminNavbar user={user?.email} />
-      <div className="min-h-full mt-5">
-        <div className="container grid gap-x-5 grid-cols-5">
-          <div className="">
-            <SideTabs />
-          </div>
-          <div className="col-span-4">
-            {children}
-          </div>
-        </div>
+      <div className="h-[70px] md:pl-56 fixed inset-y-0 w-full z-50">
+        <Navbar />
       </div>
-      <footer>
-        <Footer />
-      </footer>
+      <div className="hidden md:flex h-full w-56 flex-col fixed inset-y-0 z-50">
+        <Sidebar />
+      </div>
+      <main className="md:pl-56 pt-[80px] h-full">
+        <div className="min-h-full ">
+          {children}
+        </div>
+        <footer>
+          <Footer />
+        </footer>
+      </main>
+
     </div>
    </>
    }
