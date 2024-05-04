@@ -25,7 +25,6 @@ const AdminLayout = ({
       if (data) {
         if (data.user) {
           setUser(data.user)
-          console.log(data.user.email);
           if(process.env.NEXT_PUBLIC_CRACKDSA_AUTHORISED_USERS?.includes(String(data.user.email))){
             setStatus("done")
           }

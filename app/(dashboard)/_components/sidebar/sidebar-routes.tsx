@@ -1,10 +1,8 @@
 "use client";
 
-import { BarChart, BookText, Briefcase, Calendar, Code, Code2, Code2Icon, ComputerIcon, Flame, GitFork, GraduationCap, Layout, LayoutDashboard, List, ListVideo, RocketIcon, Route, ScrollText, User, UserCheck, Users } from "lucide-react";
+import { BarChart, BookText, Briefcase, Calendar, Code, Code2, Code2Icon, ComputerIcon, Flame, GitFork, GraduationCap, Layout, LayoutDashboard, List, ListVideo, RocketIcon, Route, ScrollText, User, UserCheck, UserSquare, Users, Video } from "lucide-react";
 import { usePathname } from "next/navigation";
-
 import { SidebarItem } from "./sidebar-item";
-import { DashboardIcon } from "@radix-ui/react-icons";
 
 const siteRoutes = [
   {
@@ -66,11 +64,6 @@ const classroomRoutes = [
     href: "/classroom/dashboard",
   },
   {
-    icon: Calendar,
-    label: "Calender",
-    href: "/classroom/calender",
-  },
-  {
     icon: ListVideo,
     label: "Live Classes",
     href: "/classroom/live",
@@ -89,6 +82,11 @@ const classroomRoutes = [
     icon: GraduationCap,
     label: "1:1 Mentorship",
     href: "/classroom/mentorship",
+  },
+  {
+    icon: UserSquare,
+    label: "Mock Interview",
+    href: "/classroom/mock-interview",
   },
   {
     icon: Code2Icon,
@@ -147,6 +145,11 @@ const adminRoutes = [
     icon: Code2,
     label: "Add DSA Problem",
     href: "/admin/problems",
+  },
+  {
+    icon: Video,
+    label: "Live Classes",
+    href: "/admin/live-class",
   }
 ]
 
