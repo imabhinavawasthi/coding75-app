@@ -2,7 +2,7 @@ import supabase from "@/supabase";
 import { Briefcase, MessageCircle, Rocket } from "lucide-react";
 import Link from "next/link";
 import { useEffect, useState } from "react";
-import { feedback_form } from "../social-links";
+import { feedback_form, pro_feedback_form } from "../social-links";
 
 const DashboardHeader = ({ }) => {
     const [user, setUser] = useState<any>(null)
@@ -48,7 +48,7 @@ const DashboardHeader = ({ }) => {
                             </Link>
                         </div>
                         <a
-                            href={feedback_form}
+                            href={pro_feedback_form}
                             target="_blank"
                             className="text-center justify-center flex items-center rounded-lg bg-primary-600 px-5 py-3 text-sm font-medium text-white transition hover:bg-primary-700 focus:outline-none focus:ring"
                         >

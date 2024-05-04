@@ -25,7 +25,7 @@ interface classDetailsType {
     liveClass: any;
 }
 
-const LivePage = ({topicname}) => {
+const LivePage = ({ topicname }) => {
 
     const [status, setStatus] = useState("loading")
 
@@ -103,11 +103,11 @@ const LivePage = ({topicname}) => {
                             {
                                 classDetails?.liveClass ?
                                     <>
-                                        <Button className="w-full mb-3" variant="destructive">
-                                            <a target="_blank" className="flex items-center" href={classDetails?.liveClass?.class_link}>
+                                        <a target="_blank" className="flex justify-center items-center w-full mb-3" href={classDetails?.liveClass?.class_link}>
+                                            <Button className="w-full flex items-center" variant="destructive">
                                                 Join Class <ExternalLink className="h-4 w-4 ml-3" />
-                                            </a>
-                                        </Button>
+                                            </Button>
+                                        </a>
                                         <ResourceCard
                                             type={"live"}
                                             heading={classDetails?.liveClass?.class_name}
@@ -134,7 +134,7 @@ const LivePage = ({topicname}) => {
                                 <TabsContent value="upcoming">
                                     <div>
                                         {
-                                            classDetails?.upcomingClasses.length>0 ?
+                                            classDetails?.upcomingClasses.length > 0 ?
                                                 <div>
                                                     {
                                                         classDetails?.upcomingClasses.slice(0, 5)?.map((data, index) => {
@@ -168,34 +168,34 @@ const LivePage = ({topicname}) => {
                                 <TabsContent value="past">
                                     <div>
                                         {
-                                            classDetails?.pastClasses?.length>0?
-                                            <div>
-                                            {
-                                                classDetails?.pastClasses.slice(0, 5)?.map((data, index) => {
-                                                    return (
-                                                        <div
-                                                            className="mb-3"
-                                                            key={index}
-                                                        >
-                                                            <ResourceCard
-                                                                type={"past"}
-                                                                heading={data?.class_name}
-                                                                sub_title={class_topics?.[data?.class_topic]}
-                                                                link={`/classroom/live/${data?.class_url_slug}`}
-                                                                instructor_name={data?.instructor_name}
-                                                                class_duration={data?.class_duration}
-                                                                class_subtopics={data?.class_subtopics}
-                                                                class_timing={data?.class_time_epoch}
-                                                            />
-                                                        </div>
-                                                    )
-                                                })
-                                            }
-                                        </div>
-                                        :
-                                        <>
-                                        No Past Live Classes
-                                        </>
+                                            classDetails?.pastClasses?.length > 0 ?
+                                                <div>
+                                                    {
+                                                        classDetails?.pastClasses.slice(0, 5)?.map((data, index) => {
+                                                            return (
+                                                                <div
+                                                                    className="mb-3"
+                                                                    key={index}
+                                                                >
+                                                                    <ResourceCard
+                                                                        type={"past"}
+                                                                        heading={data?.class_name}
+                                                                        sub_title={class_topics?.[data?.class_topic]}
+                                                                        link={`/classroom/live/${data?.class_url_slug}`}
+                                                                        instructor_name={data?.instructor_name}
+                                                                        class_duration={data?.class_duration}
+                                                                        class_subtopics={data?.class_subtopics}
+                                                                        class_timing={data?.class_time_epoch}
+                                                                    />
+                                                                </div>
+                                                            )
+                                                        })
+                                                    }
+                                                </div>
+                                                :
+                                                <>
+                                                    No Past Live Classes
+                                                </>
                                         }
                                     </div>
                                 </TabsContent>
