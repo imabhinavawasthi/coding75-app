@@ -16,6 +16,11 @@ const siteRoutes = [
   //   href: "/resources",
   // },
   {
+    icon: ListVideo,
+    label: "Live Classes 🚀",
+    href: "/classroom/dashboard",
+  },
+  {
     icon: RocketIcon,
     label: "DSA & CP",
     href: "/dsa-cp",

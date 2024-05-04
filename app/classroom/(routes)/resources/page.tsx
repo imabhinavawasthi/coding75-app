@@ -16,6 +16,8 @@ import {
     CardTitle,
 } from "@/components/ui/card"
 import { Input } from "@/components/ui/input";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
+import { Label } from "@/components/ui/label";
 
 const ClassMaterialPage = () => {
 
@@ -24,6 +26,8 @@ const ClassMaterialPage = () => {
     const [status, setStatus] = useState("loading")
 
     const [searchQuery, setSearchQuery] = useState("")
+
+    const [topicQuery, setTopicQuery] = useState("")
 
     const [classDetails, setClassDetails] = useState<any>()
 
@@ -70,11 +74,38 @@ const ClassMaterialPage = () => {
                                 }}
                                 placeholder="Search for Class (Eg. Codeforces Round 743 Discussion)"
                             />
+                            <div className="mb-5 flex flex-col space-y-1.5">
+                                <Select
+                                    onValueChange={(e) => {
+                                        if (e == "all") setTopicQuery("")
+                                        else
+                                            setTopicQuery(e)
+                                    }}
+                                    required>
+                                    <SelectTrigger id="classtopic">
+                                        <SelectValue placeholder="Select Class Topic" />
+                                    </SelectTrigger>
+                                    <SelectContent position="popper">
+                                        <SelectItem key={-1} value={"all"}>
+                                            All
+                                        </SelectItem>
+                                        {
+                                            Object.keys(class_topics).map((data, index) => {
+                                                return (
+                                                    <SelectItem key={index} value={data}>
+                                                        {class_topics[data]}
+                                                    </SelectItem>
+                                                )
+                                            })
+                                        }
+                                    </SelectContent>
+                                </Select>
+                            </div>
                             {
                                 classDetails?.slice(0, noOfRows)?.map((data, index) => {
-                                    if (data?.class_name.toLowerCase()?.includes(searchQuery.toLowerCase().trim()) ||
-                                        data?.instructor_name.toLowerCase()?.includes(searchQuery.toLowerCase().trim()) ||
-                                        data?.class_topic.toLowerCase()?.includes(searchQuery.toLowerCase().trim()))
+                                    if ((data?.class_name.toLowerCase()?.includes(searchQuery.toLowerCase().trim()) ||
+                                        data?.instructor_name.toLowerCase()?.includes(searchQuery.toLowerCase().trim())) &&
+                                        (topicQuery == "" || data?.class_topic.toLowerCase()?.includes(topicQuery.toLowerCase().trim())))
                                         return (
                                             <div
                                                 className="mb-3"
