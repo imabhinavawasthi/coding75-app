@@ -2,18 +2,18 @@ import { Code2Icon, Link2, VideoIcon } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
 
-const ResourceCard2 = ({ heading, description, link, icon_link, extra_details, trending_tag = undefined }) => {
+const ResourceCard2 = ({ heading, description, link, icon_link=null, extra_details, trending_tag = undefined }:any) => {
     return (
         <div>
             <Link href={link}>
                 <article className="hidden lg:block md:block hover:bg-gray-100 rounded-xl bg-white p-4 ring ring-indigo-50 sm:p-6 lg:p-8">
                     <div className="flex items-start sm:gap-8">
-                        <span className="relative flex shrink-0 overflow-hidden w-15 h-15">
+                        {icon_link&&<span className="relative flex shrink-0 overflow-hidden w-15 h-15">
                             <Image
                                 className="aspect-square object-contain"
                                 alt="icon" width="48" height="48" src={icon_link}
                             />
-                        </span>
+                        </span>}
                         <div>
                             {trending_tag && <div
                                 className="mb-4"
@@ -60,12 +60,15 @@ const ResourceCard2 = ({ heading, description, link, icon_link, extra_details, t
                 </article>
                 <article className="lg:hidden md:hidden hover:bg-gray-100 rounded-xl bg-white p-4 ring ring-indigo-50">
                     <div className="flex justify-center items-center gap-4">
-                        <span className="relative flex shrink-0 overflow-hidden w-15 h-15 rounded-full">
+                        {
+                            icon_link!=null&&
+                            <span className="relative flex shrink-0 overflow-hidden w-15 h-15 rounded-full">
                             <img
                                 className="aspect-square object-contain"
                                 alt="icon" width="48" height="48" src={icon_link}
                             />
                         </span>
+                        }
                         <h3 className="text-lg font-medium sm:text-xl">
                             {heading}
                         </h3>

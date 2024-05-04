@@ -200,3 +200,11 @@ export const topic_tags = [
   ["strongly-connected-component", "Strongly Connected Component"],
   ["miscellaneous", "Miscellaneous"]
 ]
+
+export const class_topics = {
+  "dsa": "Data Structures and Algorithms",
+  "project": "Project Building",
+  "cs-fundamental": "Computer Science Fundamentals",
+  "cp": "Competitive Programming",
+  "mentorship": "Mentorship Session"
+}

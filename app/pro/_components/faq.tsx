@@ -13,6 +13,10 @@ const faqs = [
         value: "Alternate DSA & CP on weekdays at 8 pm and Project Building / CS Fundamental Sessions on weekends. Our schedule ensures regular engagement while allowing flexibility for participants."
     },
     {
+        key: "Are class recordings available after the class?",
+        value: "Yes, you will get access to the class recording as well as complete class materials."
+    },
+    {
         key: "What topics will be included in classes?",
         value: "We are providing you a complete interview package; thus, the classes will cover essential topics such as Data Structures and Algorithms (DSA), practical Projects, and fundamental Computer Science concepts to prepare you comprehensively for interviews."
     },
