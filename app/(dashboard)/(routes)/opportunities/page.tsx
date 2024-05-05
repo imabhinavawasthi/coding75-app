@@ -90,7 +90,7 @@ const OpportunitiesPage = () => {
                 />
             </div>
             <a href="#opportunities">
-                <div className='flex text-blue-600 mt-10 mb-5 font-light items-center justify-center'>
+                <div className='flex text-blue-600 mb-5 font-light items-center justify-center'>
                     <ChevronDown className='animate-ping mr-2 h-4 w-4' /> Explore Open Opportunities
                 </div>
             </a>

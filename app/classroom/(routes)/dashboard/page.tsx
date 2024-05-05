@@ -8,7 +8,7 @@ import { class_topics } from "@/components/constants";
 import DashboardHeader from "@/components/page-headers/dashboard-header";
 import { fetchUpcomingClasses } from "../../(api)/fetchUpcomingClasses";
 import { fetchPastClasses } from "../../(api)/fetchPastClasses";
-import { ExternalLink, GraduationCap, Radio, UserCheck } from "lucide-react";
+import { Code2, ExternalLink, GraduationCap, Radio, UserCheck, Video } from "lucide-react";
 import ErrorBanner from "@/app/(dashboard)/_components/banners/error-banner";
 import { Logo } from "@/app/(dashboard)/_components/components/logo";
 import Link from "next/link";
@@ -16,6 +16,7 @@ import ResourceCard2 from "@/components/cards/resource-card-2";
 import Banner from "../../(components)/banner";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import DashboardCard from "@/components/cards/dashboard-card";
 
 interface classDetailsType {
     upcomingClasses: any;
@@ -93,9 +94,48 @@ const ClassroomDashboard = () => {
             <div className="mb-5">
                 <DashboardHeader />
             </div>
+            <div className="grid mb-5 md:grid-cols-4 grid-cols-2 gap-x-5 gap-y-5">
+                <div className="border-2 border-yellow-400 rounded-lg">
+                    <DashboardCard
+                        title="Live Classes"
+                        heading="Start Learning"
+                        description="Join daily interview preparation live classes"
+                        href="/classroom/live"
+                        icon={Radio}
+                    />
+                </div>
+                <div className="border-2 border-green-300 rounded-lg">
+                    <DashboardCard
+                        title="1:1 Personalised"
+                        heading="Mock Interview"
+                        description="1:1 Personalized Mock Interview with coding75 Experts."
+                        href="/classroom/mock-interview"
+                        icon={UserCheck}
+                    />
+                </div>
+                <div className="border-2 border-blue-300 rounded-lg">
+                    <DashboardCard
+                        title="Class Material"
+                        heading="Class Recordings"
+                        description="Access live class recordings and material."
+                        href="/classroom/resources"
+                        icon={Video}
+                    />
+                </div>
+                <div className="border-2 border-pink-300 rounded-lg">
+                    <DashboardCard
+                        title="coding75 Pro"
+                        heading="Subscription Details"
+                        description="Details of your coding75 Pro subscription."
+                        href="/classroom/subscription"
+                        icon={Code2}
+                    />
+                </div>
+            </div>
             {
                 status == "done" &&
                 <div>
+
                     <div className="md:hidden mb-5">
                         <h3 className="font-semibold mb-3 flex items-center"><Radio className="h-3 w-3 animate-ping mr-3 text-red-600" />Ongoing Live Class </h3>
                         <Separator className="mb-5" />
@@ -200,7 +240,7 @@ const ClassroomDashboard = () => {
                             </Card>
                         </div>
                         <div className="items-center col-span-6">
-                            <Card className="shadow-lg">
+                            <Card className="shadow-lg mt-5 md:mt-0">
                                 <CardContent className="mt-5">
                                     <>
                                         <div className="hidden md:block">

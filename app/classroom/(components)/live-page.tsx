@@ -18,6 +18,7 @@ import {
     TabsList,
     TabsTrigger,
 } from "@/components/ui/tabs"
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 
 interface classDetailsType {
     upcomingClasses: any;
@@ -92,8 +93,14 @@ const LivePage = ({ topicname }) => {
     return (
         <div className="md:container px-3">
             <Banner />
-            <div>
-                <p className="flex items-center justify-center mb-5 text-lg font-semibold">{class_topics?.[topicname]} Live Classes</p>
+            <Card className="shadow-xl">
+                <CardHeader>
+                    <CardTitle>
+                    {class_topics?.[topicname]} Live Classes
+                    </CardTitle>
+                </CardHeader>
+                <CardContent>
+                <div>
                 {
                     status == "done" &&
                     <>
@@ -218,6 +225,8 @@ const LivePage = ({ topicname }) => {
                     </div>
                 }
             </div>
+                </CardContent>
+            </Card>
         </div>
     );
 }

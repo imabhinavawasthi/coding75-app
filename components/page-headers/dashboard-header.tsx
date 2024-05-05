@@ -34,11 +34,11 @@ const DashboardHeader = ({ }) => {
                         <h1 className="text-2xl font-bold text-gray-900 sm:text-3xl">
                             {
                                 user?.user_metadata?.full_name ?
-                                    <>Welcome, {user?.user_metadata?.full_name}!</>
+                                    <>Welcome to coding75 Pro 🚀, {user?.user_metadata?.full_name}!</>
                                     : <>Welcome to coding75 Pro!</>
                             }
                         </h1>
-                        <p className="mt-1.5 text-sm text-gray-500">Let&apos;s start today&apos;s learning, Happy Coding! 🚀</p>
+                        <p className="mt-1.5 text-sm text-gray-500">Attend live classes, 1:1 Mentornship and more with Pro!</p>
                     </div>
                     <div className="mt-4 flex flex-col gap-4 sm:mt-0 sm:flex-row sm:items-center">
                         <div className='hover:animate-background rounded-xl bg-gradient-to-r from-green-300 via-blue-500 to-purple-600 p-0.5 shadow-xl transition hover:bg-[length:400%_400%] hover:shadow-sm hover:[animation-duration:_4s]'>
