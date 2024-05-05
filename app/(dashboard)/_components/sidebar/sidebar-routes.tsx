@@ -1,6 +1,6 @@
 "use client";
 
-import { BarChart, BookText, Briefcase, Calendar, Code, Code2, Code2Icon, ComputerIcon, Flame, GitFork, GraduationCap, Layout, LayoutDashboard, List, ListVideo, RocketIcon, Route, ScrollText, User, UserCheck, UserSquare, Users, Video } from "lucide-react";
+import { BarChart, BarChart2, BookText, Briefcase, Calendar, Code, Code2, Code2Icon, ComputerIcon, Flame, GitFork, GraduationCap, Layout, LayoutDashboard, List, ListVideo, RocketIcon, Route, ScrollText, User, UserCheck, UserSquare, Users, Video } from "lucide-react";
 import { usePathname } from "next/navigation";
 import { SidebarItem } from "./sidebar-item";
 
@@ -72,6 +72,16 @@ const classroomRoutes = [
     icon: ListVideo,
     label: "Live Classes",
     href: "/classroom/live",
+  },
+  {
+    icon: GitFork,
+    label: "Live DSA Classes",
+    href: "/classroom/dsa",
+  },
+  {
+    icon: BarChart2,
+    label: "Live CP Classes",
+    href: "/classroom/competitive-programming",
   },
   {
     icon: BookText,

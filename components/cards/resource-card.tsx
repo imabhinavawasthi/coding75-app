@@ -1,7 +1,6 @@
 import { cn } from "@/lib/utils";
 import { AlarmClock, Book, CalendarClock, Clock, Code2Icon, ExternalLink, FileVideo, FileVideo2, Link2, Pin, PlayCircleIcon, Radio, UserCircle, Video, VideoIcon } from "lucide-react";
 import Link from "next/link";
-import { Button } from "../ui/button";
 
 function convertEpochToIST(epochSeconds) {
     // Convert epoch seconds to milliseconds
@@ -31,7 +30,7 @@ function getMonthName(monthIndex) {
 }
 
 
-const ResourceCard = ({ heading, link, sub_title, instructor_name, class_duration, class_subtopics = [], class_timing, type, class_recording = null, class_notes = null, class_resources = false }) => {
+const ResourceCard = ({ heading, link, sub_title, instructor_name, class_duration, class_subtopics = [], class_timing, type, class_recording = null, class_notes = null, class_resources = false }:any) => {
     return (
         <div>
             <Link

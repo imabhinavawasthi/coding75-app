@@ -1,5 +1,4 @@
 import { Separator } from "@/components/ui/separator";
-import OnlyForPro from "../../(components)/only-for-pro";
 import {
     Card,
     CardContent,
@@ -7,21 +6,31 @@ import {
     CardHeader,
     CardTitle,
 } from "@/components/ui/card"
+import BookMeeting from "../../(components)/book-meeting";
+import { booking_link } from "@/components/social-links";
+import SubscriptionCheck from "../../(components)/subscription-check";
 
 const ResumeReviewClassroom = () => {
     return (
-        <div className="md:container px-3">
-            <Card className="w-full overflow-y-scroll">
-                <CardHeader>
-                    <CardTitle>Resume Review</CardTitle>
-                    <CardDescription>Persionalised 1:1 Resume Review by coding75 Experts.</CardDescription>
-                </CardHeader>
-                <Separator className="mb-5" />
-                <CardContent>
-                <OnlyForPro />
-                </CardContent>
-            </Card>
-        </div>
+        <SubscriptionCheck type="meeting">
+            <div className="md:container px-3">
+                <Card className="w-full overflow-y-scroll">
+                    <CardHeader>
+                        <CardTitle>Resume Review</CardTitle>
+                        <CardDescription>Persionalised 1:1 Resume Review by coding75 Experts.</CardDescription>
+                    </CardHeader>
+                    <Separator className="mb-5" />
+                    <CardContent>
+                        <BookMeeting
+                            link={booking_link}
+                            type="1:1 Resume Review"
+                            meeting_time={15}
+                            meeting_frequency={1}
+                        />
+                    </CardContent>
+                </Card>
+            </div>
+        </SubscriptionCheck>
     );
 }
 

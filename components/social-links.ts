@@ -14,6 +14,8 @@ export const whatsapp_link = "https://wa.me/message/TPN76XLWVOWDB1"
 
 export const codeforces_problem = "https://codeforces.com/contest/108/problem/A"
 
+export const booking_link = "https://doodle.com/meeting/participate/id/e3KOOVxe"
+
 
 //logos
 
