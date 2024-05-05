@@ -21,19 +21,16 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu"
-import { FcGoogle } from "react-icons/fc";
 import {
   Dialog,
   DialogContent,
   DialogDescription,
   DialogHeader,
-  DialogTitle,
   DialogTrigger,
 } from "@/components/ui/dialog"
 import { toast } from "sonner";
 import { usePathname } from "next/navigation";
 import { Button } from "@/components/ui/button";
-import { LinkedInLogoIcon } from "@radix-ui/react-icons";
 import { feedback_form, github_link, linkedin_link, telegram_link, youtube_link } from "@/components/social-links";
 import { Skeleton } from "@/components/ui/skeleton";
 import { Logo } from "../components/logo";
@@ -141,7 +138,7 @@ const projects: { title: string; href: string; description: string }[] = [
 export const NavbarRoutes = ({ isLogo = false }: any) => {
   const [notificationOpen, setNotificationOpen] = useState(false)
   const [user, setUser] = useState<any>(null)
-  const pathname = usePathname();
+  const pathname = usePathname(); 
   const [status, setStatus] = useState("loading")
 
   async function handleLogOut(e: any) {
