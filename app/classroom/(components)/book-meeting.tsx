@@ -10,7 +10,7 @@ const BookMeeting = ({ link, type, meeting_time, meeting_frequency }: any) => {
                 <AlertDescription>
                     <p className="flex items-center">
                         <Dot className="mr-2" />
-                        You can book a &nbsp; <strong>{type}</strong> &nbsp; session in every&nbsp; <strong>{meeting_frequency}{meeting_frequency == 1 ? " month" : " months"}</strong> .
+                        <strong>You can book a {type} session in every {meeting_frequency}{meeting_frequency == 1 ? " month" : " months"}</strong> .
                     </p>
                     <p className="flex items-center">
                         <Dot className="mr-2" />
