@@ -29,6 +29,7 @@ const SubscriptionDetailsPage = () => {
     const [user, setUser] = useState<any>(null)
     const [status, setStatus] = useState("loading")
     const [launchDate, setLaunchDate] = useState<any>()
+    const [subscriptionType, setSubscriptionType] = useState("Monthly")
 
     async function checkUser() {
         try {
@@ -57,6 +58,18 @@ const SubscriptionDetailsPage = () => {
             for (let i = 1; i < data?.length; i++) {
                 if (data?.[i]?.[2] == user_email) {
                     setSubscription(data[i])
+                    if (data?.[i]?.[1] <= 1000) {
+                        setSubscriptionType("Monthly (1 Month Access)")
+                    }
+                    else if (data?.[i]?.[1] <= 2400) {
+                        setSubscriptionType("Quaterly (3 Months Access)")
+                    }
+                    else if (data?.[i]?.[1] <= 3500) {
+                        setSubscriptionType("Semi Annually (6 Months Access)")
+                    }
+                    else {
+                        setSubscriptionType("Yearly (1 Year Access)")
+                    }
                     break;
                 }
             }
@@ -117,10 +130,12 @@ const SubscriptionDetailsPage = () => {
                                             </AlertDescription>
                                         </Alert>
                                         <div className="mt-5 grid grid-cols-1 md:grid-cols-2 gap-x-5 gap-y-5">
-                                        <TextBox keytext={"Name"} value={subscription?.[0]} />
-                                        <TextBox keytext={"Contact No."} value={subscription?.[3]} />
-                                        <TextBox keytext={"Date of Purchase"} value={subscription?.[5]?.slice(0,10)} />
-                                        <TextBox keytext={"Plan Details"} value={subscription?.[1]<=3000?"Monthly":"Yearly"} />
+                                            <TextBox keytext={"Name"} value={subscription?.[0]} />
+                                            <TextBox keytext={"Contact No."} value={subscription?.[3]} />
+                                            <TextBox keytext={"Date of Purchase"} value={subscription?.[5]?.slice(0, 10)} />
+                                            <TextBox keytext={"Plan Details"} value={
+                                                subscriptionType
+                                            } />
                                         </div>
                                         <div className="mt-5">
                                             <a href={pro_feedback_form} target="_blank">
