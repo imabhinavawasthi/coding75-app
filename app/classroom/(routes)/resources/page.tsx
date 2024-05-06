@@ -131,6 +131,10 @@ const ClassMaterialPage = () => {
                                     })
                                 }
                                 {
+                                    classDetails?.length==0&&
+                                    <>No Past Classes Found!</>
+                                }
+                                {
                                     (noOfRows < classDetails?.length)
                                     &&
                                     <div className="mt-5 flex justify-center items-center">
