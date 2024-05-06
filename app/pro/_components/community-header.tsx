@@ -3,7 +3,7 @@
 import { Logo } from '@/app/(dashboard)/_components/components/logo';
 import React, { useEffect, useState } from 'react';
 import Link from 'next/link';
-import { BookMarked, Flame, GraduationCap, Lightbulb, LogIn, LogOut, User } from 'lucide-react';
+import { BookMarked, Flame, GraduationCap, Lightbulb, ListVideo, LogIn, LogOut, User } from 'lucide-react';
 import supabase from '@/supabase';
 import { toast } from 'sonner';
 import { Skeleton } from '../../../components/ui/skeleton';
@@ -131,9 +131,9 @@ export default function CommunityHeader() {
                     </h1>
                     <p className="mb-8 text-lg font-normal text-gray-500 lg:text-xl sm:px-16 xl:px-48 dark:text-gray-400">Learn from the <strong>Experts</strong>, Engage with <strong>Peers</strong>, Be a <strong>Pro</strong>!</p>
                     <div className="flex flex-col mb-8 lg:mb-16 space-y-4 sm:flex-row sm:justify-center sm:space-y-0 sm:space-x-4">
-                        <a href="#features" className="shadow-2xl inline-flex justify-center items-center py-3 px-5 text-base font-medium text-center text-white rounded-lg bg-primary-700 hover:bg-primary-800 focus:ring-4 focus:ring-primary-300 dark:focus:ring-primary-900">
-                            <Lightbulb className="mr-2 -ml-1 w-5 h-5" /> Why coding75?
-                        </a>
+                        <Link href="/classroom" className="shadow-2xl inline-flex justify-center items-center py-3 px-5 text-base font-medium text-center text-white rounded-lg bg-primary-700 hover:bg-primary-800 focus:ring-4 focus:ring-primary-300 dark:focus:ring-primary-900">
+                            <ListVideo className="mr-2 -ml-1 w-5 h-5" /> Visit Classroom
+                        </Link>
                         <div className='hover:animate-background rounded-xl bg-gradient-to-r from-green-300 via-blue-500 to-purple-600 p-0.5 shadow-xl transition hover:bg-[length:400%_400%] hover:shadow-sm hover:[animation-duration:_4s]'>
                             <Link href="#pricing" className="w-full bg-white rounded-xl inline-flex justify-center items-center py-3 px-5 text-base font-medium text-center text-gray-900 hover:bg-gray-100 focus:ring-4 focus:ring-gray-100 dark:text-white dark:border-gray-700 dark:hover:bg-gray-700 dark:focus:ring-gray-800">
                                 <GraduationCap className="mr-2 -ml-1 w-5 h-5" />

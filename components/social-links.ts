@@ -16,6 +16,7 @@ export const codeforces_problem = "https://codeforces.com/contest/108/problem/A"
 
 export const booking_link = "https://doodle.com/meeting/participate/id/e3KOOVxe"
 
+export const pro_buy_link = "https://rpy.club/g/crHcMLMQmE"
 
 //logos
 
