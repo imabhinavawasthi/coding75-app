@@ -8,7 +8,7 @@ export const youtube_link = "https://youtube.com/@crackdsa"
 
 export const feedback_form = "https://forms.gle/S5KKUyrUqi1WzZCJ6"
 
-export const pro_feedback_form = "https://forms.gle/S5KKUyrUqi1WzZCJ6"
+export const pro_feedback_form = "https://forms.gle/NEfBozxQzhRkv1kq9"
 
 export const whatsapp_link = "https://wa.me/message/TPN76XLWVOWDB1"
 
