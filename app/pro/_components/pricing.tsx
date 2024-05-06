@@ -1,5 +1,6 @@
 "use client"
 
+import { pro_buy_link } from '@/components/social-links';
 import { Badge } from '@/components/ui/badge';
 import supabase from '@/supabase';
 import { Check, Gem, Rocket, X } from 'lucide-react';
@@ -145,7 +146,7 @@ const Pricing = () => {
                                             <span>1:1<span className="font-semibold"> Mentorship</span> Sessions</span>
                                         </li>
                                     </ul>
-                                    <a className="text-white bg-primary-600 hover:bg-primary-700 focus:ring-4 focus:ring-primary-200 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:text-white  dark:focus:ring-primary-900">Launching Soon ⏰</a>
+                                    <a href={pro_buy_link} target='_blank' className="text-white bg-primary-600 hover:bg-primary-700 focus:ring-4 focus:ring-primary-200 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:text-white  dark:focus:ring-primary-900">Join Now</a>
                                     {
                                         launchDate &&
                                         <p className='mt-4 font-semibold tracking-tight'>
@@ -237,9 +238,7 @@ const Pricing = () => {
                                     <span>Personalised<span className="font-semibold"> preparation plan</span> for 1 year</span>
                                 </li>
                             </ul>
-                            <a className="text-white bg-primary-600 hover:bg-primary-700 focus:ring-4 focus:ring-primary-200 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:text-white  dark:focus:ring-primary-900">
-                                Launching Soon ⏰
-                            </a>
+                            <a href={pro_buy_link} target='_blank' className="text-white bg-primary-600 hover:bg-primary-700 focus:ring-4 focus:ring-primary-200 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:text-white  dark:focus:ring-primary-900">Join Now</a>
                             {
                                 launchDate &&
                                 <p className='mt-4 font-semibold tracking-tight'>

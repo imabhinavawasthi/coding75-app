@@ -3,7 +3,7 @@ import { AlertTriangle } from "lucide-react";
 
 const ErrorBanner = ({ message = "Something went wrong!", description = "Error, try reloading the page again!", icon = <AlertTriangle /> }) => {
     return (
-        <div>
+        <div className="md:container px-3">
             <Alert variant="destructive" className='mb-2'>
             {icon}
                 <AlertTitle className="ml-4">{message}</AlertTitle>

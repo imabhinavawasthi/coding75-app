@@ -13,7 +13,7 @@ import {
 import React, { useEffect, useState } from "react";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
 import supabase from "@/supabase";
-import { Bell, LogIn, LogOut, MessageSquarePlusIcon, RotateCw, Send, User, YoutubeIcon } from "lucide-react";
+import { Bell, LogIn, LogOut, MessageSquarePlusIcon, Rocket, RotateCw, Send, User, YoutubeIcon } from "lucide-react";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -21,19 +21,16 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu"
-import { FcGoogle } from "react-icons/fc";
 import {
   Dialog,
   DialogContent,
   DialogDescription,
   DialogHeader,
-  DialogTitle,
   DialogTrigger,
 } from "@/components/ui/dialog"
 import { toast } from "sonner";
 import { usePathname } from "next/navigation";
 import { Button } from "@/components/ui/button";
-import { LinkedInLogoIcon } from "@radix-ui/react-icons";
 import { feedback_form, github_link, linkedin_link, telegram_link, youtube_link } from "@/components/social-links";
 import { Skeleton } from "@/components/ui/skeleton";
 import { Logo } from "../components/logo";
@@ -141,7 +138,7 @@ const projects: { title: string; href: string; description: string }[] = [
 export const NavbarRoutes = ({ isLogo = false }: any) => {
   const [notificationOpen, setNotificationOpen] = useState(false)
   const [user, setUser] = useState<any>(null)
-  const pathname = usePathname();
+  const pathname = usePathname(); 
   const [status, setStatus] = useState("loading")
 
   async function handleLogOut(e: any) {
@@ -420,6 +417,7 @@ export const NavbarRoutes = ({ isLogo = false }: any) => {
                     {/* <DropdownMenuLabel className="font-semibold"><Badge variant="basic" className="px-2 py-1">Hello, {user?.["user_metadata"]["full_name"]} 👋🏻</Badge></DropdownMenuLabel> */}
                     {/* <DropdownMenuSeparator /> */}
                     <Link href="/profile"><DropdownMenuItem className="cursor-pointer"><User className="w-4 h-4 mr-2" /> Profile</DropdownMenuItem></Link>
+                    <Link href="/classroom/subscription"><DropdownMenuItem className="cursor-pointer"><Rocket className="w-4 h-4 mr-2" />Pro Subscription</DropdownMenuItem></Link>
                     <a href={feedback_form} target="_blank"><DropdownMenuItem className="cursor-pointer"><MessageSquarePlusIcon className="w-4 h-4 mr-2" /> Submit Feedback</DropdownMenuItem></a>
                     <DropdownMenuSeparator />
                     <DropdownMenuItem onClick={handleLogOut} className="cursor-pointer text-red-600"><LogOut className="w-4 h-4 mr-2" /> Logout</DropdownMenuItem>

@@ -1195,7 +1195,7 @@ const Resume = () => {
 
                                 }
                                 <Link
-                                    href="/pro"
+                                    href="/classroom/resume-review"
                                     className="block text-center rounded-lg bg-primary-600 px-5 py-3 text-sm font-medium text-white transition hover:bg-primary-700 focus:outline-none focus:ring"
                                 >
                                     Resume Review - coding75 Pro 🚀

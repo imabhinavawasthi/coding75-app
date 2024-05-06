@@ -1,7 +1,6 @@
 import supabase from "@/supabase";
 
 export async function fetchUpcomingClasses(topicname:any) {
-    console.log(topicname);
     if (topicname && topicname != "") {
         try {
             let { data: classes, error } = await supabase

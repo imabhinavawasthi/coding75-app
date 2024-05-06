@@ -205,6 +205,8 @@ export const class_topics = {
   "dsa": "Data Structures and Algorithms",
   "project": "Project Building",
   "cs-fundamental": "Computer Science Fundamentals",
-  "cp": "Competitive Programming",
+  "competitive-programming": "Competitive Programming",
   "mentorship": "Mentorship Session"
 }
+
+export const blur_css = "pointer-events-none filter blur-xs opacity-50"

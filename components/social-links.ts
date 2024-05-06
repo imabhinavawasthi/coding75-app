@@ -8,10 +8,19 @@ export const youtube_link = "https://youtube.com/@crackdsa"
 
 export const feedback_form = "https://forms.gle/S5KKUyrUqi1WzZCJ6"
 
+export const pro_feedback_form = "https://forms.gle/NEfBozxQzhRkv1kq9"
+
 export const whatsapp_link = "https://wa.me/message/TPN76XLWVOWDB1"
 
 export const codeforces_problem = "https://codeforces.com/contest/108/problem/A"
 
+export const booking_link = "https://doodle.com/meeting/participate/id/e3KOOVxe"
+
+export const pro_buy_link = "https://rpy.club/g/crHcMLMQmE"
+
+export const pro_updates_group = "https://chat.whatsapp.com/KAXRJJUx2lA7Ur7FJI4uio"
+
+export const pro_discussion_group = "https://chat.whatsapp.com/E2eTHZKEMOs01heOEuMA5C"
 
 //logos
 

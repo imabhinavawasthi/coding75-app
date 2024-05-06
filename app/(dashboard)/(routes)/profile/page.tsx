@@ -28,6 +28,7 @@ import { Label } from "@/components/ui/label";
 import { Input } from "@/components/ui/input";
 import ErrorBanner from "../../_components/banners/error-banner";
 import { codeforces_problem } from "@/components/social-links";
+import SubscriptionDetailsPage from "@/app/classroom/(routes)/subscription/page";
 
 interface statusType {
     getUser: "loading" | "done" | "error",
@@ -44,27 +45,8 @@ const Profile = () => {
         codeforces: "pending",
         checkVerification: "pending"
     })
-    const [launchDate, setLaunchDate] = useState<any>()
     const [codeforcesId, setCodeforcesId] = useState<any>(null)
     const [inputCodeforcesId, setInputCodeforcesId] = useState<any>(null)
-
-    async function getLaunchDate() {
-        try {
-            let { data, error } = await supabase
-                .from('constants')
-                .select('launch_date')
-
-            if (error) {
-                console.error('Error fetching data:', error);
-            }
-            else {
-                setLaunchDate(data?.[0]?.launch_date)
-            }
-
-        } catch (error) {
-            console.error('An error occurred:', error);
-        }
-    }
 
     async function checkUser() {
         try {
@@ -209,8 +191,8 @@ const Profile = () => {
 
     useEffect(() => {
         checkUser()
-        getLaunchDate()
     }, [])
+    
     return (
         <div>
             {
@@ -353,27 +335,8 @@ const Profile = () => {
                             <Link href="/resume">
                                 <Button variant="outline" className="md:w-[400px] sm:w-full flex items-center"><ScrollText className="mr-2" /> Update Resume</Button></Link>
                         </div>
-                        <Separator className="mt-10" />
-                        <div className="md:flex mt-5 justify-center items-center">
-                            <div>
-                                <div className='mt-5 md:w-[400px] sm:w-full justify-center items-center hover:animate-background rounded-xl bg-gradient-to-r from-green-300 via-blue-500 to-purple-600 p-0.5 shadow-xl transition hover:bg-[length:400%_400%] hover:shadow-sm hover:[animation-duration:_4s]'>
-                                    <Link href="/pro#pricing" className="w-full bg-white rounded-xl inline-flex justify-center items-center py-3 px-5 text-base font-medium text-center text-gray-900 hover:bg-gray-100 focus:ring-4 focus:ring-gray-100 dark:text-white dark:border-gray-700 dark:hover:bg-gray-700 dark:focus:ring-gray-800">
-                                        <Rocket className="mr-2 -ml-1 w-5 h-5" />
-                                        Subscribe to coding75 Pro
-                                    </Link>
-                                </div>
-                                {
-                                    launchDate &&
-                                    <p className='text-center mt-4 font-semibold tracking-tight'>
-                                        Next Batch Starting on &nbsp;
-                                        <span className='text-blue-600 font-bold'>{launchDate}</span> -
-                                        <span className='text-green-600 font-bold'>&nbsp;Beginner Friendly</span>
-                                        .
-                                    </p>
-                                }
-                            </div>
-                        </div>
-
+                        <Separator className="mt-10 mb-10" />
+                        <SubscriptionDetailsPage/>
                         <div className="w-full">
                             <FeatureSection3 heading="" />
                         </div>

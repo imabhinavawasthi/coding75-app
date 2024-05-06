@@ -10,7 +10,6 @@ import { fetchPastClasses } from "../(api)/fetchPastClasses";
 import { ExternalLink, Radio } from "lucide-react";
 import ErrorBanner from "@/app/(dashboard)/_components/banners/error-banner";
 import { Logo } from "@/app/(dashboard)/_components/components/logo";
-import Banner from "./banner";
 import { Button } from "@/components/ui/button";
 import {
     Tabs,
@@ -18,6 +17,9 @@ import {
     TabsList,
     TabsTrigger,
 } from "@/components/ui/tabs"
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import SubscriptionCheck from "./subscription-check";
+import Banner from "./banner";
 
 interface classDetailsType {
     upcomingClasses: any;
@@ -25,7 +27,7 @@ interface classDetailsType {
     liveClass: any;
 }
 
-const LivePage = ({topicname}) => {
+const LivePage = ({ topicname, noLive = false }) => {
 
     const [status, setStatus] = useState("loading")
 
@@ -90,135 +92,148 @@ const LivePage = ({topicname}) => {
     }, [])
 
     return (
-        <div className="md:container px-3">
+        <>
+            {/* <SubscriptionCheck type={"live"}> */}
+            <div className="md:container px-3">
             <Banner />
-            <div>
-                <p className="flex items-center justify-center mb-5 text-lg font-semibold">{class_topics?.[topicname]} Live Classes</p>
-                {
-                    status == "done" &&
-                    <>
+                <Card className="shadow-xl">
+                    <CardHeader className={noLive ? "hidden" : ""}>
+                        <CardTitle>
+                            {class_topics?.[topicname]} Live Classes
+                        </CardTitle>
+                    </CardHeader>
+                    <CardContent>
                         <div>
-                            <h3 className="font-semibold mb-3 flex items-center"><Radio className="h-3 w-3 animate-ping mr-3 text-red-600" />Ongoing Live Class </h3>
-                            <Separator className="mb-5" />
                             {
-                                classDetails?.liveClass ?
-                                    <>
-                                        <Button className="w-full mb-3" variant="destructive">
-                                            <a target="_blank" className="flex items-center" href={classDetails?.liveClass?.class_link}>
-                                                Join Class <ExternalLink className="h-4 w-4 ml-3" />
-                                            </a>
-                                        </Button>
-                                        <ResourceCard
-                                            type={"live"}
-                                            heading={classDetails?.liveClass?.class_name}
-                                            sub_title={class_topics?.[classDetails?.liveClass?.class_topic]}
-                                            link={`/classroom/live/${classDetails?.liveClass?.class_url_slug}`}
-                                            instructor_name={classDetails?.liveClass?.instructor_name}
-                                            class_duration={classDetails?.liveClass?.class_duration}
-                                            class_subtopics={classDetails?.liveClass?.class_subtopics}
-                                            class_timing={classDetails?.liveClass?.class_time_epoch}
-                                        />
-                                    </>
-                                    :
-                                    <div>
-                                        No Ongoing Class
-                                    </div>
-                            }
-                        </div>
-                        <div className="mt-5">
-                            <Tabs defaultValue="upcoming" className="">
-                                <TabsList className="grid w-full grid-cols-2">
-                                    <TabsTrigger value="upcoming">Upcoming Live Classes</TabsTrigger>
-                                    <TabsTrigger value="past">Past Live Classes</TabsTrigger>
-                                </TabsList>
-                                <TabsContent value="upcoming">
-                                    <div>
+                                status == "done" &&
+                                <>
+                                    <div className={noLive ? "hidden" : ""}>
+                                        <h3 className="font-semibold mb-3 flex items-center"><Radio className="h-3 w-3 animate-ping mr-3 text-red-600" />Ongoing Live Class </h3>
+                                        <Separator className="mb-5" />
                                         {
-                                            classDetails?.upcomingClasses.length>0 ?
-                                                <div>
-                                                    {
-                                                        classDetails?.upcomingClasses.slice(0, 5)?.map((data, index) => {
-                                                            return (
-                                                                <div
-                                                                    className="mb-3"
-                                                                    key={index}
-                                                                >
-                                                                    <ResourceCard
-                                                                        type={"upcoming"}
-                                                                        heading={data?.class_name}
-                                                                        sub_title={class_topics?.[data?.class_topic]}
-                                                                        link={`/classroom/live/${data?.class_url_slug}`}
-                                                                        instructor_name={data?.instructor_name}
-                                                                        class_duration={data?.class_duration}
-                                                                        class_subtopics={data?.class_subtopics}
-                                                                        class_timing={data?.class_time_epoch}
-                                                                    />
-                                                                </div>
-                                                            )
-                                                        })
-                                                    }
-                                                </div>
+                                            classDetails?.liveClass ?
+                                                <>
+                                                    <a target="_blank" className="flex justify-center items-center w-full mb-3" href={classDetails?.liveClass?.class_link}>
+                                                        <Button className="w-full flex items-center" variant="destructive">
+                                                            Join Class <ExternalLink className="h-4 w-4 ml-3" />
+                                                        </Button>
+                                                    </a>
+                                                    <ResourceCard
+                                                        type={"live"}
+                                                        heading={classDetails?.liveClass?.class_name}
+                                                        sub_title={class_topics?.[classDetails?.liveClass?.class_topic]}
+                                                        link={`/classroom/live/${classDetails?.liveClass?.class_url_slug}`}
+                                                        instructor_name={classDetails?.liveClass?.instructor_name}
+                                                        class_duration={classDetails?.liveClass?.class_duration}
+                                                        class_subtopics={classDetails?.liveClass?.class_subtopics}
+                                                        class_timing={classDetails?.liveClass?.class_time_epoch}
+                                                    />
+                                                </>
                                                 :
                                                 <div>
-                                                    No Upcoming Classes
+                                                    No Ongoing Class
                                                 </div>
                                         }
                                     </div>
-                                </TabsContent>
-                                <TabsContent value="past">
-                                    <div>
-                                        {
-                                            classDetails?.pastClasses?.length>0?
-                                            <div>
-                                            {
-                                                classDetails?.pastClasses.slice(0, 5)?.map((data, index) => {
-                                                    return (
-                                                        <div
-                                                            className="mb-3"
-                                                            key={index}
-                                                        >
-                                                            <ResourceCard
-                                                                type={"past"}
-                                                                heading={data?.class_name}
-                                                                sub_title={class_topics?.[data?.class_topic]}
-                                                                link={`/classroom/live/${data?.class_url_slug}`}
-                                                                instructor_name={data?.instructor_name}
-                                                                class_duration={data?.class_duration}
-                                                                class_subtopics={data?.class_subtopics}
-                                                                class_timing={data?.class_time_epoch}
-                                                            />
-                                                        </div>
-                                                    )
-                                                })
-                                            }
-                                        </div>
-                                        :
-                                        <>
-                                        No Past Live Classes
-                                        </>
-                                        }
+                                    <div className="mt-5">
+                                        <Tabs defaultValue="upcoming" className="">
+                                            <TabsList className="grid w-full grid-cols-2">
+                                                <TabsTrigger value="upcoming">Upcoming Live Classes</TabsTrigger>
+                                                <TabsTrigger value="past">Past Live Classes</TabsTrigger>
+                                            </TabsList>
+                                            <TabsContent value="upcoming">
+                                                <div>
+                                                    {
+                                                        classDetails?.upcomingClasses.length > 0 ?
+                                                            <div>
+                                                                {
+                                                                    classDetails?.upcomingClasses.slice(0, 5)?.map((data, index) => {
+                                                                        return (
+                                                                            <div
+                                                                                className="mb-3"
+                                                                                key={index}
+                                                                            >
+                                                                                <ResourceCard
+                                                                                    type={"upcoming"}
+                                                                                    heading={data?.class_name}
+                                                                                    sub_title={class_topics?.[data?.class_topic]}
+                                                                                    link={`/classroom/live/${data?.class_url_slug}`}
+                                                                                    instructor_name={data?.instructor_name}
+                                                                                    class_duration={data?.class_duration}
+                                                                                    class_subtopics={data?.class_subtopics}
+                                                                                    class_timing={data?.class_time_epoch}
+                                                                                />
+                                                                            </div>
+                                                                        )
+                                                                    })
+                                                                }
+                                                            </div>
+                                                            :
+                                                            <div>
+                                                                No Upcoming Classes
+                                                            </div>
+                                                    }
+                                                </div>
+                                            </TabsContent>
+                                            <TabsContent value="past">
+                                                <div>
+                                                    {
+                                                        classDetails?.pastClasses?.length > 0 ?
+                                                            <div>
+                                                                {
+                                                                    classDetails?.pastClasses.slice(0, 5)?.map((data, index) => {
+                                                                        return (
+                                                                            <div
+                                                                                className="mb-3"
+                                                                                key={index}
+                                                                            >
+                                                                                <ResourceCard
+                                                                                    type={"past"}
+                                                                                    heading={data?.class_name}
+                                                                                    sub_title={class_topics?.[data?.class_topic]}
+                                                                                    link={`/classroom/live/${data?.class_url_slug}`}
+                                                                                    instructor_name={data?.instructor_name}
+                                                                                    class_duration={data?.class_duration}
+                                                                                    class_subtopics={data?.class_subtopics}
+                                                                                    class_timing={data?.class_time_epoch}
+                                                                                />
+                                                                            </div>
+                                                                        )
+                                                                    })
+                                                                }
+                                                            </div>
+                                                            :
+                                                            <>
+                                                                No Past Live Classes
+                                                            </>
+                                                    }
+                                                </div>
+                                            </TabsContent>
+                                        </Tabs>
                                     </div>
-                                </TabsContent>
-                            </Tabs>
+                                </>
+                            }
+                            {
+                                status == "loading" &&
+                                <>
+                                    <div className="mb-20 mt-20 animate-ping flex items-center justify-center">
+                                        <Logo />
+                                    </div>
+                                </>
+                            }
+                            {
+                                status == "error" &&
+                                <div className="mt-20">
+                                    <ErrorBanner />
+                                </div>
+                            }
                         </div>
-                    </>
-                }
-                {
-                    status == "loading" &&
-                    <>
-                        <div className="mt-20 animate-ping flex items-center justify-center">
-                            <Logo />
-                        </div>
-                    </>
-                }
-                {
-                    status == "error" &&
-                    <div className="mt-20">
-                        <ErrorBanner />
-                    </div>
-                }
+                    </CardContent>
+                </Card>
             </div>
-        </div>
+            {/* </SubscriptionCheck> */}
+        </>
+
     );
 }
 
