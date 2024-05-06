@@ -18,6 +18,10 @@ export const booking_link = "https://doodle.com/meeting/participate/id/e3KOOVxe"
 
 export const pro_buy_link = "https://rpy.club/g/crHcMLMQmE"
 
+export const pro_updates_group = "https://chat.whatsapp.com/KAXRJJUx2lA7Ur7FJI4uio"
+
+export const pro_discussion_group = "https://chat.whatsapp.com/E2eTHZKEMOs01heOEuMA5C"
+
 //logos
 
 export const GoogleLogo = "https://upload.wikimedia.org/wikipedia/commons/thumb/2/2f/Google_2015_logo.svg/800px-Google_2015_logo.svg.png"
