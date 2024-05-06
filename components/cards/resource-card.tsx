@@ -2,7 +2,7 @@ import { cn } from "@/lib/utils";
 import { AlarmClock, Book, CalendarClock, Clock, Code2Icon, ExternalLink, FileVideo, FileVideo2, Link2, Pin, PlayCircleIcon, Radio, UserCircle, Video, VideoIcon } from "lucide-react";
 import Link from "next/link";
 
-function convertEpochToIST(epochSeconds) {
+export function convertEpochToIST(epochSeconds) {
     // Convert epoch seconds to milliseconds
     var date = new Date((epochSeconds - 19800) * 1000);
 

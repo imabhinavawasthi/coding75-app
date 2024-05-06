@@ -19,7 +19,6 @@ import {
 } from "@/components/ui/tabs"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import SubscriptionCheck from "./subscription-check";
-import { checkSubscription } from "../(api)/checkSubscription";
 
 interface classDetailsType {
     upcomingClasses: any;
@@ -27,7 +26,7 @@ interface classDetailsType {
     liveClass: any;
 }
 
-const LivePage = ({ topicname }) => {
+const LivePage = ({ topicname, noLive = false }) => {
 
     const [status, setStatus] = useState("loading")
 
@@ -90,13 +89,13 @@ const LivePage = ({ topicname }) => {
     useEffect(() => {
         fetchPastClassDetails()
     }, [])
-    
+
     return (
         <>
             <SubscriptionCheck type={"live"}>
                 <div className="md:container px-3">
                     <Card className="shadow-xl">
-                        <CardHeader>
+                        <CardHeader className={noLive ? "hidden" : ""}>
                             <CardTitle>
                                 {class_topics?.[topicname]} Live Classes
                             </CardTitle>
@@ -106,7 +105,7 @@ const LivePage = ({ topicname }) => {
                                 {
                                     status == "done" &&
                                     <>
-                                        <div>
+                                        <div className={noLive ? "hidden" : ""}>
                                             <h3 className="font-semibold mb-3 flex items-center"><Radio className="h-3 w-3 animate-ping mr-3 text-red-600" />Ongoing Live Class </h3>
                                             <Separator className="mb-5" />
                                             {
