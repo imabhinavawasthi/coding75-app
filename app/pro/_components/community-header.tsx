@@ -10,7 +10,7 @@ import { Skeleton } from '../../../components/ui/skeleton';
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuSeparator, DropdownMenuTrigger } from '../../../components/ui/dropdown-menu';
 import { Avatar, AvatarFallback, AvatarImage } from '../../../components/ui/avatar'
 import FancyTestimonialSliderPage from './testimonials-page';
-import coding75ProImage from "../../../public/images/coding75-pro.png"
+import coding75ProLiveImage from "../../../public/images/coding75-pro-live.png"
 import Image from 'next/image';
 import { pro_discussion_group, pro_updates_group } from '@/components/social-links';
 
@@ -177,7 +177,7 @@ export default function CommunityHeader() {
                                 </iframe> */}
                                 <Image
                                     className="cursor-pointer w-full h-full rounded-xl p-1"
-                                    src={coding75ProImage}
+                                    src={coding75ProLiveImage}
                                     alt="coding75-pro" />
                             </div>
                         </div>
