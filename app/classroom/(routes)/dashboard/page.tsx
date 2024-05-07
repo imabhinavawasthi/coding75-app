@@ -60,7 +60,7 @@ const ClassroomDashboard = () => {
             const { classes, error } = await fetchPastClasses("")
             const upcomingClassesDetails = await fetchUpcomingClassDetails()
             if (classes) {
-                if (classes?.[0]?.class_time_epoch <= Math.floor(new Date().getTime() / 1000) && + classes?.[0]?.class_duration + + classes?.[0]?.class_time_epoch >= Math.floor(new Date().getTime() / 1000)) {
+                if (classes?.[0]?.class_time_epoch <= Math.floor(new Date().getTime() / 1000) && (classes?.[0]?.class_duration*60 + classes?.[0]?.class_time_epoch) >= Math.floor(new Date().getTime() / 1000)) {
                     setClassDetails({
                         upcomingClasses: upcomingClassesDetails,
                         liveClass: classes[0],
