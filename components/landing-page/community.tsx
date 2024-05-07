@@ -1,6 +1,6 @@
 import { Briefcase, Code, Rocket, ScrollText, Users } from "lucide-react";
 import Link from "next/link";
-import coding75ProImage from "../../public/images/coding75-pro.png"
+import coding75ProLiveImage from "../../public/images/coding75-pro-live.png"
 import Image from "next/image";
 
 const Community = () => {
@@ -43,7 +43,7 @@ const Community = () => {
                             <Link href="/pro">
                                 <Image
                                     className="cursor-pointer w-full h-full rounded-xl p-1"
-                                    src={coding75ProImage}
+                                    src={coding75ProLiveImage}
                                     alt="coding75-pro" />
                             </Link>
                         </div>
