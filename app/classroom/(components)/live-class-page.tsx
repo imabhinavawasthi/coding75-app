@@ -1,7 +1,7 @@
 "use client"
 
 import { useEffect, useState } from "react";
-import { Book, Calendar, Clock, Code, ExternalLink, Gauge, Radio, Video } from "lucide-react";
+import { Book, Calendar, Clock, Code, ExternalLink, Gauge, Radio, User, Video } from "lucide-react";
 import PageNotFound from "@/components/page-not-found";
 import {
     Breadcrumb,
@@ -39,7 +39,7 @@ const LiveClassPage = ({ class_url }: any) => {
             }
             else {
                 setClassDetails(data?.[0])
-                if (data?.[0]?.class_time_epoch <= Math.floor(new Date().getTime() / 1000) && + data?.[0]?.class_duration + + data?.[0]?.class_time_epoch >= Math.floor(new Date().getTime() / 1000)) {
+                if (data?.[0]?.class_time_epoch <= Math.floor(new Date().getTime() / 1000) && (data?.[0]?.class_duration*60 + data?.[0]?.class_time_epoch) >= Math.floor(new Date().getTime() / 1000)) {
                     setClassStatus("live")
                 }
                 else if (data?.[0]?.class_time_epoch > Math.floor(new Date().getTime() / 1000)) {
@@ -95,6 +95,10 @@ const LiveClassPage = ({ class_url }: any) => {
                                                 <div className="mt-4 flex items-center text-sm text-gray-500">
                                                     <Calendar className="mr-1.5 h-5 w-5 flex-shrink-0 text-gray-400" aria-hidden="true" />
                                                     {convertEpochToIST(classDetails?.["class_time_epoch"])}
+                                                </div>
+                                                <div className="mt-4 flex items-center text-sm text-gray-500">
+                                                    <User className="mr-1.5 h-5 w-5 flex-shrink-0 text-gray-400" aria-hidden="true" />
+                                                    {classDetails?.["instructor_name"]}
                                                 </div>
                                                 <div className="mt-4 flex items-center text-sm text-gray-500">
                                                     <Gauge className="mr-1.5 h-5 w-5 flex-shrink-0 text-gray-400" aria-hidden="true" />
@@ -197,7 +201,7 @@ const LiveClassPage = ({ class_url }: any) => {
                                                 }
                                                 {classDetails?.class_notes ?
                                                     <a
-                                                        href={classDetails?.class_link}
+                                                        href={classDetails?.class_notes}
                                                         target="_blank"
                                                         className="hover:bg-white hover:text-blue-500 inline-flex items-center gap-2 rounded-md px-4 py-2 lg:text-lg text-sm text-gray-500 focus:relative"
                                                     >
