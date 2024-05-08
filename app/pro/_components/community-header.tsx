@@ -17,8 +17,34 @@ import { pro_discussion_group, pro_updates_group } from '@/components/social-lin
 export default function CommunityHeader() {
     const [user, setUser] = useState<any>(null)
     const [status, setStatus] = useState("loading")
+    const [launchDate, setLaunchDate] = useState<any>()
+    const [surveyFilled, setSurveyFilled] = useState(false)
+    const [courseInterest, setCourseInterest] = useState<any>({
+        yes: 0,
+        no: 0
+    })
+    const [DBID, setDBID] = useState<any>()
+    async function getLaunchDate() {
+        try {
+            let { data, error } = await supabase
+                .from('constants')
+                .select('id,launch_date,course_interest,course_not_interested')
 
-    const NavMenuCSS = 'bg-transparent hover:bg-transparent'
+            if (error) {
+                console.error('Error fetching data:', error);
+            }
+            else {
+                setLaunchDate(data?.[0]?.launch_date)
+                setDBID(data?.[0]?.id)
+                setCourseInterest({
+                    yes: data?.[0]?.course_interest,
+                    no: data?.[0]?.course_not_interested,
+                })
+            }
+        } catch (error) {
+            console.error('An error occurred:', error);
+        }
+    }
 
     async function handleLogOut(e: any) {
         e.preventDefault()
@@ -60,6 +86,7 @@ export default function CommunityHeader() {
     }
     useEffect(() => {
         checkUser()
+        getLaunchDate()
     }, [])
 
     return (
@@ -142,6 +169,15 @@ export default function CommunityHeader() {
                             </Link>
                         </div>
                     </div>
+                    {
+                        launchDate &&
+                        <p className='mt-4 mb-4 font-semibold tracking-tight'>
+                            Next Batch Starting on &nbsp;
+                            <span className='text-blue-600 font-bold'>{launchDate}</span> - &nbsp;
+                            <span className='text-green-600 font-bold'>Beginner Friendly</span>
+                            .
+                        </p>
+                    }
                     <div className='mb-8 mt-10 md:mt-0 md:flex items-center justify-center '>
                         <a className="flex justify-center items-center" target="_blank" href={pro_updates_group}>
                             <span className="ml-2 hover:underline flex items-center font-semibold">
@@ -151,7 +187,7 @@ export default function CommunityHeader() {
                                 Group
                             </span>
                         </a>
-                        <Users className='hidden md:block h-4 w-4 mx-3'/>
+                        <Users className='hidden md:block h-4 w-4 mx-3' />
                         <a className="md:mt-0 mt-3 flex justify-center items-center" target="_blank" href={pro_discussion_group}>
                             <span className="ml-2 hover:underline flex items-center font-semibold">
                                 Join coding75 Pro Discussion

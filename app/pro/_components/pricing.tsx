@@ -67,7 +67,7 @@ const Pricing = () => {
                         <p className="mb-5 font-light text-gray-500 sm:text-xl dark:text-gray-400">Our pocket-friendly approach makes high-quality coding education accessible for everyone.</p>
                     </div>
                     <div className="space-y-8 lg:grid lg:grid-cols-3 sm:gap-6 xl:gap-10 lg:space-y-0">
-                        <div className="flex flex-col p-6 mx-auto max-w-lg text-center text-gray-900 bg-white rounded-lg border border-gray-100 shadow dark:border-gray-600 xl:p-8 dark:bg-gray-800 dark:text-white">
+                        <div className="hidden md:flex flex-col p-6 mx-auto max-w-lg text-center text-gray-900 bg-white rounded-lg border border-gray-100 shadow dark:border-gray-600 xl:p-8 dark:bg-gray-800 dark:text-white">
                             <h3 className="mb-4 text-2xl font-semibold">Basic</h3>
                             <p className="font-light text-gray-500 sm:text-lg dark:text-gray-400">Get access to free resources and opportunity updates.</p>
                             <div className="flex justify-center items-baseline my-8">
@@ -127,7 +127,11 @@ const Pricing = () => {
                                         </li>
                                         <li className="flex items-center space-x-3">
                                             <Check className="flex-shrink-0 w-5 h-5 text-green-500 dark:text-green-400" />
-                                            <span>Live <span className="font-semibold">DSA and CP</span> classes</span>
+                                            <span>Live <span className="font-semibold">DSA Problem Solving</span> classes</span>
+                                        </li>
+                                        <li className="flex items-center space-x-3">
+                                            <Check className="flex-shrink-0 w-5 h-5 text-green-500 dark:text-green-400" />
+                                            <span>Live <span className="font-semibold">CP Contest</span> Discussions</span>
                                         </li>
                                         <li className="flex items-center space-x-3">
                                             <Check className="flex-shrink-0 w-5 h-5 text-green-500 dark:text-green-400" />
@@ -164,23 +168,23 @@ const Pricing = () => {
                                             </p>
                                             <span className="mt-3 inline-flex -space-x-px overflow-hidden rounded-md border bg-white shadow-sm">
                                                 <button
-                                                    onClick={(e)=>{
+                                                    onClick={(e) => {
                                                         e.preventDefault()
                                                         setSurveyFilled(true)
                                                         updateCourseInterest(true)
                                                         toast.info("Response Saved!")
-                                                    } }
+                                                    }}
                                                     className="inline-block px-4 py-2 text-sm font-medium text-gray-700 hover:bg-gray-50 focus:relative"
                                                 >
                                                     Yes ✅
                                                 </button>
                                                 <button
-                                                onClick={(e)=>{
-                                                    e.preventDefault()
-                                                    setSurveyFilled(true)
-                                                    updateCourseInterest(false)
-                                                    toast.info("Response Saved!")
-                                                } }
+                                                    onClick={(e) => {
+                                                        e.preventDefault()
+                                                        setSurveyFilled(true)
+                                                        updateCourseInterest(false)
+                                                        toast.info("Response Saved!")
+                                                    }}
                                                     className="inline-block px-4 py-2 text-sm font-medium text-gray-700 hover:bg-gray-50 focus:relative"
                                                 >
                                                     No ❌
@@ -191,8 +195,8 @@ const Pricing = () => {
                                     {
                                         surveyFilled == true &&
                                         <p className='mt-5 font-semibold tracking-tight'>
-                                                Response Saved, Thanks!!
-                                            </p>
+                                            Response Saved, Thanks!!
+                                        </p>
                                     }
                                 </div>
                             </div>
@@ -215,7 +219,11 @@ const Pricing = () => {
                                 </li>
                                 <li className="flex items-center space-x-3">
                                     <Check className="flex-shrink-0 w-5 h-5 text-green-500 dark:text-green-400" />
-                                    <span>Live <span className="font-semibold">DSA and CP</span> classes</span>
+                                    <span>Live <span className="font-semibold">DSA Problem Solving</span> classes</span>
+                                </li>
+                                <li className="flex items-center space-x-3">
+                                    <Check className="flex-shrink-0 w-5 h-5 text-green-500 dark:text-green-400" />
+                                    <span>Live <span className="font-semibold">CP Contest</span> Discussions</span>
                                 </li>
                                 <li className="flex items-center space-x-3">
                                     <Check className="flex-shrink-0 w-5 h-5 text-green-500 dark:text-green-400" />
