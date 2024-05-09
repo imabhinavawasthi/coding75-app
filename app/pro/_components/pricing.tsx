@@ -3,7 +3,7 @@
 import { pro_buy_link } from '@/components/social-links';
 import { Badge } from '@/components/ui/badge';
 import supabase from '@/supabase';
-import { Check, Gem, Rocket, X } from 'lucide-react';
+import { BadgePercent, Check, Gem, Rocket, X } from 'lucide-react';
 import { useEffect, useState } from 'react';
 import CountUp from 'react-countup';
 import { toast } from 'sonner';
@@ -112,7 +112,9 @@ const Pricing = () => {
                                     <div className='mb-2'><Badge className='bg-primary-100 text-primary-700 rounded-sm text-center'>Most Popular <Rocket className='h-4 w-4 ml-2' /></Badge></div>
                                     <h3 className="mb-4 text-2xl font-semibold">Pro</h3>
                                     <p className="font-light text-gray-500 sm:text-lg dark:text-gray-400">Relevant for beginners, live classes and mentorship sessions.</p>
-                                    <div className="flex justify-center items-baseline my-8">
+                                    <div className='mb-2 mt-8'><Badge className='bg-amber-100 text-amber-700 rounded-sm text-center'>45 % Off<BadgePercent className='h-4 w-4 ml-2' /></Badge></div>
+                                    <div className="flex justify-center items-center mb-8">
+                                        <span className="mr-2 text-2xl font-extrabold text-gray-600 line-through">₹899</span>
                                         <span className="mr-2 text-5xl font-extrabold">₹499</span>
                                         <span className="text-gray-500 dark:text-gray-400">/month</span>
                                     </div>
@@ -204,10 +206,12 @@ const Pricing = () => {
                         <div className="flex flex-col p-6 mx-auto max-w-lg text-center text-gray-900 bg-white rounded-lg border border-gray-100 shadow dark:border-gray-600 xl:p-8 dark:bg-gray-800 dark:text-white">
                             <h3 className="mb-4 text-2xl font-semibold">Self Placed</h3>
                             <p className="font-light text-gray-500 sm:text-lg dark:text-gray-400">A complete plan for your next one year preparation strategy.</p>
-                            <div className="flex justify-center items-baseline my-8">
-                                <span className="mr-2 text-5xl font-extrabold">₹3999</span>
-                                <span className="text-gray-500 dark:text-gray-400">/year</span>
-                            </div>
+                            <div className='mb-2 mt-8'><Badge className='bg-amber-100 text-amber-700 rounded-sm text-center'>50 % Off<BadgePercent className='h-4 w-4 ml-2' /></Badge></div>
+                            <div className="flex justify-center items-center mb-8">
+                                        <span className="mr-2 text-2xl font-extrabold text-gray-600 line-through">₹9999</span>
+                                        <span className="mr-2 text-5xl font-extrabold">₹4999</span>
+                                        <span className="text-gray-500 dark:text-gray-400">/year</span>
+                                    </div>
                             <ul role="list" className="mb-8 space-y-4 text-left">
                                 <li className="flex items-center space-x-3">
                                     <Check className="flex-shrink-0 w-5 h-5 text-green-500 dark:text-green-400" />

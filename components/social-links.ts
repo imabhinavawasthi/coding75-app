@@ -22,6 +22,8 @@ export const pro_updates_group = "https://chat.whatsapp.com/KAXRJJUx2lA7Ur7FJI4u
 
 export const pro_discussion_group = "https://chat.whatsapp.com/E2eTHZKEMOs01heOEuMA5C"
 
+export const pro_curriculum_pdf_link = "https://zettllhfmtvcunctalyo.supabase.co/storage/v1/object/public/resources/notes/coding75-pro-schedule.pdf"
+
 //logos
 
 export const GoogleLogo = "https://upload.wikimedia.org/wikipedia/commons/thumb/2/2f/Google_2015_logo.svg/800px-Google_2015_logo.svg.png"
