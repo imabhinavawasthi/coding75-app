@@ -3,7 +3,7 @@
 import { Logo } from '@/app/(dashboard)/_components/components/logo';
 import React, { useEffect, useState } from 'react';
 import Link from 'next/link';
-import { BookMarked, Flame, GraduationCap, Lightbulb, ListVideo, LogIn, LogOut, User, Users } from 'lucide-react';
+import { BookMarked, BookText, Flame, GraduationCap, Lightbulb, ListVideo, LogIn, LogOut, User, Users } from 'lucide-react';
 import supabase from '@/supabase';
 import { toast } from 'sonner';
 import { Skeleton } from '../../../components/ui/skeleton';
@@ -12,7 +12,7 @@ import { Avatar, AvatarFallback, AvatarImage } from '../../../components/ui/avat
 import FancyTestimonialSliderPage from './testimonials-page';
 import coding75ProLiveImage from "../../../public/images/coding75-pro-live.png"
 import Image from 'next/image';
-import { pro_discussion_group, pro_updates_group } from '@/components/social-links';
+import { pro_curriculum_pdf_link, pro_discussion_group, pro_updates_group } from '@/components/social-links';
 
 export default function CommunityHeader() {
     const [user, setUser] = useState<any>(null)
@@ -167,6 +167,14 @@ export default function CommunityHeader() {
                                 <GraduationCap className="mr-2 -ml-1 w-5 h-5" />
                                 Join Now
                             </Link>
+                        </div>
+                    </div>
+                    <div className="flex flex-col mb-4 lg:mb-8 space-y-4 sm:flex-row sm:justify-center sm:space-y-0 sm:space-x-4">
+                        <div className='hover:animate-background rounded-xl bg-gradient-to-r from-blue-300 via-cyan-500 to-gray-600 p-0.5 shadow-xl transition hover:bg-[length:400%_400%] hover:shadow-sm hover:[animation-duration:_4s]'>
+                            <a target='_blank' href={pro_curriculum_pdf_link} className="w-full bg-white rounded-xl inline-flex justify-center items-center py-3 px-5 text-base font-medium text-center text-gray-900 hover:bg-gray-100 focus:ring-4 focus:ring-gray-100 dark:text-white dark:border-gray-700 dark:hover:bg-gray-700 dark:focus:ring-gray-800">
+                                <BookText className="mr-2 -ml-1 w-5 h-5" />
+                                Read Curriculum and Schedule of coding75 Pro Batch
+                            </a>
                         </div>
                     </div>
                     {
