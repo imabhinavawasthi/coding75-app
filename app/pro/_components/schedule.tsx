@@ -5,6 +5,8 @@ import {
     AccordionTrigger,
 } from "@/components/ui/accordion"
 import AccordianPro from "./accordian-pro";
+import Link from "next/link";
+import { GraduationCap } from "lucide-react";
 
 const ProSchedule = () => {
     return (
@@ -15,8 +17,8 @@ const ProSchedule = () => {
                         <h2 className="mb-4 lg:text-6xl md:text-4xl text-4xl  text-center text-gray-900 tracking-tight font-extrabold dark:text-white">Schedule</h2>
                         <p className="text-left text-gray-500 sm:text-xl dark:text-gray-400">Topicwise schedule of all the topics that will be covered in the coding75 Pro Subscription.</p>
                     </div>
-                    <Accordion type="multiple" defaultValue={["mentorship", "dsa"]} className="w-full">
-                        <AccordionItem value="mentorship" >
+                    <Accordion type="multiple" defaultValue={["mentorship", "dsa","cp","projects","cs"]} className="w-full">
+                        <AccordionItem className="md:text-2xl text-xl" value="mentorship" >
                             <AccordionTrigger>1:1 Personalized Mentorship</AccordionTrigger>
                             <AccordionContent>
                                 <AccordianPro heading={"1:1 Mentorship Session"}>
@@ -39,7 +41,7 @@ const ProSchedule = () => {
                                 </AccordianPro>
                             </AccordionContent>
                         </AccordionItem>
-                        <AccordionItem value="dsa" >
+                        <AccordionItem className="md:text-2xl text-xl" value="dsa" >
                             <AccordionTrigger>Data Structures and Algorithms</AccordionTrigger>
                             <AccordionContent>
                                 <AccordianPro heading={"Class Schedule"}>
@@ -208,7 +210,7 @@ const ProSchedule = () => {
                                 </AccordianPro>
                             </AccordionContent>
                         </AccordionItem>
-                        <AccordionItem value="cp" >
+                        <AccordionItem className="md:text-2xl text-xl" value="cp" >
                             <AccordionTrigger>Competitive Programming</AccordionTrigger>
                             <AccordionContent>
                                 <AccordianPro heading={"Class Schedule"}>
@@ -261,7 +263,7 @@ const ProSchedule = () => {
                                 </AccordianPro>
                             </AccordionContent>
                         </AccordionItem>
-                        <AccordionItem value="projects" >
+                        <AccordionItem className="md:text-2xl text-xl" value="projects" >
                             <AccordionTrigger>Project Building</AccordionTrigger>
                             <AccordionContent>
                                 <AccordianPro heading={"Class Schedule"}>
@@ -309,7 +311,7 @@ const ProSchedule = () => {
                                 </AccordianPro>
                             </AccordionContent>
                         </AccordionItem>
-                        <AccordionItem value="cs" >
+                        <AccordionItem className="md:text-2xl text-xl" value="cs" >
                             <AccordionTrigger>CS Fundamentals</AccordionTrigger>
                             <AccordionContent>
                                 <AccordianPro heading={"Class Schedule"}>
@@ -400,6 +402,14 @@ const ProSchedule = () => {
                             </AccordionContent>
                         </AccordionItem>
                     </Accordion>
+                </div>
+                <div className="flex justify-center items-center flex-col space-y-4 sm:flex-row sm:justify-center sm:space-y-0 sm:space-x-4">
+                    <div className='lg:w-1/4 md:w-1/2 w-3/4 hover:animate-background rounded-xl bg-gradient-to-r from-green-300 via-blue-500 to-purple-600 p-0.5 shadow-xl transition hover:bg-[length:400%_400%] hover:shadow-sm hover:[animation-duration:_4s]'>
+                        <Link href="#pricing" className="w-full bg-white rounded-xl inline-flex justify-center items-center py-3 px-5 text-base font-medium text-center text-gray-900 hover:bg-gray-100 focus:ring-4 focus:ring-gray-100 dark:text-white dark:border-gray-700 dark:hover:bg-gray-700 dark:focus:ring-gray-800">
+                            <GraduationCap className="mr-2 -ml-1 w-5 h-5" />
+                            Subscribe to coding75 Pro 
+                        </Link>
+                    </div>
                 </div>
             </section>
         </div>

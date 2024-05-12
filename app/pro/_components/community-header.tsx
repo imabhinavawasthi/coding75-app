@@ -12,7 +12,7 @@ import { Avatar, AvatarFallback, AvatarImage } from '../../../components/ui/avat
 import FancyTestimonialSliderPage from './testimonials-page';
 import coding75ProLiveImage from "../../../public/images/coding75-pro-live.png"
 import Image from 'next/image';
-import { pro_curriculum_pdf_link, pro_discussion_group, pro_updates_group, whatsapp_link } from '@/components/social-links';
+import { pro_curriculum_pdf_link, pro_details_video, pro_discussion_group, pro_updates_group, whatsapp_link } from '@/components/social-links';
 import { Badge } from '@/components/ui/badge';
 import ProButtonCard from './button-card';
 
@@ -199,17 +199,18 @@ export default function CommunityHeader() {
                     } */}
                     <div className="lg:mt-0 mt-10 md:mb-10 mb-5 flex justify-center items-center lg:col-span-6">
                             <div className="w-[calc(90%)] aspect-video hover:animate-background rounded-xl bg-gradient-to-r from-green-300 via-blue-500 to-purple-600 p-0.5 shadow-xl transition hover:bg-[length:400%_400%] hover:shadow-sm hover:[animation-duration:_4s] z-40">
-                                {/* <iframe
+                                <iframe
                                     className="w-full h-full rounded-xl p-1"
-                                    src="https://www.youtube.com/embed/q9oxkhweXY4?si=zqQDV5F_tK2kCP-E"
+                                    src={pro_details_video}
                                     title="YouTube video player"
                                     allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-                                    allowFullScreen>
-                                </iframe> */}
-                                <Image
+                                    allowFullScreen
+                                    >
+                                </iframe>
+                                {/* <Image
                                     className="cursor-pointer w-full h-full rounded-xl p-1"
                                     src={coding75ProLiveImage}
-                                    alt="coding75-pro" />
+                                    alt="coding75-pro" /> */}
                             </div>
                         </div>
                     <div className='mt-3 grid md:grid-cols-4 grid-cols-2 gap-x-5 gap-y-2'>

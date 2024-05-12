@@ -26,6 +26,8 @@ export const pro_curriculum_pdf_link = "https://zettllhfmtvcunctalyo.supabase.co
 
 export const pro_schedule_pdf_link = "https://zettllhfmtvcunctalyo.supabase.co/storage/v1/object/public/resources/notes/coding75-pro-schedule.pdf"
 
+export const pro_details_video = "https://www.youtube.com/embed/Kc7QBXQJ82M?si=eudVISrQgHar9COX?autoplay=1"
+
 //logos
 
 export const GoogleLogo = "https://upload.wikimedia.org/wikipedia/commons/thumb/2/2f/Google_2015_logo.svg/800px-Google_2015_logo.svg.png"
