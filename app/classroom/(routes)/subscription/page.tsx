@@ -166,11 +166,11 @@ const SubscriptionDetailsPage = () => {
                                                     </Link>
                                                 </div>
                                                 {
-                                                    launchDate &&
+                                                    // launchDate &&
                                                     <p className='text-center mt-4 font-semibold tracking-tight'>
-                                                        Next Batch Starting on &nbsp;
-                                                        <span className='text-blue-600 font-bold'>{launchDate}</span> -
-                                                        <span className='text-green-600 font-bold'>&nbsp;Beginner Friendly</span>
+                                                        All the classes are Beginner Friendly&nbsp;
+                                                        {/* <span className='text-blue-600 font-bold'>{launchDate}</span> - */}
+                                                        <span className='text-green-600 font-bold'>&nbsp;Join Now!</span>
                                                         .
                                                     </p>
                                                 }
