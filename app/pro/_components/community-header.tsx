@@ -177,7 +177,7 @@ export default function CommunityHeader() {
                             </a>
                         </div>
                     </div>
-                    {
+                    {/* {
                         launchDate &&
                         <p className='mt-4 mb-4 font-semibold tracking-tight'>
                             Next Batch Starting on &nbsp;
@@ -185,7 +185,7 @@ export default function CommunityHeader() {
                             <span className='text-green-600 font-bold'>Beginner Friendly</span>
                             .
                         </p>
-                    }
+                    } */}
                     <div className='mb-8 mt-10 md:mt-0 md:flex items-center justify-center '>
                         <a className="flex justify-center items-center" target="_blank" href={pro_updates_group}>
                             <span className="ml-2 hover:underline flex items-center font-semibold">

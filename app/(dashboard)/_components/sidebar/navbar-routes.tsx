@@ -378,8 +378,11 @@ export const NavbarRoutes = ({ isLogo = false }: any) => {
               </div>
             </DropdownMenuTrigger>
             <DropdownMenuContent align="end">
+            <Link href="/classroom">
+                <DropdownMenuItem className="cursor-pointer px-5 py-3">Live Classes & 1:1 Mentorship</DropdownMenuItem>
+              </Link>
               <Link href="/pro">
-                <DropdownMenuItem className="cursor-pointer px-5 py-3">coding75 Pro - Launching Soon 🚀</DropdownMenuItem>
+                <DropdownMenuItem className="cursor-pointer px-5 py-3">coding75 Pro is Live 🚀</DropdownMenuItem>
               </Link>
               <Separator/>
               <DropdownMenuItem className="cursor-pointer px-5 py-3">Welcome to coding75!</DropdownMenuItem>
