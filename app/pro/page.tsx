@@ -5,6 +5,7 @@ import Features from "./_components/features";
 import Pricing from "./_components/pricing";
 import TeamSection from "./_components/team-section";
 import { Metadata } from "next";
+import ProSchedule from "./_components/schedule";
 
 export const metadata: Metadata = {
   title: 'coding75 Pro 🚀',
@@ -16,6 +17,9 @@ const CommunityPage = () => {
     <div className="bg-white scroll-smooth">
       <div id="header">
         <CommunityHeader />
+      </div>
+      <div id="schedule">
+        <ProSchedule/>
       </div>
       <div id="features">
         <Features />

@@ -6,8 +6,8 @@ const Features = () => {
             <section className="md:container px-5">
                 <div className="py-8 px-4 mx-auto max-w-screen-xl sm:py-16 lg:px-6">
                     <div className="mb-8 lg:mb-16">
-                        <h2 className="mb-4 lg:text-6xl md:text-4xl text-4xl  text-center text-gray-900 tracking-tight font-extrabold dark:text-white">Why Coding75?</h2>
-                        <p className="text-left text-gray-500 sm:text-xl dark:text-gray-400">Here at Coding75, we prioritize the development of students in the dynamic world of coding and fast growing industry, making it your one-stop destination for a well-rounded coding education</p>
+                        <h2 className="mb-4 lg:text-6xl md:text-4xl text-4xl  text-center text-gray-900 tracking-tight font-extrabold dark:text-white">Why coding75?</h2>
+                        <p className="text-left text-gray-500 sm:text-xl dark:text-gray-400">Here at coding75, we prioritize the development of students in the dynamic world of coding and fast growing industry, making it your one-stop destination for a well-rounded coding education</p>
                     </div>
                     <div className="space-y-8 md:grid md:grid-cols-2 lg:grid-cols-3 md:gap-12 md:space-y-0">
                         <div>
