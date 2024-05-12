@@ -41,12 +41,12 @@ const Community = () => {
                                 allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
                                 allowFullScreen>
                             </iframe>
-                            <Link href="/pro">
+                            {/* <Link href="/pro">
                                 <Image
                                     className="cursor-pointer w-full h-full rounded-xl p-1"
                                     src={coding75ProLiveImage}
                                     alt="coding75-pro" />
-                            </Link>
+                            </Link> */}
                         </div>
                     </div>
                 </div>

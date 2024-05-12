@@ -11,8 +11,9 @@ const Banner = () => {
                         </svg>
                         <span className="sr-only">Light bulb</span>
                     </span>
-                    <span>{"We are providing free access to our Pro Classroom and all the live classes for first 10 days. After this, you have to buy our Pro Subscription to access classes and other pro features. "}
-                        <Link target="_blank" className="text-blue-600 underline" href={"/pro"}>Pro Details Here</Link>
+                    <span>
+                        {"Beginner Friendly Classes - Batches are Running. Enroll Now! Class Recording & 1:1 Mentorship Sessions Available. "}
+                        <Link className="text-blue-600 underline" href={"/pro"}>Subscribe Now!</Link>
                     </span>
                 </p>
             </div>
