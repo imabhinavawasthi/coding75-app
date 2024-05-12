@@ -14,6 +14,7 @@ import coding75ProLiveImage from "../../../public/images/coding75-pro-live.png"
 import Image from 'next/image';
 import { pro_curriculum_pdf_link, pro_discussion_group, pro_updates_group, whatsapp_link } from '@/components/social-links';
 import { Badge } from '@/components/ui/badge';
+import ProButtonCard from './button-card';
 
 export default function CommunityHeader() {
     const [user, setUser] = useState<any>(null)
@@ -158,7 +159,7 @@ export default function CommunityHeader() {
                     <h1 className="mb-4 text-4xl font-extrabold tracking-tight leading-none text-gray-900 md:text-5xl lg:text-6xl dark:text-white">
                         <strong><span className='text-transparent bg-clip-text hover:animate-background bg-gradient-to-r from-green-500 via-blue-500 to-purple-600 transition hover:bg-[length:400%_400%] hover:[animation-duration:_4s] hover:cursor-pointer'>Coding75 Pro   </span>  🚀.</strong>
                     </h1>
-                    <p className="mb-8 text-lg font-normal text-gray-500 lg:text-xl sm:px-16 xl:px-48 dark:text-gray-400">Learn from the <strong>Experts</strong>, Engage with <strong>Peers</strong>, Be a <strong>Pro</strong>!</p>
+                    <p className="mb-8 text-lg font-normal text-gray-500 lg:text-xl sm:px-16 xl:px-48 dark:text-gray-400">Join for <strong>1:1 Mentorship</strong>, Live <strong>DSA & CP</strong>, Mock <strong>Interviews</strong>, Live <strong>Project Building</strong>, and CS <strong>Fundamentals</strong>!</p>
                     <div className="flex flex-col mb-4 lg:mb-8 space-y-4 sm:flex-row sm:justify-center sm:space-y-0 sm:space-x-4">
                         <Link href="/classroom" className="shadow-2xl inline-flex justify-center items-center py-3 px-5 text-base font-medium text-center text-white rounded-lg bg-primary-700 hover:bg-primary-800 focus:ring-4 focus:ring-primary-300 dark:focus:ring-primary-900">
                             <ListVideo className="mr-2 -ml-1 w-5 h-5" /> Visit Classroom
@@ -196,6 +197,35 @@ export default function CommunityHeader() {
                             .
                         </p>
                     } */}
+                    <div className="lg:mt-0 mt-10 md:mb-10 mb-5 flex justify-center items-center lg:col-span-6">
+                            <div className="w-[calc(90%)] aspect-video hover:animate-background rounded-xl bg-gradient-to-r from-green-300 via-blue-500 to-purple-600 p-0.5 shadow-xl transition hover:bg-[length:400%_400%] hover:shadow-sm hover:[animation-duration:_4s] z-40">
+                                {/* <iframe
+                                    className="w-full h-full rounded-xl p-1"
+                                    src="https://www.youtube.com/embed/q9oxkhweXY4?si=zqQDV5F_tK2kCP-E"
+                                    title="YouTube video player"
+                                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                                    allowFullScreen>
+                                </iframe> */}
+                                <Image
+                                    className="cursor-pointer w-full h-full rounded-xl p-1"
+                                    src={coding75ProLiveImage}
+                                    alt="coding75-pro" />
+                            </div>
+                        </div>
+                    <div className='mt-3 grid md:grid-cols-4 grid-cols-2 gap-x-5 gap-y-2'>
+                        <ProButtonCard text="✅ 1:1 Mentorship Sessions" />
+                        <ProButtonCard text="✅ 1:1 Mock Interviews" />
+                        <ProButtonCard text="✅ 1:1 Resume Review" />
+                        <ProButtonCard text="✅ Live DSA Classes" />
+                        <ProButtonCard text="✅ Live CP Contest Discussions" />
+                        <ProButtonCard text="✅ Live Project Building Classes" />
+                        <ProButtonCard text="✅ CS Fundamental Classes" />
+                        <ProButtonCard text="✅ Class Recording Available" />
+                        <ProButtonCard text="✅ Beginner Friendly" />
+                        <ProButtonCard text="✅ Interview Preparation" />
+                        <ProButtonCard text="✅ Doubt Support" />
+                        <ProButtonCard text="✅ Pocket Friendly Only @ ₹499" />
+                    </div>
                     <div className='mb-2 mt-8'><Badge className='bg-amber-100 text-amber-700 rounded-sm text-center'>Still have queires? Contact us 👇🏻</Badge></div>
                     <div className='flex items-center justify-center'>
                         <a className="md:mb-5 flex items-center" target="_blank" href={whatsapp_link}>
@@ -226,23 +256,6 @@ export default function CommunityHeader() {
                                 Group
                             </span>
                         </a>
-                    </div>
-                    <div>
-                        <div className="lg:mt-0 mt-10 md:mb-10 mb-5 flex justify-center items-center lg:col-span-6">
-                            <div className="w-[calc(90%)] aspect-video hover:animate-background rounded-xl bg-gradient-to-r from-green-300 via-blue-500 to-purple-600 p-0.5 shadow-xl transition hover:bg-[length:400%_400%] hover:shadow-sm hover:[animation-duration:_4s] z-40">
-                                {/* <iframe
-                                    className="w-full h-full rounded-xl p-1"
-                                    src="https://www.youtube.com/embed/q9oxkhweXY4?si=zqQDV5F_tK2kCP-E"
-                                    title="YouTube video player"
-                                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-                                    allowFullScreen>
-                                </iframe> */}
-                                <Image
-                                    className="cursor-pointer w-full h-full rounded-xl p-1"
-                                    src={coding75ProLiveImage}
-                                    alt="coding75-pro" />
-                            </div>
-                        </div>
                     </div>
                     <div>
                         <span className="font-semibold text-gray-400 uppercase mb-5">Words that matter</span>
