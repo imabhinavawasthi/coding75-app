@@ -94,7 +94,6 @@ const ClassroomDashboard = () => {
 
     return (
         <div className="md:container px-3">
-            <Banner />
             <div className="mb-5 grid md:grid-cols-10 grid-col-8 gap-x-5">
                 <div className="md:col-span-6 lg:col-span-8">
                     <ClassroomHeader />
