@@ -197,22 +197,6 @@ export default function CommunityHeader() {
                             .
                         </p>
                     } */}
-                    <div className="lg:mt-0 mt-10 md:mb-10 mb-5 flex justify-center items-center lg:col-span-6">
-                            <div className="w-[calc(90%)] aspect-video hover:animate-background rounded-xl bg-gradient-to-r from-green-300 via-blue-500 to-purple-600 p-0.5 shadow-xl transition hover:bg-[length:400%_400%] hover:shadow-sm hover:[animation-duration:_4s] z-40">
-                                <iframe
-                                    className="w-full h-full rounded-xl p-1"
-                                    src={pro_details_video}
-                                    title="YouTube video player"
-                                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-                                    allowFullScreen
-                                    >
-                                </iframe>
-                                {/* <Image
-                                    className="cursor-pointer w-full h-full rounded-xl p-1"
-                                    src={coding75ProLiveImage}
-                                    alt="coding75-pro" /> */}
-                            </div>
-                        </div>
                     <div className='mt-3 grid md:grid-cols-4 grid-cols-2 gap-x-5 gap-y-2'>
                         <ProButtonCard text="✅ 1:1 Mentorship Sessions" />
                         <ProButtonCard text="✅ 1:1 Mock Interviews" />
@@ -237,7 +221,6 @@ export default function CommunityHeader() {
                                 Support
                             </span>
                         </a>
-
                     </div>
                     <div className='mb-8 mt-10 md:mt-0 md:flex items-center justify-center '>
                         <a className="flex justify-center items-center" target="_blank" href={pro_updates_group}>
@@ -257,6 +240,22 @@ export default function CommunityHeader() {
                                 Group
                             </span>
                         </a>
+                    </div>
+                    <div className="lg:mt-0 mt-10 md:mb-10 mb-5 flex justify-center items-center lg:col-span-6">
+                        <div className="w-[calc(90%)] aspect-video hover:animate-background rounded-xl bg-gradient-to-r from-green-300 via-blue-500 to-purple-600 p-0.5 shadow-xl transition hover:bg-[length:400%_400%] hover:shadow-sm hover:[animation-duration:_4s] z-40">
+                            <iframe
+                                className="w-full h-full rounded-xl p-1"
+                                src={pro_details_video}
+                                title="YouTube video player"
+                                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                                allowFullScreen
+                            >
+                            </iframe>
+                            {/* <Image
+                                    className="cursor-pointer w-full h-full rounded-xl p-1"
+                                    src={coding75ProLiveImage}
+                                    alt="coding75-pro" /> */}
+                        </div>
                     </div>
                     <div>
                         <span className="font-semibold text-gray-400 uppercase mb-5">Words that matter</span>

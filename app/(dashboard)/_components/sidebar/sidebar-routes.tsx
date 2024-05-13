@@ -69,6 +69,11 @@ const classroomRoutes = [
     href: "/classroom/dashboard",
   },
   {
+    icon: Calendar,
+    label: "Class Schedule",
+    href: "/classroom/schedule",
+  },
+  {
     icon: ListVideo,
     label: "Live Classes",
     href: "/classroom/live",
