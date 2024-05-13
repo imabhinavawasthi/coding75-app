@@ -95,7 +95,6 @@ const LivePage = ({ topicname, noLive = false }) => {
         <>
             <SubscriptionCheck type={"live"}>
             <div className="md:container px-3">
-            <Banner />
                 <Card className="shadow-xl">
                     <CardHeader className={noLive ? "hidden" : ""}>
                         <CardTitle>

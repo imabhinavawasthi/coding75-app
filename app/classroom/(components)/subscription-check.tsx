@@ -19,6 +19,7 @@ import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
 import { GraduationCap, Lock } from "lucide-react";
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
+import Banner from "./banner";
 
 const SubscriptionCheck = ({
     children, type
@@ -65,6 +66,7 @@ const SubscriptionCheck = ({
                             :
                             <>
                                 <div className="md:container px-3 mt-5 mb-5">
+                                    <Banner/>
                                     <Alert>
                                         <GraduationCap className="h-4 w-4" />
                                         <AlertTitle>You are not subscribed to coding75 Pro!</AlertTitle>
