@@ -153,7 +153,7 @@ const Pricing = () => {
                                         </li>
                                     </ul>
                                     <a href={pro_buy_link} target='_blank' className="text-white bg-primary-600 hover:bg-primary-700 focus:ring-4 focus:ring-primary-200 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:text-white  dark:focus:ring-primary-900">Join Now</a>
-                                    {
+                                    {/* {
                                         launchDate &&
                                         <p className='mt-4 font-semibold tracking-tight'>
                                             Next Batch Starting on &nbsp;
@@ -161,7 +161,13 @@ const Pricing = () => {
                                             <span className='text-green-600 font-bold'>Beginner Friendly</span>
                                             .
                                         </p>
-                                    }
+                                    } */}
+                                    <p className='mt-4 mb-4 font-semibold tracking-tight'>
+                                        Beginner Friendly batches are running &nbsp;
+                                        <span className='text-blue-600 font-bold'>Live Class Recording and 1:1 Sessions Available </span> - &nbsp;
+                                        <span className='text-green-600 font-bold'>Join Now</span>
+                                        .
+                                    </p>
                                     <div className="mt-3 mb-3 flex justify-center items-center text-center">
                                         <p className="flex items-center">Still have questions?
                                             <a className="flex items-center" target="_blank" href={whatsapp_link}>
@@ -262,8 +268,8 @@ const Pricing = () => {
                                     <span>Personalised<span className="font-semibold"> preparation plan</span> for 1 year</span>
                                 </li>
                             </ul>
-                            <a href={pro_buy_link} target='_blank' className="text-white bg-primary-600 hover:bg-primary-700 focus:ring-4 focus:ring-primary-200 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:text-white  dark:focus:ring-primary-900">Join Now</a>
-                            {
+                            <a target='_blank' className="text-white bg-primary-600 hover:bg-primary-700 focus:ring-4 focus:ring-primary-200 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:text-white  dark:focus:ring-primary-900">Next Batch Soon</a>
+                            {/* {
                                 launchDate &&
                                 <p className='mt-4 font-semibold tracking-tight'>
                                     Next Batch Starting on &nbsp;
@@ -271,7 +277,13 @@ const Pricing = () => {
                                     <span className='text-amber-600 font-bold'>1:1 Personalized Plan Included</span>
                                     .
                                 </p>
-                            }
+                            } */}
+                            <p className='mt-4 mb-4 font-semibold tracking-tight'>
+                                        All the slots for personalised long term mentorship plans are filled &nbsp;
+                                        <span className='text-blue-600 font-bold'>Stay Updated </span> - &nbsp;
+                                        <span className='text-green-600 font-bold'>Launching Next Batch Soon</span>
+                                        .
+                                    </p>
                         </div>
                     </div>
                 </div>
