@@ -19,7 +19,7 @@ import DashboardCard from "@/components/cards/dashboard-card";
 import ClassroomHeader from "../../(components)/classroom-header";
 import Image from "next/image";
 import WhatsappSupport from "../../../../public/images/whatsapp-support.png"
-import { pro_discussion_group, pro_updates_group, whatsapp_link } from "@/components/social-links";
+import { pro_cs_notes, pro_discussion_group, pro_dsa_notes, pro_projects_notes, pro_projects_plan, pro_updates_group, whatsapp_link } from "@/components/social-links";
 import SubscriptionCheck from "../../(components)/subscription-check";
 
 interface classDetailsType {
@@ -123,7 +123,7 @@ const ClassroomDashboard = () => {
                     </span>
                 </a>
             </div>
-            <div className="flex flex-col mb-4 lg:mb-8 space-y-4 sm:flex-row sm:justify-center sm:space-y-0 sm:space-x-4">
+            <div className="flex flex-col mb-4 lg:mb-4 space-y-4 sm:flex-row sm:justify-center sm:space-y-0 sm:space-x-4">
                 <Link className="w-full" href={"/pro/details"}>
                     <Button variant={"outline"} className="w-full flex items-center">
                         <BookText className="mr-2 -ml-1 w-5 h-5" />
@@ -136,6 +136,32 @@ const ClassroomDashboard = () => {
                         Check Complete Weekly Schedule
                     </Button>
                 </Link>
+                <Link className="w-full" href={"/pro/projects-plan"} >
+                    <Button variant={"outline"} className="w-full flex items-center">
+                        <Code2 className="mr-2 -ml-1 w-5 h-5" />
+                        Project Building Plan
+                    </Button>
+                </Link>
+            </div>
+            <div className="flex flex-col mb-4 lg:mb-8 space-y-4 sm:flex-row sm:justify-center sm:space-y-0 sm:space-x-4">
+                <a className="w-full" target="_blank" href={pro_dsa_notes}>
+                    <Button variant={"basic"} className="w-full flex items-center">
+                        <BookText className="mr-2 -ml-1 w-5 h-5" />
+                        DSA Class Notes
+                    </Button>
+                </a>
+                <a className="w-full" target="_blank" href={pro_projects_notes}>
+                    <Button variant={"basic"} className="w-full flex items-center">
+                        <BookText className="mr-2 -ml-1 w-5 h-5" />
+                        Projects Class Notes
+                    </Button>
+                </a>
+                <a className="w-full" target="_blank" href={pro_cs_notes}>
+                    <Button variant={"basic"} className="w-full flex items-center">
+                        <BookText className="mr-2 -ml-1 w-5 h-5" />
+                        CS Fundamental Class Notes
+                    </Button>
+                </a>
             </div>
             <div className="grid mb-5 md:grid-cols-4 grid-cols-2 gap-x-5 gap-y-5">
                 <div className="border-2 border-yellow-400 rounded-lg">

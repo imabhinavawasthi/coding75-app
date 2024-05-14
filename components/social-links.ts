@@ -26,7 +26,15 @@ export const pro_curriculum_pdf_link = "https://zettllhfmtvcunctalyo.supabase.co
 
 export const pro_schedule_pdf_link = "https://zettllhfmtvcunctalyo.supabase.co/storage/v1/object/public/resources/notes/coding75-pro-schedule.pdf"
 
-export const pro_details_video = "https://www.youtube.com/embed/Kc7QBXQJ82M?si=eudVISrQgHar9COX?autoplay=1"
+export const pro_details_video = "https://www.youtube.com/embed/eUESza1d9Ac?si=4JwgQtxdhJWZW7WE?autoplay=1"
+
+export const pro_projects_plan = "https://zettllhfmtvcunctalyo.supabase.co/storage/v1/object/public/resources/notes/coding75-pro-project-plan.pdf"
+
+export const pro_dsa_notes = "https://docs.google.com/document/d/1RwzwIyx2GDuUiUNLLwqJdmybsMMrRmk9Kw1d2yAKK0g/edit?usp=sharing"
+
+export const pro_projects_notes = "https://docs.google.com/document/d/1Gz400ChhsjCVkqYovhelKCTy9JwFzTytbu6pSdBIKDk/edit?usp=sharing"
+
+export const pro_cs_notes = "https://docs.google.com/document/d/1YjGb3lwE5wUg-Txy1B4eMobxzYquExC4wyA2nPA9f1M/edit?usp=sharing"
 
 //logos
 
