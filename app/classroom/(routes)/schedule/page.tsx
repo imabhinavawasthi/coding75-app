@@ -4,9 +4,9 @@ import SchedulePage from "./schedule-page";
 const Schedule = () => {
     return (
         <div>
-            <SubscriptionCheck type={"live"}>
+            {/* <SubscriptionCheck type={"live"}> */}
                 <SchedulePage />
-            </SubscriptionCheck>
+            {/* </SubscriptionCheck> */}
         </div>
     );
 }
