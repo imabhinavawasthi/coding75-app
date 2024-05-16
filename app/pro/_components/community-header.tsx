@@ -3,7 +3,7 @@
 import { Logo } from '@/app/(dashboard)/_components/components/logo';
 import React, { useEffect, useState } from 'react';
 import Link from 'next/link';
-import { BadgePercent, BookMarked, BookText, Flame, GraduationCap, Lightbulb, ListVideo, LogIn, LogOut, Route, User, Users } from 'lucide-react';
+import { BadgePercent, BookMarked, BookText, Flame, GraduationCap, Lightbulb, ListVideo, LogIn, LogOut, MessageCircle, Route, User, Users } from 'lucide-react';
 import supabase from '@/supabase';
 import { toast } from 'sonner';
 import { Skeleton } from '../../../components/ui/skeleton';
@@ -153,8 +153,8 @@ export default function CommunityHeader() {
                 </div>
                 <div className="py-16 relative px-4 mx-auto max-w-screen-xl text-center lg:py-16 lg:px-12">
                     <div className="inline-flex justify-between items-center py-1 px-1 pr-4 mb-7 text-sm text-gray-700 bg-gray-100 rounded-full dark:bg-gray-800 dark:text-white hover:bg-gray-200 dark:hover:bg-gray-700" role="alert">
-                        <span className="text-xs bg-primary-600 rounded-full text-white px-4 py-1.5 mr-3">Recently Added</span> <span className="text-sm font-medium">1:1 Mock Interviews</span>
-                        <Flame className='h-4 w-4 ml-3' />
+                        <a href={whatsapp_link} target='_blank'><span className="text-xs bg-primary-600 rounded-full text-white px-4 py-1.5 mr-3">Have Queries?</span> <span className="text-sm font-medium">Contact WhatsApp Support </span></a>
+                        <MessageCircle className='h-4 w-4 ml-3' />
                     </div>
                     <h1 className="mb-4 text-4xl font-extrabold tracking-tight leading-none text-gray-900 md:text-5xl lg:text-6xl dark:text-white">
                         <strong><span className='text-transparent bg-clip-text hover:animate-background bg-gradient-to-r from-green-500 via-blue-500 to-purple-600 transition hover:bg-[length:400%_400%] hover:[animation-duration:_4s] hover:cursor-pointer'>Coding75 Pro Bootcamp</span>  🚀.</strong>
