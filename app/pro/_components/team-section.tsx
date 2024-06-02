@@ -1,6 +1,6 @@
 /* eslint-disable @next/next/no-img-element */
 
-import { LinkedInLogoIcon } from "@radix-ui/react-icons";
+import { LinkedInLogoIcon, TwitterLogoIcon } from "@radix-ui/react-icons";
 
 //pictures
 import surajPic from "../../../public/pictures/suraj.jpeg"
@@ -9,6 +9,8 @@ import abhinavPic from "../../../public/pictures/abhinav.jpeg"
 import amarPic from "../../../public/pictures/amar.jpeg"
 import harshitPic from "../../../public/pictures/harshit.png"
 import jwalaPic from "../../../public/pictures/jwala.jpeg"
+import abhayPic from "../../../public/pictures/abhay.jpeg"
+import yashPandeyPic from "../../../public/pictures/yash-pandey.jpeg"
 
 //logos
 import inducedAI from "../../../public/logos/inducedai.png"
@@ -44,15 +46,15 @@ export default function TeamSection() {
                         </h3>
                         <p className="flex justify-center items-center">
                             SDE I. @
-                            <img className="object-contain w-12 ml-2" 
-                            alt="zeta"
+                            <img className="object-contain w-12 ml-2"
+                                alt="zeta"
                                 src="https://upload.wikimedia.org/wikipedia/commons/1/18/Zeta_Services_logo.png" />
                         </p>
                         <p className="flex mt-1 justify-center items-center">
                             Former SDE I. @
-                            <img className="object-contain w-16 ml-2" 
-                            alt="linkedin" 
-                            src="https://upload.wikimedia.org/wikipedia/commons/thumb/0/01/LinkedIn_Logo.svg/2560px-LinkedIn_Logo.svg.png" />
+                            <img className="object-contain w-16 ml-2"
+                                alt="linkedin"
+                                src="https://upload.wikimedia.org/wikipedia/commons/thumb/0/01/LinkedIn_Logo.svg/2560px-LinkedIn_Logo.svg.png" />
                         </p>
                         <p className="flex mt-2 text-sm justify-center items-center">
                             Worked with-
@@ -130,16 +132,16 @@ export default function TeamSection() {
                         </p>
                         <p className="flex mt-1 justify-center items-center">
                             Former SDE @
-                            <img className="object-contain w-14 ml-2" alt="airtel" 
-                            src="https://1000logos.net/wp-content/uploads/2023/06/Airtel-logo.png" />
+                            <img className="object-contain w-14 ml-2" alt="airtel"
+                                src="https://1000logos.net/wp-content/uploads/2023/06/Airtel-logo.png" />
                         </p>
                         <p className="flex mt-2 text-sm justify-center items-center">
                             Worked with-
                         </p>
                         <p className="flex justify-center items-center">
-                            <img className="object-contain w-24 ml-2" 
-                            alt="placewit" 
-                            src="https://placewit.com/images/headerlogo.png" />
+                            <img className="object-contain w-24 ml-2"
+                                alt="placewit"
+                                src="https://placewit.com/images/headerlogo.png" />
                         </p>
                         <p className="flex text-sm justify-center items-center">
                             Mentored more than 2000 students.
@@ -150,6 +152,48 @@ export default function TeamSection() {
                         <ul className="flex justify-center mt-4 space-x-4">
                             <li>
                                 <a href="https://www.linkedin.com/in/harshit-theguy/" target="_blank" className="text-[#0077B5] hover:text-gray-900 dark:hover:text-white">
+                                    <LinkedInLogoIcon className="h-6 w-6" />
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+                    <div className="text-center items-center text-gray-500 dark:text-gray-400">
+                        <Image className="mx-auto mb-4 w-36 h-36 rounded-full"
+                            src={abhayPic}
+                            alt="Picture" />
+                        <h3 className="mb-1 text-2xl font-bold tracking-tight text-gray-900 dark:text-white">
+                            Abhay Ray
+                        </h3>
+                        <p className="flex justify-center items-center">
+                            Software Engineer @
+                            <img className="object-contain w-20 ml-2" alt="zomato"
+                                src="https://upload.wikimedia.org/wikipedia/commons/b/bd/Zomato_Logo.svg" />
+                        </p>
+                        <p className="flex mt-1 justify-center items-center">
+                            Former SWE Intern @
+                            <img className="object-contain w-20 ml-2" alt="urban-company"
+                                src="https://res.cloudinary.com/urbanclap/image/upload/t_high_res_category/images/supply/partner-training/1628575858610-5b0ae4.png" />
+                        </p>
+                        <p className="flex mt-2 text-sm justify-center items-center">
+                            Worked with-
+                        </p>
+                        <p className="flex mt-1 mb-1 justify-center items-center">
+                            <img className="object-contain w-32 ml-2"
+                                alt="newton-school"
+                                src="https://assets-global.website-files.com/62e8d2ea218fb7676b6892a6/64df4847c57fbbefc3975c51_NS%20Primary%20wo_o%20button.png" />
+                            <img className="object-contain w-24 ml-2"
+                                alt="scaler"
+                                src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQh7J9IbIUcnll0LOu28lo6Btn4NHm_MqPuheZ_fsmC&s" />
+                        </p>
+                        <p className="flex text-sm justify-center items-center">
+                            Mentored more than 500 students.
+                        </p>
+                        <p className="flex text-sm justify-center items-center">
+                            Ex - Urban Company, UKG, Scaler Academy, Newton School, RealOne, Tortoise Creative, Fiyn Labs
+                        </p>
+                        <ul className="flex justify-center mt-4 space-x-4">
+                            <li>
+                                <a href="https://www.linkedin.com/in/abhay-ray-204b44187/" target="_blank" className="text-[#0077B5] hover:text-gray-900 dark:hover:text-white">
                                     <LinkedInLogoIcon className="h-6 w-6" />
                                 </a>
                             </li>
@@ -178,12 +222,12 @@ export default function TeamSection() {
                             Worked with-
                         </p>
                         <p className="flex mt-1 mb-1 justify-center items-center">
-                            <img className="object-contain w-24 ml-2" 
-                            alt="codingspoon" 
-                            src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ66Sxhw6ZrFRADzjsMt-zxu0hPJktz0W43xQ&s" />
-                            <Image className="object-contain w-24 ml-2" 
-                            alt="crackdsa" 
-                            src={crackdsaLogo} />
+                            <img className="object-contain w-24 ml-2"
+                                alt="codingspoon"
+                                src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ66Sxhw6ZrFRADzjsMt-zxu0hPJktz0W43xQ&s" />
+                            <Image className="object-contain w-24 ml-2"
+                                alt="crackdsa"
+                                src={crackdsaLogo} />
                         </p>
                         <p className="flex text-sm justify-center items-center">
                             Mentored more than 1000 students.
@@ -204,7 +248,7 @@ export default function TeamSection() {
                             src={jwalaPic}
                             alt="Picture" />
                         <h3 className="mb-1 text-2xl font-bold tracking-tight text-gray-900 dark:text-white">
-                        Jwala Chorasiya
+                            Jwala Chorasiya
                         </h3>
                         <p className="flex justify-center items-center">
                             Software Developer I. @
@@ -222,8 +266,8 @@ export default function TeamSection() {
                             Worked with-
                         </p>
                         <p className="flex mt-1 mb-1 justify-center items-center">
-                            <img className="object-contain w-24 ml-2" alt="codechef" 
-                            src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSy16sMmLUotlWm6Jcbo-JMVTOozfd7Sn_f294NNEai6w&s" />
+                            <img className="object-contain w-24 ml-2" alt="codechef"
+                                src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSy16sMmLUotlWm6Jcbo-JMVTOozfd7Sn_f294NNEai6w&s" />
                         </p>
                         <p className="flex text-sm justify-center items-center">
                             Mentored more than 3000 students.
@@ -235,6 +279,45 @@ export default function TeamSection() {
                             <li>
                                 <a href="https://www.linkedin.com/in/jwalapc/" target="_blank" className="text-[#0077B5] hover:text-gray-900 dark:hover:text-white">
                                     <LinkedInLogoIcon className="h-6 w-6" />
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+                    <div className="text-center items-center text-gray-500 dark:text-gray-400">
+                        <Image className="mx-auto mb-4 w-36 h-36 rounded-full"
+                            src={yashPandeyPic}
+                            alt="Picture" />
+                        <h3 className="mb-1 text-2xl font-bold tracking-tight text-gray-900 dark:text-white">
+                            Yash Pandey
+                        </h3>
+                        <p className="flex justify-center items-center">
+                            SDE Intern @
+                            <img className="object-contain w-20" alt="agoda"
+                                src="https://upload.wikimedia.org/wikipedia/commons/c/ce/Agoda_transparent_logo.png" />
+                        </p>
+                        <p className="flex mt-2 text-sm justify-center items-center">
+                            Worked with-
+                        </p>
+                        <p className="flex mt-1 mb-1 justify-center items-center">
+                            <Image className="object-contain w-24 ml-2"
+                                alt="crackdsa"
+                                src={crackdsaLogo} />
+                        </p>
+                        <p className="flex text-sm justify-center items-center">
+                            Mentored more than 500 students.
+                        </p>
+                        <p className="flex text-sm justify-center items-center">
+                            Software Developer Engineer Intern at Agoda and Neoterics Labs | Have expertise working with MERN Stack
+                        </p>
+                        <ul className="flex justify-center mt-4 space-x-4">
+                            <li>
+                                <a href="https://www.linkedin.com/in/yash-pandey-53aa3a21b/" target="_blank" className="text-[#0077B5] hover:text-gray-900 dark:hover:text-white">
+                                    <LinkedInLogoIcon className="h-6 w-6" />
+                                </a>
+                            </li>
+                            <li>
+                                <a href="https://twitter.com/Yashpandey7052" target="_blank" className="hover:text-gray-900 dark:hover:text-white">
+                                    <TwitterLogoIcon className="h-6 w-6" />
                                 </a>
                             </li>
                         </ul>
@@ -255,8 +338,8 @@ export default function TeamSection() {
                             Worked with-
                         </p>
                         <p className="flex mt-1 mb-1 justify-center items-center">
-                            <img className="object-contain w-24 ml-2" alt="codingninjas" 
-                            src="https://www.codingninjas.com/careercamp/wp-content/uploads/2022/06/logo-05.png" />
+                            <img className="object-contain w-24 ml-2" alt="codingninjas"
+                                src="https://www.codingninjas.com/careercamp/wp-content/uploads/2022/06/logo-05.png" />
                         </p>
                         <p className="flex text-sm justify-center items-center">
                             Mentored more than 500 students.

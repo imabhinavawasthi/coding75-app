@@ -56,7 +56,7 @@ const ClassMaterialPage = () => {
     }, [])
 
     return (
-        <SubscriptionCheck type="live">
+        // <SubscriptionCheck type="live">
             <div className="md:container px-3">
                 <Card className="min-h-screen w-full overflow-y-scroll">
                     <CardHeader>
@@ -163,7 +163,7 @@ const ClassMaterialPage = () => {
                     </CardContent>
                 </Card>
             </div>
-        </SubscriptionCheck>
+        {/* </SubscriptionCheck> */}
     );
 }
 

@@ -186,7 +186,7 @@ export default function CommunityHeader() {
                         </Link>
                     </div>
                     <p className='mt-4 mb-4 font-semibold tracking-tight'>
-                        Beginner Friendly batches are running &nbsp;
+                        Beginner Friendly batches are running (Started 15th May) &nbsp;
                         <span className='text-blue-600 font-bold'>Live Class Recording and 1:1 Sessions Available </span> - &nbsp;
                         <span className='text-green-600 font-bold'>Join Now</span>
                         .
