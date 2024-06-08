@@ -93,7 +93,7 @@ const LivePage = ({ topicname, noLive = false }) => {
 
     return (
         <>
-            {/* <SubscriptionCheck type={"live"}> */}
+            <SubscriptionCheck type={"live"}>
             <div className="md:container px-3">
                 <Card className="shadow-xl">
                     <CardHeader className={noLive ? "hidden" : ""}>
@@ -230,7 +230,7 @@ const LivePage = ({ topicname, noLive = false }) => {
                     </CardContent>
                 </Card>
             </div>
-            {/* </SubscriptionCheck> */}
+            </SubscriptionCheck>
         </>
 
     );
