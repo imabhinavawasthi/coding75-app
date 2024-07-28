@@ -79,7 +79,7 @@ export default function TeamSection() {
                             </li>
                         </ul>
                     </div>
-                    <div className="text-center items-center text-gray-500 dark:text-gray-400">
+                    {/* <div className="text-center items-center text-gray-500 dark:text-gray-400">
                         <Image className="mx-auto mb-4 w-36 h-36 rounded-full"
                             src={amarPic}
                             alt="Picture" />
@@ -116,7 +116,7 @@ export default function TeamSection() {
                                 </a>
                             </li>
                         </ul>
-                    </div>
+                    </div> */}
                     <div className="text-center items-center text-gray-500 dark:text-gray-400">
                         <Image className="mx-auto mb-4 w-36 h-36 rounded-full"
                             src={harshitPic}
@@ -322,7 +322,7 @@ export default function TeamSection() {
                             </li>
                         </ul>
                     </div>
-                    <div className="text-center items-center text-gray-500 dark:text-gray-400">
+                    {/* <div className="text-center items-center text-gray-500 dark:text-gray-400">
                         <Image className="mx-auto mb-4 w-36 h-36 rounded-full"
                             src={yashPic}
                             alt="Picture" />
@@ -354,7 +354,7 @@ export default function TeamSection() {
                                 </a>
                             </li>
                         </ul>
-                    </div>
+                    </div> */}
                 </div>
             </div>
         </section>
