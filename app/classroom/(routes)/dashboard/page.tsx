@@ -204,7 +204,7 @@ const ClassroomDashboard = () => {
             {
                 status == "done" &&
                 <>
-                    <SubscriptionCheck type={"live"}>
+                    {/* <SubscriptionCheck type={"live"}> */}
                         <div>
 
                             <div className="md:hidden mb-5">
@@ -399,7 +399,7 @@ const ClassroomDashboard = () => {
                                 </div>
                             </div>
                         </div>
-                    </SubscriptionCheck>
+                    {/* </SubscriptionCheck> */}
                 </>
             }
             {
