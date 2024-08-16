@@ -210,7 +210,7 @@ const ProSchedule = () => {
                                 </AccordianPro>
                             </AccordionContent>
                         </AccordionItem>
-                        <AccordionItem className="md:text-2xl text-xl" value="cp" >
+                        {/* <AccordionItem className="md:text-2xl text-xl" value="cp" >
                             <AccordionTrigger>Competitive Programming</AccordionTrigger>
                             <AccordionContent>
                                 <AccordianPro heading={"Class Schedule"}>
@@ -262,7 +262,7 @@ const ProSchedule = () => {
                                     </div>
                                 </AccordianPro>
                             </AccordionContent>
-                        </AccordionItem>
+                        </AccordionItem> */}
                         <AccordionItem className="md:text-2xl text-xl" value="projects" >
                             <AccordionTrigger>Project Building</AccordionTrigger>
                             <AccordionContent>

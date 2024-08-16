@@ -22,9 +22,10 @@ export default function RootLayout({
         <meta name="description" content="Coding DSA MERN Projects Interview Preparation: Free Resources for College Students" />
         <meta name="keywords" content="Coding, DSA, Competitive Programming, CP, Interviews, coding75, crackDSA, learn coding, coding75, coding 75, coding75.com, crackdsa" />
         <meta property="og:image" content="/og.png" />
+        <meta name="google-adsense-account" content="ca-pub-5737188174207597"/>
         {/* <link rel="icon" href="/logo.svg" /> */}
       </head>
-      <body className={inter.className+" no-scrollbar"}>
+      <body className={inter.className + " no-scrollbar"}>
         <NextTopLoader
           color="#2563eb"
           height={4}
