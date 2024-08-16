@@ -163,7 +163,7 @@ const ClassMaterialPage = () => {
                     </CardContent>
                 </Card>
             </div>
-        {/* </SubscriptionCheck> */}
+        // {/* </SubscriptionCheck> */}
     );
 }
 
