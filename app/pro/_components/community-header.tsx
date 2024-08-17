@@ -170,7 +170,7 @@ export default function CommunityHeader() {
                         <div className='hover:animate-background rounded-xl bg-gradient-to-r from-green-300 via-blue-500 to-purple-600 p-0.5 shadow-xl transition hover:bg-[length:400%_400%] hover:shadow-sm hover:[animation-duration:_4s]'>
                             <Link href="#pricing" className="w-full bg-white rounded-xl inline-flex justify-center items-center py-3 px-5 text-base font-medium text-center text-gray-900 hover:bg-gray-100 focus:ring-4 focus:ring-gray-100 dark:text-white dark:border-gray-700 dark:hover:bg-gray-700 dark:focus:ring-gray-800">
                                 <GraduationCap className="mr-2 -ml-1 w-5 h-5" />
-                                Join Now @ ₹799 Only
+                                Join Now @ ₹999 Only
                             </Link>
                         </div>
                     </div>
@@ -185,12 +185,18 @@ export default function CommunityHeader() {
                             Check Complete Weekly Schedule
                         </Link>
                     </div>
-                    <p className='mt-4 mb-4 font-semibold tracking-tight'>
+                    {/* <p className='mt-4 mb-4 font-semibold tracking-tight'>
                         Beginner Friendly batches are running (Started 15th May) &nbsp;
                         <span className='text-blue-600 font-bold'>Live Class Recording and 1:1 Sessions Available </span> - &nbsp;
                         <span className='text-green-600 font-bold'>Join Now</span>
                         .
-                    </p>
+                    </p> */}
+                    <p className='mt-4 mb-4 font-semibold tracking-tight'>
+                                        All the slots for current batch are filled &nbsp;
+                                        <span className='text-blue-600 font-bold'>Stay Updated </span> - &nbsp;
+                                        <span className='text-green-600 font-bold'>Launching Next Batch Soon</span>
+                                        .
+                                    </p>
                     {/* {
                         launchDate &&
                         <p className='mt-4 mb-4 font-semibold tracking-tight'>

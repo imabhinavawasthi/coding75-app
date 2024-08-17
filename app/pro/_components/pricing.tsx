@@ -63,7 +63,7 @@ const Pricing = () => {
             <section>
                 <div className="py-8 px-4 mx-auto max-w-screen-xl lg:py-16 lg:px-6">
                     <div className="mx-auto max-w-screen-md text-center mb-8 lg:mb-12">
-                        <h2 className="mb-4 text-4xl tracking-tight font-extrabold text-gray-900 dark:text-white">Everything at the <span style={{ color: "#27ae60" }}>cost</span> of less than <span className='text-primary-600'>₹<CountUp start={1000} end={30} />/day</span></h2>
+                        <h2 className="mb-4 text-4xl tracking-tight font-extrabold text-gray-900 dark:text-white">Everything at the <span style={{ color: "#27ae60" }}>cost</span> of less than <span className='text-primary-600'>₹<CountUp start={1000} end={50} />/day</span></h2>
                         <p className="mb-5 font-light text-gray-500 sm:text-xl dark:text-gray-400">Our pocket-friendly approach makes high-quality coding education accessible for everyone.</p>
                     </div>
                     <div className="space-y-8 lg:grid lg:grid-cols-3 sm:gap-6 xl:gap-10 lg:space-y-0">
@@ -114,8 +114,8 @@ const Pricing = () => {
                                     <p className="font-light text-gray-500 sm:text-lg dark:text-gray-400">Relevant for beginners, live classes and mentorship sessions.</p>
                                     <div className='mb-2 mt-8'><Badge className='bg-amber-100 text-amber-700 rounded-sm text-center'>50 % Off<BadgePercent className='h-4 w-4 ml-2' /></Badge></div>
                                     <div className="flex justify-center items-center mb-8">
-                                        <span className="mr-2 text-2xl font-extrabold text-gray-600 line-through">₹1599</span>
-                                        <span className="mr-2 text-5xl font-extrabold">₹799</span>
+                                        <span className="mr-2 text-2xl font-extrabold text-gray-600 line-through">₹1999</span>
+                                        <span className="mr-2 text-5xl font-extrabold">₹999</span>
                                         <span className="text-gray-500 dark:text-gray-400">/month</span>
                                     </div>
                                     <ul role="list" className="mb-8 space-y-4 text-left">
@@ -152,7 +152,7 @@ const Pricing = () => {
                                             <span>1:1<span className="font-semibold"> Mentorship</span> Sessions</span>
                                         </li>
                                     </ul>
-                                    <a href={pro_buy_link} target='_blank' className="text-white bg-primary-600 hover:bg-primary-700 focus:ring-4 focus:ring-primary-200 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:text-white  dark:focus:ring-primary-900">Join Now</a>
+                                    <a target='_blank' className="text-white bg-primary-600 hover:bg-primary-700 focus:ring-4 focus:ring-primary-200 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:text-white  dark:focus:ring-primary-900">Next Batch Soon</a>
                                     {/* {
                                         launchDate &&
                                         <p className='mt-4 font-semibold tracking-tight'>
@@ -162,10 +162,16 @@ const Pricing = () => {
                                             .
                                         </p>
                                     } */}
-                                    <p className='mt-4 mb-4 font-semibold tracking-tight'>
+                                    {/* <p className='mt-4 mb-4 font-semibold tracking-tight'>
                                         Beginner Friendly batches are running (Started 15th May) &nbsp;
                                         <span className='text-blue-600 font-bold'>Live Class Recording and 1:1 Sessions Available </span> - &nbsp;
                                         <span className='text-green-600 font-bold'>Join Now</span>
+                                        .
+                                    </p> */}
+                                    <p className='mt-4 mb-4 font-semibold tracking-tight'>
+                                        All the slots for current batch are filled &nbsp;
+                                        <span className='text-blue-600 font-bold'>Stay Updated </span> - &nbsp;
+                                        <span className='text-green-600 font-bold'>Launching Next Batch Soon</span>
                                         .
                                     </p>
                                     <div className="mt-3 mb-3 flex justify-center items-center text-center">
@@ -226,8 +232,8 @@ const Pricing = () => {
                             <p className="font-light text-gray-500 sm:text-lg dark:text-gray-400">A complete plan for your next one year preparation strategy.</p>
                             <div className='mb-2 mt-8'><Badge className='bg-amber-100 text-amber-700 rounded-sm text-center'>50 % Off<BadgePercent className='h-4 w-4 ml-2' /></Badge></div>
                             <div className="flex justify-center items-center mb-8">
-                                <span className="mr-2 text-2xl font-extrabold text-gray-600 line-through">₹9999</span>
-                                <span className="mr-2 text-5xl font-extrabold">₹4999</span>
+                                <span className="mr-2 text-2xl font-extrabold text-gray-600 line-through">₹15999</span>
+                                <span className="mr-2 text-5xl font-extrabold">₹7999</span>
                                 <span className="text-gray-500 dark:text-gray-400">/year</span>
                             </div>
                             <ul role="list" className="mb-8 space-y-4 text-left">
