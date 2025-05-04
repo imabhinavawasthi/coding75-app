@@ -24,8 +24,6 @@ export default function DashboardHeader() {
             if (data) {
                 if (data.user) {
                     setUser(data.user)
-                    console.log(data.user);
-
                 }
                 else {
                     setUser(null)
@@ -59,11 +57,11 @@ export default function DashboardHeader() {
     }
     useEffect(() => {
         checkUser()
-        getAnnouncement()
+        // getAnnouncement()
     }, [])
     return (
         <header className="">
-            {
+            {/* {
                 announcement.text &&
                 <div id="sticky-banner" className="mb-5 flex justify-between w-full p-4 border border-gray-200 bg-gray-50 dark:bg-gray-700 dark:border-gray-600">
                     <p className="flex items-center mx-auto text-sm font-normal text-gray-500 dark:text-gray-400">
@@ -76,7 +74,7 @@ export default function DashboardHeader() {
                         <span>{announcement.text} <a target="_blank" className="text-blue-600 underline" href={announcement.link}>{announcement.linkText}</a></span>
                     </p>
                 </div>
-            }
+            } */}
             <div className="bg-blue-50 mx-auto max-w-screen-xl px-4 py-8 sm:px-6 sm:py-12 lg:px-8">
                 <div className="sm:flex sm:items-center sm:justify-between">
                     <div className="text-center sm:text-left">
