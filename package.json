@@ -3,7 +3,9 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "dev": "next dev",
+    "flask-dev": "FLASK_DEBUG=1 pip3 install -r api/requirements.txt && python3 -m flask --app api/app.py run -p 5328",
+    "next-dev": "next dev",
+    "dev": "concurrently \"npm run next-dev\" \"npm run flask-dev\"",
     "build": "next build",
     "start": "next start",
     "lint": "next lint"
@@ -84,5 +86,8 @@
   },
   "optionalDependencies": {
     "@types/react": "^17.0.44"
+  },
+  "devDependencies": {
+    "concurrently": "^9.2.1"
   }
 }
