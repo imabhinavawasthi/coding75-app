@@ -1,3 +1,5 @@
+'use client';
+
 import { pro_curriculum_pdf_link } from "@/components/social-links";
 import ProPdfViewer from "../_components/pdf-viewer";
 

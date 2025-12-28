@@ -24,6 +24,9 @@ const DBMS = () => {
         ]} />
         </div>
         <div>
+          We are facing some issues with PDF Viewer. We are trying to fix this as soon as possible. Sorry for the inconvenience.
+        </div>
+        {/* <div>
           <PageHeadersButton greenHeading='Management System' heading='Database'
           description='DBMS notes, specially designed for interview preparation 🚀'
           pdf_link='https://topmate.io/abhinavawasthi/918246'
@@ -38,7 +41,7 @@ const DBMS = () => {
               />
             </div>
           </Worker>
-        </div>
+        </div> */}
       </div>
     </>
   );

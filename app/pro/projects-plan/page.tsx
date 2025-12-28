@@ -1,3 +1,6 @@
+'use client';
+
+
 import { pro_projects_plan, pro_schedule_pdf_link } from "@/components/social-links";
 import ProPdfViewer from "../_components/pdf-viewer";
 

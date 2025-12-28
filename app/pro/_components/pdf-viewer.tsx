@@ -54,13 +54,16 @@ const ProPdfViewer = ({ greenHeading, heading, description = "", pdf_link, butto
             </section>
             <div className='grid grid-cols-10'>
                 <div className='col-span-1 hidden lg:block md:block'></div>
-                <Worker workerUrl={`https://unpkg.com/pdfjs-dist@${'^3.11.174'}/build/pdf.worker.min.js`}>
+                <div>
+          We are facing some issues with PDF Viewer. We are trying to fix this as soon as possible. Sorry for the inconvenience.
+        </div>
+                {/* <Worker workerUrl={`https://unpkg.com/pdfjs-dist@${'^3.11.174'}/build/pdf.worker.min.js`}>
                     <div className='lg:col-span-8 md:col-span-8 col-span-10' style={{ maxWidth: '100%', minWidth: '100%' }}>
                         <Viewer
                             fileUrl={pdf_link}
                         />
                     </div>
-                </Worker>
+                </Worker> */}
             </div>
         </div>
     );

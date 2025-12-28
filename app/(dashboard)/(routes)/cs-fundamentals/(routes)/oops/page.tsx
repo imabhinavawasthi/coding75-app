@@ -24,6 +24,9 @@ const OOPS = () => {
         ]} />
         </div>
         <div>
+          We are facing some issues with PDF Viewer. We are trying to fix this as soon as possible. Sorry for the inconvenience.
+        </div>
+        {/* <div>
           <PageHeadersButton greenHeading='Programming' heading='Object Oriented'
           description='OOPs notes, specially designed for interview preparation 🚀'
           pdf_link='https://topmate.io/abhinavawasthi/918265'
@@ -38,7 +41,7 @@ const OOPS = () => {
               />
             </div>
           </Worker>
-        </div>
+        </div> */}
       </div>
     </>
   );
