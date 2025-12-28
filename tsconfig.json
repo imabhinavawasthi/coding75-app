@@ -16,7 +16,7 @@
     "moduleResolution": "bundler",
     "resolveJsonModule": true,
     "isolatedModules": true,
-    "jsx": "preserve",
+    "jsx": "react-jsx",
     "incremental": true,
     "plugins": [
       {
@@ -37,7 +37,8 @@
     ".next/types/**/*.ts",
     "supabase.js",
     "app/pages/404.jx",
-    "components/page-headers/page-headers.tsx"
+    "components/page-headers/page-headers.tsx",
+    ".next/dev/types/**/*.ts"
   ],
   "exclude": [
     "node_modules"
