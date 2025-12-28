@@ -1,11 +1,9 @@
 {
   "name": "coding75-app",
-  "version": "0.1.0",
+  "version": "25.10.18",
   "private": true,
   "scripts": {
-    "flask-dev": "FLASK_DEBUG=1 pip3 install -r api/requirements.txt && python3 -m flask --app api/app.py run -p 5328",
-    "next-dev": "next dev",
-    "dev": "concurrently \"npm run next-dev\" \"npm run flask-dev\"",
+    "dev": "next dev",
     "build": "next build",
     "start": "next start",
     "lint": "next lint"
