@@ -1,10 +1,6 @@
 "use client"
 
 import BreadCrumb from '@/app/(dashboard)/_components/components/breadcrumb';
-import PageHeadersButton from '@/components/page-headers/page-headers-button';
-import { Worker, Viewer } from '@react-pdf-viewer/core';
-import '@react-pdf-viewer/core/lib/styles/index.css';
-import '@react-pdf-viewer/default-layout/lib/styles/index.css';
 
 const DBMS = () => {
   
@@ -24,6 +20,9 @@ const DBMS = () => {
         ]} />
         </div>
         <div>
+          We are facing some issues with PDF Viewer. We are trying to fix this as soon as possible. Sorry for the inconvenience.
+        </div>
+        {/* <div>
           <PageHeadersButton greenHeading='Management System' heading='Database'
           description='DBMS notes, specially designed for interview preparation 🚀'
           pdf_link='https://topmate.io/abhinavawasthi/918246'
@@ -38,7 +37,7 @@ const DBMS = () => {
               />
             </div>
           </Worker>
-        </div>
+        </div> */}
       </div>
     </>
   );

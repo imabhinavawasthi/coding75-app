@@ -80,6 +80,11 @@ module.exports = {
             transform: "translateX(calc(-250px * 5))",
           },
         },
+        marquee: {
+          to: {
+            transform: 'translateX(-50%)'
+          }
+        }
       },
       backgroundImage: {
         'hexagon': "url('./(dashboard)/_components/img/hexagon.svg')",
@@ -90,6 +95,7 @@ module.exports = {
         "accordion-down": "accordion-down 0.2s ease-out",
         "accordion-up": "accordion-up 0.2s ease-out",
         ["infinite-slider"]: "infiniteSlider 20s linear infinite",
+        marquee: 'marquee var(--duration, 30s) linear infinite'
       },
     },
     screens: {
