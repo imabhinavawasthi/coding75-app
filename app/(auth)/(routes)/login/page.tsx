@@ -13,18 +13,24 @@ const LogIn = () => {
     const router = useRouter()
     async function checkUser() {
         try {
-            const { data, error } = await supabase.auth.getUser();
-            if (data) {
-                console.log(data.user);
-                if (data.user)
-                    router.push('/')
+            const { data: { session } } = await supabase.auth.getSession();
+            if (session?.user) {
+                const res = await fetch("/api/profile", {
+                    headers: {
+                        Authorization: `Bearer ${session.access_token}`
+                    }
+                });
+                if (res.ok) {
+                    const profileData = await res.json();
+                    if (!profileData.isOnboarded) {
+                        router.push("/onboarding");
+                        return;
+                    }
+                }
+                router.push("/");
             }
-            else {
-                console.error(error);
-            }
-        }
-        catch {
-
+        } catch {
+            // Stay on login if unauthenticated
         }
     }
     useEffect(() => {

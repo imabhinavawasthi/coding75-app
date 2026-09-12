@@ -25,16 +25,38 @@ const Home = () => {
     }
   }
   useEffect(() => {
-    checkUser()
-    const loggedin_route = localStorage.getItem('loggedin_route');
-    if (loggedin_route && loggedin_route != "") {
-      localStorage.setItem('loggedin_route', "")
-      router.push(loggedin_route)
+    async function init() {
+      try {
+        const { data: { session } } = await supabase.auth.getSession();
+        if (session?.user) {
+          const res = await fetch("/api/profile", {
+            headers: {
+              Authorization: `Bearer ${session.access_token}`
+            }
+          });
+          if (res.ok) {
+            const data = await res.json();
+            if (!data.isOnboarded) {
+              router.push("/onboarding");
+              return;
+            }
+          }
+        }
+
+        const loggedin_route = localStorage.getItem('loggedin_route');
+        if (loggedin_route && loggedin_route !== "") {
+          localStorage.setItem('loggedin_route', "");
+          router.push(loggedin_route);
+        } else {
+          setNewLogin(false);
+        }
+      } catch {
+        setNewLogin(false);
+      }
     }
-    else{
-      setNewLogin(false)
-    }
-  }, [])
+
+    init();
+  }, [router]);
   return (
     <>
       {newLogin ?
