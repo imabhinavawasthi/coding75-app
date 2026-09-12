@@ -13,6 +13,7 @@ import ErrorBanner from "@/app/(dashboard)/_components/banners/error-banner";
 import DOMPurify from 'dompurify';
 import BreadCrumb from "@/app/(dashboard)/_components/components/breadcrumb";
 import { toast } from "sonner";
+import { useParams } from "next/navigation";
 import {
   Breadcrumb,
   BreadcrumbItem,
@@ -23,7 +24,9 @@ import {
 } from "@/components/ui/breadcrumb"
 
 
-const OpportunityPage = (params: any) => {
+const OpportunityPage = () => {
+  const params = useParams();
+  const opportunityParam = (params?.opportunity as string) || "";
   const [internshipDetails, setInternshipDetails] = useState<any>([])
   const [isCopied, setIsCopied] = useState(false)
   const [status, setStatus] = useState("loading")
@@ -59,9 +62,10 @@ const OpportunityPage = (params: any) => {
     }, 2000);
   }
   async function fetchData() {
+    if (!opportunityParam) return;
     try {
 
-      const { internships, error } = await fetchInternships(params.params.opportunity, undefined);
+      const { internships, error } = await fetchInternships(opportunityParam, undefined);
       if (error) {
         setStatus("error")
         return
@@ -79,7 +83,7 @@ const OpportunityPage = (params: any) => {
   }
   useEffect(() => {
     fetchData();
-  }, [])
+  }, [opportunityParam])
 
   return (
     <>

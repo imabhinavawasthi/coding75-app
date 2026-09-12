@@ -19,16 +19,20 @@ import { Label } from "@/components/ui/label";
 import { Input } from "@/components/ui/input";
 import PageHeadersButton from "@/components/page-headers/page-headers-button";
 import BreadCrumb from "@/app/(dashboard)/_components/components/breadcrumb";
+import { useParams } from "next/navigation";
 
-const ProjectType = (params: any) => {
+const ProjectType = () => {
+    const params = useParams();
+    const projectTypeParam = (params?.projecttype as string) || "";
     const [projectDetails, setProjectsDetails] = useState<any>([])
     const [status, setStatus] = useState("loading")
     const [level, setLevel] = useState("all")
 
     async function fetchData(levelProject = undefined) {
+        if (!projectTypeParam) return [];
         setStatus("loading")
         try {
-            const response = await fetchProjects(params.params.projecttype, undefined, (!levelProject || levelProject == "all") ? undefined : levelProject);
+            const response = await fetchProjects(projectTypeParam, undefined, (!levelProject || levelProject == "all") ? undefined : levelProject);
             const { projects, error } = response as { projects: any[] | null; error: PostgrestError | null };
             if (error) {
                 setStatus("error")
@@ -59,7 +63,7 @@ const ProjectType = (params: any) => {
 
     useEffect(() => {
         fetchData();
-    }, [])
+    }, [projectTypeParam])
 
     function setLevelProjects(e) {
         setLevel(e)
@@ -74,8 +78,8 @@ const ProjectType = (params: any) => {
             "href": "/projects"
           },
           {
-            "title": `${projectDetails?projectDetails[0]?.project_type:params.params.projecttype}`,
-            "href": `/projects/${params.params.projecttype}`
+            "title": `${projectDetails?projectDetails[0]?.project_type:projectTypeParam}`,
+            "href": `/projects/${projectTypeParam}`
           }
         ]} />
             <div className="">

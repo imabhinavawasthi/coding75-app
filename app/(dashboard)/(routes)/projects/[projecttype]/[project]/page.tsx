@@ -12,14 +12,18 @@ import DOMPurify from 'dompurify';
 import LinkNext from "next/link";
 import Link from "next/link";
 import { PostgrestError } from "@supabase/supabase-js";
+import { useParams } from "next/navigation";
 
-const Project = (params: any) => {
+const Project = () => {
+    const params = useParams();
+    const projectParam = (params?.project as string) || "";
     const [project, setProject] = useState<any>({})
     const [status, setStatus] = useState("loading")
 
     async function fetchData() {
+        if (!projectParam) return;
         try {
-            const response = await fetchProjects(undefined, params.params.project, undefined);
+            const response = await fetchProjects(undefined, projectParam, undefined);
             const { projects, error } = response as { projects: any[] | null; error: PostgrestError | null };
             if (error) {
                 setStatus("error")
@@ -36,10 +40,8 @@ const Project = (params: any) => {
     }
 
     useEffect(() => {
-
         fetchData();
-
-    }, [])
+    }, [projectParam])
     const [isCopied, setIsCopied] = useState(false)
     function getCurrentURL() {
         return window.location.href

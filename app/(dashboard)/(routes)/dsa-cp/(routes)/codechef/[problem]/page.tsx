@@ -10,6 +10,7 @@ import DOMPurify from 'dompurify';
 import BreadCrumb from "@/app/(dashboard)/_components/components/breadcrumb";
 import Link from "next/link";
 import { fetchCodechefProblem } from "../../../(api)/codechef/fetchCodechefProblem";
+import { useParams } from "next/navigation";
 import {
     Breadcrumb,
     BreadcrumbItem,
@@ -19,24 +20,28 @@ import {
     BreadcrumbSeparator,
 } from "@/components/ui/breadcrumb"
 
-const Problem = (params: any) => {
+const Problem = () => {
+    const params = useParams();
+    const problemParam = (params?.problem as string) || "";
     const [problem, setProblem] = useState<any>()
     const [loading, setLoading] = useState(true)
 
     useEffect(() => {
         async function fetchProblemsFun() {
+            if (!problemParam) return;
             try {
-                const { dsaproblem } = await fetchCodechefProblem({ problem: params.params.problem });
-                if (dsaproblem) {
+                const { dsaproblem } = await fetchCodechefProblem({ problem: problemParam });
+                if (dsaproblem && dsaproblem.length > 0) {
                     setProblem(dsaproblem[0])
                 }
-                setLoading(false)
             } catch (error) {
                 console.error("Error fetching data:", error);
+            } finally {
+                setLoading(false)
             }
         }
         fetchProblemsFun();
-    }, [])
+    }, [problemParam])
     const [isCopied, setIsCopied] = useState(false)
     function getCurrentURL() {
         return window.location.href

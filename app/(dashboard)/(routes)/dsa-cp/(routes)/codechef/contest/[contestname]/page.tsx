@@ -6,6 +6,8 @@ import PageHeadersButton from "@/components/page-headers/page-headers-button";
 import CodechefProblemTable from "../../../../_components/codechef-table"
 import { fetchCodechefContestProblems } from "../../../../(api)/codechef/fetchCodechefContestProblems";
 
+import { useParams } from "next/navigation";
+
 type Problem = {
     ProblemName: string
     Submission: number
@@ -28,14 +30,18 @@ function extractSubmissionNumber(link) {
     return match ? match[1] : 0;
   }
 
-const ContestPage = ({params}) => {
+const ContestPage = () => {
+    const params = useParams();
+    const contestParam = (params?.contestname as string) || "";
+    const decodedContest = decodeURIComponent(contestParam).replaceAll("%20", " ");
     const [problemList, setProblemList] = useState<any[]>([])
     const [loading, setLoading] = useState(true)
 
     useEffect(() => {
         async function fetchProblemsFun() {
+            if (!decodedContest) return;
             try {
-                const { dsaproblems } = await fetchCodechefContestProblems(params.contestname.replaceAll("%20"," "));
+                const { dsaproblems } = await fetchCodechefContestProblems(decodedContest);
                 if (dsaproblems) {
                     const problems_list: Problem[] = dsaproblems.map((data: any) => {
                         let topic_tags = []
@@ -65,13 +71,14 @@ const ContestPage = ({params}) => {
                       });
                     setProblemList(problems_list);
                 }
-                setLoading(false)
             } catch (error) {
                 console.error("Error fetching data:", error);
+            } finally {
+                setLoading(false)
             }
         }
         fetchProblemsFun();
-    }, [])
+    }, [decodedContest])
 
 
     return (
@@ -79,7 +86,7 @@ const ContestPage = ({params}) => {
             <div>
                 <PageHeadersButton
                     greenHeading=" Editorials"
-                    heading={params.contestname.replaceAll("%20"," ")}
+                    heading={decodedContest}
                     description="In-depth Codechef editorials for efficient problem-solving."
                 />
             </div>

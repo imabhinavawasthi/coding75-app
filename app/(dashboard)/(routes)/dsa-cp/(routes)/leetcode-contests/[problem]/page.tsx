@@ -11,6 +11,7 @@ import DOMPurify from 'dompurify';
 import BreadCrumb from "@/app/(dashboard)/_components/components/breadcrumb";
 import convertGMTtoIST from "@/app/(dashboard)/_components/helpers/GMTToIST";
 import { fetchLeetcodeContestProblem } from "../../../(api)/leetcode/fetchLeetcodeContestProblem";
+import { useParams } from "next/navigation";
 import {
     Breadcrumb,
     BreadcrumbItem,
@@ -20,28 +21,31 @@ import {
     BreadcrumbSeparator,
 } from "@/components/ui/breadcrumb"
 
-const Problem = (params: any) => {
+const Problem = () => {
+    const params = useParams();
+    const problemParam = (params?.problem as string) || "";
     const [problem, setProblem] = useState<any>()
     const [loading, setLoading] = useState(true)
     const [date, setDate] = useState("")
 
     useEffect(() => {
         async function fetchProblemsFun() {
+            if (!problemParam) return;
             try {
-                const { dsaproblem } = await fetchLeetcodeContestProblem({ problem: params.params.problem });
-                if (dsaproblem) {
+                const { dsaproblem } = await fetchLeetcodeContestProblem({ problem: problemParam });
+                if (dsaproblem && dsaproblem.length > 0) {
                     setProblem(dsaproblem[0])
-                    const options: Intl.DateTimeFormatOptions = { year: 'numeric', month: 'short', day: '2-digit' };
                     const formattedDate = convertGMTtoIST(new Date(dsaproblem[0]["date"]))
                     setDate(formattedDate)
                 }
-                setLoading(false)
             } catch (error) {
                 console.error("Error fetching data:", error);
+            } finally {
+                setLoading(false)
             }
         }
         fetchProblemsFun();
-    }, [])
+    }, [problemParam])
     const [isCopied, setIsCopied] = useState(false)
     function getCurrentURL() {
         return window.location.href
