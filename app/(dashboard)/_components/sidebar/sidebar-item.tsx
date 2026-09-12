@@ -10,19 +10,22 @@ interface SidebarItemProps {
   icon: LucideIcon;
   label: string;
   href: string;
+  exact?: boolean;
 };
 
 export const SidebarItem = ({
   icon: Icon,
   label,
   href,
+  exact = false,
 }: SidebarItemProps) => {
   const pathname = usePathname();
 
-  const isActive =
-    (pathname === "/" && href === "/") ||
-    pathname === href ||
-    pathname?.startsWith(`${href}/`);
+  const isActive = exact
+    ? pathname === href
+    : (pathname === "/" && href === "/") ||
+      pathname === href ||
+      pathname?.startsWith(`${href}/`);
 
   return (
     <>

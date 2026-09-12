@@ -1,7 +1,7 @@
 // internshipsService.ts
 import supabase from "@/supabase";
 
-export async function fetchProjects(projectType=undefined, projectSlug=undefined, projectLevel=undefined) {
+export async function fetchProjects(projectType?: string, projectSlug?: string, projectLevel?: string) {
     
     if(projectType){
         try {

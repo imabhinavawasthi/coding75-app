@@ -5,10 +5,11 @@ import Loading from "@/components/loading";
 import PageHeadersButton from "@/components/page-headers/page-headers-button";
 import { fetchLeetcodeContest } from "../../../../(api)/leetcode/fetchLeetcodeContest";
 import LeetcodeContestsProblemTable from "../../../../_components/leetcode-contests-table";
+import { useParams } from "next/navigation";
 
 type Problem = {
     ProblemName: string
-    Date: Date
+    Date: string
     ProblemLink: string
     TopicTags: string[]
     CompanyTags: string[]
@@ -20,14 +21,18 @@ type Problem = {
     ContestName: string
 }
 
-const LeetcodeContests = ({params}) => {
+const LeetcodeContests = () => {
+    const params = useParams();
+    const contestParam = (params?.contestname as string) || "";
+    const decodedContest = decodeURIComponent(contestParam).replaceAll("%20", " ");
     const [problemList, setProblemList] = useState<any[]>([])
     const [loading, setLoading] = useState(true)
 
     useEffect(() => {
         async function fetchProblemsFun() {
+            if (!decodedContest) return;
             try {
-                const { dsaproblems } = await fetchLeetcodeContest(params.contestname.replaceAll("%20"," "));
+                const { dsaproblems } = await fetchLeetcodeContest(decodedContest);
                 if (dsaproblems) {
                     const problems_list: Problem[] = dsaproblems.map((data: any) => {
                         let topic_tags = []
@@ -54,13 +59,14 @@ const LeetcodeContests = ({params}) => {
                     })
                     setProblemList(problems_list);
                 }
-                setLoading(false)
             } catch (error) {
                 console.error("Error fetching data:", error);
+            } finally {
+                setLoading(false)
             }
         }
         fetchProblemsFun();
-    }, [])
+    }, [decodedContest])
 
 
     return (
@@ -68,7 +74,7 @@ const LeetcodeContests = ({params}) => {
             <div>
             <PageHeadersButton
                     greenHeading=" Editorials"
-                    heading={params.contestname.replaceAll("%20"," ")}
+                    heading={decodedContest}
                     description="In-depth Codeforces editorials for efficient problem-solving."
                 />
             </div>

@@ -10,24 +10,30 @@ import PageNotFound from "@/components/page-not-found";
 import DOMPurify from 'dompurify';
 import BreadCrumb from "@/app/(dashboard)/_components/components/breadcrumb";
 
-const Problem = (params: any) => {
+import { useParams } from "next/navigation";
+
+const Problem = () => {
+    const params = useParams();
+    const problemParam = (params?.problem as string) || "";
     const [problem, setProblem] = useState<any>()
     const [loading, setLoading] = useState(true)
 
     useEffect(() => {
         async function fetchProblemsFun() {
+            if (!problemParam) return;
             try {
-                const { dsaproblem } = await fetchProblem({ problem: params.params.problem });
-                if (dsaproblem) {
+                const { dsaproblem } = await fetchProblem({ problem: problemParam });
+                if (dsaproblem && dsaproblem.length > 0) {
                     setProblem(dsaproblem[0])
                 }
-                setLoading(false)
             } catch (error) {
                 console.error("Error fetching data:", error);
+            } finally {
+                setLoading(false)
             }
         }
         fetchProblemsFun();
-    }, [])
+    }, [problemParam])
     const [isCopied, setIsCopied] = useState(false)
     function getCurrentURL() {
         return window.location.href
@@ -62,7 +68,7 @@ const Problem = (params: any) => {
                                         },
                                         {
                                             "title": `${problem["problem_name"]}`,
-                                            "href": `/dsa-cp/problems/${params.params.problem}`
+                                            "href": `/dsa-cp/problems/${problemParam}`
                                         }
                                     ]} />
                                 </div>

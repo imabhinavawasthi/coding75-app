@@ -1,6 +1,7 @@
 "use client";
 
-import { BarChart, BarChart2, BookText, Briefcase, Calendar, Code, Code2, Code2Icon, ComputerIcon, Flame, GitFork, GraduationCap, Layout, LayoutDashboard, List, ListVideo, RocketIcon, Route, ScrollText, User, UserCheck, UserSquare, Users, Video } from "lucide-react";
+import { useState, useEffect } from "react";
+import { BarChart, BarChart2, BookText, Briefcase, Calendar, Code, Code2, Code2Icon, ComputerIcon, Flame, GitFork, GraduationCap, Layout, LayoutDashboard, List, ListVideo, RocketIcon, Route, ScrollText, Trophy, User, UserCheck, UserSquare, Users, Video } from "lucide-react";
 import { usePathname } from "next/navigation";
 import { SidebarItem } from "./sidebar-item";
 
@@ -170,6 +171,11 @@ const adminRoutes = [
     icon: Video,
     label: "Live Classes",
     href: "/admin/live-class",
+  },
+  {
+    icon: GraduationCap,
+    label: "Batches",
+    href: "/admin/batches",
   }
 ]
 
@@ -177,10 +183,92 @@ export const SidebarRoutes = () => {
   const pathname = usePathname();
 
   const isClassroomPage = pathname?.startsWith("/classroom");
+  const isAdminPage = pathname?.startsWith("/admin");
+  const isBatchPage = pathname?.startsWith("/batch");
 
-  const isAdminPage = pathname?.startsWith("/admin")
+  // Extract batchId if on a batch subpath
+  const batchId = isBatchPage ? pathname?.split("/")[2] : null;
 
-  const routes = isClassroomPage ? classroomRoutes : isAdminPage ? adminRoutes : siteRoutes;
+  const [batchType, setBatchType] = useState<string | null>(() => {
+    if (typeof window !== "undefined" && batchId) {
+      return sessionStorage.getItem(`batch_type_${batchId}`) || null;
+    }
+    return null;
+  });
+
+  useEffect(() => {
+    if (!batchId || typeof window === "undefined") return;
+    const cached = sessionStorage.getItem(`batch_type_${batchId}`);
+    if (cached) {
+      setBatchType(cached);
+    }
+    const handleUpdate = () => {
+      const updated = sessionStorage.getItem(`batch_type_${batchId}`);
+      if (updated) setBatchType(updated);
+    };
+    window.addEventListener("batch_type_updated", handleUpdate);
+    return () => window.removeEventListener("batch_type_updated", handleUpdate);
+  }, [batchId]);
+
+  const isDsaBatch = batchType === "dsa" || pathname?.includes("/progress") || pathname?.includes("/ranklist");
+
+  const batchRoutes = batchId
+    ? [
+        {
+          icon: LayoutDashboard,
+          label: "Batch Dashboard",
+          href: `/batch/${batchId}`,
+          exact: true,
+        },
+        ...(isDsaBatch
+          ? [
+              {
+                icon: BarChart2,
+                label: "DSA Progress",
+                href: `/batch/${batchId}/progress`,
+              },
+              {
+                icon: Trophy,
+                label: "Batch Ranklist",
+                href: `/batch/${batchId}/ranklist`,
+              },
+            ]
+          : []),
+        {
+          icon: Video,
+          label: "Class Recordings",
+          href: `/batch/${batchId}/recordings`,
+        },
+        {
+          icon: UserCheck,
+          label: "Attendance",
+          href: `/batch/${batchId}/attendance`,
+        },
+        {
+          icon: ScrollText,
+          label: "Assignments",
+          href: `/batch/${batchId}/assignments`,
+        },
+        {
+          icon: BookText,
+          label: "Notes & Resources",
+          href: `/batch/${batchId}/resources`,
+        },
+        {
+          icon: GraduationCap,
+          label: "Batch Details",
+          href: `/batch/${batchId}/details`,
+        },
+      ]
+    : siteRoutes;
+
+  const routes = isClassroomPage
+    ? classroomRoutes
+    : isAdminPage
+    ? adminRoutes
+    : isBatchPage && batchId
+    ? batchRoutes
+    : siteRoutes;
 
   return (
     <div className="flex flex-col w-full">
@@ -190,9 +278,9 @@ export const SidebarRoutes = () => {
           icon={route.icon}
           label={route.label}
           href={route.href}
+          exact={(route as any).exact}
         />
       ))}
-
     </div>
-  )
-}
+  );
+};
