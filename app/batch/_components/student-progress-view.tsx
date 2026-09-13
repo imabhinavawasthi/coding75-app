@@ -22,7 +22,8 @@ import {
     Clock,
     History,
     User,
-    ChevronDown
+    ChevronDown,
+    Rocket
 } from "lucide-react";
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
@@ -434,7 +435,7 @@ export function StudentProgressView({ batchId, studentId }: StudentProgressViewP
                                     <div className="space-y-1.5">
                                         <Label htmlFor="lcInput" className="text-xs font-semibold flex items-center justify-between">
                                             <span className="flex items-center gap-1.5">
-                                                <span className="w-2 h-2 rounded-full bg-amber-500" />
+                                                <img src="/logos/leetcode.png" alt="LeetCode" className="w-3.5 h-3.5 object-contain" />
                                                 LeetCode Username or Profile Link *
                                             </span>
                                             <span className="text-[11px] text-gray-400 font-normal">e.g. tourist or leetcode.com/u/tourist</span>
@@ -452,7 +453,7 @@ export function StudentProgressView({ batchId, studentId }: StudentProgressViewP
                                     <div className="space-y-1.5">
                                         <Label htmlFor="cfInput" className="text-xs font-semibold flex items-center justify-between">
                                             <span className="flex items-center gap-1.5">
-                                                <span className="w-2 h-2 rounded-full bg-blue-600" />
+                                                <img src="/logos/codeforces.svg" alt="Codeforces" className="w-3.5 h-3.5 object-contain" />
                                                 Codeforces Handle or Profile Link *
                                             </span>
                                             <span className="text-[11px] text-gray-400 font-normal">e.g. tourist or codeforces.com/profile/tourist</span>
@@ -470,7 +471,7 @@ export function StudentProgressView({ batchId, studentId }: StudentProgressViewP
                                     <div className="space-y-1.5">
                                         <Label htmlFor="ccInput" className="text-xs font-semibold flex items-center justify-between">
                                             <span className="flex items-center gap-1.5">
-                                                <span className="w-2 h-2 rounded-full bg-yellow-600" />
+                                                <img src="/logos/codechef.png" alt="CodeChef" className="w-3.5 h-3.5 object-contain" />
                                                 CodeChef Handle or Profile Link *
                                             </span>
                                             <span className="text-[11px] text-gray-400 font-normal">e.g. gennady or codechef.com/users/gennady</span>
@@ -564,8 +565,8 @@ export function StudentProgressView({ batchId, studentId }: StudentProgressViewP
                             <CardContent className="p-5">
                                 <div className="flex items-center justify-between">
                                     <span className="text-xs font-semibold text-amber-800">LeetCode Rating</span>
-                                    <div className="w-8 h-8 rounded-lg bg-amber-100 text-amber-700 flex items-center justify-center font-bold text-xs">
-                                        LC
+                                    <div className="w-8 h-8 rounded-lg bg-white border border-amber-200/80 flex items-center justify-center p-1.5 shadow-xs">
+                                        <img src="/logos/leetcode.png" alt="LeetCode" className="w-full h-full object-contain" />
                                     </div>
                                 </div>
                                 <div className="mt-3">
@@ -589,8 +590,8 @@ export function StudentProgressView({ batchId, studentId }: StudentProgressViewP
                             <CardContent className="p-5">
                                 <div className="flex items-center justify-between">
                                     <span className="text-xs font-semibold text-blue-800">Codeforces Rating</span>
-                                    <div className="w-8 h-8 rounded-lg bg-blue-100 text-blue-700 flex items-center justify-center font-bold text-xs">
-                                        CF
+                                    <div className="w-8 h-8 rounded-lg bg-white border border-blue-200/80 flex items-center justify-center p-1.5 shadow-xs">
+                                        <img src="/logos/codeforces.svg" alt="Codeforces" className="w-full h-full object-contain" />
                                     </div>
                                 </div>
                                 <div className="mt-3">
@@ -614,8 +615,8 @@ export function StudentProgressView({ batchId, studentId }: StudentProgressViewP
                             <CardContent className="p-5">
                                 <div className="flex items-center justify-between">
                                     <span className="text-xs font-semibold text-yellow-800">CodeChef Rating</span>
-                                    <div className="w-8 h-8 rounded-lg bg-yellow-100 text-yellow-700 flex items-center justify-center font-bold text-xs">
-                                        CC
+                                    <div className="w-8 h-8 rounded-lg bg-white border border-yellow-200/80 flex items-center justify-center p-1.5 shadow-xs">
+                                        <img src="/logos/codechef.png" alt="CodeChef" className="w-full h-full object-contain" />
                                     </div>
                                 </div>
                                 <div className="mt-3">
@@ -781,8 +782,8 @@ export function StudentProgressView({ batchId, studentId }: StudentProgressViewP
                             <CardHeader className="bg-amber-50/40 border-b pb-4">
                                 <div className="flex items-center justify-between">
                                     <div className="flex items-center gap-2.5">
-                                        <div className="w-9 h-9 rounded-xl bg-amber-500 text-white font-bold text-sm flex items-center justify-center shadow-xs">
-                                            LC
+                                        <div className="w-9 h-9 rounded-xl bg-white border border-amber-200 flex items-center justify-center p-1.5 shadow-xs">
+                                            <img src="/logos/leetcode.png" alt="LeetCode" className="w-full h-full object-contain" />
                                         </div>
                                         <div>
                                             <CardTitle className="text-base font-bold text-gray-900">LeetCode</CardTitle>
@@ -845,8 +846,8 @@ export function StudentProgressView({ batchId, studentId }: StudentProgressViewP
                             <CardHeader className="bg-blue-50/40 border-b pb-4">
                                 <div className="flex items-center justify-between">
                                     <div className="flex items-center gap-2.5">
-                                        <div className="w-9 h-9 rounded-xl bg-blue-600 text-white font-bold text-sm flex items-center justify-center shadow-xs">
-                                            CF
+                                        <div className="w-9 h-9 rounded-xl bg-white border border-blue-200 flex items-center justify-center p-1.5 shadow-xs">
+                                            <img src="/logos/codeforces.svg" alt="Codeforces" className="w-full h-full object-contain" />
                                         </div>
                                         <div>
                                             <CardTitle className="text-base font-bold text-gray-900">Codeforces</CardTitle>
@@ -899,8 +900,8 @@ export function StudentProgressView({ batchId, studentId }: StudentProgressViewP
                             <CardHeader className="bg-yellow-50/40 border-b pb-4">
                                 <div className="flex items-center justify-between">
                                     <div className="flex items-center gap-2.5">
-                                        <div className="w-9 h-9 rounded-xl bg-yellow-600 text-white font-bold text-sm flex items-center justify-center shadow-xs">
-                                            CC
+                                        <div className="w-9 h-9 rounded-xl bg-white border border-yellow-200 flex items-center justify-center p-1.5 shadow-xs">
+                                            <img src="/logos/codechef.png" alt="CodeChef" className="w-full h-full object-contain" />
                                         </div>
                                         <div>
                                             <CardTitle className="text-base font-bold text-gray-900">CodeChef</CardTitle>
@@ -948,6 +949,154 @@ export function StudentProgressView({ batchId, studentId }: StudentProgressViewP
                             </CardContent>
                         </Card>
                     </div>
+
+                    {/* CONTEST SOLUTIONS SECTION */}
+                    <Card className="border-slate-200 shadow-sm overflow-hidden">
+                        <CardHeader className="pb-3 border-b bg-slate-50/50">
+                            <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2">
+                                <div>
+                                    <CardTitle className="text-base font-bold text-gray-900 flex items-center gap-2">
+                                        <Flame className="w-4 h-4 text-rose-500" />
+                                        Contest Solutions & Video Editorials
+                                    </CardTitle>
+                                    <CardDescription className="text-xs">
+                                        Step-by-step problem walkthroughs, intuitions and video solutions for all major platforms
+                                    </CardDescription>
+                                </div>
+                                <Link href="/dsa-cp">
+                                    <Button variant="ghost" size="sm" className="text-xs text-gray-500 hover:text-gray-900 flex items-center gap-1">
+                                        All Contests & POTD <ArrowRight className="w-3.5 h-3.5" />
+                                    </Button>
+                                </Link>
+                            </div>
+                        </CardHeader>
+                        <CardContent className="p-5">
+                            <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+                                {/* LeetCode Contests */}
+                                <Link
+                                    href="/dsa-cp/leetcode-contests"
+                                    className="p-4 rounded-xl border border-amber-200/80 bg-gradient-to-br from-amber-50/40 via-white to-white hover:border-amber-400 hover:shadow-md transition flex flex-col justify-between group"
+                                >
+                                    <div className="space-y-2.5">
+                                        <div className="flex items-center justify-between">
+                                            <div className="w-10 h-10 rounded-xl bg-white border border-amber-200 flex items-center justify-center p-2 shadow-xs group-hover:scale-105 transition">
+                                                <img src="/logos/leetcode.png" alt="LeetCode" className="w-full h-full object-contain" />
+                                            </div>
+                                            <Badge variant="outline" className="text-[10px] bg-amber-50 text-amber-800 border-amber-300">
+                                                Weekly / Biweekly
+                                            </Badge>
+                                        </div>
+                                        <div>
+                                            <h4 className="font-bold text-gray-900 text-sm group-hover:text-amber-700 transition">LeetCode Contests</h4>
+                                            <p className="text-[11px] text-gray-500 mt-1 line-clamp-2">
+                                                Detailed contest problem solutions with intuition, optimal code & video tutorials.
+                                            </p>
+                                        </div>
+                                    </div>
+                                    <div className="pt-3 mt-3 border-t border-amber-100 flex items-center justify-between text-xs font-semibold text-amber-700 group-hover:text-amber-800">
+                                        <span>View Solutions</span>
+                                        <ArrowRight className="w-3.5 h-3.5 group-hover:translate-x-1 transition" />
+                                    </div>
+                                </Link>
+
+                                {/* Codeforces Contests */}
+                                <Link
+                                    href="/dsa-cp/codeforces"
+                                    className="p-4 rounded-xl border border-blue-200/80 bg-gradient-to-br from-blue-50/40 via-white to-white hover:border-blue-400 hover:shadow-md transition flex flex-col justify-between group"
+                                >
+                                    <div className="space-y-2.5">
+                                        <div className="flex items-center justify-between">
+                                            <div className="w-10 h-10 rounded-xl bg-white border border-blue-200 flex items-center justify-center p-2 shadow-xs group-hover:scale-105 transition">
+                                                <img src="/logos/codeforces.svg" alt="Codeforces" className="w-full h-full object-contain" />
+                                            </div>
+                                            <Badge variant="outline" className="text-[10px] bg-blue-50 text-blue-800 border-blue-300">
+                                                Div 2 / Div 3
+                                            </Badge>
+                                        </div>
+                                        <div>
+                                            <h4 className="font-bold text-gray-900 text-sm group-hover:text-blue-700 transition">Codeforces Contests</h4>
+                                            <p className="text-[11px] text-gray-500 mt-1 line-clamp-2">
+                                                In-depth analysis and proofs for Div. 2, Div. 3 and Educational contest problems.
+                                            </p>
+                                        </div>
+                                    </div>
+                                    <div className="pt-3 mt-3 border-t border-blue-100 flex items-center justify-between text-xs font-semibold text-blue-700 group-hover:text-blue-800">
+                                        <span>View Solutions</span>
+                                        <ArrowRight className="w-3.5 h-3.5 group-hover:translate-x-1 transition" />
+                                    </div>
+                                </Link>
+
+                                {/* CodeChef Contests */}
+                                <Link
+                                    href="/dsa-cp/codechef"
+                                    className="p-4 rounded-xl border border-yellow-200/80 bg-gradient-to-br from-yellow-50/40 via-white to-white hover:border-yellow-400 hover:shadow-md transition flex flex-col justify-between group"
+                                >
+                                    <div className="space-y-2.5">
+                                        <div className="flex items-center justify-between">
+                                            <div className="w-10 h-10 rounded-xl bg-white border border-yellow-200 flex items-center justify-center p-2 shadow-xs group-hover:scale-105 transition">
+                                                <img src="/logos/codechef.png" alt="CodeChef" className="w-full h-full object-contain" />
+                                            </div>
+                                            <Badge variant="outline" className="text-[10px] bg-yellow-50 text-yellow-800 border-yellow-300">
+                                                Starters
+                                            </Badge>
+                                        </div>
+                                        <div>
+                                            <h4 className="font-bold text-gray-900 text-sm group-hover:text-yellow-800 transition">CodeChef Contests</h4>
+                                            <p className="text-[11px] text-gray-500 mt-1 line-clamp-2">
+                                                Full editorial walkthroughs & test-case insights for weekly CodeChef Starters.
+                                            </p>
+                                        </div>
+                                    </div>
+                                    <div className="pt-3 mt-3 border-t border-yellow-100 flex items-center justify-between text-xs font-semibold text-yellow-800 group-hover:text-yellow-900">
+                                        <span>View Solutions</span>
+                                        <ArrowRight className="w-3.5 h-3.5 group-hover:translate-x-1 transition" />
+                                    </div>
+                                </Link>
+                            </div>
+                        </CardContent>
+                    </Card>
+
+                    {/* PATH TO NEWBIE TO EXPERT SHEET SECTION */}
+                    <Card className="shadow-sm border-emerald-300 bg-gradient-to-r from-emerald-950 via-slate-900 to-slate-900 text-white overflow-hidden relative">
+                        <div className="absolute right-0 top-0 bottom-0 w-1/3 bg-radial from-emerald-500/10 to-transparent pointer-events-none" />
+                        <CardContent className="p-6 sm:p-7 relative z-10">
+                            <div className="flex flex-col md:flex-row items-start md:items-center justify-between gap-5">
+                                <div className="space-y-2.5 max-w-xl">
+                                    <div className="flex items-center gap-2 flex-wrap">
+                                        <Badge className="bg-emerald-500 hover:bg-emerald-600 text-white text-[10px] font-bold px-2 py-0.5 border-none">
+                                            Curated Practice Roadmap
+                                        </Badge>
+                                        <Badge variant="outline" className="text-emerald-300 border-emerald-500/40 text-[10px] bg-emerald-950/40">
+                                            800 → 1900+ Rating
+                                        </Badge>
+                                        <Badge variant="outline" className="text-emerald-300 border-emerald-500/40 text-[10px] bg-emerald-950/40">
+                                            Video Editorials
+                                        </Badge>
+                                    </div>
+                                    <h3 className="text-lg sm:text-xl font-bold tracking-tight text-white flex items-center gap-2">
+                                        <Rocket className="w-5 h-5 text-emerald-400" />
+                                        Path: Newbie → Expert CP Sheet
+                                    </h3>
+                                    <p className="text-xs sm:text-sm text-slate-300 leading-relaxed">
+                                        Hand-picked Codeforces problems arranged difficulty-wise with in-depth video editorials. Master pattern recognition and level up step-by-step from Newbie to Expert.
+                                    </p>
+                                </div>
+
+                                <div className="flex flex-col sm:flex-row md:flex-col items-stretch sm:items-center md:items-end gap-2.5 shrink-0 w-full sm:w-auto">
+                                    <Link href="/dsa-cp/sheets/expert-sheet" className="w-full sm:w-auto">
+                                        <Button className="w-full sm:w-auto bg-emerald-500 hover:bg-emerald-600 text-slate-950 font-bold text-xs h-10 gap-2 shadow-lg shadow-emerald-500/20">
+                                            Start Solving Sheet <ArrowRight className="w-4 h-4" />
+                                        </Button>
+                                    </Link>
+                                    <Link href="/dsa-cp/sheets" className="w-full sm:w-auto">
+                                        <Button variant="ghost" size="sm" className="w-full sm:w-auto text-xs text-slate-300 hover:text-white hover:bg-slate-800/60">
+                                            Explore All Sheets
+                                        </Button>
+                                    </Link>
+                                </div>
+                            </div>
+                        </CardContent>
+                    </Card>
                 </div>
             )}
         </div>

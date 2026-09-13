@@ -401,9 +401,24 @@ export default function BatchRanklistPage() {
                                         <th className="py-3 px-4">Student</th>
                                         <th className="py-3 px-4 text-center">Main Rating</th>
                                         <th className="py-3 px-4 text-center">Total Solved</th>
-                                        <th className="py-3 px-4">LeetCode</th>
-                                        <th className="py-3 px-4">Codeforces</th>
-                                        <th className="py-3 px-4">CodeChef</th>
+                                        <th className="py-3 px-4">
+                                            <div className="flex items-center gap-1.5">
+                                                <img src="/logos/leetcode.png" alt="LeetCode" className="w-3.5 h-3.5 object-contain" />
+                                                <span>LeetCode</span>
+                                            </div>
+                                        </th>
+                                        <th className="py-3 px-4">
+                                            <div className="flex items-center gap-1.5">
+                                                <img src="/logos/codeforces.svg" alt="Codeforces" className="w-3.5 h-3.5 object-contain" />
+                                                <span>Codeforces</span>
+                                            </div>
+                                        </th>
+                                        <th className="py-3 px-4">
+                                            <div className="flex items-center gap-1.5">
+                                                <img src="/logos/codechef.png" alt="CodeChef" className="w-3.5 h-3.5 object-contain" />
+                                                <span>CodeChef</span>
+                                            </div>
+                                        </th>
                                     </tr>
                                 </thead>
                                 <tbody className="divide-y divide-slate-100">
@@ -518,7 +533,8 @@ export default function BatchRanklistPage() {
                                                 <td className="py-3.5 px-4">
                                                     {st.handles.leetcode ? (
                                                         <div>
-                                                            <div className="flex items-center gap-1">
+                                                            <div className="flex items-center gap-1.5">
+                                                                <img src="/logos/leetcode.png" alt="LeetCode" className="w-3.5 h-3.5 object-contain shrink-0" />
                                                                 <span className="font-bold text-gray-900">
                                                                     {st.stats.leetcode.rating ? st.stats.leetcode.rating : "Unrated"}
                                                                 </span>
@@ -530,7 +546,7 @@ export default function BatchRanklistPage() {
                                                                 href={getPlatformProfileUrl("leetcode", st.handles.leetcode)}
                                                                 target="_blank"
                                                                 rel="noopener noreferrer"
-                                                                className="text-[11px] text-amber-700 hover:underline flex items-center gap-0.5"
+                                                                className="text-[11px] text-amber-700 hover:underline flex items-center gap-0.5 mt-0.5"
                                                             >
                                                                 @{st.handles.leetcode} <ExternalLink className="w-2.5 h-2.5" />
                                                             </a>
@@ -544,7 +560,8 @@ export default function BatchRanklistPage() {
                                                 <td className="py-3.5 px-4">
                                                     {st.handles.codeforces ? (
                                                         <div>
-                                                            <div className="flex items-center gap-1">
+                                                            <div className="flex items-center gap-1.5">
+                                                                <img src="/logos/codeforces.svg" alt="Codeforces" className="w-3.5 h-3.5 object-contain shrink-0" />
                                                                 <span className="font-bold text-gray-900">
                                                                     {st.stats.codeforces.rating ? st.stats.codeforces.rating : "Unrated"}
                                                                 </span>
@@ -556,7 +573,7 @@ export default function BatchRanklistPage() {
                                                                 href={getPlatformProfileUrl("codeforces", st.handles.codeforces)}
                                                                 target="_blank"
                                                                 rel="noopener noreferrer"
-                                                                className="text-[11px] text-blue-700 hover:underline flex items-center gap-0.5"
+                                                                className="text-[11px] text-blue-700 hover:underline flex items-center gap-0.5 mt-0.5"
                                                             >
                                                                 @{st.handles.codeforces} <ExternalLink className="w-2.5 h-2.5" />
                                                             </a>
@@ -570,7 +587,8 @@ export default function BatchRanklistPage() {
                                                 <td className="py-3.5 px-4">
                                                     {st.handles.codechef ? (
                                                         <div>
-                                                            <div className="flex items-center gap-1">
+                                                            <div className="flex items-center gap-1.5">
+                                                                <img src="/logos/codechef.png" alt="CodeChef" className="w-3.5 h-3.5 object-contain shrink-0" />
                                                                 <span className="font-bold text-gray-900">
                                                                     {st.stats.codechef.rating ? st.stats.codechef.rating : "Unrated"}
                                                                 </span>
@@ -582,7 +600,7 @@ export default function BatchRanklistPage() {
                                                                 href={getPlatformProfileUrl("codechef", st.handles.codechef)}
                                                                 target="_blank"
                                                                 rel="noopener noreferrer"
-                                                                className="text-[11px] text-yellow-800 hover:underline flex items-center gap-0.5"
+                                                                className="text-[11px] text-yellow-800 hover:underline flex items-center gap-0.5 mt-0.5"
                                                             >
                                                                 @{st.handles.codechef} <ExternalLink className="w-2.5 h-2.5" />
                                                             </a>

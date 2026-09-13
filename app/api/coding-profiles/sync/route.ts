@@ -89,7 +89,29 @@ async function fetchLeetCodeStats(handle: string) {
             }
         }
 
-        // Fallback
+        // Fallback 1: Faisal Shohag Vercel Edge API (fast & highly reliable)
+        try {
+            const vercelRes = await fetch(`https://leetcode-api-faisalshohag.vercel.app/${encodeURIComponent(handle)}`, {
+                headers: { "User-Agent": "Mozilla/5.0" },
+                next: { revalidate: 300 }
+            });
+            if (vercelRes.ok) {
+                const data = await vercelRes.json();
+                if (data && data.totalSolved !== undefined) {
+                    return {
+                        handle,
+                        rating: 0,
+                        solved: data.totalSolved || 0,
+                        easySolved: data.easySolved || 0,
+                        mediumSolved: data.mediumSolved || 0,
+                        hardSolved: data.hardSolved || 0,
+                        ranking: data.ranking || null
+                    };
+                }
+            }
+        } catch {}
+
+        // Fallback 2: Alfa LeetCode API
         const fallbackRes = await fetch(`https://alfa-leetcode-api.onrender.com/userProfile/${encodeURIComponent(handle)}`);
         if (fallbackRes.ok) {
             const data = await fallbackRes.json();
@@ -178,7 +200,8 @@ async function fetchCodeChefStats(handle: string) {
         if (res.ok) {
             const html = await res.text();
             if (!html.includes("User not found")) {
-                const ratingMatch = html.match(/class="rating-number">\s*(\d+)\s*<\/div>/);
+                const ratingMatch = html.match(/class="rating-number"[^>]*>\s*(\d+)/i) ||
+                    html.match(/class="rating-header"[^>]*>[\s\S]*?(\d{3,4})/i);
                 const starsMatch = html.match(/class="rating-star">([\s\S]*?)<\/div>/);
                 let stars = "1★";
                 if (starsMatch) {
@@ -358,7 +381,16 @@ export async function GET(req: Request) {
         const lastSyncedTime = latest?.synced_at ? new Date(latest.synced_at).getTime() : 0;
         const isOlderThanWeek = !latest || (now - lastSyncedTime > SEVEN_DAYS_MS);
 
-        if (isOlderThanWeek && hasAllHandles) {
+        // Auto-heal if snapshot is missing stats (e.g. CodeChef rating is 0 or solved is 0)
+        const needsRepair = Boolean(
+            latest && (
+                (targetProfile.social_links?.codechef && latest.codechef?.rating === 0) ||
+                (targetProfile.social_links?.codechef && latest.codechef?.solved === 0) ||
+                (targetProfile.social_links?.leetcode && latest.leetcode?.solved === 0)
+            )
+        );
+
+        if ((isOlderThanWeek || needsRepair) && hasAllHandles) {
             // Auto sync
             return performSync(targetProfile.user_email, targetProfile, false, studentInfo);
         }
@@ -484,9 +516,19 @@ export async function POST(req: Request) {
         const codingStats = targetProfile.metadata?.coding_stats || {};
         const lastManualSync = codingStats.last_manual_sync;
         const now = Date.now();
+        const latest = codingStats.latest as CodingSnapshot | undefined;
 
-        // Enforce 24-hour rate-limit on manual sync
-        if (isManual && lastManualSync) {
+        // Auto-heal check: allow manual sync if existing snapshot has 0 ratings/solved
+        const needsRepair = Boolean(
+            latest && (
+                (targetProfile.social_links?.codechef && latest.codechef?.rating === 0) ||
+                (targetProfile.social_links?.codechef && latest.codechef?.solved === 0) ||
+                (targetProfile.social_links?.leetcode && latest.leetcode?.solved === 0)
+            )
+        );
+
+        // Enforce 24-hour rate-limit on manual sync (unless user needs repair)
+        if (isManual && lastManualSync && !needsRepair) {
             const elapsed = now - new Date(lastManualSync).getTime();
             if (elapsed < TWENTY_FOUR_HOURS_MS) {
                 const hoursLeft = Math.ceil((TWENTY_FOUR_HOURS_MS - elapsed) / (1000 * 60 * 60));

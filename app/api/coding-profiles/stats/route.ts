@@ -71,7 +71,30 @@ async function fetchLeetCodeStats(handle: string): Promise<PlatformStatsResult> 
             }
         }
 
-        // Fallback to alfa-leetcode-api
+        // Fallback 1: Faisal Shohag Vercel Edge API (fast & highly reliable)
+        try {
+            const vercelRes = await fetch(`https://leetcode-api-faisalshohag.vercel.app/${encodeURIComponent(handle)}`, {
+                headers: { "User-Agent": "Mozilla/5.0" },
+                next: { revalidate: 300 }
+            });
+            if (vercelRes.ok) {
+                const data = await vercelRes.json();
+                if (data && data.totalSolved !== undefined) {
+                    return {
+                        handle,
+                        rating: 0,
+                        solved: data.totalSolved || 0,
+                        easySolved: data.easySolved || 0,
+                        mediumSolved: data.mediumSolved || 0,
+                        hardSolved: data.hardSolved || 0,
+                        ranking: data.ranking || null,
+                        status: "success"
+                    };
+                }
+            }
+        } catch {}
+
+        // Fallback 2: alfa-leetcode-api
         const fallbackRes = await fetch(`https://alfa-leetcode-api.onrender.com/userProfile/${encodeURIComponent(handle)}`, {
             headers: { "User-Agent": "Mozilla/5.0" }
         });
@@ -179,7 +202,8 @@ async function fetchCodeChefStats(handle: string): Promise<PlatformStatsResult> 
             return { handle, rating: 0, solved: 0, status: "not_found", error: "User not found on CodeChef" };
         }
 
-        const ratingMatch = html.match(/class="rating-number">\s*(\d+)\s*<\/div>/);
+        const ratingMatch = html.match(/class="rating-number"[^>]*>\s*(\d+)/i) ||
+            html.match(/class="rating-header"[^>]*>[\s\S]*?(\d{3,4})/i);
         const starsMatch = html.match(/class="rating-star">([\s\S]*?)<\/div>/);
         let stars = "1★";
         if (starsMatch) {

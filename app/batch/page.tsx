@@ -15,7 +15,7 @@ import {
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
-import { Logo } from "@/app/(dashboard)/_components/components/logo";
+import { BatchLoadingState } from "./_components/batch-loading-state";
 import supabase from "@/supabase";
 
 export default function BatchesIndexPage() {
@@ -42,10 +42,6 @@ export default function BatchesIndexPage() {
                 if (res.ok && data.batches) {
                     const userBatches = data.batches;
                     setBatches(userBatches);
-                    if (userBatches.length === 1) {
-                        router.replace(`/batch/${userBatches[0].batch_id}`);
-                        return;
-                    }
                 }
             } catch (err) {
                 console.error("Error loading batches:", err);
@@ -58,14 +54,7 @@ export default function BatchesIndexPage() {
     }, [router]);
 
     if (loading) {
-        return (
-            <div className="flex flex-col items-center justify-center min-h-[60vh] gap-4">
-                <div className="animate-ping">
-                    <Logo />
-                </div>
-                <p className="text-sm font-medium text-gray-500">Loading your batches...</p>
-            </div>
-        );
+        return <BatchLoadingState message="Loading your batches..." />;
     }
 
     return (

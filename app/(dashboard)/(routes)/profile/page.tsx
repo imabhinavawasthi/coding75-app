@@ -279,11 +279,9 @@ export default function ProfilePage() {
 
     if (loading) {
         return (
-            <div className="flex flex-col items-center justify-center min-h-[60vh] gap-4">
-                <div className="animate-ping">
-                    <Logo />
-                </div>
-                <p className="text-sm font-medium text-gray-500">Loading your profile...</p>
+            <div className="flex flex-col items-center justify-center min-h-[60vh] gap-3.5">
+                <div className="w-8 h-8 rounded-full border-2 border-slate-200 border-t-slate-800 animate-spin" />
+                <p className="text-sm font-medium text-slate-500">Loading your profile...</p>
             </div>
         );
     }

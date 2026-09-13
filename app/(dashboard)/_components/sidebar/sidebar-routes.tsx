@@ -224,7 +224,7 @@ export const SidebarRoutes = () => {
           ? [
               {
                 icon: BarChart2,
-                label: "DSA Progress",
+                label: "Progress",
                 href: `/batch/${batchId}/progress`,
               },
               {

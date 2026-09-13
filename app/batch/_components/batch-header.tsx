@@ -44,25 +44,26 @@ export function BatchHeader({ batchData, classes = [], userEmail = "" }: BatchHe
 
     return (
         <div className="space-y-4">
-            {/* Top Hero Banner */}
-            <div className="relative overflow-hidden rounded-2xl bg-gradient-to-r from-slate-900 via-indigo-950 to-slate-900 text-white p-6 sm:p-8 shadow-xl">
-                <div className="relative z-10 flex flex-col lg:flex-row lg:items-center justify-between gap-6">
-                    <div className="space-y-3 max-w-2xl">
+            {/* Modern Classic Solid Batch Header */}
+            <div className="rounded-2xl bg-slate-900 border border-slate-800 text-white p-6 sm:p-8 shadow-sm">
+                <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-6">
+                    <div className="space-y-3.5 max-w-2xl">
                         <div className="flex flex-wrap items-center gap-2">
-                            <Badge className="bg-blue-500/20 text-blue-300 border-blue-500/30">
+                            <span className="inline-flex items-center px-2.5 py-1 rounded-md text-xs font-mono font-medium bg-slate-800 text-slate-200 border border-slate-700">
                                 Batch Code: {batchId}
-                            </Badge>
+                            </span>
                             {attributes?.status && (
-                                <Badge className="bg-emerald-500/20 text-emerald-300 border-emerald-500/30 capitalize">
+                                <span className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-md text-xs font-medium bg-emerald-950/80 text-emerald-300 border border-emerald-800/80 capitalize">
+                                    <span className="w-1.5 h-1.5 rounded-full bg-emerald-400" />
                                     {attributes.status}
-                                </Badge>
+                                </span>
                             )}
-                            <Badge className="bg-purple-500/20 text-purple-300 border-purple-500/30">
+                            <span className="inline-flex items-center px-2.5 py-1 rounded-md text-xs font-medium bg-slate-800 text-slate-300 border border-slate-700">
                                 Enrolled Student
-                            </Badge>
+                            </span>
                         </div>
 
-                        <h1 className="text-2xl sm:text-3xl lg:text-4xl font-extrabold tracking-tight">
+                        <h1 className="text-2xl sm:text-3xl lg:text-4xl font-bold tracking-tight text-white">
                             {batchData?.batch_name}
                         </h1>
 
@@ -72,51 +73,51 @@ export function BatchHeader({ batchData, classes = [], userEmail = "" }: BatchHe
                             </p>
                         )}
 
-                        {/* Batch quick links from attributes */}
-                        <div className="flex flex-wrap items-center gap-2.5 pt-2">
+                        {/* Batch quick links */}
+                        <div className="flex flex-wrap items-center gap-2.5 pt-1.5">
                             {attributes?.discord_link && (
                                 <a href={attributes.discord_link} target="_blank" rel="noopener noreferrer">
-                                    <Button size="sm" variant="outline" className="bg-indigo-600/30 hover:bg-indigo-600/50 text-white border-indigo-400/40 text-xs flex items-center gap-1.5 h-8">
-                                        <MessageSquare className="w-3.5 h-3.5 text-indigo-300" /> Discord Community
+                                    <Button size="sm" variant="outline" className="bg-slate-800 hover:bg-slate-700 text-slate-100 border-slate-700 text-xs flex items-center gap-1.5 h-8 font-medium">
+                                        <MessageSquare className="w-3.5 h-3.5 text-indigo-400" /> Discord Community
                                     </Button>
                                 </a>
                             )}
                             {attributes?.whatsapp_link && (
                                 <a href={attributes.whatsapp_link} target="_blank" rel="noopener noreferrer">
-                                    <Button size="sm" variant="outline" className="bg-emerald-600/30 hover:bg-emerald-600/50 text-white border-emerald-400/40 text-xs flex items-center gap-1.5 h-8">
-                                        <ExternalLink className="w-3.5 h-3.5 text-emerald-300" /> WhatsApp Group
+                                    <Button size="sm" variant="outline" className="bg-slate-800 hover:bg-slate-700 text-slate-100 border-slate-700 text-xs flex items-center gap-1.5 h-8 font-medium">
+                                        <ExternalLink className="w-3.5 h-3.5 text-emerald-400" /> WhatsApp Group
                                     </Button>
                                 </a>
                             )}
                             {attributes?.syllabus_url && (
                                 <a href={attributes.syllabus_url} target="_blank" rel="noopener noreferrer">
-                                    <Button size="sm" variant="outline" className="bg-white/10 hover:bg-white/20 text-white border-white/20 text-xs flex items-center gap-1.5 h-8">
-                                        <BookOpen className="w-3.5 h-3.5" /> Syllabus Roadmap
+                                    <Button size="sm" variant="outline" className="bg-slate-800 hover:bg-slate-700 text-slate-100 border-slate-700 text-xs flex items-center gap-1.5 h-8 font-medium">
+                                        <BookOpen className="w-3.5 h-3.5 text-slate-300" /> Syllabus Roadmap
                                     </Button>
                                 </a>
                             )}
                         </div>
                     </div>
 
-                    {/* Quick Stats Metric Cards */}
-                    <div className="grid grid-cols-2 sm:grid-cols-4 lg:grid-cols-2 gap-3 min-w-[260px]">
-                        <div className="bg-white/10 backdrop-blur-md rounded-xl p-3 text-center border border-white/10">
-                            <span className="text-[11px] text-slate-300 font-medium block">Total Classes</span>
-                            <span className="text-2xl font-black text-white">{classes.length}</span>
+                    {/* Quick Stats Metric Cards - Modern Classic Solid */}
+                    <div className="grid grid-cols-2 sm:grid-cols-4 lg:grid-cols-2 gap-3 min-w-[280px]">
+                        <div className="bg-slate-800/90 rounded-xl p-4 text-center border border-slate-700/80 shadow-sm">
+                            <span className="text-[11px] text-slate-400 font-semibold uppercase tracking-wider block mb-1">Total Classes</span>
+                            <span className="text-2xl font-bold text-white tracking-tight">{classes.length}</span>
                         </div>
-                        <div className="bg-white/10 backdrop-blur-md rounded-xl p-3 text-center border border-white/10">
-                            <span className="text-[11px] text-slate-300 font-medium block">Your Attendance</span>
-                            <span className={`text-2xl font-black ${attendancePercentage >= 80 ? 'text-emerald-400' : attendancePercentage >= 60 ? 'text-amber-300' : 'text-rose-400'}`}>
+                        <div className="bg-slate-800/90 rounded-xl p-4 text-center border border-slate-700/80 shadow-sm">
+                            <span className="text-[11px] text-slate-400 font-semibold uppercase tracking-wider block mb-1">Your Attendance</span>
+                            <span className={`text-2xl font-bold tracking-tight ${attendancePercentage >= 80 ? 'text-emerald-400' : attendancePercentage >= 60 ? 'text-amber-400' : 'text-rose-400'}`}>
                                 {attendancePercentage}%
                             </span>
                         </div>
-                        <div className="bg-white/10 backdrop-blur-md rounded-xl p-3 text-center border border-white/10">
-                            <span className="text-[11px] text-slate-300 font-medium block">Attended</span>
-                            <span className="text-2xl font-black text-white">{attendedClassesCount}</span>
+                        <div className="bg-slate-800/90 rounded-xl p-4 text-center border border-slate-700/80 shadow-sm">
+                            <span className="text-[11px] text-slate-400 font-semibold uppercase tracking-wider block mb-1">Attended</span>
+                            <span className="text-2xl font-bold text-white tracking-tight">{attendedClassesCount}</span>
                         </div>
-                        <div className="bg-white/10 backdrop-blur-md rounded-xl p-3 text-center border border-white/10">
-                            <span className="text-[11px] text-slate-300 font-medium block">Upcoming</span>
-                            <span className="text-2xl font-black text-amber-300">{upcomingClasses.length}</span>
+                        <div className="bg-slate-800/90 rounded-xl p-4 text-center border border-slate-700/80 shadow-sm">
+                            <span className="text-[11px] text-slate-400 font-semibold uppercase tracking-wider block mb-1">Upcoming</span>
+                            <span className="text-2xl font-bold text-amber-400 tracking-tight">{upcomingClasses.length}</span>
                         </div>
                     </div>
                 </div>

@@ -19,7 +19,9 @@ import {
     ExternalLink,
     Send,
     BarChart2,
-    Trophy
+    Trophy,
+    Flame,
+    Rocket
 } from "lucide-react";
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
@@ -251,6 +253,156 @@ export default function BatchDashboardPage() {
                             )}
                         </CardContent>
                     </Card>
+
+                    {/* SECTION: CONTEST SOLUTIONS & VIDEO EDITORIALS (for DSA Batches) */}
+                    {batchData?.attributes?.batch_type === "dsa" && (
+                        <Card className="shadow-sm border-slate-200" id="contest-solutions">
+                            <CardHeader className="pb-3 flex flex-row items-center justify-between">
+                                <div>
+                                    <CardTitle className="text-base font-bold text-gray-900 flex items-center gap-2">
+                                        <Flame className="w-4 h-4 text-rose-500" />
+                                        Contest Solutions & Video Editorials
+                                    </CardTitle>
+                                    <CardDescription className="text-xs">
+                                        In-depth problem breakdowns and video solutions for recent contests
+                                    </CardDescription>
+                                </div>
+                                <Link href="/dsa-cp">
+                                    <Button variant="ghost" size="sm" className="text-xs text-gray-500 hover:text-gray-900 flex items-center gap-1">
+                                        All Contests <ArrowRight className="w-3.5 h-3.5" />
+                                    </Button>
+                                </Link>
+                            </CardHeader>
+                            <CardContent className="space-y-3">
+                                <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
+                                    {/* LeetCode Contests */}
+                                    <Link
+                                        href="/dsa-cp/leetcode-contests"
+                                        className="p-4 rounded-xl border border-amber-200/80 bg-gradient-to-br from-amber-50/40 via-white to-white hover:border-amber-400 hover:shadow-md transition flex flex-col justify-between group"
+                                    >
+                                        <div className="space-y-2.5">
+                                            <div className="flex items-center justify-between">
+                                                <div className="w-10 h-10 rounded-xl bg-white border border-amber-200 flex items-center justify-center p-2 shadow-xs group-hover:scale-105 transition">
+                                                    <img src="/logos/leetcode.png" alt="LeetCode" className="w-full h-full object-contain" />
+                                                </div>
+                                                <Badge variant="outline" className="text-[10px] bg-amber-50 text-amber-800 border-amber-300">
+                                                    Weekly / Biweekly
+                                                </Badge>
+                                            </div>
+                                            <div>
+                                                <h4 className="font-bold text-gray-900 text-sm group-hover:text-amber-700 transition">LeetCode Contests</h4>
+                                                <p className="text-[11px] text-gray-500 mt-1 line-clamp-2">
+                                                    Detailed contest problem solutions with intuition & time complexity analysis.
+                                                </p>
+                                            </div>
+                                        </div>
+                                        <div className="pt-3 mt-3 border-t border-amber-100 flex items-center justify-between text-xs font-semibold text-amber-700 group-hover:text-amber-800">
+                                            <span>View Solutions</span>
+                                            <ArrowRight className="w-3.5 h-3.5 group-hover:translate-x-1 transition" />
+                                        </div>
+                                    </Link>
+
+                                    {/* Codeforces Contests */}
+                                    <Link
+                                        href="/dsa-cp/codeforces"
+                                        className="p-4 rounded-xl border border-blue-200/80 bg-gradient-to-br from-blue-50/40 via-white to-white hover:border-blue-400 hover:shadow-md transition flex flex-col justify-between group"
+                                    >
+                                        <div className="space-y-2.5">
+                                            <div className="flex items-center justify-between">
+                                                <div className="w-10 h-10 rounded-xl bg-white border border-blue-200 flex items-center justify-center p-2 shadow-xs group-hover:scale-105 transition">
+                                                    <img src="/logos/codeforces.svg" alt="Codeforces" className="w-full h-full object-contain" />
+                                                </div>
+                                                <Badge variant="outline" className="text-[10px] bg-blue-50 text-blue-800 border-blue-300">
+                                                    Div 2 / Div 3
+                                                </Badge>
+                                            </div>
+                                            <div>
+                                                <h4 className="font-bold text-gray-900 text-sm group-hover:text-blue-700 transition">Codeforces Contests</h4>
+                                                <p className="text-[11px] text-gray-500 mt-1 line-clamp-2">
+                                                    Step-by-step mathematical & algorithmic solutions for Codeforces rounds.
+                                                </p>
+                                            </div>
+                                        </div>
+                                        <div className="pt-3 mt-3 border-t border-blue-100 flex items-center justify-between text-xs font-semibold text-blue-700 group-hover:text-blue-800">
+                                            <span>View Solutions</span>
+                                            <ArrowRight className="w-3.5 h-3.5 group-hover:translate-x-1 transition" />
+                                        </div>
+                                    </Link>
+
+                                    {/* CodeChef Contests */}
+                                    <Link
+                                        href="/dsa-cp/codechef"
+                                        className="p-4 rounded-xl border border-yellow-200/80 bg-gradient-to-br from-yellow-50/40 via-white to-white hover:border-yellow-400 hover:shadow-md transition flex flex-col justify-between group"
+                                    >
+                                        <div className="space-y-2.5">
+                                            <div className="flex items-center justify-between">
+                                                <div className="w-10 h-10 rounded-xl bg-white border border-yellow-200 flex items-center justify-center p-2 shadow-xs group-hover:scale-105 transition">
+                                                    <img src="/logos/codechef.png" alt="CodeChef" className="w-full h-full object-contain" />
+                                                </div>
+                                                <Badge variant="outline" className="text-[10px] bg-yellow-50 text-yellow-800 border-yellow-300">
+                                                    Starters
+                                                </Badge>
+                                            </div>
+                                            <div>
+                                                <h4 className="font-bold text-gray-900 text-sm group-hover:text-yellow-800 transition">CodeChef Contests</h4>
+                                                <p className="text-[11px] text-gray-500 mt-1 line-clamp-2">
+                                                    Complete problem walkthroughs & editorials for weekly CodeChef Starters.
+                                                </p>
+                                            </div>
+                                        </div>
+                                        <div className="pt-3 mt-3 border-t border-yellow-100 flex items-center justify-between text-xs font-semibold text-yellow-800 group-hover:text-yellow-900">
+                                            <span>View Solutions</span>
+                                            <ArrowRight className="w-3.5 h-3.5 group-hover:translate-x-1 transition" />
+                                        </div>
+                                    </Link>
+                                </div>
+                            </CardContent>
+                        </Card>
+                    )}
+
+                    {/* SECTION: NEWBIE TO EXPERT CP SHEET (for DSA Batches) */}
+                    {batchData?.attributes?.batch_type === "dsa" && (
+                        <Card className="shadow-sm border-emerald-300 bg-gradient-to-r from-emerald-950 via-slate-900 to-slate-900 text-white overflow-hidden relative">
+                            <div className="absolute right-0 top-0 bottom-0 w-1/3 bg-radial from-emerald-500/10 to-transparent pointer-events-none" />
+                            <CardContent className="p-6 sm:p-7 relative z-10">
+                                <div className="flex flex-col md:flex-row items-start md:items-center justify-between gap-5">
+                                    <div className="space-y-2.5 max-w-xl">
+                                        <div className="flex items-center gap-2 flex-wrap">
+                                            <Badge className="bg-emerald-500 hover:bg-emerald-600 text-white text-[10px] font-bold px-2 py-0.5 border-none">
+                                                Curated Practice Sheet
+                                            </Badge>
+                                            <Badge variant="outline" className="text-emerald-300 border-emerald-500/40 text-[10px] bg-emerald-950/40">
+                                                800 → 1900+ Rating
+                                            </Badge>
+                                            <Badge variant="outline" className="text-emerald-300 border-emerald-500/40 text-[10px] bg-emerald-950/40">
+                                                Video Editorials
+                                            </Badge>
+                                        </div>
+                                        <h3 className="text-lg sm:text-xl font-bold tracking-tight text-white flex items-center gap-2">
+                                            <Rocket className="w-5 h-5 text-emerald-400" />
+                                            Path: Newbie → Expert CP Sheet
+                                        </h3>
+                                        <p className="text-xs sm:text-sm text-slate-300 leading-relaxed">
+                                            Hand-picked Codeforces problems arranged difficulty-wise with in-depth video editorials. Master pattern recognition and level up step-by-step from Newbie to Expert.
+                                        </p>
+                                    </div>
+
+                                    <div className="flex flex-col sm:flex-row md:flex-col items-stretch sm:items-center md:items-end gap-2.5 shrink-0 w-full sm:w-auto">
+                                        <Link href="/dsa-cp/sheets/expert-sheet" className="w-full sm:w-auto">
+                                            <Button className="w-full sm:w-auto bg-emerald-500 hover:bg-emerald-600 text-slate-950 font-bold text-xs h-10 gap-2 shadow-lg shadow-emerald-500/20">
+                                                Start Solving Sheet <ArrowRight className="w-4 h-4" />
+                                            </Button>
+                                        </Link>
+                                        <Link href="/dsa-cp/sheets" className="w-full sm:w-auto">
+                                            <Button variant="ghost" size="sm" className="w-full sm:w-auto text-xs text-slate-300 hover:text-white hover:bg-slate-800/60">
+                                                Explore All Sheets
+                                            </Button>
+                                        </Link>
+                                    </div>
+                                </div>
+                            </CardContent>
+                        </Card>
+                    )}
                 </div>
 
                 {/* Right 1 Column: Quick Sections & Important Guidelines */}
@@ -291,6 +443,32 @@ export default function BatchDashboardPage() {
                                         </div>
                                         <ArrowRight className="w-3.5 h-3.5 text-amber-600 group-hover:translate-x-0.5 transition" />
                                     </Link>
+
+                                    <Link href="/dsa-cp/sheets/expert-sheet" className="flex items-center justify-between p-3 rounded-lg hover:bg-purple-50 transition text-xs font-medium text-gray-700 group border border-purple-200 bg-purple-50/40">
+                                        <div className="flex items-center gap-2.5">
+                                            <div className="w-7 h-7 rounded-md bg-purple-600 text-white flex items-center justify-center">
+                                                <Rocket className="w-4 h-4" />
+                                            </div>
+                                            <div>
+                                                <span className="font-semibold text-gray-900 block">Expert CP Sheet</span>
+                                                <span className="text-[10px] text-purple-700 font-normal">Newbie → Expert Sheet</span>
+                                            </div>
+                                        </div>
+                                        <ArrowRight className="w-3.5 h-3.5 text-purple-600 group-hover:translate-x-0.5 transition" />
+                                    </Link>
+
+                                    <a href="#contest-solutions" className="flex items-center justify-between p-3 rounded-lg hover:bg-rose-50 transition text-xs font-medium text-gray-700 group border border-rose-200 bg-rose-50/30">
+                                        <div className="flex items-center gap-2.5">
+                                            <div className="w-7 h-7 rounded-md bg-rose-500 text-white flex items-center justify-center">
+                                                <Flame className="w-4 h-4" />
+                                            </div>
+                                            <div>
+                                                <span className="font-semibold text-gray-900 block">Contest Solutions</span>
+                                                <span className="text-[10px] text-rose-700 font-normal">LC, CF & CC Walkthroughs</span>
+                                            </div>
+                                        </div>
+                                        <ArrowRight className="w-3.5 h-3.5 text-rose-600 group-hover:translate-x-0.5 transition" />
+                                    </a>
                                 </>
                             )}
 
