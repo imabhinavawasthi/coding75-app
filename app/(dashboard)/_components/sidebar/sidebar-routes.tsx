@@ -63,6 +63,8 @@ interface NavGroup {
   icon: any;
   items: NavSubItem[];
   defaultOpen?: boolean;
+  color?: string;
+  badgeColor?: string;
 }
 
 const siteNavigation: (NavSubItem | NavGroup)[] = [
@@ -77,6 +79,8 @@ const siteNavigation: (NavSubItem | NavGroup)[] = [
     title: "DSA & Contests",
     icon: Trophy,
     defaultOpen: true,
+    color: "text-amber-600 dark:text-amber-400",
+    badgeColor: "bg-amber-500/15 text-amber-600 dark:text-amber-400",
     items: [
       {
         icon: GraduationCap,
@@ -105,6 +109,8 @@ const siteNavigation: (NavSubItem | NavGroup)[] = [
     title: "Interview Preparation",
     icon: UserCheck,
     defaultOpen: true,
+    color: "text-purple-600 dark:text-purple-400",
+    badgeColor: "bg-purple-500/15 text-purple-600 dark:text-purple-400",
     items: [
       {
         icon: Code2,
@@ -138,6 +144,8 @@ const siteNavigation: (NavSubItem | NavGroup)[] = [
     title: "Job Applications",
     icon: Briefcase,
     defaultOpen: true,
+    color: "text-emerald-600 dark:text-emerald-400",
+    badgeColor: "bg-emerald-500/15 text-emerald-600 dark:text-emerald-400",
     items: [
       {
         icon: Briefcase,
@@ -292,21 +300,31 @@ export const SidebarRoutes = ({ isCollapsed = false, onItemClick }: SidebarRoute
 
   // Render Modern Categorized Site Routes with Submenus
   return (
-    <div className="flex flex-col w-full py-1 space-y-1">
+    <div className="flex flex-col w-full py-1 space-y-0.5">
       {siteNavigation.map((navItem, idx) => {
+        const isFirst = idx === 0;
+
         // Individual Top-level item (e.g. Dashboard, Pro)
         if ("href" in navItem) {
           return (
-            <SidebarItem
-              key={navItem.href}
-              icon={navItem.icon}
-              label={navItem.label}
-              href={navItem.href}
-              exact={navItem.exact}
-              badge={navItem.badge}
-              isCollapsed={isCollapsed}
-              onClick={onItemClick}
-            />
+            <React.Fragment key={navItem.href}>
+              {!isFirst && (
+                isCollapsed ? (
+                  <div className="w-8 mx-auto my-1.5 border-t border-border/60" />
+                ) : (
+                  <div className="my-1.5 mx-2 border-t border-border/50" />
+                )
+              )}
+              <SidebarItem
+                icon={navItem.icon}
+                label={navItem.label}
+                href={navItem.href}
+                exact={navItem.exact}
+                badge={navItem.badge}
+                isCollapsed={isCollapsed}
+                onClick={onItemClick}
+              />
+            </React.Fragment>
           );
         }
 
@@ -321,112 +339,124 @@ export const SidebarRoutes = ({ isCollapsed = false, onItemClick }: SidebarRoute
         // COLLAPSED MODE: Show Popover / Flyout menu on click/hover
         if (isCollapsed) {
           return (
-            <div key={group.id} className="w-full flex justify-center py-1">
-              <DropdownMenu>
-                <DropdownMenuTrigger asChild>
-                  <button
-                    className={cn(
-                      "flex items-center justify-center h-10 w-10 rounded-xl transition-all duration-150 relative group",
-                      hasActiveChild
-                        ? "bg-primary/15 text-primary shadow-2xs font-semibold"
-                        : "text-muted-foreground hover:text-foreground hover:bg-muted/70"
-                    )}
-                    title={group.title}
-                  >
-                    <GroupIcon
+            <React.Fragment key={group.id}>
+              {!isFirst && <div className="w-8 mx-auto my-1.5 border-t border-border/60" />}
+              <div className="w-full flex justify-center py-0.5">
+                <DropdownMenu>
+                  <DropdownMenuTrigger asChild>
+                    <button
                       className={cn(
-                        "w-5 h-5 transition-transform group-hover:scale-110",
-                        hasActiveChild ? "text-primary" : "text-muted-foreground group-hover:text-foreground"
+                        "flex items-center justify-center h-10 w-10 rounded-xl transition-all duration-150 relative group cursor-pointer",
+                        hasActiveChild
+                          ? "bg-primary/15 text-primary shadow-2xs font-semibold"
+                          : "text-muted-foreground hover:text-foreground hover:bg-muted/70"
                       )}
-                    />
-                    {hasActiveChild && (
-                      <span className="absolute -left-1.5 top-1/2 -translate-y-1/2 w-1 h-5 bg-primary rounded-r-full" />
-                    )}
-                  </button>
-                </DropdownMenuTrigger>
-                <DropdownMenuContent side="right" align="start" className="w-56 p-1.5 shadow-xl rounded-xl z-50">
-                  <DropdownMenuLabel className="text-xs font-bold text-muted-foreground uppercase tracking-wider px-2 py-1.5">
-                    {group.title}
-                  </DropdownMenuLabel>
-                  <DropdownMenuSeparator />
-                  {group.items.map((subItem) => {
-                    const SubIcon = subItem.icon;
-                    const isSubActive =
-                      pathname === subItem.href || pathname?.startsWith(`${subItem.href}/`);
-                    return (
-                      <DropdownMenuItem key={subItem.href} asChild className="p-0 rounded-lg">
-                        <Link
-                          href={subItem.href}
-                          onClick={onItemClick}
-                          className={cn(
-                            "flex items-center justify-between w-full px-2.5 py-2 text-xs font-medium cursor-pointer rounded-lg transition-colors",
-                            isSubActive
-                              ? "bg-primary/10 text-primary font-semibold"
-                              : "text-foreground hover:bg-muted"
-                          )}
-                        >
-                          <div className="flex items-center gap-2">
-                            <SubIcon className={cn("w-3.5 h-3.5", isSubActive ? "text-primary" : "text-muted-foreground")} />
-                            <span>{subItem.label}</span>
-                          </div>
-                          {subItem.badge && (
-                            <span className="text-[10px] font-bold px-1.5 py-0.2 rounded-full bg-amber-500/15 text-amber-600 dark:text-amber-400">
-                              {subItem.badge}
-                            </span>
-                          )}
-                        </Link>
-                      </DropdownMenuItem>
-                    );
-                  })}
-                </DropdownMenuContent>
-              </DropdownMenu>
-            </div>
+                      title={group.title}
+                    >
+                      <div className={cn("w-7 h-7 rounded-lg flex items-center justify-center transition-transform group-hover:scale-110", group.badgeColor)}>
+                        <GroupIcon className="w-4 h-4" />
+                      </div>
+                      {hasActiveChild && (
+                        <span className="absolute -left-1.5 top-1/2 -translate-y-1/2 w-1 h-5 bg-primary rounded-r-full" />
+                      )}
+                    </button>
+                  </DropdownMenuTrigger>
+                  <DropdownMenuContent side="right" align="start" className="w-56 p-1.5 shadow-xl rounded-xl z-50">
+                    <DropdownMenuLabel className="text-xs font-bold text-muted-foreground uppercase tracking-wider px-2 py-1.5 flex items-center gap-2">
+                      <div className={cn("w-5 h-5 rounded flex items-center justify-center", group.badgeColor)}>
+                        <GroupIcon className="w-3.5 h-3.5" />
+                      </div>
+                      <span>{group.title}</span>
+                    </DropdownMenuLabel>
+                    <DropdownMenuSeparator />
+                    {group.items.map((subItem) => {
+                      const SubIcon = subItem.icon;
+                      const isSubActive =
+                        pathname === subItem.href || pathname?.startsWith(`${subItem.href}/`);
+                      return (
+                        <DropdownMenuItem key={subItem.href} asChild className="p-0 rounded-lg">
+                          <Link
+                            href={subItem.href}
+                            onClick={onItemClick}
+                            className={cn(
+                              "flex items-center justify-between w-full px-2.5 py-2 text-xs font-medium cursor-pointer rounded-lg transition-colors",
+                              isSubActive
+                                ? "bg-primary/10 text-primary font-semibold"
+                                : "text-foreground hover:bg-muted"
+                            )}
+                          >
+                            <div className="flex items-center gap-2">
+                              <SubIcon className={cn("w-3.5 h-3.5", isSubActive ? "text-primary" : "text-muted-foreground")} />
+                              <span>{subItem.label}</span>
+                            </div>
+                            {subItem.badge && (
+                              <span className="text-[10px] font-bold px-1.5 py-0.2 rounded-full bg-amber-500/15 text-amber-600 dark:text-amber-400">
+                                {subItem.badge}
+                              </span>
+                            )}
+                          </Link>
+                        </DropdownMenuItem>
+                      );
+                    })}
+                  </DropdownMenuContent>
+                </DropdownMenu>
+              </div>
+            </React.Fragment>
           );
         }
 
         // EXPANDED MODE: Collapsible Submenu Accordion
         return (
-          <div key={group.id} className="pt-1.5">
-            {/* Submenu Accordion Header */}
-            <button
-              onClick={() => toggleGroup(group.id)}
-              className={cn(
-                "w-full flex items-center justify-between px-3 py-1 text-xs font-bold uppercase tracking-wider transition-colors select-none cursor-pointer",
-                hasActiveChild ? "text-primary" : "text-muted-foreground/70 hover:text-foreground"
-              )}
-            >
-              <div className="flex items-center gap-1.5">
-                <GroupIcon className={cn("w-3.5 h-3.5", hasActiveChild ? "text-primary" : "text-muted-foreground/70")} />
-                <span>{group.title}</span>
-              </div>
-              <div className="text-muted-foreground/50 hover:text-foreground p-0.5">
-                {isOpen ? (
-                  <ChevronDown className="w-3.5 h-3.5 transition-transform duration-200" />
-                ) : (
-                  <ChevronRight className="w-3.5 h-3.5 transition-transform duration-200" />
+          <React.Fragment key={group.id}>
+            {!isFirst && <div className="my-1.5 mx-2 border-t border-border/50" />}
+            <div className="pt-0.5">
+              {/* Submenu Accordion Header */}
+              <button
+                onClick={() => toggleGroup(group.id)}
+                className={cn(
+                  "w-full flex items-center justify-between px-2.5 py-1 text-xs font-bold uppercase tracking-wider rounded-lg transition-all select-none cursor-pointer group",
+                  hasActiveChild
+                    ? "bg-muted/50 text-foreground"
+                    : "text-muted-foreground hover:bg-muted/30 hover:text-foreground"
                 )}
-              </div>
-            </button>
+              >
+                <div className="flex items-center gap-2">
+                  <div className={cn("w-5 h-5 rounded-md flex items-center justify-center shrink-0 shadow-2xs transition-transform group-hover:scale-105", group.badgeColor)}>
+                    <GroupIcon className="w-3.5 h-3.5" />
+                  </div>
+                  <span className={cn("text-[11.5px] tracking-wide font-bold", hasActiveChild ? "text-foreground" : "text-muted-foreground group-hover:text-foreground")}>
+                    {group.title}
+                  </span>
+                </div>
+                <div className="text-muted-foreground/50 group-hover:text-foreground p-0.5">
+                  {isOpen ? (
+                    <ChevronDown className="w-3.5 h-3.5 transition-transform duration-200" />
+                  ) : (
+                    <ChevronRight className="w-3.5 h-3.5 transition-transform duration-200" />
+                  )}
+                </div>
+              </button>
 
-            {/* Submenu Children */}
-            {isOpen && (
-              <div className="mt-0.5 space-y-0.5 transition-all duration-200">
-                {group.items.map((subItem) => (
-                  <SidebarItem
-                    key={subItem.href}
-                    icon={subItem.icon}
-                    label={subItem.label}
-                    href={subItem.href}
-                    exact={subItem.exact}
-                    badge={subItem.badge}
-                    isCollapsed={false}
-                    indent={false}
-                    onClick={onItemClick}
-                  />
-                ))}
-              </div>
-            )}
-          </div>
+              {/* Submenu Children */}
+              {isOpen && (
+                <div className="mt-0.5 space-y-0.5 transition-all duration-200">
+                  {group.items.map((subItem) => (
+                    <SidebarItem
+                      key={subItem.href}
+                      icon={subItem.icon}
+                      label={subItem.label}
+                      href={subItem.href}
+                      exact={subItem.exact}
+                      badge={subItem.badge}
+                      isCollapsed={false}
+                      indent={false}
+                      onClick={onItemClick}
+                    />
+                  ))}
+                </div>
+              )}
+            </div>
+          </React.Fragment>
         );
       })}
     </div>

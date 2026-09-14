@@ -374,45 +374,34 @@ export function ContestsHubClient({ initialProblems, stats }: ContestsHubClientP
   };
 
   return (
-    <div className="p-4 sm:p-6 lg:p-8 max-w-7xl mx-auto space-y-8">
-      {/* Top Banner Header */}
-      <div className="relative overflow-hidden rounded-3xl border border-border/80 bg-gradient-to-br from-card via-card/90 to-primary/5 p-6 sm:p-8 lg:p-10 shadow-sm">
+    <div className="p-4 sm:p-6 max-w-7xl mx-auto space-y-6">
+      {/* Top Banner Header - Compact & Sleek */}
+      <div className="relative overflow-hidden rounded-2xl border border-border/80 bg-gradient-to-br from-card via-card/90 to-primary/5 p-4 sm:p-5 shadow-xs">
         {/* Ambient background glow accents */}
-        <div className="absolute -right-16 -top-16 w-80 h-80 rounded-full bg-primary/10 blur-3xl pointer-events-none" />
-        <div className="absolute -left-16 -bottom-16 w-80 h-80 rounded-full bg-amber-500/5 blur-3xl pointer-events-none" />
+        <div className="absolute -right-16 -top-16 w-60 h-60 rounded-full bg-primary/10 blur-3xl pointer-events-none" />
+        <div className="absolute -left-16 -bottom-16 w-60 h-60 rounded-full bg-amber-500/5 blur-3xl pointer-events-none" />
 
-        <div className="relative z-10 flex flex-col lg:flex-row lg:items-center justify-between gap-6">
-          <div className="space-y-3.5 max-w-2xl">
-            {/* Badges row */}
-            <div className="flex items-center gap-2 flex-wrap">
-              <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-primary/10 border border-primary/25 text-primary text-xs font-bold uppercase tracking-wider">
-                <Trophy className="w-3.5 h-3.5" />
-                <span>Contest Archive</span>
-              </div>
-              <div className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-emerald-500/10 border border-emerald-500/25 text-emerald-600 dark:text-emerald-400 text-xs font-semibold">
-                <span className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse" />
-                <span>Weekly Sync Active</span>
-              </div>
-            </div>
+        <div className="relative z-10 flex flex-col md:flex-row md:items-center justify-between gap-4">
+          <div className="space-y-1.5 max-w-2xl">
 
-            <h1 className="text-3xl sm:text-4xl lg:text-5xl font-black text-foreground tracking-tight leading-tight">
+            <h1 className="text-xl sm:text-2xl font-black text-foreground tracking-tight">
               Contest Problem Archive
             </h1>
 
-            <p className="text-xs sm:text-sm text-muted-foreground leading-relaxed">
-              Explore verified editorials, video walkthroughs, and official C++ submissions across LeetCode, Codeforces, and CodeChef rounds.
+            <p className="text-xs text-muted-foreground leading-normal">
+              Editorials, video walkthroughs, and official C++ solutions across LeetCode, Codeforces, and CodeChef rounds.
             </p>
 
             {/* Quick Actions in Header */}
-            <div className="flex items-center gap-2.5 pt-1.5 flex-wrap">
-              <Button asChild size="sm" className="h-9 px-4 text-xs font-bold gap-2 bg-gradient-to-r from-amber-500 to-orange-500 hover:from-amber-600 hover:to-orange-600 text-white shadow-xs">
+            <div className="flex items-center gap-2 pt-1 flex-wrap">
+              <Button asChild size="sm" className="h-8 px-3 text-xs font-bold gap-1.5 bg-gradient-to-r from-amber-500 to-orange-500 hover:from-amber-600 hover:to-orange-600 text-white shadow-2xs">
                 <Link href="/contests/leetcode-potd">
-                  <Flame className="w-4 h-4 fill-white" />
+                  <Flame className="w-3.5 h-3.5 fill-white" />
                   <span>LeetCode Daily POTD</span>
-                  <ArrowRight className="w-3.5 h-3.5 ml-0.5" />
+                  <ArrowRight className="w-3 h-3 ml-0.5" />
                 </Link>
               </Button>
-              <Button asChild variant="outline" size="sm" className="h-9 px-3.5 text-xs font-semibold gap-1.5 bg-background/80 hover:bg-muted border-border">
+              <Button asChild variant="outline" size="sm" className="h-8 px-3 text-xs font-semibold gap-1.5 bg-background/80 hover:bg-muted border-border">
                 <Link href="/dsa">
                   <Code2 className="w-3.5 h-3.5 text-primary" />
                   <span>DSA Course Catalog</span>
@@ -422,32 +411,24 @@ export function ContestsHubClient({ initialProblems, stats }: ContestsHubClientP
           </div>
 
           {/* Quick Stats Grid */}
-          <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-1 gap-2.5 lg:w-64 shrink-0">
-            <div className="p-3.5 rounded-2xl bg-background/80 backdrop-blur-xs border border-border/80 text-xs shadow-2xs space-y-1">
-              <div className="flex items-center justify-between text-muted-foreground">
-                <span className="font-medium text-[11px]">Total Contests</span>
-                <Calendar className="w-3.5 h-3.5 text-primary/70" />
+          <div className="flex flex-row md:flex-col gap-2 shrink-0">
+            <div className="flex items-center gap-2.5 px-3 py-1.5 rounded-xl bg-background/80 border border-border/80 text-xs shadow-2xs min-w-[140px]">
+              <div className="w-7 h-7 rounded-lg bg-primary/10 text-primary flex items-center justify-center shrink-0">
+                <Calendar className="w-3.5 h-3.5" />
               </div>
-              <span className="text-xl sm:text-2xl font-black text-foreground block">{stats.totalContests}</span>
+              <div className="leading-tight">
+                <p className="text-[10px] text-muted-foreground font-medium">Contests</p>
+                <p className="text-sm font-black text-foreground">{stats.totalContests}</p>
+              </div>
             </div>
 
-            <div className="p-3.5 rounded-2xl bg-background/80 backdrop-blur-xs border border-border/80 text-xs shadow-2xs space-y-1">
-              <div className="flex items-center justify-between text-muted-foreground">
-                <span className="font-medium text-[11px]">Total Problems</span>
-                <Code2 className="w-3.5 h-3.5 text-emerald-500" />
+            <div className="flex items-center gap-2.5 px-3 py-1.5 rounded-xl bg-background/80 border border-border/80 text-xs shadow-2xs min-w-[140px]">
+              <div className="w-7 h-7 rounded-lg bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 flex items-center justify-center shrink-0">
+                <Code2 className="w-3.5 h-3.5" />
               </div>
-              <span className="text-xl sm:text-2xl font-black text-primary block">{stats.totalProblems}</span>
-            </div>
-
-            <div className="p-3.5 rounded-2xl bg-background/80 backdrop-blur-xs border border-border/80 text-xs shadow-2xs space-y-1 col-span-2 sm:col-span-1">
-              <div className="flex items-center justify-between text-muted-foreground">
-                <span className="font-medium text-[11px]">Platforms</span>
-                <Trophy className="w-3.5 h-3.5 text-amber-500" />
-              </div>
-              <div className="flex items-center gap-2 pt-0.5">
-                <Badge variant="outline" className="text-[10px] font-bold px-1.5 py-0.5 bg-background">LeetCode</Badge>
-                <Badge variant="outline" className="text-[10px] font-bold px-1.5 py-0.5 bg-background">Codeforces</Badge>
-                <Badge variant="outline" className="text-[10px] font-bold px-1.5 py-0.5 bg-background">CodeChef</Badge>
+              <div className="leading-tight">
+                <p className="text-[10px] text-muted-foreground font-medium">Problems</p>
+                <p className="text-sm font-black text-primary">{stats.totalProblems}</p>
               </div>
             </div>
           </div>

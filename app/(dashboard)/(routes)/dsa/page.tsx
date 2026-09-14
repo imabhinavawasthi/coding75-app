@@ -3,7 +3,8 @@
 import React, { useEffect, useState, useMemo, Suspense } from "react";
 import Link from "next/link";
 import Image from "next/image";
-import { Search, X, Trophy, Code2, Flame, Layers, ArrowRight, Sparkles } from "lucide-react";
+import { Search, X, Trophy, Code2, Flame, Layers, ArrowRight, Sparkles, GraduationCap, Calendar } from "lucide-react";
+import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Card, CardHeader, CardTitle, CardDescription, CardContent } from "@/components/ui/card";
 import { dsaModules, DSATopicModule } from "@/config/dsa-catalog";
@@ -108,53 +109,64 @@ function DsaCatalogContent() {
   };
 
   return (
-    <div className="mx-auto max-w-7xl px-4 sm:px-6 pb-24 pt-4 space-y-8">
-      {/* Top Banner / Hero */}
-      <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 border-b pb-6">
-        <div className="space-y-1.5">
-          <h1 className="text-2xl sm:text-3xl font-extrabold tracking-tight text-foreground">
-            Data Structures & Algorithms
-          </h1>
-          <p className="text-xs sm:text-sm text-muted-foreground">
-            Explore topic roadmaps, structured video lessons, problem sheets, and contest solutions.
-          </p>
-        </div>
+    <div className="mx-auto max-w-7xl px-4 sm:px-6 pb-24 pt-4 space-y-6">
+      {/* Top Banner Header - Compact & Sleek */}
+      <div className="relative overflow-hidden rounded-2xl border border-border/80 bg-gradient-to-br from-card via-card/90 to-primary/5 p-4 sm:p-5 shadow-xs">
+        {/* Ambient background glow accents */}
+        <div className="absolute -right-16 -top-16 w-60 h-60 rounded-full bg-primary/10 blur-3xl pointer-events-none" />
+        <div className="absolute -left-16 -bottom-16 w-60 h-60 rounded-full bg-amber-500/5 blur-3xl pointer-events-none" />
 
-        {/* Quick External Links */}
-        <div className="flex items-center gap-2 self-start md:self-center flex-wrap">
-          <Link href="/contests/leetcode-potd">
-            <Badge
-              variant="outline"
-              className="px-3.5 py-1.5 rounded-full text-xs font-semibold gap-1.5 bg-amber-500/10 text-amber-600 dark:text-amber-400 border-amber-500/30 hover:bg-amber-500/20 transition-colors shadow-2xs"
-            >
-              <Flame className="w-3.5 h-3.5 fill-amber-500 text-amber-500" />
-              LeetCode Daily POTD
-            </Badge>
-          </Link>
-          <Link href="/contests">
-            <Badge variant="outline" className="gap-1.5 py-1.5 px-3 bg-primary/10 border-primary/30 text-primary hover:bg-primary/20 cursor-pointer transition-colors text-xs font-semibold shadow-2xs">
-              <Trophy className="w-3.5 h-3.5 text-primary" />
-              Contest Editorials
-            </Badge>
-          </Link>
-          <Link href="/dsa-cp/sheets">
-            <Badge variant="outline" className="gap-1.5 py-1.5 px-3 hover:bg-muted cursor-pointer transition-colors text-xs font-semibold">
-              <Layers className="w-3.5 h-3.5 text-muted-foreground" />
-              Practice Sheets
-            </Badge>
-          </Link>
-          <a href="#masterclasses">
-            <Badge
-              variant="outline"
-              className="gap-1.5 py-1.5 px-3 bg-purple-500/10 border-purple-500/30 text-purple-600 dark:text-purple-400 hover:bg-purple-500/20 cursor-pointer transition-colors text-xs font-semibold shadow-2xs"
-            >
-              <Sparkles className="w-3.5 h-3.5 text-purple-500" />
-              Masterclasses
-              <span className="text-[9px] font-bold bg-purple-500/20 px-1.5 py-0.2 rounded-full">
-                Soon
-              </span>
-            </Badge>
-          </a>
+        <div className="relative z-10 flex flex-col md:flex-row md:items-center justify-between gap-4">
+          <div className="space-y-1.5 max-w-2xl">
+
+            <h1 className="text-xl sm:text-2xl font-black text-foreground tracking-tight">
+              Data Structures & Algorithms
+            </h1>
+
+            <p className="text-xs text-muted-foreground leading-normal">
+              Structured video lessons, foundational concepts, curated problem sheets, and contest solutions.
+            </p>
+
+            {/* Quick Actions in Header */}
+            <div className="flex items-center gap-2 pt-1 flex-wrap">
+              <Button asChild size="sm" className="h-8 px-3 text-xs font-bold gap-1.5 bg-gradient-to-r from-amber-500 to-orange-500 hover:from-amber-600 hover:to-orange-600 text-white shadow-2xs">
+                <Link href="/contests">
+                  <Trophy className="w-3.5 h-3.5 fill-white" />
+                  <span>Contest Solutions</span>
+                  <ArrowRight className="w-3 h-3 ml-0.5" />
+                </Link>
+              </Button>
+              <Button asChild variant="outline" size="sm" className="h-8 px-3 text-xs font-semibold gap-1.5 bg-background/80 hover:bg-muted border-border">
+                <Link href="/dsa-cp/sheets">
+                  <Layers className="w-3.5 h-3.5 text-muted-foreground" />
+                  <span>Practice Sheets</span>
+                </Link>
+              </Button>
+            </div>
+          </div>
+
+          {/* Quick Stats Grid */}
+          <div className="flex flex-row md:flex-col gap-2 shrink-0">
+            <div className="flex items-center gap-2.5 px-3 py-1.5 rounded-xl bg-background/80 border border-border/80 text-xs shadow-2xs min-w-[140px]">
+              <div className="w-7 h-7 rounded-lg bg-primary/10 text-primary flex items-center justify-center shrink-0">
+                <Code2 className="w-3.5 h-3.5" />
+              </div>
+              <div className="leading-tight">
+                <p className="text-[10px] text-muted-foreground font-medium">Topic Modules</p>
+                <p className="text-sm font-black text-foreground">{hydratedModules.length}</p>
+              </div>
+            </div>
+
+            <div className="flex items-center gap-2.5 px-3 py-1.5 rounded-xl bg-background/80 border border-border/80 text-xs shadow-2xs min-w-[140px]">
+              <div className="w-7 h-7 rounded-lg bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 flex items-center justify-center shrink-0">
+                <Sparkles className="w-3.5 h-3.5" />
+              </div>
+              <div className="leading-tight">
+                <p className="text-[10px] text-muted-foreground font-medium">Tracks</p>
+                <p className="text-sm font-black text-primary">Foundations • DS • Algo</p>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
 
