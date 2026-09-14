@@ -1,8 +1,7 @@
 "use client"
 
-import Footer from "@/components/footer";
-import { Navbar } from "../(dashboard)/_components/sidebar/navbar";
-import { Sidebar } from "../(dashboard)/_components/sidebar/sidebar";
+import { SidebarProvider } from "../(dashboard)/_components/sidebar/sidebar-context";
+import { DashboardShell } from "../(dashboard)/_components/sidebar/dashboard-shell";
 import { usePathname, useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import supabase from "@/supabase";
@@ -47,39 +46,23 @@ const ClassroomLayout = ({
     checkUser()
   }, [])
   return (
-    <div className="h-full bg-white">
-      <div className="h-[70px] md:pl-56 fixed inset-y-0 w-full z-50">
-        <Navbar />
-      </div>
-      <div className="hidden md:flex h-full w-56 flex-col fixed inset-y-0 z-50">
-        <Sidebar />
-      </div>
-      <main className="md:pl-56 pt-[80px] h-full">
-        <div className="min-h-full ">
-          {
-            status == "done" &&
-            <>
-              {children}
-            </>
-          }
-          {
-            status == "error" &&
+    <SidebarProvider>
+      <DashboardShell>
+        <div className="min-h-full">
+          {status === "done" && children}
+          {status === "error" && (
             <div className="mt-20">
               <ErrorBanner />
             </div>
-          }
-          {
-            status == "loading" &&
+          )}
+          {status === "loading" && (
             <div className="mt-20 animate-ping flex items-center justify-center">
               <Logo />
             </div>
-          }
+          )}
         </div>
-        <footer>
-          <Footer />
-        </footer>
-      </main>
-    </div>
+      </DashboardShell>
+    </SidebarProvider>
   );
 }
 

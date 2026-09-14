@@ -1,6 +1,5 @@
-import Footer from "@/components/footer";
-import { Navbar } from "../_components/sidebar/navbar";
-import { Sidebar } from "../_components/sidebar/sidebar";
+import { SidebarProvider } from "../_components/sidebar/sidebar-context";
+import { DashboardShell } from "../_components/sidebar/dashboard-shell";
 
 const DashboardLayout = ({
   children
@@ -8,24 +7,10 @@ const DashboardLayout = ({
   children: React.ReactNode;
 }) => {
   return (
-    <div className="h-full bg-white">
-      <div className="h-[70px] md:pl-56 fixed inset-y-0 w-full z-50">
-        <Navbar />
-      </div>
-      <div className="hidden md:flex h-full w-56 flex-col fixed inset-y-0 z-50">
-        <Sidebar />
-      </div>
-      <main className="md:pl-56 pt-[80px] h-full">
-        <div className="min-h-full ">
-          {children}
-        </div>
-        <footer>
-          <Footer />
-        </footer>
-      </main>
-
-    </div>
+    <SidebarProvider>
+      <DashboardShell>{children}</DashboardShell>
+    </SidebarProvider>
   );
-}
+};
 
 export default DashboardLayout;

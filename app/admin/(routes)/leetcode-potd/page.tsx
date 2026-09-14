@@ -94,7 +94,7 @@ const AddProblem = () => {
                 setLoading(false)
             } else {
                 console.log(data);
-                router.push(`/dsa-cp/leetcode-potd/${slug_url}`)
+                router.push(`/contests/leetcode-potd/${slug_url}`)
             }
             return { data, error };
         } catch (error) {

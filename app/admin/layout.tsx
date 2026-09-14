@@ -5,9 +5,9 @@ import { useEffect, useState } from "react";
 import { usePathname, useRouter } from "next/navigation";
 import supabase from "@/supabase";
 import { toast } from "sonner";
+import { SidebarProvider } from "../(dashboard)/_components/sidebar/sidebar-context";
+import { DashboardShell } from "../(dashboard)/_components/sidebar/dashboard-shell";
 import Loading from "@/components/loading";
-import { Sidebar } from "../(dashboard)/_components/sidebar/sidebar";
-import { Navbar } from "../(dashboard)/_components/sidebar/navbar";
 
 const AdminLayout = ({
   children
@@ -58,23 +58,11 @@ const AdminLayout = ({
    </>
    :
    <>
-    <div className="h-full bg-white">
-      <div className="h-[70px] md:pl-56 fixed inset-y-0 w-full z-50">
-        <Navbar />
-      </div>
-      <div className="hidden md:flex h-full w-56 flex-col fixed inset-y-0 z-50">
-        <Sidebar />
-      </div>
-      <main className="md:pl-56 pt-[80px] h-full">
-        <div className="min-h-full ">
-          {children}
-        </div>
-        <footer>
-          <Footer />
-        </footer>
-      </main>
-
-    </div>
+    <SidebarProvider>
+      <DashboardShell>
+        <div className="min-h-full">{children}</div>
+      </DashboardShell>
+    </SidebarProvider>
    </>
    }
    </>

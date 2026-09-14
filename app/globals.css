@@ -139,3 +139,115 @@ input[type=number] {
   -ms-overflow-style: none;  /* IE and Edge */
   scrollbar-width: none;  /* Firefox */
 }
+
+/* Contest Editorial & Problem Description Rich HTML */
+.contest-html-content {
+  overflow-x: auto;
+  word-break: break-word;
+  line-height: 1.7;
+}
+
+.contest-html-content p {
+  margin-top: 0.5rem;
+  margin-bottom: 0.75rem;
+}
+
+.contest-html-content p:first-child {
+  margin-top: 0;
+}
+
+.contest-html-content p:last-child {
+  margin-bottom: 0;
+}
+
+.contest-html-content ul {
+  list-style-type: disc;
+  padding-left: 1.5rem;
+  margin-top: 0.5rem;
+  margin-bottom: 0.75rem;
+}
+
+.contest-html-content ol {
+  list-style-type: decimal;
+  padding-left: 1.5rem;
+  margin-top: 0.5rem;
+  margin-bottom: 0.75rem;
+}
+
+.contest-html-content li {
+  margin-top: 0.25rem;
+  margin-bottom: 0.25rem;
+}
+
+.contest-html-content strong,
+.contest-html-content b {
+  font-weight: 600;
+}
+
+.contest-html-content code {
+  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+  font-size: 0.85em;
+  padding: 0.15rem 0.35rem;
+  border-radius: 0.375rem;
+  background-color: hsl(var(--muted));
+  color: hsl(var(--foreground));
+  border: 1px solid hsl(var(--border) / 0.5);
+}
+
+.contest-html-content pre {
+  margin-top: 0.75rem;
+  margin-bottom: 0.75rem;
+  padding: 0.875rem 1rem;
+  border-radius: 0.5rem;
+  background-color: hsl(var(--muted));
+  border: 1px solid hsl(var(--border) / 0.8);
+  overflow-x: auto;
+  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+  font-size: 0.825rem;
+}
+
+.contest-html-content pre code {
+  background: transparent !important;
+  border: none !important;
+  padding: 0 !important;
+}
+
+.contest-html-content img {
+  max-width: 100%;
+  height: auto;
+  border-radius: 0.5rem;
+  margin-top: 0.75rem;
+  margin-bottom: 0.75rem;
+}
+
+.contest-html-content table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 0.75rem;
+  margin-bottom: 0.75rem;
+  font-size: 0.875rem;
+}
+
+.contest-html-content th,
+.contest-html-content td {
+  border: 1px solid hsl(var(--border));
+  padding: 0.5rem 0.75rem;
+}
+
+.contest-html-content th {
+  background-color: hsl(var(--muted));
+  font-weight: 600;
+}
+
+/* Ensure dark mode readability even with hardcoded inline scraped styles */
+.dark .contest-html-content [style*="color: rgb(0, 0, 0)"],
+.dark .contest-html-content [style*="color: rgb(38, 38, 38)"],
+.dark .contest-html-content [style*="color:#000"],
+.dark .contest-html-content [style*="color: #000"] {
+  color: hsl(var(--foreground)) !important;
+}
+
+.dark .contest-html-content code[style*="background-color"] {
+  background-color: hsl(var(--muted)) !important;
+  color: hsl(var(--foreground)) !important;
+}

@@ -48,21 +48,21 @@ export default function DashboardPage() {
               title="Solve Today's POTD"
               heading="Leetcode"
               description="Leetcode Daily Problem with Proper Video Editorial"
-              href="/dsa-cp/leetcode-potd"
+              href="/contests/leetcode-potd"
               icon={Code2}
             />
             <DashboardCard
               title="Contest Solutions"
               heading="Codeforces"
               description="Video Editorial of All Codeforces Contests"
-              href="/dsa-cp/codeforces"
+              href="/contests/codeforces"
               icon={BarChart2}
             />
             <DashboardCard
               title="Contest Solutions"
               heading="Codechef"
               description="Video Editorial of All Codechef Contests"
-              href="/dsa-cp/codechef"
+              href="/contests/codechef"
               icon={ChefHat}
             />
             <DashboardCard

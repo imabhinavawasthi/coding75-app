@@ -6,9 +6,9 @@ import { useEffect } from "react";
 
 const Classroom = () => {
     const router = useRouter()
-    useEffect(()=>{
-        router.replace("/classroom/dashboard")
-    },[])
+    useEffect(() => {
+        router.replace("/dsa");
+    }, [router]);
     return (
         <div className="min-h-screen animate-ping flex justify-center items-center "><Logo/></div>
     );

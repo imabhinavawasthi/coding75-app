@@ -11,6 +11,50 @@ const nextConfig = {
 //       },
 //     ]
 //   },
+    async redirects() {
+        return [
+            {
+                source: '/dsa-cp',
+                destination: '/contests',
+                permanent: false,
+            },
+            {
+                source: '/leetcode-potd',
+                destination: '/contests/leetcode-potd',
+                permanent: false,
+            },
+            {
+                source: '/dsa-cp/leetcode-potd',
+                destination: '/contests/leetcode-potd',
+                permanent: false,
+            },
+            {
+                source: '/dsa-cp/codeforces',
+                destination: '/contests/codeforces',
+                permanent: false,
+            },
+            {
+                source: '/dsa-cp/codechef',
+                destination: '/contests/codechef',
+                permanent: false,
+            },
+            {
+                source: '/dsa-cp/leetcode-potd/:slug',
+                destination: '/contests/leetcode-potd/:slug',
+                permanent: false,
+            },
+            {
+                source: '/content/leetcode-potd/:slug*',
+                destination: '/contests/leetcode-potd/:slug*',
+                permanent: false,
+            },
+            {
+                source: '/dsa-cp/leetcode-contests',
+                destination: '/contests/leetcode',
+                permanent: false,
+            },
+        ];
+    },
     webpack: (config) => {
         config.resolve.alias.canvas = false;
 
