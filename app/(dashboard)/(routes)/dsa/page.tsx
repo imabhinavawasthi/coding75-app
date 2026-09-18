@@ -3,7 +3,7 @@
 import React, { useEffect, useState, useMemo, Suspense } from "react";
 import Link from "next/link";
 import Image from "next/image";
-import { Search, X, Trophy, Code2, Flame, Layers, ArrowRight, Sparkles, GraduationCap, Calendar } from "lucide-react";
+import { Search, X, Trophy, Code2, Flame, Layers, ArrowRight, Sparkles, GraduationCap, Calendar, Network } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Card, CardHeader, CardTitle, CardDescription, CardContent } from "@/components/ui/card";
@@ -17,6 +17,9 @@ import LeetcodeLogo from "@/public/logos/leetcode.png";
 import CodeforcesLogo from "@/public/logos/codeforces.svg";
 import CodechefLogo from "@/public/logos/codechef.png";
 import CrackDsaLogo from "@/public/logos/crackdsa.png";
+import PremiumPageHeader from "@/components/page-headers/premium-page-header";
+import supabase from "@/supabase";
+
 
 function DsaCatalogContent() {
   const [batchData, setBatchData] = useState<BatchTopicResponse | null>(null);
@@ -44,8 +47,14 @@ function DsaCatalogContent() {
       }
     }
     loadBatchDetails();
+
+    const { data: { subscription } } = supabase.auth.onAuthStateChange(() => {
+      loadBatchDetails();
+    });
+
     return () => {
       isMounted = false;
+      subscription?.unsubscribe();
     };
   }, []);
 
@@ -110,65 +119,34 @@ function DsaCatalogContent() {
 
   return (
     <div className="mx-auto max-w-7xl px-4 sm:px-6 pb-24 pt-4 space-y-6">
-      {/* Top Banner Header - Compact & Sleek */}
-      <div className="relative overflow-hidden rounded-2xl border border-border/80 bg-gradient-to-br from-card via-card/90 to-primary/5 p-4 sm:p-5 shadow-xs">
-        {/* Ambient background glow accents */}
-        <div className="absolute -right-16 -top-16 w-60 h-60 rounded-full bg-primary/10 blur-3xl pointer-events-none" />
-        <div className="absolute -left-16 -bottom-16 w-60 h-60 rounded-full bg-amber-500/5 blur-3xl pointer-events-none" />
-
-        <div className="relative z-10 flex flex-col md:flex-row md:items-center justify-between gap-4">
-          <div className="space-y-1.5 max-w-2xl">
-
-            <h1 className="text-xl sm:text-2xl font-black text-foreground tracking-tight">
-              Data Structures & Algorithms
-            </h1>
-
-            <p className="text-xs text-muted-foreground leading-normal">
-              Structured video lessons, foundational concepts, curated problem sheets, and contest solutions.
-            </p>
-
-            {/* Quick Actions in Header */}
-            <div className="flex items-center gap-2 pt-1 flex-wrap">
-              <Button asChild size="sm" className="h-8 px-3 text-xs font-bold gap-1.5 bg-gradient-to-r from-amber-500 to-orange-500 hover:from-amber-600 hover:to-orange-600 text-white shadow-2xs">
-                <Link href="/contests">
-                  <Trophy className="w-3.5 h-3.5 fill-white" />
-                  <span>Contest Solutions</span>
-                  <ArrowRight className="w-3 h-3 ml-0.5" />
-                </Link>
-              </Button>
-              <Button asChild variant="outline" size="sm" className="h-8 px-3 text-xs font-semibold gap-1.5 bg-background/80 hover:bg-muted border-border">
-                <Link href="/dsa-cp/sheets">
-                  <Layers className="w-3.5 h-3.5 text-muted-foreground" />
-                  <span>Practice Sheets</span>
-                </Link>
-              </Button>
-            </div>
-          </div>
-
-          {/* Quick Stats Grid */}
-          <div className="flex flex-row md:flex-col gap-2 shrink-0">
-            <div className="flex items-center gap-2.5 px-3 py-1.5 rounded-xl bg-background/80 border border-border/80 text-xs shadow-2xs min-w-[140px]">
-              <div className="w-7 h-7 rounded-lg bg-primary/10 text-primary flex items-center justify-center shrink-0">
-                <Code2 className="w-3.5 h-3.5" />
-              </div>
-              <div className="leading-tight">
-                <p className="text-[10px] text-muted-foreground font-medium">Topic Modules</p>
-                <p className="text-sm font-black text-foreground">{hydratedModules.length}</p>
-              </div>
-            </div>
-
-            <div className="flex items-center gap-2.5 px-3 py-1.5 rounded-xl bg-background/80 border border-border/80 text-xs shadow-2xs min-w-[140px]">
-              <div className="w-7 h-7 rounded-lg bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 flex items-center justify-center shrink-0">
-                <Sparkles className="w-3.5 h-3.5" />
-              </div>
-              <div className="leading-tight">
-                <p className="text-[10px] text-muted-foreground font-medium">Tracks</p>
-                <p className="text-sm font-black text-primary">Foundations • DS • Algo</p>
-              </div>
-            </div>
-          </div>
+      {/* Top Banner Header - Premium */}
+      <PremiumPageHeader 
+        title="Data Structures & Algorithms" 
+        subtitle="Structured video lessons, foundational concepts, curated problem sheets, and contest solutions."
+      >
+        <div className="flex items-center justify-center gap-3 pt-1 flex-wrap w-full">
+          <Button asChild size="default" className="font-black gap-2 bg-gradient-to-r from-violet-600 to-fuchsia-600 hover:from-violet-500 hover:to-fuchsia-500 text-white shadow-[0_0_15px_rgba(139,92,246,0.5)] border border-white/20 transition-all hover:scale-105 rounded-xl">
+            <Link href="/dsa/topic-tree">
+              <Network className="w-4 h-4 fill-white" />
+              <span>Topic Tree Roadmap</span>
+              <Badge variant="secondary" className="ml-1 px-1.5 py-0 h-5 text-[10px] font-black bg-white/20 text-white border-none shadow-sm uppercase tracking-wider">New</Badge>
+            </Link>
+          </Button>
+          <Button asChild size="default" className="font-bold gap-1.5 bg-gradient-to-r from-amber-500 to-orange-500 hover:from-amber-600 hover:to-orange-600 text-white shadow-2xs rounded-xl">
+            <Link href="/contests">
+              <Trophy className="w-4 h-4 fill-white" />
+              <span>Contest Solutions</span>
+              <ArrowRight className="w-3.5 h-3.5 ml-0.5" />
+            </Link>
+          </Button>
+          <Button asChild variant="outline" size="default" className="font-semibold gap-1.5 bg-background/80 hover:bg-muted border-border rounded-xl">
+            <Link href="/dsa/sheets">
+              <Layers className="w-4 h-4 text-muted-foreground" />
+              <span>Practice Sheets</span>
+            </Link>
+          </Button>
         </div>
-      </div>
+      </PremiumPageHeader>
 
       {/* Enhanced Search & Filter Options Bar */}
       <div className="space-y-4">
@@ -288,15 +266,15 @@ function DsaCatalogContent() {
           </div>
 
           {isLoading ? (
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-5">
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-3 2xl:grid-cols-4 gap-5">
               {[1, 2, 3, 4].map((idx) => (
-                <DSATopicCard key={idx} module={dsaModules[0]} isLoading />
+                <DSATopicCard key={idx} module={dsaModules[0]} isLoading layout="grid" />
               ))}
             </div>
           ) : filteredResults.length > 0 ? (
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-5">
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-3 2xl:grid-cols-4 gap-5">
               {filteredResults.map((module) => (
-                <DSATopicCard key={module.id} module={module} />
+                <DSATopicCard key={module.id} module={module} layout="grid" />
               ))}
             </div>
           ) : (
@@ -341,129 +319,6 @@ function DsaCatalogContent() {
           />
         </div>
       )}
-
-      {/* Section 4: Live DSA Masterclasses (Coming Soon) */}
-      <section id="masterclasses" className="pt-8 border-t space-y-6">
-        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
-          <div className="space-y-1">
-            <div className="flex items-center gap-2">
-              <h2 className="text-xl sm:text-2xl font-black tracking-tight text-foreground flex items-center gap-2">
-                <Sparkles className="w-5 h-5 text-amber-500" />
-                Live DSA Masterclasses
-              </h2>
-              <Badge className="bg-amber-500/15 text-amber-600 dark:text-amber-400 border-amber-500/30 text-[10px] font-bold px-2 py-0.5 rounded-full">
-                Coming Soon
-              </Badge>
-            </div>
-            <p className="text-xs sm:text-sm text-muted-foreground">
-              Intensive, cohort-based live problem-solving sessions and advanced algorithmic masterclasses led by industry mentors.
-            </p>
-          </div>
-        </div>
-
-        {/* Masterclass Cards Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-5">
-          {/* Card 1 */}
-          <div className="rounded-2xl border border-border/80 bg-card p-5 flex flex-col justify-between hover:border-primary/40 hover:shadow-md transition-all relative overflow-hidden group">
-            <div className="absolute top-0 right-0 w-24 h-24 bg-primary/5 rounded-full blur-2xl group-hover:bg-primary/10 transition-all pointer-events-none" />
-            <div className="space-y-3">
-              <div className="flex items-center justify-between">
-                <span className="text-[10px] font-bold tracking-wider uppercase px-2 py-0.5 rounded bg-blue-500/10 text-blue-600 dark:text-blue-400">
-                  Advanced
-                </span>
-                <span className="text-[10px] font-semibold text-muted-foreground">
-                  4 Weeks Cohort
-                </span>
-              </div>
-              <h3 className="font-bold text-sm text-foreground group-hover:text-primary transition-colors">
-                Dynamic Programming & Tree Rerooting
-              </h3>
-              <p className="text-xs text-muted-foreground leading-relaxed line-clamp-3">
-                Master 1D/2D DP, Digit DP, Bitmask DP, Tree DP, and DSU on Trees with real interview and contest problems.
-              </p>
-            </div>
-            <div className="pt-4 mt-4 border-t border-border/60 flex items-center justify-between text-xs">
-              <span className="font-semibold text-amber-600 dark:text-amber-400">Coming Soon</span>
-              <span className="text-[11px] text-muted-foreground">Stay tuned</span>
-            </div>
-          </div>
-
-          {/* Card 2 */}
-          <div className="rounded-2xl border border-border/80 bg-card p-5 flex flex-col justify-between hover:border-primary/40 hover:shadow-md transition-all relative overflow-hidden group">
-            <div className="absolute top-0 right-0 w-24 h-24 bg-primary/5 rounded-full blur-2xl group-hover:bg-primary/10 transition-all pointer-events-none" />
-            <div className="space-y-3">
-              <div className="flex items-center justify-between">
-                <span className="text-[10px] font-bold tracking-wider uppercase px-2 py-0.5 rounded bg-emerald-500/10 text-emerald-600 dark:text-emerald-400">
-                  Comprehensive
-                </span>
-                <span className="text-[10px] font-semibold text-muted-foreground">
-                  4 Weeks Cohort
-                </span>
-              </div>
-              <h3 className="font-bold text-sm text-foreground group-hover:text-primary transition-colors">
-                Advanced Graphs & Network Flow
-              </h3>
-              <p className="text-xs text-muted-foreground leading-relaxed line-clamp-3">
-                Deep dive into Dijkstra, Bellman-Ford, Tarjan's SCC, Bridges, 2-SAT, Dinic's Maximum Flow, and Min-Cut.
-              </p>
-            </div>
-            <div className="pt-4 mt-4 border-t border-border/60 flex items-center justify-between text-xs">
-              <span className="font-semibold text-amber-600 dark:text-amber-400">Coming Soon</span>
-              <span className="text-[11px] text-muted-foreground">Stay tuned</span>
-            </div>
-          </div>
-
-          {/* Card 3 */}
-          <div className="rounded-2xl border border-border/80 bg-card p-5 flex flex-col justify-between hover:border-primary/40 hover:shadow-md transition-all relative overflow-hidden group">
-            <div className="absolute top-0 right-0 w-24 h-24 bg-primary/5 rounded-full blur-2xl group-hover:bg-primary/10 transition-all pointer-events-none" />
-            <div className="space-y-3">
-              <div className="flex items-center justify-between">
-                <span className="text-[10px] font-bold tracking-wider uppercase px-2 py-0.5 rounded bg-purple-500/10 text-purple-600 dark:text-purple-400">
-                  CP Specialized
-                </span>
-                <span className="text-[10px] font-semibold text-muted-foreground">
-                  3 Weeks Cohort
-                </span>
-              </div>
-              <h3 className="font-bold text-sm text-foreground group-hover:text-primary transition-colors">
-                Segment Trees & Range Queries
-              </h3>
-              <p className="text-xs text-muted-foreground leading-relaxed line-clamp-3">
-                Segment Tree with Lazy Propagation, Fenwick Tree (BIT), Sparse Table, Square Root Decomposition, and Mo's Algorithm.
-              </p>
-            </div>
-            <div className="pt-4 mt-4 border-t border-border/60 flex items-center justify-between text-xs">
-              <span className="font-semibold text-amber-600 dark:text-amber-400">Coming Soon</span>
-              <span className="text-[11px] text-muted-foreground">Stay tuned</span>
-            </div>
-          </div>
-
-          {/* Card 4 */}
-          <div className="rounded-2xl border border-border/80 bg-card p-5 flex flex-col justify-between hover:border-primary/40 hover:shadow-md transition-all relative overflow-hidden group">
-            <div className="absolute top-0 right-0 w-24 h-24 bg-primary/5 rounded-full blur-2xl group-hover:bg-primary/10 transition-all pointer-events-none" />
-            <div className="space-y-3">
-              <div className="flex items-center justify-between">
-                <span className="text-[10px] font-bold tracking-wider uppercase px-2 py-0.5 rounded bg-amber-500/10 text-amber-600 dark:text-amber-400">
-                  FAANG Interview
-                </span>
-                <span className="text-[10px] font-semibold text-muted-foreground">
-                  3 Weeks Cohort
-                </span>
-              </div>
-              <h3 className="font-bold text-sm text-foreground group-hover:text-primary transition-colors">
-                Concurrency, Multithreading & LLD
-              </h3>
-              <p className="text-xs text-muted-foreground leading-relaxed line-clamp-3">
-                Thread synchronization, deadlock prevention, producer-consumer models, and low-level object-oriented design for top tech interviews.
-              </p>
-            </div>
-            <div className="pt-4 mt-4 border-t border-border/60 flex items-center justify-between text-xs">
-              <span className="font-semibold text-amber-600 dark:text-amber-400">Coming Soon</span>
-              <span className="text-[11px] text-muted-foreground">Stay tuned</span>
-            </div>
-          </div>
-        </div>
-      </section>
 
       {/* Explore More: Contest Solutions & Curated Practice Sheets */}
       <div className="pt-8 border-t space-y-6">

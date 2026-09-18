@@ -22,6 +22,8 @@ import {
 import { dsaModules, getTopicGradientStyle, DSATopicModule, TOPIC_KEYWORDS } from "@/config/dsa-catalog";
 import { fetchCourseCurriculum, TARGET_DSA_COURSE_ID } from "@/lib/courses";
 import { CourseSection, CourseSectionItem } from "@/types/course";
+import supabase from "@/supabase";
+import { getValidSession } from "@/lib/auth-client";
 import { deriveSectionStats } from "@/lib/courseCatalogSync";
 import { fetchUserAssetStates, saveUserAssetState, UserAssetState } from "@/lib/user-states";
 import { CurriculumAccordion } from "../_components/curriculum-accordion";
@@ -73,12 +75,17 @@ export default function DSATopicDetailPage() {
   const prevTopic = currentTopicIndex > 0 ? trackModules[currentTopicIndex - 1] : null;
   const nextTopic = currentTopicIndex !== -1 && currentTopicIndex < trackModules.length - 1 ? trackModules[currentTopicIndex + 1] : null;
 
+    const [isLoggedIn, setIsLoggedIn] = useState(false);
+
   // Load curriculum & user asset states strictly from database
   useEffect(() => {
     let isMounted = true;
     async function loadData() {
       setIsLoading(true);
       try {
+        const session = await getValidSession();
+        if (isMounted) setIsLoggedIn(!!session);
+
         const [sections, states] = await Promise.all([
           fetchCourseCurriculum(TARGET_DSA_COURSE_ID),
           fetchUserAssetStates(),
@@ -519,6 +526,7 @@ export default function DSATopicDetailPage() {
             topicSlug={localModule.id}
             enableDirectNavigation={true}
             isLoadingStates={isLoading}
+            isLoggedIn={isLoggedIn}
           />
 
           {/* Bottom Topic Navigation Flow */}

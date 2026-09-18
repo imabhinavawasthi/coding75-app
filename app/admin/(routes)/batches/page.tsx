@@ -21,6 +21,7 @@ import { Input } from "@/components/ui/input";
 import { Badge } from "@/components/ui/badge";
 import { toast } from "sonner";
 import supabase from "@/supabase";
+import { getValidAccessToken } from "@/lib/auth-client";
 
 export default function AdminBatchesPage() {
     const [batches, setBatches] = useState<any[]>([]);
@@ -31,8 +32,7 @@ export default function AdminBatchesPage() {
     async function loadBatches() {
         setLoading(true);
         try {
-            const { data: { session } } = await supabase.auth.getSession();
-            const token = session?.access_token;
+            const token = await getValidAccessToken();
 
             const res = await fetch("/api/batches?all=true", {
                 headers: {
@@ -65,8 +65,7 @@ export default function AdminBatchesPage() {
 
         setDeletingId(batchId);
         try {
-            const { data: { session } } = await supabase.auth.getSession();
-            const token = session?.access_token;
+            const token = await getValidAccessToken();
 
             const res = await fetch(`/api/batches/${batchId}`, {
                 method: "DELETE",

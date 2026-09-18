@@ -40,6 +40,7 @@ import { BatchHeader } from "../_components/batch-header";
 import { BatchClassCard } from "../_components/batch-class-card";
 import { BatchLoadingState } from "../_components/batch-loading-state";
 import { BatchUnauthorizedCard } from "../_components/batch-unauthorized-card";
+import { NextClassCountdown } from "../_components/next-class-countdown";
 import { useBatchData } from "../_components/use-batch-data";
 import ErrorBanner from "@/app/(dashboard)/_components/banners/error-banner";
 import { toast } from "sonner";
@@ -134,6 +135,15 @@ export default function BatchDashboardPage() {
                 batchData={batchData}
                 classes={classes}
                 userEmail={userEmail}
+            />
+
+            {/* Next Class Live Countdown Timer */}
+            <NextClassCountdown
+                classes={classes}
+                batchName={batchData?.batch_name}
+                batchId={batchId}
+                userEmail={userEmail}
+                onRefresh={refetch}
             />
 
             {/* Live Now Alert */}
@@ -388,12 +398,12 @@ export default function BatchDashboardPage() {
                                     </div>
 
                                     <div className="flex flex-col sm:flex-row md:flex-col items-stretch sm:items-center md:items-end gap-2.5 shrink-0 w-full sm:w-auto">
-                                        <Link href="/dsa-cp/sheets/expert-sheet" className="w-full sm:w-auto">
+                                        <Link href="/dsa/sheets/expert-sheet" className="w-full sm:w-auto">
                                             <Button className="w-full sm:w-auto bg-emerald-500 hover:bg-emerald-600 text-slate-950 font-bold text-xs h-10 gap-2 shadow-lg shadow-emerald-500/20">
                                                 Start Solving Sheet <ArrowRight className="w-4 h-4" />
                                             </Button>
                                         </Link>
-                                        <Link href="/dsa-cp/sheets" className="w-full sm:w-auto">
+                                        <Link href="/dsa/sheets" className="w-full sm:w-auto">
                                             <Button variant="ghost" size="sm" className="w-full sm:w-auto text-xs text-slate-300 hover:text-white hover:bg-slate-800/60">
                                                 Explore All Sheets
                                             </Button>
@@ -444,7 +454,7 @@ export default function BatchDashboardPage() {
                                         <ArrowRight className="w-3.5 h-3.5 text-amber-600 group-hover:translate-x-0.5 transition" />
                                     </Link>
 
-                                    <Link href="/dsa-cp/sheets/expert-sheet" className="flex items-center justify-between p-3 rounded-lg hover:bg-purple-50 transition text-xs font-medium text-gray-700 group border border-purple-200 bg-purple-50/40">
+                                    <Link href="/dsa/sheets/expert-sheet" className="flex items-center justify-between p-3 rounded-lg hover:bg-purple-50 transition text-xs font-medium text-gray-700 group border border-purple-200 bg-purple-50/40">
                                         <div className="flex items-center gap-2.5">
                                             <div className="w-7 h-7 rounded-md bg-purple-600 text-white flex items-center justify-center">
                                                 <Rocket className="w-4 h-4" />

@@ -121,7 +121,7 @@ const Footer = () => {
                 </Link>
               </li>
               <li>
-                <a href="/dsa#masterclasses" className="text-muted-foreground hover:text-primary transition-colors flex items-center gap-1.5">
+                <a href="/masterclasses" className="text-muted-foreground hover:text-primary transition-colors flex items-center gap-1.5">
                   <span>Masterclasses</span>
                   <span className="text-[9px] font-bold px-1.5 py-0.2 rounded-full bg-purple-500/15 text-purple-600 dark:text-purple-400">Soon</span>
                 </a>

@@ -32,6 +32,7 @@ import { Checkbox } from "@/components/ui/checkbox";
 import { Badge } from "@/components/ui/badge";
 import { toast } from "sonner";
 import supabase from "@/supabase";
+import { getValidAccessToken } from "@/lib/auth-client";
 
 export default function CreateBatchPage() {
     const router = useRouter();
@@ -63,8 +64,7 @@ export default function CreateBatchPage() {
         async function fetchClasses() {
             setLoadingClasses(true);
             try {
-                const { data: { session } } = await supabase.auth.getSession();
-                const token = session?.access_token;
+                const token = await getValidAccessToken();
 
                 const res = await fetch("/api/live-classes?limit=100", {
                     headers: {
@@ -152,8 +152,7 @@ export default function CreateBatchPage() {
 
         setSaving(true);
         try {
-            const { data: { session } } = await supabase.auth.getSession();
-            const token = session?.access_token;
+            const token = await getValidAccessToken();
 
             const notesObj: Record<string, string> = {};
             batchNotes.forEach(({ title, link }) => {

@@ -54,6 +54,7 @@ interface CurriculumAccordionProps {
   topicSlug?: string;
   enableDirectNavigation?: boolean;
   isLoadingStates?: boolean;
+  isLoggedIn?: boolean;
 }
 
 export const CurriculumAccordion: React.FC<CurriculumAccordionProps> = ({
@@ -63,6 +64,7 @@ export const CurriculumAccordion: React.FC<CurriculumAccordionProps> = ({
   onToggleBookmark,
   topicSlug = "",
   isLoadingStates = false,
+  isLoggedIn = true,
 }) => {
   const router = useRouter();
   const [searchQuery, setSearchQuery] = useState("");
@@ -140,7 +142,7 @@ export const CurriculumAccordion: React.FC<CurriculumAccordionProps> = ({
     if (item.type === "video") {
       router.push(`/video/${encodeURIComponent(targetId)}${queryParam}`);
     } else if (item.type === "problem") {
-      router.push(`/problem/${encodeURIComponent(targetId)}${queryParam}`);
+      router.push(`/dsa/problem/${encodeURIComponent(targetId)}${queryParam}`);
     } else if (item.solution_url || item.problem_url) {
       window.open(item.solution_url || item.problem_url, "_blank");
     }
@@ -354,80 +356,84 @@ export const CurriculumAccordion: React.FC<CurriculumAccordionProps> = ({
         {/* Left: Status Dropdown, Bookmark, Icon, Title */}
         <div className="flex items-center gap-2.5 min-w-0 pr-3">
           {/* Status Dropdown: Pending / Revise / Done */}
-          {isLoadingStates ? (
-            <span className="flex items-center gap-1 px-2 py-1 rounded-lg text-[11px] font-medium bg-muted/50 text-muted-foreground border border-border/40 animate-pulse shrink-0">
-              <Loader2 className="w-3.5 h-3.5 animate-spin text-muted-foreground shrink-0" />
-              <span>Loading...</span>
-            </span>
-          ) : (
-            <DropdownMenu>
-              <DropdownMenuTrigger asChild>
-                <button
-                  type="button"
-                  onClick={(e) => e.stopPropagation()}
-                  className={`flex items-center gap-1 px-2 py-1 rounded-lg text-[11px] font-bold border transition-all shrink-0 ${
-                    isDone
-                      ? "bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 border-emerald-500/30 hover:bg-emerald-500/20"
-                      : isRevise
-                      ? "bg-amber-500/10 text-amber-600 dark:text-amber-400 border-amber-500/30 hover:bg-amber-500/20"
-                      : "bg-muted/50 text-muted-foreground border-border hover:bg-muted"
-                  }`}
-                  title="Change Status"
-                >
-                  {isDone && <CheckCircle2 className="w-3.5 h-3.5 text-emerald-500 shrink-0" />}
-                  {isRevise && <RotateCcw className="w-3.5 h-3.5 text-amber-500 shrink-0" />}
-                  {!isDone && !isRevise && <CircleDot className="w-3.5 h-3.5 text-muted-foreground shrink-0" />}
-                  <span className="capitalize">{currentStatus === "revision" ? "Revise" : currentStatus}</span>
-                  <ChevronDown className="w-3 h-3 opacity-60 ml-0.5 shrink-0" />
-                </button>
-              </DropdownMenuTrigger>
+          {isLoggedIn && (
+            isLoadingStates ? (
+              <span className="flex items-center gap-1 px-2 py-1 rounded-lg text-[11px] font-medium bg-muted/50 text-muted-foreground border border-border/40 animate-pulse shrink-0">
+                <Loader2 className="w-3.5 h-3.5 animate-spin text-muted-foreground shrink-0" />
+                <span>Loading...</span>
+              </span>
+            ) : (
+              <DropdownMenu>
+                <DropdownMenuTrigger asChild>
+                  <button
+                    type="button"
+                    onClick={(e) => e.stopPropagation()}
+                    className={`flex items-center gap-1 px-2 py-1 rounded-lg text-[11px] font-bold border transition-all shrink-0 ${
+                      isDone
+                        ? "bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 border-emerald-500/30 hover:bg-emerald-500/20"
+                        : isRevise
+                        ? "bg-amber-500/10 text-amber-600 dark:text-amber-400 border-amber-500/30 hover:bg-amber-500/20"
+                        : "bg-muted/50 text-muted-foreground border-border hover:bg-muted"
+                    }`}
+                    title="Change Status"
+                  >
+                    {isDone && <CheckCircle2 className="w-3.5 h-3.5 text-emerald-500 shrink-0" />}
+                    {isRevise && <RotateCcw className="w-3.5 h-3.5 text-amber-500 shrink-0" />}
+                    {!isDone && !isRevise && <CircleDot className="w-3.5 h-3.5 text-muted-foreground shrink-0" />}
+                    <span className="capitalize">{currentStatus === "revision" ? "Revise" : currentStatus}</span>
+                    <ChevronDown className="w-3 h-3 opacity-60 ml-0.5 shrink-0" />
+                  </button>
+                </DropdownMenuTrigger>
 
-            <DropdownMenuContent align="start" onClick={(e) => e.stopPropagation()} className="w-36 z-50">
-              <DropdownMenuItem
-                onClick={() => onUpdateStatus(targetAssetId, item.type, "pending")}
-                className="flex items-center gap-2 text-xs cursor-pointer font-medium"
-              >
-                <CircleDot className="w-3.5 h-3.5 text-muted-foreground" />
-                <span>Pending</span>
-                {currentStatus === "pending" && <Check className="w-3.5 h-3.5 ml-auto text-primary" />}
-              </DropdownMenuItem>
-              <DropdownMenuItem
-                onClick={() => onUpdateStatus(targetAssetId, item.type, "revision")}
-                className="flex items-center gap-2 text-xs cursor-pointer font-medium text-amber-600 dark:text-amber-400"
-              >
-                <RotateCcw className="w-3.5 h-3.5 text-amber-500" />
-                <span>Revise</span>
-                {currentStatus === "revision" && <Check className="w-3.5 h-3.5 ml-auto text-primary" />}
-              </DropdownMenuItem>
-              <DropdownMenuItem
-                onClick={() => onUpdateStatus(targetAssetId, item.type, "done")}
-                className="flex items-center gap-2 text-xs cursor-pointer font-medium text-emerald-600 dark:text-emerald-400"
-              >
-                <CheckCircle2 className="w-3.5 h-3.5 text-emerald-500" />
-                <span>Done</span>
-                {currentStatus === "done" && <Check className="w-3.5 h-3.5 ml-auto text-primary" />}
-              </DropdownMenuItem>
-            </DropdownMenuContent>
-          </DropdownMenu>
-        )}
+                <DropdownMenuContent align="start" onClick={(e) => e.stopPropagation()} className="w-36 z-50">
+                  <DropdownMenuItem
+                    onClick={() => onUpdateStatus(targetAssetId, item.type, "pending")}
+                    className="flex items-center gap-2 text-xs cursor-pointer font-medium"
+                  >
+                    <CircleDot className="w-3.5 h-3.5 text-muted-foreground" />
+                    <span>Pending</span>
+                    {currentStatus === "pending" && <Check className="w-3.5 h-3.5 ml-auto text-primary" />}
+                  </DropdownMenuItem>
+                  <DropdownMenuItem
+                    onClick={() => onUpdateStatus(targetAssetId, item.type, "revision")}
+                    className="flex items-center gap-2 text-xs cursor-pointer font-medium text-amber-600 dark:text-amber-400"
+                  >
+                    <RotateCcw className="w-3.5 h-3.5 text-amber-500" />
+                    <span>Revise</span>
+                    {currentStatus === "revision" && <Check className="w-3.5 h-3.5 ml-auto text-primary" />}
+                  </DropdownMenuItem>
+                  <DropdownMenuItem
+                    onClick={() => onUpdateStatus(targetAssetId, item.type, "done")}
+                    className="flex items-center gap-2 text-xs cursor-pointer font-medium text-emerald-600 dark:text-emerald-400"
+                  >
+                    <CheckCircle2 className="w-3.5 h-3.5 text-emerald-500" />
+                    <span>Done</span>
+                    {currentStatus === "done" && <Check className="w-3.5 h-3.5 ml-auto text-primary" />}
+                  </DropdownMenuItem>
+                </DropdownMenuContent>
+              </DropdownMenu>
+            )
+          )}
 
           {/* Bookmark Button */}
-          <button
-            type="button"
-            onClick={(e) => {
-              e.stopPropagation();
-              onToggleBookmark(targetAssetId, item.type);
-            }}
-            className={`p-1 rounded-md border transition-all shrink-0 ${
-              isBookmarked
-                ? "bg-amber-500/10 border-amber-500/30 text-amber-500"
-                : "border-transparent hover:bg-muted text-muted-foreground/40 hover:text-muted-foreground"
-            }`}
-            title={isBookmarked ? "Saved in Bookmarks" : "Save / Bookmark"}
-            aria-label="Bookmark"
-          >
-            <Bookmark className={`w-3.5 h-3.5 ${isBookmarked ? "fill-amber-500 text-amber-500" : ""}`} />
-          </button>
+          {isLoggedIn && (
+            <button
+              type="button"
+              onClick={(e) => {
+                e.stopPropagation();
+                onToggleBookmark(targetAssetId, item.type);
+              }}
+              className={`p-1 rounded-md border transition-all shrink-0 ${
+                isBookmarked
+                  ? "bg-amber-500/10 border-amber-500/30 text-amber-500"
+                  : "border-transparent hover:bg-muted text-muted-foreground/40 hover:text-muted-foreground"
+              }`}
+              title={isBookmarked ? "Saved in Bookmarks" : "Save / Bookmark"}
+              aria-label="Bookmark"
+            >
+              <Bookmark className={`w-3.5 h-3.5 ${isBookmarked ? "fill-amber-500 text-amber-500" : ""}`} />
+            </button>
+          )}
 
           {/* Type Icon */}
           <div className="shrink-0">

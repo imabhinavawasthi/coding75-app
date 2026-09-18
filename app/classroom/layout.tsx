@@ -5,6 +5,7 @@ import { DashboardShell } from "../(dashboard)/_components/sidebar/dashboard-she
 import { usePathname, useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import supabase from "@/supabase";
+import { getValidUser } from "@/lib/auth-client";
 import { toast } from "sonner";
 import ErrorBanner from "../(dashboard)/_components/banners/error-banner";
 import { Logo } from "../(dashboard)/_components/components/logo";
@@ -20,31 +21,35 @@ const ClassroomLayout = ({
 
   async function checkUser() {
     try {
-      const { data, error } = await supabase.auth.getUser();
-      if (data) {
-        if (data.user) {
-          setStatus("done")
-        }
-        else {
-          localStorage.setItem('loggedin_route', pathname)
-          router.replace("/login")
-        }
+      const user = await getValidUser();
+      if (user) {
+        setStatus("done");
+      } else {
+        localStorage.setItem('loggedin_route', pathname);
+        router.replace("/login");
       }
-      else {
-        console.error(error);
-        toast.error('Error! Something went wrong.')
-        setStatus("error")
-      }
-    }
-    catch {
-      toast.error('Error! Something went wrong.')
-      setStatus("error")
+    } catch {
+      toast.error('Error! Something went wrong.');
+      setStatus("error");
     }
   }
 
   useEffect(() => {
-    checkUser()
-  }, [])
+    checkUser();
+
+    const { data: authListener } = supabase.auth.onAuthStateChange((event, session) => {
+      if (event === "SIGNED_OUT" || !session) {
+        localStorage.setItem('loggedin_route', pathname);
+        router.replace("/login");
+      } else if (session?.user) {
+        setStatus("done");
+      }
+    });
+
+    return () => {
+      authListener.subscription.unsubscribe();
+    };
+  }, [pathname, router]);
   return (
     <SidebarProvider>
       <DashboardShell>

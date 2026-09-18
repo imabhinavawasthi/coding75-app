@@ -7,8 +7,8 @@ import supabase from "@/supabase";
 import { Fullscreen, Rocket, RotateCcw } from "lucide-react";
 import Link from "next/link";
 import { useEffect, useState } from "react";
-import { fetchSheet } from "../../../(api)/sheets/fetchSheet";
-import CPSheetTable from "../../../_components/cp-sheet-table";
+import { fetchSheet } from "@/app/(dashboard)/(routes)/dsa-cp/(api)/sheets/fetchSheet";
+import CPSheetTable from "@/app/(dashboard)/(routes)/dsa-cp/_components/cp-sheet-table";
 import {
     Tabs,
     TabsList,
@@ -51,7 +51,7 @@ interface ProblemStatusType {
     Solved: any
 }
 
-const Sheet = (params) => {
+const ExpertSheetView = () => {
     const [user, setUser] = useState<any>(null)
     const [fullScreen, setFullScreen] = useState(false)
     const [refresh, setRefresh] = useState(0)
@@ -256,7 +256,7 @@ const Sheet = (params) => {
                         </BreadcrumbItem>
                         <BreadcrumbSeparator />
                         <BreadcrumbItem>
-                            <BreadcrumbLink href="/dsa-cp/sheets">Sheets</BreadcrumbLink>
+                            <BreadcrumbLink href="/dsa/sheets">Sheets</BreadcrumbLink>
                         </BreadcrumbItem>
                         <BreadcrumbSeparator />
                         <BreadcrumbItem>
@@ -409,4 +409,4 @@ const Sheet = (params) => {
     );
 }
 
-export default Sheet;
+export default ExpertSheetView;

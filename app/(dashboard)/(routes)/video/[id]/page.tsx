@@ -294,7 +294,7 @@ export default function VideoLecturePage() {
     const idToUse = item.asset_id || item.id;
     const q = topicParam ? `?topic=${topicParam}` : "";
     if (item.type === "video") return `/video/${idToUse}${q}`;
-    return `/problem/${idToUse}${q}`;
+    return `/dsa/problem/${idToUse}${q}`;
   };
 
   if (isLoading) {

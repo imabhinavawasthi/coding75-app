@@ -17,6 +17,7 @@ import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { BatchLoadingState } from "./_components/batch-loading-state";
 import supabase from "@/supabase";
+import { getValidSession } from "@/lib/auth-client";
 
 export default function BatchesIndexPage() {
     const router = useRouter();
@@ -26,7 +27,7 @@ export default function BatchesIndexPage() {
     useEffect(() => {
         async function loadEnrolledBatches() {
             try {
-                const { data: { session } } = await supabase.auth.getSession();
+                const session = await getValidSession();
                 if (!session) {
                     router.replace("/login");
                     return;
@@ -54,7 +55,7 @@ export default function BatchesIndexPage() {
     }, [router]);
 
     if (loading) {
-        return <BatchLoadingState message="Loading your batches..." />;
+        return <BatchLoadingState message="Loading your batches..." variant="list" />;
     }
 
     return (

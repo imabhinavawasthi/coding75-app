@@ -4,6 +4,8 @@ import Image from "next/image";
 import { notFound } from "next/navigation";
 import { ChevronRight, ArrowLeft, BookOpen } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
+import { Button } from "@/components/ui/button";
+import PremiumPageHeader from "@/components/page-headers/premium-page-header";
 import { ContestPlatform, ContestSummary } from "@/types/contest";
 import { PLATFORMS, slugifyContest } from "@/lib/contests";
 import { getContestProblems } from "@/lib/contests-service";
@@ -90,48 +92,50 @@ export default async function PlatformContestsPage({ params }: PlatformPageProps
         <span className="text-foreground capitalize">{config.name}</span>
       </div>
 
-      {/* Platform Hero Banner */}
-      <div className={`relative overflow-hidden rounded-2xl bg-gradient-to-r ${config.accentBg} border border-border p-6 md:p-8 backdrop-blur-sm shadow-sm`}>
-        <div className="flex flex-col md:flex-row items-start md:items-center justify-between gap-6">
-          <div className="flex items-start gap-4">
-            <div className="w-16 h-16 rounded-2xl bg-background/80 p-3 shrink-0 shadow-sm border border-border flex items-center justify-center">
+      {/* Platform Hero Banner - Premium */}
+      <PremiumPageHeader
+        badge={
+          <Badge variant="outline" className={`text-xs font-bold px-3 py-1 ${config.badgeColor}`}>
+            {config.name} Contests
+          </Badge>
+        }
+        title={
+          <div className="flex items-center justify-center gap-3 flex-wrap">
+            <div className="w-12 h-12 md:w-14 md:h-14 rounded-2xl bg-background/80 p-2.5 shadow-sm border border-border flex items-center justify-center shrink-0">
               <Image
                 src={logo}
                 alt={config.name}
-                width={44}
-                height={44}
+                width={36}
+                height={36}
                 className="object-contain"
               />
             </div>
-            <div className="space-y-1.5">
-              <div className="flex items-center gap-2">
-                <Badge variant="outline" className={`text-xs font-bold px-2.5 py-0.5 ${config.badgeColor}`}>
-                  {config.name} Contests
-                </Badge>
-              </div>
-              <h1 className="text-2xl md:text-3xl font-extrabold tracking-tight text-foreground">
-                {config.name} Contest Archive
-              </h1>
-              <p className="text-xs md:text-sm text-muted-foreground max-w-xl">
-                {config.description}
-              </p>
-            </div>
+            <span>
+              {config.name} <span className="text-primary">Contest Archive</span>
+            </span>
           </div>
-
-          <div className="flex items-center gap-3">
-            <div className="flex items-center gap-2 px-4 py-2 rounded-xl bg-card border border-border shadow-xs text-xs font-medium">
-              <BookOpen className={`w-4 h-4 ${config.accentText}`} />
-              <span>
-                <strong className="text-foreground">{summaries.length}</strong> Contests
-              </span>
-              <span className="text-muted-foreground">·</span>
-              <span>
-                <strong className="text-foreground">{rows.length}</strong> Editorials
-              </span>
-            </div>
+        }
+        subtitle={config.description}
+      >
+        <div className="flex items-center justify-center gap-3 flex-wrap">
+          <div className="flex items-center gap-2 px-4 py-2 rounded-xl bg-card/80 border border-border shadow-xs text-xs font-medium">
+            <BookOpen className={`w-4 h-4 ${config.accentText}`} />
+            <span>
+              <strong className="text-foreground">{summaries.length}</strong> Contests
+            </span>
+            <span className="text-muted-foreground">·</span>
+            <span>
+              <strong className="text-foreground">{rows.length}</strong> Editorials
+            </span>
           </div>
+          <Button asChild variant="outline" size="sm" className="h-9 px-4 rounded-xl text-xs font-semibold gap-1.5 bg-background/80 hover:bg-muted border-border">
+            <Link href="/contests">
+              <ArrowLeft className="w-3.5 h-3.5" />
+              <span>All Contests</span>
+            </Link>
+          </Button>
         </div>
-      </div>
+      </PremiumPageHeader>
 
       {/* Modern Contest Table with Sorting and Search (No other platform tabs) */}
       <PlatformContestTable

@@ -53,6 +53,7 @@ import {
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { class_topics } from "@/components/constants";
 import supabase from "@/supabase";
+import { getValidAccessToken } from "@/lib/auth-client";
 import { toast } from "sonner";
 
 function istToEpochSeconds(timeStr: string) {
@@ -116,8 +117,8 @@ export default function AdminLiveClassesPage() {
     const [deletingId, setDeletingId] = useState<string | null>(null);
 
     async function getAuthToken() {
-        const { data: { session } } = await supabase.auth.getSession();
-        return session?.access_token || "";
+        const token = await getValidAccessToken();
+        return token || "";
     }
 
     async function loadData() {

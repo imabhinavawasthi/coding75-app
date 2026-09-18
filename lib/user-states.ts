@@ -1,4 +1,5 @@
 import supabase from "@/supabase";
+import { getValidAccessToken } from "@/lib/auth-client";
 
 export interface UserNote {
   id: string;
@@ -41,9 +42,9 @@ function setLocalStates(states: Record<string, UserAssetState>) {
 async function getAuthHeader(): Promise<Record<string, string>> {
   if (typeof window === "undefined") return {};
   try {
-    const { data: { session } } = await supabase.auth.getSession();
-    if (session?.access_token) {
-      return { Authorization: `Bearer ${session.access_token}` };
+    const token = await getValidAccessToken();
+    if (token) {
+      return { Authorization: `Bearer ${token}` };
     }
   } catch {}
   return {};

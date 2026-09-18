@@ -33,6 +33,7 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@
 import { Logo } from "@/app/(dashboard)/_components/components/logo";
 import ErrorBanner from "../../_components/banners/error-banner";
 import supabase from "@/supabase";
+import { getValidSession, getValidAccessToken } from "@/lib/auth-client";
 import { toast } from "sonner";
 import {
     POPULAR_COLLEGES,
@@ -96,24 +97,33 @@ export default function ProfilePage() {
         setLoading(true);
         setError(null);
         try {
-            const { data: { session }, error: sessionError } = await supabase.auth.getSession();
+            const session = await getValidSession();
 
-            if (sessionError || !session) {
+            if (!session) {
                 localStorage.setItem("loggedin_route", "/profile");
                 router.replace("/login");
                 return;
             }
 
             const token = session.access_token;
-            const res = await fetch("/api/profile", {
+            let res = await fetch("/api/profile", {
                 headers: {
                     "Authorization": `Bearer ${token}`
                 }
             });
 
             if (res.status === 401) {
-                router.replace("/login");
-                return;
+                const refreshed = await supabase.auth.refreshSession();
+                if (refreshed.data.session) {
+                    res = await fetch("/api/profile", {
+                        headers: {
+                            "Authorization": `Bearer ${refreshed.data.session.access_token}`
+                        }
+                    });
+                } else {
+                    router.replace("/login");
+                    return;
+                }
             }
 
             const data = await res.json();
@@ -211,8 +221,8 @@ export default function ProfilePage() {
         e.preventDefault();
         setSaving(true);
         try {
-            const { data: { session } } = await supabase.auth.getSession();
-            if (!session) {
+            let token = await getValidAccessToken();
+            if (!token) {
                 router.replace("/login");
                 return;
             }
@@ -235,14 +245,32 @@ export default function ProfilePage() {
                 social_links: cleanedLinks
             };
 
-            const res = await fetch("/api/profile", {
+            let res = await fetch("/api/profile", {
                 method: "PUT",
                 headers: {
                     "Content-Type": "application/json",
-                    "Authorization": `Bearer ${session.access_token}`
+                    "Authorization": `Bearer ${token}`
                 },
                 body: JSON.stringify(payload)
             });
+
+            if (res.status === 401) {
+                const refreshed = await supabase.auth.refreshSession();
+                if (refreshed.data.session?.access_token) {
+                    token = refreshed.data.session.access_token;
+                    res = await fetch("/api/profile", {
+                        method: "PUT",
+                        headers: {
+                            "Content-Type": "application/json",
+                            "Authorization": `Bearer ${token}`
+                        },
+                        body: JSON.stringify(payload)
+                    });
+                } else {
+                    router.replace("/login");
+                    return;
+                }
+            }
 
             const data = await res.json();
 

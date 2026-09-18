@@ -28,6 +28,7 @@ import { BatchUnauthorizedCard } from "../../_components/batch-unauthorized-card
 import { useBatchData } from "../../_components/use-batch-data";
 import ErrorBanner from "@/app/(dashboard)/_components/banners/error-banner";
 import supabase from "@/supabase";
+import { getValidAccessToken } from "@/lib/auth-client";
 import { getPlatformProfileUrl } from "@/lib/profile-constants";
 
 interface StudentRankItem {
@@ -68,12 +69,12 @@ export default function BatchRanklistPage() {
         if (!batchId) return;
         try {
             setLoadingRanklist(true);
-            const { data: { session } } = await supabase.auth.getSession();
-            if (!session) return;
+            const token = await getValidAccessToken();
+            if (!token) return;
 
             const res = await fetch(`/api/batches/${batchId}/ranklist`, {
                 headers: {
-                    "Authorization": `Bearer ${session.access_token}`
+                    "Authorization": `Bearer ${token}`
                 }
             });
 

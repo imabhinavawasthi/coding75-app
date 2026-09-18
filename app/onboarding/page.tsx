@@ -26,6 +26,7 @@ import { Badge } from "@/components/ui/badge";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Logo } from "@/app/(dashboard)/_components/components/logo";
 import supabase from "@/supabase";
+import { getValidSession, getValidAccessToken } from "@/lib/auth-client";
 import { toast } from "sonner";
 import {
     POPULAR_COLLEGES,
@@ -79,9 +80,9 @@ export default function OnboardingPage() {
         async function checkAuthAndProfile() {
             try {
                 setLoading(true);
-                const { data: { session }, error: sessionError } = await supabase.auth.getSession();
+                const session = await getValidSession();
 
-                if (sessionError || !session) {
+                if (!session) {
                     router.replace("/login");
                     return;
                 }
@@ -189,8 +190,8 @@ export default function OnboardingPage() {
 
         setSubmitting(true);
         try {
-            const { data: { session } } = await supabase.auth.getSession();
-            if (!session) {
+            let token = await getValidAccessToken();
+            if (!token) {
                 toast.error("Session expired. Please log in again.");
                 router.replace("/login");
                 return;
@@ -210,14 +211,29 @@ export default function OnboardingPage() {
                 onboarded: true
             };
 
-            const res = await fetch("/api/profile", {
+            let res = await fetch("/api/profile", {
                 method: "PUT",
                 headers: {
                     "Content-Type": "application/json",
-                    Authorization: `Bearer ${session.access_token}`
+                    Authorization: `Bearer ${token}`
                 },
                 body: JSON.stringify(payload)
             });
+
+            if (res.status === 401) {
+                const refreshed = await supabase.auth.refreshSession();
+                if (refreshed.data.session?.access_token) {
+                    token = refreshed.data.session.access_token;
+                    res = await fetch("/api/profile", {
+                        method: "PUT",
+                        headers: {
+                            "Content-Type": "application/json",
+                            Authorization: `Bearer ${token}`
+                        },
+                        body: JSON.stringify(payload)
+                    });
+                }
+            }
 
             if (!res.ok) {
                 const errData = await res.json();
@@ -231,7 +247,7 @@ export default function OnboardingPage() {
                     method: "POST",
                     headers: {
                         "Content-Type": "application/json",
-                        Authorization: `Bearer ${session.access_token}`
+                        Authorization: `Bearer ${token}`
                     },
                     body: JSON.stringify({ force: true })
                 }).catch(() => {});

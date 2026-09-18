@@ -4,6 +4,7 @@ import Footer from "@/components/footer";
 import { useEffect, useState } from "react";
 import { usePathname, useRouter } from "next/navigation";
 import supabase from "@/supabase";
+import { getValidUser } from "@/lib/auth-client";
 import { toast } from "sonner";
 import { SidebarProvider } from "../(dashboard)/_components/sidebar/sidebar-context";
 import { DashboardShell } from "../(dashboard)/_components/sidebar/dashboard-shell";
@@ -21,30 +22,20 @@ const AdminLayout = ({
 
   async function checkUser() {
     try {
-      const { data, error } = await supabase.auth.getUser();
-      if (data) {
-        if (data.user) {
-          setUser(data.user)
-          if(process.env.NEXT_PUBLIC_CRACKDSA_AUTHORISED_USERS?.includes(String(data.user.email))){
-            setStatus("done")
-          }
-          else{
-            router.push("/")
-          }
+      const validUser = await getValidUser();
+      if (validUser) {
+        setUser(validUser);
+        if (process.env.NEXT_PUBLIC_CRACKDSA_AUTHORISED_USERS?.includes(String(validUser.email))) {
+          setStatus("done");
+        } else {
+          router.push("/");
         }
-        else {
-          router.push("/")
-          setUser(null)
-        }
-        setStatus("done")
+      } else {
+        router.push("/");
+        setUser(null);
       }
-      else {
-        console.error(error);
-        toast.error('Error! Something went wrong.')
-      }
-    }
-    catch {
-      toast.error('Error! Something went wrong.')
+    } catch {
+      toast.error('Error! Something went wrong.');
     }
   }
   useEffect(() => {

@@ -4,6 +4,7 @@ import Link from "next/link";
 import React, { useEffect, useState } from "react";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import supabase from "@/supabase";
+import { getValidSession } from "@/lib/auth-client";
 import { Bell, LogIn, LogOut, MessageSquarePlusIcon, Rocket, User } from "lucide-react";
 import {
   DropdownMenu,
@@ -41,7 +42,7 @@ export const NavbarRoutes = ({ isLogo = false }: any) => {
         toast.error('Error! Something went wrong.')
       }
       else {
-        checkUser()
+        setUser(null);
         toast.info('You are Logged Out!')
         location.reload()
       }
@@ -53,93 +54,92 @@ export const NavbarRoutes = ({ isLogo = false }: any) => {
 
   async function handleLogIn(e: any) {
     e.preventDefault();
-    localStorage.setItem('loggedin_route', pathname)
+    if (typeof window !== "undefined") {
+      localStorage.setItem('loggedin_route', pathname || "/");
+    }
     try {
-      const { data, error } = await supabase.auth.signInWithOAuth({
+      const redirectUrl = typeof window !== "undefined"
+        ? `${window.location.origin}/login/callback`
+        : undefined;
+
+      await supabase.auth.signInWithOAuth({
         provider: 'google',
         options: {
+          redirectTo: redirectUrl,
           queryParams: {
-            access_type: 'offline',
-            prompt: 'consent',
+            prompt: 'select_account',
           },
-        }
-      }
-      )
-      if (data) {
-        checkUser()
-        toast.success(`Welcome, ${data["user_metadata"]["full_name"]}`)
-      }
-      else {
-        toast.error('Error! Something went wrong.')
-      }
-    }
-    catch {
-
+        },
+      });
+    } catch (err) {
+      console.error("Login error:", err);
+      toast.error('Error! Something went wrong.');
     }
   }
 
-
-  async function checkUser() {
-    try {
-      const { data, error } = await supabase.auth.getUser();
-      if (data) {
-        if (data.user) {
-          setUser(data.user)
-        }
-        else {
-          setUser(null)
-        }
-      }
-      else {
-        console.error(error);
-        toast.error('Error! Something went wrong.')
-      }
-    }
-    catch {
-      toast.error('Error! Something went wrong.')
-    }
-    setStatus("done")
-  }
   useEffect(() => {
-    checkUser()
-  }, [])
+    let isMounted = true;
+
+    async function initUser() {
+      try {
+        const session = await getValidSession();
+        if (isMounted) {
+          setUser(session?.user ?? null);
+          setStatus("done");
+        }
+      } catch {
+        if (isMounted) {
+          setUser(null);
+          setStatus("done");
+        }
+      }
+    }
+
+    initUser();
+
+    const { data: { subscription } } = supabase.auth.onAuthStateChange((event, session) => {
+      if (isMounted) {
+        setUser(session?.user ?? null);
+        setStatus("done");
+      }
+    });
+
+    return () => {
+      isMounted = false;
+      subscription?.unsubscribe();
+    };
+  }, []);
 
   return (
     <div className="flex items-center gap-2 sm:gap-3 ml-auto">
-      {/* Coding75 Pro CTA Badge */}
+      {/* Coding75 Pro CTA Badge (hidden on mobile/tablet, visible only on desktop lg+) */}
       <Link
         href="/pro"
-        className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-semibold bg-gradient-to-r from-amber-500 via-orange-500 to-amber-600 text-white shadow-2xs hover:shadow-md hover:scale-[1.02] active:scale-[0.98] transition-all"
+        className="hidden lg:inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-semibold bg-gradient-to-r from-amber-500 via-orange-500 to-amber-600 text-white shadow-2xs hover:shadow-md hover:scale-[1.02] active:scale-[0.98] transition-all"
       >
         <Rocket className="w-3.5 h-3.5" />
         <span>coding75 Pro</span>
       </Link>
 
-        {/* Notification Bell */}
-        <DropdownMenu>
-          <DropdownMenuTrigger asChild>
-            <button
-              onClick={() => setNotificationOpen(true)}
-              className="h-8 w-8 inline-flex items-center justify-center rounded-lg text-muted-foreground hover:text-foreground hover:bg-muted/80 transition-colors relative"
-              aria-label="Notifications"
-            >
-              <Bell className="w-4 h-4" />
-              {!notificationOpen && (
-                <span className="absolute top-1.5 right-1.5 w-2 h-2 rounded-full bg-red-500 ring-2 ring-card" />
-              )}
-            </button>
-          </DropdownMenuTrigger>
+      {/* Notification Bell (hidden on mobile, visible from md) */}
+      <DropdownMenu>
+        <DropdownMenuTrigger asChild>
+          <button
+            onClick={() => setNotificationOpen(true)}
+            className="hidden md:inline-flex h-8 w-8 items-center justify-center rounded-lg text-muted-foreground hover:text-foreground hover:bg-muted/80 transition-colors relative"
+            aria-label="Notifications"
+          >
+            <Bell className="w-4 h-4" />
+            {!notificationOpen && (
+              <span className="absolute top-1.5 right-1.5 w-2 h-2 rounded-full bg-red-500 ring-2 ring-card" />
+            )}
+          </button>
+        </DropdownMenuTrigger>
           <DropdownMenuContent align="end" className="w-64 p-1.5 shadow-xl rounded-xl z-50">
             <div className="px-2.5 py-1.5 text-[11px] font-bold text-muted-foreground uppercase tracking-wider">
               Notifications
             </div>
             <DropdownMenuSeparator />
-            <DropdownMenuItem asChild className="p-0 rounded-lg">
-              <Link href="/classroom" className="flex flex-col gap-0.5 px-2.5 py-2 cursor-pointer rounded-lg hover:bg-muted">
-                <span className="text-xs font-semibold text-foreground">Live Classes & 1:1 Mentorship</span>
-                <span className="text-[11px] text-muted-foreground">Interactive cohort-based learning</span>
-              </Link>
-            </DropdownMenuItem>
             <DropdownMenuItem asChild className="p-0 rounded-lg">
               <Link href="/pro" className="flex flex-col gap-0.5 px-2.5 py-2 cursor-pointer rounded-lg hover:bg-muted">
                 <span className="text-xs font-semibold text-primary">coding75 Pro is Live 🚀</span>

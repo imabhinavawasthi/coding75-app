@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Calendar, Clock, Video, Book, ExternalLink, Radio, CheckCircle, Star, User } from "lucide-react";
 import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
@@ -8,6 +8,7 @@ import { Badge } from "@/components/ui/badge";
 import { RateClassDialog } from "./rate-class-dialog";
 import { toast } from "sonner";
 import supabase from "@/supabase";
+import { getValidAccessToken } from "@/lib/auth-client";
 
 interface BatchClassCardProps {
     classItem: any;
@@ -16,14 +17,25 @@ interface BatchClassCardProps {
 }
 
 export function BatchClassCard({ classItem, userEmail, onRefresh }: BatchClassCardProps) {
-    const [joining, setJoining] = useState(false);
+    const [nowEpoch, setNowEpoch] = useState(() => Math.floor(Date.now() / 1000));
 
-    const nowEpoch = Math.floor(Date.now() / 1000);
+    // Update time every 5 seconds to smoothly transition across the 15m and live thresholds
+    useEffect(() => {
+        const timer = setInterval(() => {
+            setNowEpoch(Math.floor(Date.now() / 1000));
+        }, 5000);
+        return () => clearInterval(timer);
+    }, []);
+
     const classTimeEpoch = Number(classItem?.class_time_epoch || 0);
     const durationSeconds = (Number(classItem?.class_duration) || 60) * 60;
     const isLive = nowEpoch >= classTimeEpoch && nowEpoch <= (classTimeEpoch + durationSeconds);
     const isUpcoming = nowEpoch < classTimeEpoch;
     const isPast = nowEpoch > (classTimeEpoch + durationSeconds);
+
+    const secondsUntilClass = classTimeEpoch - nowEpoch;
+    // Join window opens 15 minutes before scheduled start time
+    const isWithin15Mins = isUpcoming && secondsUntilClass <= 15 * 60 && secondsUntilClass >= 0;
 
     // Check attendance
     const studentsJoined: string[] = Array.isArray(classItem?.students_joined) ? classItem.students_joined : [];
@@ -57,39 +69,38 @@ export function BatchClassCard({ classItem, userEmail, onRefresh }: BatchClassCa
         hour12: true
     }) : "Date TBA";
 
-    const handleJoinClass = async () => {
-        setJoining(true);
-        try {
-            const { data: sessionData } = await supabase.auth.getSession();
-            const token = sessionData?.session?.access_token;
-
-            const identifier = classItem?.id || classItem?.class_url_slug;
-            const res = await fetch(`/api/live-classes/${identifier}/join`, {
-                method: "POST",
-                headers: {
-                    "Content-Type": "application/json",
-                    ...(token ? { "Authorization": `Bearer ${token}` } : {})
-                }
-            });
-
-            const data = await res.json();
-            if (res.ok) {
-                toast.success("Attendance marked! Joining live session 🚀");
-                if (onRefresh) onRefresh();
-            }
-
-            // Open link in new window
-            if (classItem?.class_link) {
-                window.open(classItem.class_link, "_blank");
-            }
-        } catch (err) {
-            console.error("Error joining live class:", err);
-            if (classItem?.class_link) {
-                window.open(classItem.class_link, "_blank");
-            }
-        } finally {
-            setJoining(false);
+    const handleJoinClass = () => {
+        const classLink = classItem?.class_link;
+        if (!classLink) {
+            toast.error("Meeting link is not available yet.");
+            return;
         }
+
+        // 1. INSTANT REDIRECT / OPEN WINDOW (synchronously in user click event context to avoid delay and popup blockers)
+        window.open(classLink, "_blank", "noopener,noreferrer");
+
+        // 2. ASYNC BACKGROUND ATTENDANCE LOGGING (does not block redirect)
+        (async () => {
+            try {
+                const token = await getValidAccessToken();
+
+                const identifier = classItem?.id || classItem?.class_url_slug;
+                const res = await fetch(`/api/live-classes/${identifier}/join`, {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json",
+                        ...(token ? { "Authorization": `Bearer ${token}` } : {})
+                    }
+                });
+
+                if (res.ok) {
+                    toast.success("Attendance marked! Joining session 🚀");
+                    if (onRefresh) onRefresh();
+                }
+            } catch (err) {
+                console.error("Async attendance logging error:", err);
+            }
+        })();
     };
 
     return (
@@ -106,7 +117,12 @@ export function BatchClassCard({ classItem, userEmail, onRefresh }: BatchClassCa
                                     <Radio className="w-3 h-3 animate-ping" /> LIVE NOW
                                 </Badge>
                             )}
-                            {isUpcoming && (
+                            {isWithin15Mins && (
+                                <Badge className="bg-emerald-100 text-emerald-800 border-emerald-300 flex items-center gap-1.5 px-2.5 py-0.5 font-bold animate-pulse">
+                                    <Radio className="w-3 h-3 text-emerald-600 animate-ping" /> Joining Open ({Math.max(1, Math.ceil(secondsUntilClass / 60))}m left)
+                                </Badge>
+                            )}
+                            {isUpcoming && !isWithin15Mins && (
                                 <Badge variant="secondary" className="bg-amber-100 text-amber-800 border-amber-200">
                                     Upcoming
                                 </Badge>
@@ -176,23 +192,28 @@ export function BatchClassCard({ classItem, userEmail, onRefresh }: BatchClassCa
                         {isLive && (
                             <Button
                                 onClick={handleJoinClass}
-                                disabled={joining}
-                                className="bg-red-600 hover:bg-red-700 text-white font-semibold flex items-center gap-2 shadow-sm"
+                                className="bg-red-600 hover:bg-red-700 text-white font-semibold flex items-center gap-2 shadow-sm text-xs sm:text-sm"
                             >
                                 <Radio className="w-4 h-4 animate-ping" />
-                                {joining ? "Joining..." : "Join Live Class"}
+                                Join Live Class
                             </Button>
                         )}
 
-                        {isUpcoming && (
+                        {isWithin15Mins && (
                             <Button
                                 onClick={handleJoinClass}
-                                variant="outline"
-                                className="border-blue-300 text-blue-700 hover:bg-blue-50 font-medium flex items-center gap-1.5 text-xs"
+                                className="bg-emerald-600 hover:bg-emerald-700 text-white font-semibold flex items-center gap-2 shadow-sm text-xs sm:text-sm animate-pulse"
                             >
-                                <ExternalLink className="w-3.5 h-3.5" />
-                                Meeting Link
+                                <Radio className="w-3.5 h-3.5 animate-ping" />
+                                Join Session ({Math.max(1, Math.ceil(secondsUntilClass / 60))}m left)
                             </Button>
+                        )}
+
+                        {isUpcoming && !isWithin15Mins && (
+                            <div className="text-[11px] text-muted-foreground bg-muted/60 px-2.5 py-1.5 rounded-lg border border-border/60 flex items-center gap-1.5 self-start md:self-end">
+                                <Clock className="w-3 h-3 text-muted-foreground" />
+                                <span>Link unlocks 15m before class</span>
+                            </div>
                         )}
 
                         {isPast && classItem?.class_recording && (
@@ -231,17 +252,20 @@ export function BatchClassCard({ classItem, userEmail, onRefresh }: BatchClassCa
                             </a>
                         )}
 
-                        {hasRated ? (
-                            <Badge variant="outline" className="bg-amber-50 text-amber-800 border-amber-200 text-xs py-1 px-2.5 flex items-center gap-1 h-8">
-                                <Star className="w-3.5 h-3.5 fill-amber-400 text-amber-400" />
-                                Rated
-                            </Badge>
-                        ) : (
-                            <RateClassDialog
-                                classItem={classItem}
-                                userEmail={userEmail}
-                                onRatingSubmitted={onRefresh}
-                            />
+                        {/* Rating: Only allowed during or after the class */}
+                        {!isUpcoming && (
+                            hasRated ? (
+                                <Badge variant="outline" className="bg-amber-50 text-amber-800 border-amber-200 text-xs py-1 px-2.5 flex items-center gap-1 h-8">
+                                    <Star className="w-3.5 h-3.5 fill-amber-400 text-amber-400" />
+                                    Rated
+                                </Badge>
+                            ) : (
+                                <RateClassDialog
+                                    classItem={classItem}
+                                    userEmail={userEmail}
+                                    onRatingSubmitted={onRefresh}
+                                />
+                            )
                         )}
                     </div>
                 </div>

@@ -4,6 +4,7 @@ import supabase from "@/supabase";
 import { BookText, Briefcase, Rocket } from "lucide-react";
 import Link from "next/link";
 import { useState, useEffect } from "react";
+import { Skeleton } from "@/components/ui/skeleton";
 
 interface accouncementType {
     text: any;
@@ -13,6 +14,7 @@ interface accouncementType {
 
 export default function DashboardHeader() {
     const [user, setUser] = useState<any>(null)
+    const [loadingUser, setLoadingUser] = useState(true)
     const [announcement, setAnnouncement] = useState<accouncementType>({
         text: "We would greatly appreciate it if you could take a moment to visit our site and share your valuable feedback with us here.",
         link: "https://forms.gle/S5KKUyrUqi1WzZCJ6",
@@ -21,18 +23,15 @@ export default function DashboardHeader() {
     async function checkUser() {
         try {
             const { data, error } = await supabase.auth.getUser();
-            if (data) {
-                if (data.user) {
-                    setUser(data.user)
-                }
-                else {
-                    setUser(null)
-                }
+            if (data && data.user) {
+                setUser(data.user)
+            } else {
+                setUser(null)
             }
-            else {
-            }
-        }
-        catch {
+        } catch {
+            setUser(null)
+        } finally {
+            setLoadingUser(false)
         }
     }
     async function getAnnouncement() {
@@ -60,53 +59,116 @@ export default function DashboardHeader() {
         // getAnnouncement()
     }, [])
     return (
-        <header className="">
-            {/* {
-                announcement.text &&
-                <div id="sticky-banner" className="mb-5 flex justify-between w-full p-4 border border-gray-200 bg-gray-50 dark:bg-gray-700 dark:border-gray-600">
-                    <p className="flex items-center mx-auto text-sm font-normal text-gray-500 dark:text-gray-400">
-                        <span className="inline-flex p-1 me-3 bg-gray-200 rounded-full dark:bg-gray-600 w-6 h-6 items-center justify-center flex-shrink-0">
-                            <svg className="w-3 h-3 text-gray-500 dark:text-gray-400" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 18 19">
-                                <path d="M15 1.943v12.114a1 1 0 0 1-1.581.814L8 11V5l5.419-3.871A1 1 0 0 1 15 1.943ZM7 4H2a2 2 0 0 0-2 2v4a2 2 0 0 0 2 2v5a2 2 0 0 0 2 2h1a2 2 0 0 0 2-2V4ZM4 17v-5h1v5H4ZM16 5.183v5.634a2.984 2.984 0 0 0 0-5.634Z" />
-                            </svg>
-                            <span className="sr-only">Light bulb</span>
-                        </span>
-                        <span>{announcement.text} <a target="_blank" className="text-blue-600 underline" href={announcement.link}>{announcement.linkText}</a></span>
-                    </p>
-                </div>
-            } */}
-            <div className="bg-blue-50 mx-auto max-w-screen-xl px-4 py-8 sm:px-6 sm:py-12 lg:px-8">
-                <div className="sm:flex sm:items-center sm:justify-between">
-                    <div className="text-center sm:text-left">
-                        <h1 className="text-2xl font-bold text-gray-900 sm:text-3xl">
-                            {
-                                user?.user_metadata?.full_name ?
-                                    <>Welcome, {user?.user_metadata?.full_name}!</>
-                                    : <>Welcome to coding75!</>
-                            }
+        <header className="mb-6">
+            <div className="relative overflow-hidden bg-gradient-to-br from-card via-card to-primary/5 border border-border/80 rounded-2xl p-6 sm:p-7 shadow-xs">
+                {/* Subtle top accent gradient */}
+                <div className="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-blue-600 via-indigo-500 to-purple-500" />
+                
+                <div className="space-y-5">
+                    {/* Header Title & Subtitle */}
+                    <div className="space-y-2 max-w-3xl">
+                        <h1 className="text-xl sm:text-2xl lg:text-3xl font-bold tracking-tight text-foreground min-h-[36px] flex items-center">
+                            {loadingUser ? (
+                                <span className="inline-flex items-center gap-2">
+                                    <span>Welcome back,</span>
+                                    <Skeleton className="h-7 w-36 sm:w-44 rounded-lg inline-block align-middle" />
+                                </span>
+                            ) : user?.user_metadata?.full_name ? (
+                                <>
+                                    Welcome back,{" "}
+                                    <span className="text-blue-600 dark:text-blue-400 font-extrabold ml-1.5">
+                                        {user.user_metadata.full_name}
+                                    </span>{" "}
+                                    👋
+                                </>
+                            ) : (
+                                <>
+                                    Welcome to{" "}
+                                    <span className="text-blue-600 dark:text-blue-400 font-extrabold ml-1.5">
+                                        coding75
+                                    </span>{" "}
+                                    🚀
+                                </>
+                            )}
                         </h1>
-
-                        <p className="mt-1.5 text-sm text-gray-500">Let&apos;s start today&apos;s learning, Happy Coding! 🚀</p>
+                        <p className="text-xs sm:text-sm text-muted-foreground leading-relaxed">
+                            Master Data Structures & Algorithms, solve contest problems with video editorials, build production-grade systems, and crack top-tier technical interviews.
+                        </p>
                     </div>
 
-                    <div className="mt-4 flex flex-col gap-4 sm:mt-0 sm:flex-row sm:items-center">
-                        <div className='hover:animate-background rounded-xl bg-gradient-to-r from-green-300 via-blue-500 to-purple-600 p-0.5 shadow-xl transition hover:bg-[length:400%_400%] hover:shadow-sm hover:[animation-duration:_4s]'>
-                            <Link href="/pro" className=" w-full bg-white inline-flex items-center justify-center px-4 py-2 text-base font-medium text-center text-gray-900 border border-gray-300 rounded-lg hover:bg-gray-100 focus:ring-4 focus:ring-gray-100 dark:text-white dark:border-gray-700 dark:hover:bg-gray-700 dark:focus:ring-gray-800">
-                                Coding75 Pro
-                                <Rocket className="ml-2 -mr-1 w-5 h-5" />
-                            </Link>
-                        </div>
-
+                    {/* Premium Action Cards directly below title */}
+                    <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 pt-1">
+                        {/* 1. Explore DSA */}
                         <Link
-                            href="/opportunities"
-                            className="text-center justify-center flex items-center rounded-lg bg-primary-600 px-5 py-3 text-sm font-medium text-white transition hover:bg-primary-700 focus:outline-none focus:ring"
+                            href="/dsa"
+                            className="group relative overflow-hidden flex items-center justify-between p-3.5 sm:p-4 rounded-xl border border-border/80 bg-background/80 hover:bg-muted/70 hover:border-amber-500/40 dark:hover:border-amber-500/40 transition-all duration-200 shadow-2xs hover:shadow-sm"
                         >
-                            Find Internships
-                            <Briefcase className="ml-2 -mr-1 w-5 h-5" />
+                            <div className="flex items-center gap-3">
+                                <div className="w-10 h-10 rounded-xl bg-amber-500/15 text-amber-600 dark:text-amber-400 border border-amber-500/25 flex items-center justify-center shrink-0 group-hover:scale-105 transition-transform">
+                                    <BookText className="w-5 h-5" />
+                                </div>
+                                <div className="text-left">
+                                    <div className="text-sm font-bold text-foreground group-hover:text-amber-600 dark:group-hover:text-amber-400 transition-colors">
+                                        Explore DSA
+                                    </div>
+                                    <div className="text-[11px] text-muted-foreground">
+                                        Roadmaps & Concepts
+                                    </div>
+                                </div>
+                            </div>
+                            <span className="text-xs font-semibold text-muted-foreground group-hover:text-foreground transition-colors shrink-0 ml-2">
+                                →
+                            </span>
+                        </Link>
+
+                        {/* 2. Contest Discussions */}
+                        <Link
+                            href="/contests"
+                            className="group relative overflow-hidden flex items-center justify-between p-3.5 sm:p-4 rounded-xl border border-border/80 bg-background/80 hover:bg-muted/70 hover:border-blue-500/40 dark:hover:border-blue-500/40 transition-all duration-200 shadow-2xs hover:shadow-sm"
+                        >
+                            <div className="flex items-center gap-3">
+                                <div className="w-10 h-10 rounded-xl bg-blue-500/15 text-blue-600 dark:text-blue-400 border border-blue-500/25 flex items-center justify-center shrink-0 group-hover:scale-105 transition-transform">
+                                    <Rocket className="w-5 h-5" />
+                                </div>
+                                <div className="text-left">
+                                    <div className="text-sm font-bold text-foreground group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors">
+                                        Contest Discussions
+                                    </div>
+                                    <div className="text-[11px] text-muted-foreground">
+                                        Editorials & Solutions
+                                    </div>
+                                </div>
+                            </div>
+                            <span className="text-xs font-semibold text-muted-foreground group-hover:text-foreground transition-colors shrink-0 ml-2">
+                                →
+                            </span>
+                        </Link>
+
+                        {/* 3. Masterclasses */}
+                        <Link
+                            href="/masterclasses"
+                            className="group relative overflow-hidden flex items-center justify-between p-3.5 sm:p-4 rounded-xl border border-border/80 bg-background/80 hover:bg-muted/70 hover:border-purple-500/40 dark:hover:border-purple-500/40 transition-all duration-200 shadow-2xs hover:shadow-sm"
+                        >
+                            <div className="flex items-center gap-3">
+                                <div className="w-10 h-10 rounded-xl bg-purple-500/15 text-purple-600 dark:text-purple-400 border border-purple-500/25 flex items-center justify-center shrink-0 group-hover:scale-105 transition-transform">
+                                    <Briefcase className="w-5 h-5" />
+                                </div>
+                                <div className="text-left">
+                                    <div className="text-sm font-bold text-foreground group-hover:text-purple-600 dark:group-hover:text-purple-400 transition-colors">
+                                        Masterclasses
+                                    </div>
+                                    <div className="text-[11px] text-muted-foreground">
+                                        Industry Mentorship
+                                    </div>
+                                </div>
+                            </div>
+                            <span className="text-xs font-semibold text-muted-foreground group-hover:text-foreground transition-colors shrink-0 ml-2">
+                                →
+                            </span>
                         </Link>
                     </div>
                 </div>
             </div>
         </header>
-    )
+    );
 }

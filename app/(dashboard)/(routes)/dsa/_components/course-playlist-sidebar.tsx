@@ -178,7 +178,7 @@ export const CoursePlaylistSidebar: React.FC<CoursePlaylistSidebarProps> = ({
     if (item.type === "video") {
       router.push(`/video/${encodeURIComponent(targetId)}${q}`);
     } else if (item.type === "problem") {
-      router.push(`/problem/${encodeURIComponent(targetId)}${q}`);
+      router.push(`/dsa/problem/${encodeURIComponent(targetId)}${q}`);
     } else if (item.problem_url || item.solution_url) {
       window.open(item.problem_url || item.solution_url, "_blank");
     }

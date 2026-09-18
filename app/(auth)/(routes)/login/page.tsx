@@ -8,12 +8,13 @@ import { Logo } from "@/app/(dashboard)/_components/components/logo";
 import Link from "next/link";
 import loginPic from "../../../../public/images/login.jpg"
 import Image from "next/image";
+import { getValidSession } from "@/lib/auth-client";
 
 const LogIn = () => {
     const router = useRouter()
     async function checkUser() {
         try {
-            const { data: { session } } = await supabase.auth.getSession();
+            const session = await getValidSession();
             if (session?.user) {
                 const res = await fetch("/api/profile", {
                     headers: {
@@ -34,26 +35,38 @@ const LogIn = () => {
         }
     }
     useEffect(() => {
-        checkUser()
+        checkUser();
 
+        const { data: { subscription } } = supabase.auth.onAuthStateChange((event, session) => {
+            if (session?.user) {
+                checkUser();
+            }
+        });
+
+        return () => {
+            subscription?.unsubscribe();
+        };
     }, [])
 
     async function handleLogIn(e: any) {
         e.preventDefault();
         try {
-            const { data, error } = await supabase.auth.signInWithOAuth({
+            const redirectUrl = typeof window !== "undefined"
+                ? `${window.location.origin}/login/callback`
+                : undefined;
+
+            await supabase.auth.signInWithOAuth({
                 provider: 'google',
                 options: {
+                    redirectTo: redirectUrl,
                     queryParams: {
-                        access_type: 'offline',
-                        prompt: 'consent',
+                        prompt: 'select_account',
                     },
                 }
-            },
-            )
+            });
         }
-        catch {
-
+        catch (err) {
+            console.error("Google sign in error:", err);
         }
     }
     return (

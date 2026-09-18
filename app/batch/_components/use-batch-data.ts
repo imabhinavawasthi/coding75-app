@@ -3,6 +3,7 @@
 import { useEffect, useState, useCallback } from "react";
 import { useRouter, useParams } from "next/navigation";
 import supabase from "@/supabase";
+import { getValidSession } from "@/lib/auth-client";
 
 export function useBatchData() {
     const routeParams = useParams();
@@ -18,27 +19,36 @@ export function useBatchData() {
     const fetchBatchDetails = useCallback(async () => {
         if (!batchId) return;
         try {
-            const { data: { session }, error: sessionError } = await supabase.auth.getSession();
+            const session = await getValidSession();
 
-            if (sessionError || !session) {
+            if (!session) {
                 localStorage.setItem("loggedin_route", `/batch/${batchId}`);
                 router.replace("/login");
                 return;
             }
 
             const token = session.access_token;
-            const res = await fetch(`/api/batches/${batchId}`, {
+            let res = await fetch(`/api/batches/${batchId}`, {
                 headers: {
                     "Authorization": `Bearer ${token}`
                 }
             });
 
-            const data = await res.json();
-
             if (res.status === 401) {
-                router.replace("/login");
-                return;
+                const refreshed = await supabase.auth.refreshSession();
+                if (refreshed.data.session) {
+                    res = await fetch(`/api/batches/${batchId}`, {
+                        headers: {
+                            "Authorization": `Bearer ${refreshed.data.session.access_token}`
+                        }
+                    });
+                } else {
+                    router.replace("/login");
+                    return;
+                }
             }
+
+            const data = await res.json();
 
             if (res.status === 403) {
                 setStatus("unauthorized");

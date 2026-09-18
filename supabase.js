@@ -2,8 +2,15 @@
 
 import { createClient } from '@supabase/supabase-js'
 
-const supabaseUrl = 'https://zettllhfmtvcunctalyo.supabase.co'
+const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL || 'https://zettllhfmtvcunctalyo.supabase.co'
 const supabaseKey = process.env.NEXT_PUBLIC_SUPABASE_KEY
-const supabase = createClient(supabaseUrl, supabaseKey)
+const supabase = createClient(supabaseUrl, supabaseKey, {
+  auth: {
+    persistSession: true,
+    autoRefreshToken: true,
+    detectSessionInUrl: true,
+    storage: typeof window !== "undefined" ? window.localStorage : undefined,
+  },
+})
 
 export default supabase

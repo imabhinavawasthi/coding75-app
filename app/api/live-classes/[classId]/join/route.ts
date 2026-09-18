@@ -33,6 +33,23 @@ export async function POST(
         const currentStudentsJoined: string[] = Array.isArray(liveClass.students_joined) ? liveClass.students_joined : [];
         const currentAttendance: any[] = Array.isArray(liveClass.attendance) ? liveClass.attendance : [];
 
+        // Validate 15-minute joining window
+        const nowEpoch = Math.floor(Date.now() / 1000);
+        const classTimeEpoch = Number(
+            liveClass.class_time_epoch ||
+            (liveClass.class_time ? Math.floor(new Date(liveClass.class_time).getTime() / 1000) : 0)
+        );
+        const fifteenMinutesInSeconds = 15 * 60;
+
+        if (classTimeEpoch > 0) {
+            const isTooEarly = nowEpoch < (classTimeEpoch - fifteenMinutesInSeconds);
+            if (isTooEarly && !user.isAdmin) {
+                return NextResponse.json({
+                    error: 'Attendance can only be marked starting 15 minutes before the live class starts.',
+                }, { status: 400 });
+            }
+        }
+
         // Add to students_joined if not already present
         const userEmailLower = user.email.trim().toLowerCase();
         let updatedStudentsJoined = [...currentStudentsJoined];

@@ -49,6 +49,34 @@ export async function POST(
     }
 
     const supabase = getSupabaseServerClient(token);
+    
+    // Auth Check for User
+    let userId: string | undefined = undefined;
+    if (token) {
+      try {
+        const { data: { user } } = await supabase.auth.getUser(token);
+        userId = user?.id;
+      } catch (e) {
+        console.warn('Could not verify user token in batch-topic-details:', e);
+      }
+    }
+
+    // Fetch user states if user exists (status in DB is 'done')
+    const userStates: Record<string, boolean> = {};
+    if (userId) {
+      const { data: stateData } = await supabase
+        .from('user_asset_states')
+        .select('asset_id, status')
+        .eq('user_id', userId)
+        .eq('status', 'done');
+
+      if (stateData) {
+        for (const row of stateData) {
+          userStates[row.asset_id] = true;
+        }
+      }
+    }
+
     const isUUID = /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i.test(courseId);
 
     let query = supabase.from('courses').select('id, slug, curriculum');
@@ -61,11 +89,11 @@ export async function POST(
     let curriculum: any[] = [];
     let courseSlug = courseId;
 
-    const { data, error } = await query.maybeSingle();
+    const { data: courseData, error: courseError } = await query.maybeSingle();
 
-    if (!error && data && Array.isArray(data.curriculum) && data.curriculum.length > 0) {
-      curriculum = data.curriculum;
-      courseSlug = data.slug || courseId;
+    if (!courseError && courseData && Array.isArray(courseData.curriculum)) {
+      curriculum = courseData.curriculum;
+      courseSlug = courseData.slug || courseId;
     }
 
     const matched_topics: Record<string, any> = {};
@@ -75,11 +103,11 @@ export async function POST(
       const keywords = TOPIC_KEYWORDS[topic] || [cleanTopic];
       let matchedSec: any = null;
 
+      // Find matched section in course curriculum
       for (const sec of curriculum) {
         const cleanSecTitle = normalizeText(sec.title || '');
         const cleanSecId = normalizeText(sec.id || '');
 
-        // 1. Exact or keyword match on top-level section
         if (
           cleanTopic === cleanSecId ||
           cleanTopic === cleanSecTitle ||
@@ -91,7 +119,7 @@ export async function POST(
           break;
         }
 
-        // 2. Exact or keyword match on subsections
+        // Subsections match
         for (const sub of sec.subsections || []) {
           const cleanSubTitle = normalizeText(sub.title || '');
           const cleanSubId = normalizeText(sub.id || '');
@@ -115,11 +143,15 @@ export async function POST(
         if (matchedSec) break;
       }
 
-      if (matchedSec) {
+      const subsections = matchedSec?.subsections || [];
+      const totalCurriculumItems = (matchedSec?.items?.length || 0) + subsections.reduce((acc: number, sub: any) => acc + (sub.items?.length || 0), 0);
+
+      // Only topics present in the course with items are available; all others are upcoming
+      if (matchedSec && totalCurriculumItems > 0) {
         let videosCount = 0;
         let problemsCount = 0;
         let articlesCount = 0;
-        const subsections = matchedSec.subsections || [];
+        let completedItems = 0;
         const chaptersCount = subsections.length > 0 ? subsections.length : 1;
 
         const countItems = (items: any[]) => {
@@ -127,6 +159,15 @@ export async function POST(
             if (item.type === 'video') videosCount++;
             else if (item.type === 'problem') problemsCount++;
             else if (item.type === 'article') articlesCount++;
+            
+            const isDone = Boolean(
+              (item.asset_id && userStates[item.asset_id]) ||
+              (item.id && userStates[item.id]) ||
+              (item.slug && userStates[item.slug])
+            );
+            if (isDone) {
+              completedItems++;
+            }
           }
         };
 
@@ -146,9 +187,12 @@ export async function POST(
           videos_count: videosCount,
           problems_count: problemsCount,
           articles_count: articlesCount,
-          is_upcoming: itemsCount === 0,
+          completed_count: completedItems,
+          completion_percentage: itemsCount > 0 ? Math.round((completedItems / itemsCount) * 100) : 0,
+          is_upcoming: false,
         };
       } else {
+        // Not present in course curriculum => Upcoming
         matched_topics[topic] = {
           title: topic,
           found: false,
@@ -158,6 +202,8 @@ export async function POST(
           videos_count: 0,
           problems_count: 0,
           articles_count: 0,
+          completed_count: 0,
+          completion_percentage: 0,
           is_upcoming: true,
         };
       }

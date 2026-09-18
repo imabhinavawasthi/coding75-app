@@ -36,6 +36,7 @@ import { BatchUnauthorizedCard } from "../../../_components/batch-unauthorized-c
 import { useBatchData } from "../../../_components/use-batch-data";
 import ErrorBanner from "@/app/(dashboard)/_components/banners/error-banner";
 import supabase from "@/supabase";
+import { getValidAccessToken } from "@/lib/auth-client";
 import { toast } from "sonner";
 
 function formatISTTime(epochSeconds: number) {
@@ -213,8 +214,7 @@ export default function BatchLectureDetailPage() {
         if (hasAttended) return;
         setMarkingAttendance(true);
         try {
-            const { data: sessionData } = await supabase.auth.getSession();
-            const token = sessionData?.session?.access_token;
+            const token = await getValidAccessToken();
             const identifier = currentClass.id || currentClass.class_url_slug;
 
             const res = await fetch(`/api/live-classes/${identifier}/join`, {

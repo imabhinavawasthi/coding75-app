@@ -5,6 +5,7 @@ import React, { useEffect, useState } from 'react';
 import Link from 'next/link';
 import { BadgePercent, BookMarked, BookText, Flame, GraduationCap, Lightbulb, ListVideo, LogIn, LogOut, MessageCircle, Route, User, Users } from 'lucide-react';
 import supabase from '@/supabase';
+import { getValidUser } from '@/lib/auth-client';
 import { toast } from 'sonner';
 import { Skeleton } from '../../../components/ui/skeleton';
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuSeparator, DropdownMenuTrigger } from '../../../components/ui/dropdown-menu';
@@ -67,28 +68,26 @@ export default function CommunityHeader() {
 
     async function checkUser() {
         try {
-            const { data, error } = await supabase.auth.getUser();
-            if (data) {
-                if (data.user) {
-                    setUser(data.user)
-                }
-                else {
-                    setUser(null)
-                }
-            }
-            else {
-                console.error(error);
-                toast.error('Error! Something went wrong.')
-            }
+            const validUser = await getValidUser();
+            setUser(validUser || null);
         }
         catch {
-            toast.error('Error! Something went wrong.')
+            setUser(null);
         }
-        setStatus("done")
+        setStatus("done");
     }
     useEffect(() => {
-        checkUser()
-        getLaunchDate()
+        checkUser();
+        getLaunchDate();
+
+        const { data: authListener } = supabase.auth.onAuthStateChange((event, session) => {
+            setUser(session?.user || null);
+            setStatus("done");
+        });
+
+        return () => {
+            authListener.subscription.unsubscribe();
+        };
     }, [])
 
     return (

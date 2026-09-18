@@ -155,7 +155,7 @@ export const ItemSlideDrawer: React.FC<ItemSlideDrawerProps> = ({
 
   const fullPageUrl = isVideo
     ? `/video/${encodeURIComponent(targetAssetId)}${topicSlug ? `?topic=${topicSlug}` : ""}`
-    : `/problem/${encodeURIComponent(targetAssetId)}${topicSlug ? `?topic=${topicSlug}` : ""}`;
+    : `/dsa/problem/${encodeURIComponent(targetAssetId)}${topicSlug ? `?topic=${topicSlug}` : ""}`;
 
   const handleOpenFullPage = () => {
     onClose();

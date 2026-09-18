@@ -32,7 +32,9 @@ import {
   ChevronsRight,
   Loader2,
   Flame,
+  Layers,
 } from "lucide-react";
+import PremiumPageHeader from "@/components/page-headers/premium-page-header";
 import { Card, CardHeader, CardTitle, CardDescription, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
@@ -375,65 +377,52 @@ export function ContestsHubClient({ initialProblems, stats }: ContestsHubClientP
 
   return (
     <div className="p-4 sm:p-6 max-w-7xl mx-auto space-y-6">
-      {/* Top Banner Header - Compact & Sleek */}
-      <div className="relative overflow-hidden rounded-2xl border border-border/80 bg-gradient-to-br from-card via-card/90 to-primary/5 p-4 sm:p-5 shadow-xs">
-        {/* Ambient background glow accents */}
-        <div className="absolute -right-16 -top-16 w-60 h-60 rounded-full bg-primary/10 blur-3xl pointer-events-none" />
-        <div className="absolute -left-16 -bottom-16 w-60 h-60 rounded-full bg-amber-500/5 blur-3xl pointer-events-none" />
-
-        <div className="relative z-10 flex flex-col md:flex-row md:items-center justify-between gap-4">
-          <div className="space-y-1.5 max-w-2xl">
-
-            <h1 className="text-xl sm:text-2xl font-black text-foreground tracking-tight">
-              Contest Problem Archive
-            </h1>
-
-            <p className="text-xs text-muted-foreground leading-normal">
-              Editorials, video walkthroughs, and official C++ solutions across LeetCode, Codeforces, and CodeChef rounds.
-            </p>
-
-            {/* Quick Actions in Header */}
-            <div className="flex items-center gap-2 pt-1 flex-wrap">
-              <Button asChild size="sm" className="h-8 px-3 text-xs font-bold gap-1.5 bg-gradient-to-r from-amber-500 to-orange-500 hover:from-amber-600 hover:to-orange-600 text-white shadow-2xs">
-                <Link href="/contests/leetcode-potd">
-                  <Flame className="w-3.5 h-3.5 fill-white" />
-                  <span>LeetCode Daily POTD</span>
-                  <ArrowRight className="w-3 h-3 ml-0.5" />
-                </Link>
-              </Button>
-              <Button asChild variant="outline" size="sm" className="h-8 px-3 text-xs font-semibold gap-1.5 bg-background/80 hover:bg-muted border-border">
-                <Link href="/dsa">
-                  <Code2 className="w-3.5 h-3.5 text-primary" />
-                  <span>DSA Course Catalog</span>
-                </Link>
-              </Button>
-            </div>
+      {/* Top Banner Header - Premium */}
+      <PremiumPageHeader
+        title={
+          <span>
+            Contest <span className="text-primary">Problem Archive</span>
+          </span>
+        }
+        subtitle="Editorials, video walkthroughs, and official C++ solutions across LeetCode, Codeforces, and CodeChef rounds."
+      >
+        <div className="flex flex-col items-center gap-4 w-full">
+          <div className="flex items-center justify-center gap-3 pt-1 flex-wrap w-full">
+            <Button asChild size="default" className="font-bold gap-1.5 bg-gradient-to-r from-amber-500 to-orange-500 hover:from-amber-600 hover:to-orange-600 text-white shadow-2xs rounded-xl">
+              <Link href="/contests/leetcode-potd">
+                <Flame className="w-4 h-4 fill-white" />
+                <span>LeetCode Daily POTD</span>
+                <ArrowRight className="w-3.5 h-3.5 ml-0.5" />
+              </Link>
+            </Button>
+            <Button asChild variant="outline" size="default" className="font-semibold gap-1.5 bg-background/80 hover:bg-muted border-border rounded-xl">
+              <Link href="/dsa">
+                <Code2 className="w-4 h-4 text-primary" />
+                <span>DSA Course Catalog</span>
+              </Link>
+            </Button>
+            <Button asChild variant="outline" size="default" className="font-semibold gap-1.5 bg-background/80 hover:bg-muted border-border rounded-xl">
+              <Link href="/dsa/sheets">
+                <Layers className="w-4 h-4 text-muted-foreground" />
+                <span>Practice Sheets</span>
+              </Link>
+            </Button>
           </div>
 
-          {/* Quick Stats Grid */}
-          <div className="flex flex-row md:flex-col gap-2 shrink-0">
-            <div className="flex items-center gap-2.5 px-3 py-1.5 rounded-xl bg-background/80 border border-border/80 text-xs shadow-2xs min-w-[140px]">
-              <div className="w-7 h-7 rounded-lg bg-primary/10 text-primary flex items-center justify-center shrink-0">
-                <Calendar className="w-3.5 h-3.5" />
-              </div>
-              <div className="leading-tight">
-                <p className="text-[10px] text-muted-foreground font-medium">Contests</p>
-                <p className="text-sm font-black text-foreground">{stats.totalContests}</p>
-              </div>
+          <div className="flex items-center justify-center gap-3 flex-wrap pt-1">
+            <div className="flex items-center gap-2 px-4 py-1.5 rounded-full bg-background/80 border border-border/80 text-xs font-semibold shadow-2xs">
+              <Calendar className="w-3.5 h-3.5 text-primary" />
+              <span className="text-foreground">{stats.totalContests}</span>
+              <span className="text-muted-foreground">Contests</span>
             </div>
-
-            <div className="flex items-center gap-2.5 px-3 py-1.5 rounded-xl bg-background/80 border border-border/80 text-xs shadow-2xs min-w-[140px]">
-              <div className="w-7 h-7 rounded-lg bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 flex items-center justify-center shrink-0">
-                <Code2 className="w-3.5 h-3.5" />
-              </div>
-              <div className="leading-tight">
-                <p className="text-[10px] text-muted-foreground font-medium">Problems</p>
-                <p className="text-sm font-black text-primary">{stats.totalProblems}</p>
-              </div>
+            <div className="flex items-center gap-2 px-4 py-1.5 rounded-full bg-background/80 border border-border/80 text-xs font-semibold shadow-2xs">
+              <Code2 className="w-3.5 h-3.5 text-emerald-500" />
+              <span className="text-foreground">{stats.totalProblems}</span>
+              <span className="text-muted-foreground">Problems</span>
             </div>
           </div>
         </div>
-      </div>
+      </PremiumPageHeader>
 
       {/* Featured Platform Cards */}
       <div className="space-y-3">

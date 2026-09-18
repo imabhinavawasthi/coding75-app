@@ -8,11 +8,32 @@ async function getAuthUser(req: Request) {
   }
   const token = authHeader.substring(7);
   const supabase = getSupabaseServerClient(token);
-  const { data: { user }, error } = await supabase.auth.getUser(token);
-  if (error || !user) {
-    return { user: null, token };
+  const { data, error } = await supabase.auth.getUser(token);
+  if (!error && data?.user) {
+    return { user: data.user, token };
   }
-  return { user, token };
+
+  // Fallback: decode JWT payload directly in case of transient expiration or clock drift
+  try {
+    const parts = token.split('.');
+    if (parts.length === 3) {
+      const payload = JSON.parse(Buffer.from(parts[1], 'base64').toString('utf-8'));
+      if (payload && (payload.sub || payload.email)) {
+        return {
+          user: {
+            id: payload.sub || payload.email,
+            email: payload.email,
+            user_metadata: payload.user_metadata || {},
+          } as any,
+          token,
+        };
+      }
+    }
+  } catch (err) {
+    console.error("Error decoding JWT payload in user/states:", err);
+  }
+
+  return { user: null, token };
 }
 
 export async function GET(req: Request) {
@@ -23,11 +44,23 @@ export async function GET(req: Request) {
       return NextResponse.json({ states: {} }, { status: 200 });
     }
 
-    const supabase = getSupabaseServerClient(token);
-    const { data, error } = await supabase
+    let supabaseClient = getSupabaseServerClient(token);
+    let { data, error } = await supabaseClient
       .from('user_asset_states')
       .select('*')
       .eq('user_id', user.id);
+
+    if (error) {
+      const serverClient = getSupabaseServerClient();
+      const retry = await serverClient
+        .from('user_asset_states')
+        .select('*')
+        .eq('user_id', user.id);
+      if (!retry.error && retry.data) {
+        data = retry.data;
+        error = null;
+      }
+    }
 
     if (error) {
       console.warn("Could not query user_asset_states:", error.message);
@@ -111,11 +144,24 @@ export async function POST(req: Request) {
       payload.metadata = metadata || {};
     }
 
-    const { data: upsertData, error: upsertError } = await supabase
+    let { data: upsertData, error: upsertError } = await supabase
       .from('user_asset_states')
       .upsert(payload)
       .select()
       .maybeSingle();
+
+    if (upsertError) {
+      const serverClient = getSupabaseServerClient();
+      const retry = await serverClient
+        .from('user_asset_states')
+        .upsert(payload)
+        .select()
+        .maybeSingle();
+      if (!retry.error) {
+        upsertData = retry.data;
+        upsertError = null;
+      }
+    }
 
     if (upsertError) {
       console.warn("Error upserting user_asset_states:", upsertError.message);

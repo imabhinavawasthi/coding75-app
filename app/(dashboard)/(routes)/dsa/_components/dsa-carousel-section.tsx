@@ -73,10 +73,11 @@ export function DSACarouselSection({
                 key={idx}
                 module={modules[0] || { id: "skeleton", title: "Loading...", category: "foundations", categoryLabel: "Foundations", description: "", icon: () => null, difficulty: "Beginner", topics: [] }}
                 isLoading
+                layout="carousel"
               />
             ))
           : modules.map((module) => (
-              <DSATopicCard key={module.id} module={module} />
+              <DSATopicCard key={module.id} module={module} layout="carousel" />
             ))}
       </div>
     </section>

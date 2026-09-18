@@ -3,6 +3,7 @@
 import { useEffect, useState } from "react";
 import LiveBlurPage from "./live-blur-page";
 import supabase from "@/supabase";
+import { getValidUser } from "@/lib/auth-client";
 import { toast } from "sonner";
 import { checkSubscription } from "../(api)/checkSubscription";
 import ErrorBanner from "@/app/(dashboard)/_components/banners/error-banner";
@@ -33,20 +34,19 @@ const SubscriptionCheck = ({
 
     async function getSubsDetails() {
         try {
-            const { data, error } = await supabase.auth.getUser();
-            if (error) {
-                setStatus("error")
-                toast.error("Some error occured")
+            const user = await getValidUser();
+            if (!user) {
+                setStatus("error");
             }
             else {
-                const res = await checkSubscription(data?.user?.email)
-                setSubscription(res)
-                setStatus("done")
+                const res = await checkSubscription(user.email);
+                setSubscription(res);
+                setStatus("done");
             }
         }
         catch {
-            setStatus("error")
-            toast.error("Some error occured")
+            setStatus("error");
+            toast.error("Some error occured");
         }
     }
 

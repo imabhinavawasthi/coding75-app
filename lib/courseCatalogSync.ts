@@ -10,6 +10,8 @@ export interface BatchTopicDetailItem {
   videos_count: number;
   problems_count: number;
   articles_count: number;
+  completed_count?: number;
+  completion_percentage?: number;
   is_upcoming: boolean;
 }
 
@@ -104,6 +106,7 @@ export function hydrateModulesWithBatchResponse(
       itemsCount: matched.items_count,
       lessonCount: matched.videos_count,
       problemCount: matched.problems_count,
+      progressPercent: matched.completion_percentage || 0,
       isUpcoming: false,
       topics: Array.from(new Set([...dynamicTopics, ...module.topics.slice(0, 2)])),
     };

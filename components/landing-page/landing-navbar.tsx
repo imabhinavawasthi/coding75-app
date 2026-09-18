@@ -13,6 +13,7 @@ import React, { useEffect, useState } from 'react';
 import Link from 'next/link';
 import { BookMarked, LogIn, LogOut, User } from 'lucide-react';
 import supabase from '@/supabase';
+import { getValidSession } from '@/lib/auth-client';
 import { toast } from 'sonner';
 import { Skeleton } from '../ui/skeleton';
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuSeparator, DropdownMenuTrigger } from '../ui/dropdown-menu';
@@ -121,7 +122,7 @@ const LandingPageNavbar = () => {
                 toast.error('Error! Something went wrong.')
             }
             else {
-                checkUser()
+                setUser(null)
                 toast.error('You are Logged Out!')
             }
         }
@@ -130,29 +131,37 @@ const LandingPageNavbar = () => {
         }
     }
 
-    async function checkUser() {
-        try {
-            const { data, error } = await supabase.auth.getUser();
-            if (data) {
-                if (data.user) {
-                    setUser(data.user)
-                }
-                else {
-                    setUser(null)
-                }
-            }
-            else {
-                console.error(error);
-                toast.error('Error! Something went wrong.')
-            }
-        }
-        catch {
-            toast.error('Error! Something went wrong.')
-        }
-        setStatus("done")
-    }
     useEffect(() => {
-        checkUser()
+        let isMounted = true;
+
+        async function initUser() {
+            try {
+                const session = await getValidSession();
+                if (isMounted) {
+                    setUser(session?.user ?? null);
+                    setStatus("done");
+                }
+            } catch {
+                if (isMounted) {
+                    setUser(null);
+                    setStatus("done");
+                }
+            }
+        }
+
+        initUser();
+
+        const { data: { subscription } } = supabase.auth.onAuthStateChange((event, session) => {
+            if (isMounted) {
+                setUser(session?.user ?? null);
+                setStatus("done");
+            }
+        });
+
+        return () => {
+            isMounted = false;
+            subscription?.unsubscribe();
+        };
     }, [])
     return (
         <div>

@@ -16,6 +16,7 @@ import { Textarea } from "@/components/ui/textarea";
 import { Label } from "@/components/ui/label";
 import { toast } from "sonner";
 import supabase from "@/supabase";
+import { getValidAccessToken } from "@/lib/auth-client";
 
 interface RateClassDialogProps {
     classItem: any;
@@ -39,15 +40,24 @@ export function RateClassDialog({ classItem, userEmail, onRatingSubmitted, trigg
         )
     );
 
-    if (hasRated) {
+    const nowEpoch = Math.floor(Date.now() / 1000);
+    const classTimeEpoch = Number(classItem?.class_time_epoch || 0);
+    const isUpcoming = classTimeEpoch ? nowEpoch < classTimeEpoch : false;
+
+    if (hasRated || isUpcoming) {
         return null;
     }
 
     const handleSubmit = async () => {
+        const currentNow = Math.floor(Date.now() / 1000);
+        if (classTimeEpoch && currentNow < classTimeEpoch) {
+            toast.error("Ratings can only be submitted during or after the class.");
+            return;
+        }
+
         setSubmitting(true);
         try {
-            const { data: sessionData } = await supabase.auth.getSession();
-            const token = sessionData?.session?.access_token;
+            const token = await getValidAccessToken();
 
             const identifier = classItem?.id || classItem?.class_url_slug;
             const res = await fetch(`/api/live-classes/${identifier}/rate`, {

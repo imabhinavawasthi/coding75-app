@@ -3,6 +3,7 @@
 import { useEffect, useState } from "react";
 import LandingPage from "../../components/landing-page/landing-page";
 import supabase from "@/supabase";
+import { getValidSession } from "@/lib/auth-client";
 import { useRouter } from 'next/navigation'
 import { Loader2 } from "lucide-react";
 import { Logo } from "./_components/components/logo";
@@ -27,7 +28,7 @@ const Home = () => {
   useEffect(() => {
     async function init() {
       try {
-        const { data: { session } } = await supabase.auth.getSession();
+        const session = await getValidSession();
         if (session?.user) {
           const res = await fetch("/api/profile", {
             headers: {

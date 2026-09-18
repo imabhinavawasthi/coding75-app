@@ -32,8 +32,8 @@ export async function POST(
 
         const supabase = getSupabaseServerClient();
 
-        // Fetch current class ratings
-        let query = supabase.from('live-classes').select('id, class_url_slug, ratings, average_ratings');
+        // Fetch current class ratings and schedule time
+        let query = supabase.from('live-classes').select('id, class_url_slug, ratings, average_ratings, class_time_epoch, class_time');
         if (/^[0-9a-fA-F-]{36}$/.test(classId) || /^\d+$/.test(classId)) {
             query = query.eq('id', classId);
         } else {
@@ -44,6 +44,18 @@ export async function POST(
 
         if (fetchError || !liveClass) {
             return NextResponse.json({ error: 'Live class not found' }, { status: 404 });
+        }
+
+        // Non-admins can only rate during or after the class
+        if (!user.isAdmin) {
+            const nowEpoch = Math.floor(Date.now() / 1000);
+            const classTimeEpoch = Number(liveClass.class_time_epoch) || (liveClass.class_time ? Math.floor(new Date(liveClass.class_time).getTime() / 1000) : 0);
+            if (classTimeEpoch && nowEpoch < classTimeEpoch) {
+                return NextResponse.json(
+                    { error: 'Ratings can only be submitted during or after the class.' },
+                    { status: 400 }
+                );
+            }
         }
 
         const currentRatings = liveClass.ratings || {

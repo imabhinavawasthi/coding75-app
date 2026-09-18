@@ -1,6 +1,7 @@
 import { CourseSummary, CourseSection, VideoLecture, PracticeProblem } from "@/types/course";
 import { BatchTopicResponse } from "./courseCatalogSync";
 import supabase from "@/supabase";
+import { getValidAccessToken } from "./auth-client";
 
 /**
  * Target course ID for the production DSA portal.
@@ -8,15 +9,15 @@ import supabase from "@/supabase";
 export const TARGET_DSA_COURSE_ID = "54b8ebac-66f4-498a-9b94-66a149866d3e";
 
 /**
- * Shared helper — builds auth headers if a token exists.
+ * Shared helper — builds auth headers with guaranteed valid access token.
  */
 async function getAuthHeaders(): Promise<Record<string, string>> {
   const headers: Record<string, string> = {};
   if (typeof window !== "undefined") {
     try {
-      const { data: { session } } = await supabase.auth.getSession();
-      if (session?.access_token) {
-        headers["Authorization"] = `Bearer ${session.access_token}`;
+      const token = await getValidAccessToken();
+      if (token) {
+        headers["Authorization"] = `Bearer ${token}`;
       }
     } catch {}
   }

@@ -53,6 +53,21 @@ const nextConfig = {
                 destination: '/contests/leetcode',
                 permanent: false,
             },
+            {
+                source: '/dsa-cp/sheets',
+                destination: '/dsa/sheets',
+                permanent: false,
+            },
+            {
+                source: '/dsa-cp/sheets/:sheet*',
+                destination: '/dsa/sheets/:sheet*',
+                permanent: false,
+            },
+            {
+                source: '/problem/:slug*',
+                destination: '/dsa/problem/:slug*',
+                permanent: false,
+            },
         ];
     },
     webpack: (config) => {

@@ -16,6 +16,7 @@ import {
 import { useEffect, useState } from "react";
 import { fetchSubscriptionDetails } from "../../(api)/fetchSubscriptionDetails";
 import supabase from "@/supabase";
+import { getValidUser } from "@/lib/auth-client";
 import TextBox from "../../(components)/text-box";
 import ErrorBanner from "@/app/(dashboard)/_components/banners/error-banner";
 import { GraduationCap, Rocket, RotateCw } from "lucide-react";
@@ -25,30 +26,26 @@ import { pro_feedback_form } from "@/components/social-links";
 
 const SubscriptionDetailsPage = () => {
 
-    const [subscription, setSubscription] = useState<any>(null)
     const [user, setUser] = useState<any>(null)
+    const [subscription, setSubscription] = useState<any>(null)
     const [status, setStatus] = useState("loading")
     const [launchDate, setLaunchDate] = useState<any>()
     const [subscriptionType, setSubscriptionType] = useState("Monthly")
 
     async function checkUser() {
         try {
-            const { data, error } = await supabase.auth.getUser();
-            if (data) {
-                if (data.user) {
-                    setUser(data.user)
-                    fetchSubscription(data?.user?.email)
-                }
-                else {
-                    setStatus("error")
-                    setUser(null)
-                }
+            const validUser = await getValidUser();
+            if (validUser) {
+                setUser(validUser);
+                fetchSubscription(validUser.email);
             }
             else {
-                setStatus("error")
+                setStatus("error");
+                setUser(null);
             }
         }
         catch {
+            setStatus("error");
         }
     }
 

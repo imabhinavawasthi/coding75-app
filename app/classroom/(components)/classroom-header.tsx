@@ -1,5 +1,6 @@
 import { pro_feedback_form } from "@/components/social-links";
 import supabase from "@/supabase";
+import { getValidUser } from "@/lib/auth-client";
 import { MessageCircle, Rocket } from "lucide-react";
 import Link from "next/link";
 import { useEffect, useState } from "react";
@@ -9,24 +10,22 @@ const ClassroomHeader = () => {
 
     async function checkUser() {
         try {
-            const { data, error } = await supabase.auth.getUser();
-            if (data) {
-                if (data.user) {
-                    setUser(data.user)
-                }
-                else {
-                    setUser(null)
-                }
-            }
-            else {
-            }
+            const validUser = await getValidUser();
+            setUser(validUser || null);
         }
         catch {
+            setUser(null);
         }
     }
 
     useEffect(() => {
-        checkUser()
+        checkUser();
+        const { data: authListener } = supabase.auth.onAuthStateChange((event, session) => {
+            setUser(session?.user || null);
+        });
+        return () => {
+            authListener.subscription.unsubscribe();
+        };
     }, [])
 
     return (

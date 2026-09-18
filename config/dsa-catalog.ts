@@ -93,10 +93,14 @@ export const TOPIC_CSS_GRADIENTS = [
   "linear-gradient(135deg, #0d9488, #0891b2, #1d4ed8)",
 ];
 
-export function getTopicGradient(module: DSATopicModule, index: number = 0): string {
+export function getGradientForTopic(module: DSATopicModule, index: number = 0): string {
   if (module.gradient) return module.gradient;
   const hash = module.id.split("").reduce((acc, char) => acc + char.charCodeAt(0), 0);
   return TOPIC_GRADIENTS[(hash + index) % TOPIC_GRADIENTS.length];
+}
+
+export function getTopicGradient(module: DSATopicModule, index: number = 0): string {
+  return getGradientForTopic(module, index);
 }
 
 export function getTopicGradientStyle(module: DSATopicModule, index: number = 0): string {

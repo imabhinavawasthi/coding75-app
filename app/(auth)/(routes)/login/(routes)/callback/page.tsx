@@ -9,16 +9,13 @@ const CallBack = () => {
     const router = useRouter();
 
     useEffect(() => {
-        async function handleAuthCallback() {
+        let hasHandled = false;
+
+        async function processSession(session: any) {
+            if (hasHandled) return;
+            hasHandled = true;
+
             try {
-                // Wait briefly for supabase session exchange
-                const { data: { session }, error: sessionError } = await supabase.auth.getSession();
-
-                if (sessionError || !session) {
-                    router.push("/login");
-                    return;
-                }
-
                 // Check if user has already completed onboarding
                 const res = await fetch("/api/profile", {
                     headers: {
@@ -46,6 +43,36 @@ const CallBack = () => {
             } catch (err) {
                 console.error("Auth callback error:", err);
                 router.push("/");
+            }
+        }
+
+        async function handleAuthCallback() {
+            try {
+                const { data: { session } } = await supabase.auth.getSession();
+                if (session) {
+                    processSession(session);
+                    return;
+                }
+
+                const { data: authListener } = supabase.auth.onAuthStateChange((event, session) => {
+                    if (session && (event === "SIGNED_IN" || event === "INITIAL_SESSION")) {
+                        processSession(session);
+                    }
+                });
+
+                const timeout = setTimeout(() => {
+                    if (!hasHandled) {
+                        router.push("/login");
+                    }
+                }, 4000);
+
+                return () => {
+                    clearTimeout(timeout);
+                    authListener?.subscription?.unsubscribe();
+                };
+            } catch (err) {
+                console.error("Auth callback error:", err);
+                router.push("/login");
             }
         }
 

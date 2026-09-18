@@ -4,10 +4,13 @@ import React from "react";
 import Link from "next/link";
 import { Play, Lock, Clock } from "lucide-react";
 import { DSATopicModule, getTopicGradient, getTopicGradientStyle } from "@/config/dsa-catalog";
+import { cn } from "@/lib/utils";
 
 interface DSATopicCardProps {
   module: DSATopicModule;
   isLoading?: boolean;
+  className?: string;
+  layout?: "grid" | "carousel";
 }
 
 // Unique SVG background graphics for each topic module
@@ -252,10 +255,23 @@ function CardBackgroundGraphic({ id }: { id: string }) {
   }
 }
 
-export function DSATopicCard({ module, isLoading }: DSATopicCardProps) {
+export function DSATopicCard({
+  module,
+  isLoading,
+  className,
+  layout = "grid",
+}: DSATopicCardProps) {
+  const isCarousel = layout === "carousel";
+
   if (isLoading) {
     return (
-      <div className="relative w-[280px] sm:w-[310px] overflow-hidden rounded-2xl border border-border bg-card shadow-xs flex flex-col shrink-0 animate-pulse">
+      <div
+        className={cn(
+          "relative overflow-hidden rounded-2xl border border-border bg-card shadow-xs flex flex-col justify-between animate-pulse",
+          isCarousel ? "w-[280px] sm:w-[310px] shrink-0" : "w-full h-full",
+          className
+        )}
+      >
         {/* Skeleton Top Banner */}
         <div className="relative h-[165px] p-5 flex flex-col justify-between bg-muted/70">
           <div className="h-3 w-24 bg-muted-foreground/30 rounded-full" />
@@ -269,7 +285,7 @@ export function DSATopicCard({ module, isLoading }: DSATopicCardProps) {
         <div className="absolute right-4 top-[141px] z-30 flex h-12 w-12 items-center justify-center rounded-full bg-muted-foreground/30 border-2 border-border" />
 
         {/* Skeleton Bottom Bar */}
-        <div className="px-5 pt-5 pb-4 bg-muted/40 flex items-center justify-between">
+        <div className="px-5 pt-5 pb-4 bg-muted/40 flex items-center justify-between mt-auto">
           <div className="flex items-center gap-5">
             <div className="space-y-1">
               <div className="h-4 w-8 bg-muted-foreground/20 rounded" />
@@ -293,11 +309,14 @@ export function DSATopicCard({ module, isLoading }: DSATopicCardProps) {
 
   const cardContent = (
     <div
-      className={`relative w-[280px] sm:w-[310px] overflow-hidden rounded-2xl border border-border bg-card shadow-xs flex flex-col transition-all duration-300 ${
+      className={cn(
+        "relative overflow-hidden rounded-2xl border border-border bg-card shadow-xs flex flex-col justify-between transition-all duration-300",
+        isCarousel ? "w-[280px] sm:w-[310px] shrink-0" : "w-full h-full",
         isUpcoming
           ? "opacity-90 cursor-not-allowed"
-          : "hover:shadow-xl hover:-translate-y-1.5 cursor-pointer"
-      }`}
+          : "hover:shadow-xl hover:-translate-y-1.5 cursor-pointer",
+        className
+      )}
     >
       {/* Top Banner with Gradient & Abstract Graphic */}
       <div
@@ -356,7 +375,7 @@ export function DSATopicCard({ module, isLoading }: DSATopicCardProps) {
       )}
 
       {/* Bottom Bar */}
-      <div className="px-5 pt-5 pb-4 bg-muted/30 flex items-center justify-between text-muted-foreground">
+      <div className="px-5 pt-5 pb-4 bg-muted/30 flex items-center justify-between text-muted-foreground mt-auto">
         {isUpcoming ? (
           <div className="flex items-center gap-2">
             <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-lg bg-amber-500/10 text-amber-600 dark:text-amber-400 border border-amber-500/20 text-[10px] font-black uppercase tracking-wider">
@@ -392,7 +411,7 @@ export function DSATopicCard({ module, isLoading }: DSATopicCardProps) {
           </div>
         )}
 
-        <div className="text-right">
+        <div className="flex flex-col items-end gap-1.5 min-w-[70px]">
           <span
             className={`text-xs font-black ${
               isUpcoming
@@ -402,6 +421,14 @@ export function DSATopicCard({ module, isLoading }: DSATopicCardProps) {
           >
             {isUpcoming ? "Upcoming" : `${module.progressPercent ?? 0}%`}
           </span>
+          {!isUpcoming && (
+            <div className="w-16 h-1.5 bg-muted rounded-full overflow-hidden">
+              <div
+                className="h-full bg-primary rounded-full transition-all duration-500"
+                style={{ width: `${Math.min(100, Math.max(0, module.progressPercent ?? 0))}%` }}
+              />
+            </div>
+          )}
         </div>
       </div>
     </div>
@@ -409,11 +436,18 @@ export function DSATopicCard({ module, isLoading }: DSATopicCardProps) {
 
   // If Upcoming -> disable navigation link entirely
   if (isUpcoming) {
-    return <div className="shrink-0">{cardContent}</div>;
+    return (
+      <div className={cn("h-full", isCarousel ? "w-[280px] sm:w-[310px] shrink-0" : "w-full")}>
+        {cardContent}
+      </div>
+    );
   }
 
   return (
-    <Link href={`/dsa/${module.id}`} className="block group shrink-0">
+    <Link
+      href={`/dsa/${module.id}`}
+      className={cn("block group h-full", isCarousel ? "w-[280px] sm:w-[310px] shrink-0" : "w-full")}
+    >
       {cardContent}
     </Link>
   );

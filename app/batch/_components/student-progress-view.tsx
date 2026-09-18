@@ -32,6 +32,7 @@ import { Label } from "@/components/ui/label";
 import { Badge } from "@/components/ui/badge";
 import { toast } from "sonner";
 import supabase from "@/supabase";
+import { getValidAccessToken } from "@/lib/auth-client";
 import { cleanCodingHandle, getPlatformProfileUrl } from "@/lib/profile-constants";
 import { BatchLoadingState } from "./batch-loading-state";
 import { BatchUnauthorizedCard } from "./batch-unauthorized-card";
@@ -122,8 +123,8 @@ export function StudentProgressView({ batchId, studentId }: StudentProgressViewP
     const loadSyncData = useCallback(async () => {
         try {
             setLoadingStats(true);
-            const { data: { session } } = await supabase.auth.getSession();
-            if (!session) return;
+            const token = await getValidAccessToken();
+            if (!token) return;
 
             let url = `/api/coding-profiles/sync?batchId=${encodeURIComponent(batchId)}`;
             if (studentId) {
@@ -132,7 +133,7 @@ export function StudentProgressView({ batchId, studentId }: StudentProgressViewP
 
             const res = await fetch(url, {
                 headers: {
-                    "Authorization": `Bearer ${session.access_token}`
+                    "Authorization": `Bearer ${token}`
                 }
             });
             const data = await res.json();
@@ -153,12 +154,12 @@ export function StudentProgressView({ batchId, studentId }: StudentProgressViewP
     // If current user, fetch profile to prefill edit form
     const fetchCurrentUserProfile = useCallback(async () => {
         try {
-            const { data: { session } } = await supabase.auth.getSession();
-            if (!session) return;
+            const token = await getValidAccessToken();
+            if (!token) return;
 
             const res = await fetch("/api/profile", {
                 headers: {
-                    "Authorization": `Bearer ${session.access_token}`
+                    "Authorization": `Bearer ${token}`
                 }
             });
 
@@ -193,14 +194,14 @@ export function StudentProgressView({ batchId, studentId }: StudentProgressViewP
     const handleManualSync = async () => {
         try {
             setIsSyncing(true);
-            const { data: { session } } = await supabase.auth.getSession();
-            if (!session) return;
+            const token = await getValidAccessToken();
+            if (!token) return;
 
             const res = await fetch("/api/coding-profiles/sync", {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json",
-                    "Authorization": `Bearer ${session.access_token}`
+                    "Authorization": `Bearer ${token}`
                 },
                 body: JSON.stringify({
                     force: true,
@@ -238,8 +239,8 @@ export function StudentProgressView({ batchId, studentId }: StudentProgressViewP
 
         setIsSavingHandles(true);
         try {
-            const { data: { session } } = await supabase.auth.getSession();
-            if (!session) {
+            const token = await getValidAccessToken();
+            if (!token) {
                 toast.error("Session expired. Please log in again.");
                 return;
             }
@@ -255,7 +256,7 @@ export function StudentProgressView({ batchId, studentId }: StudentProgressViewP
                 method: "PUT",
                 headers: {
                     "Content-Type": "application/json",
-                    "Authorization": `Bearer ${session.access_token}`
+                    "Authorization": `Bearer ${token}`
                 },
                 body: JSON.stringify({
                     social_links: updatedLinks
@@ -1083,12 +1084,12 @@ export function StudentProgressView({ batchId, studentId }: StudentProgressViewP
                                 </div>
 
                                 <div className="flex flex-col sm:flex-row md:flex-col items-stretch sm:items-center md:items-end gap-2.5 shrink-0 w-full sm:w-auto">
-                                    <Link href="/dsa-cp/sheets/expert-sheet" className="w-full sm:w-auto">
+                                    <Link href="/dsa/sheets/expert-sheet" className="w-full sm:w-auto">
                                         <Button className="w-full sm:w-auto bg-emerald-500 hover:bg-emerald-600 text-slate-950 font-bold text-xs h-10 gap-2 shadow-lg shadow-emerald-500/20">
                                             Start Solving Sheet <ArrowRight className="w-4 h-4" />
                                         </Button>
                                     </Link>
-                                    <Link href="/dsa-cp/sheets" className="w-full sm:w-auto">
+                                    <Link href="/dsa/sheets" className="w-full sm:w-auto">
                                         <Button variant="ghost" size="sm" className="w-full sm:w-auto text-xs text-slate-300 hover:text-white hover:bg-slate-800/60">
                                             Explore All Sheets
                                         </Button>

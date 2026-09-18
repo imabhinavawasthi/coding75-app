@@ -24,7 +24,7 @@ export const Navbar = ({ isLogo = false }: { isLogo?: boolean }) => {
   const isPotdActive = pathname?.startsWith("/contests/leetcode-potd");
   const isContestsActive = pathname?.startsWith("/contests") && !isPotdActive;
   const isDsaActive = pathname === "/dsa" || (pathname?.startsWith("/dsa") && !pathname?.startsWith("/dsa-cp"));
-  const isSheetsActive = pathname?.startsWith("/dsa-cp/sheets");
+  const isSheetsActive = pathname?.startsWith("/dsa/sheets");
 
   return (
     <header className="px-3 sm:px-4 border-b border-border/70 h-full flex items-center justify-between bg-card/90 backdrop-blur-md shadow-2xs relative">
@@ -118,7 +118,7 @@ export const Navbar = ({ isLogo = false }: { isLogo?: boolean }) => {
           </Link>
 
           <Link
-            href="/dsa-cp/sheets"
+            href="/dsa/sheets"
             className={cn(
               "h-8 px-2.5 rounded-lg text-xs font-medium inline-flex items-center gap-1.5 transition-colors hidden xl:inline-flex",
               isSheetsActive

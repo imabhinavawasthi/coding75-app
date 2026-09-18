@@ -24,7 +24,7 @@ export const MobileSidebar = () => {
         </button>
       </SheetTrigger>
       <SheetContent side="left" className="p-0 w-72 bg-card border-r border-border shadow-2xl z-50">
-        <Sidebar isMobile onItemClick={() => setMobileOpen(false)} />
+        <Sidebar isMobile className="w-full border-r-0" onItemClick={() => setMobileOpen(false)} />
       </SheetContent>
     </Sheet>
   );

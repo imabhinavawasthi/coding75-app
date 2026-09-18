@@ -4,6 +4,7 @@ import React, { useState, useEffect, useMemo } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import {
+  ArrowLeft,
   BarChart2,
   BookText,
   Briefcase,
@@ -86,21 +87,30 @@ const siteNavigation: (NavSubItem | NavGroup)[] = [
         icon: GraduationCap,
         label: "Learn DSA",
         href: "/dsa",
+        exact: true,
+      },
+      {
+        icon: GitFork,
+        label: "DSA Topic Tree",
+        href: "/dsa/topic-tree",
+        badge: "New 🚀",
       },
       {
         icon: Trophy,
         label: "Contest Solutions",
         href: "/contests",
+        badge: "Practice",
       },
       {
         icon: ListVideo,
         label: "Practice Sheets",
-        href: "/dsa-cp/sheets",
+        href: "/dsa/sheets",
       },
       {
         icon: Sparkles,
         label: "Masterclasses",
-        href: "/dsa#masterclasses",
+        href: "/masterclasses",
+        badge: "Live 👨🏻‍💻",
       },
     ],
   },
@@ -108,7 +118,6 @@ const siteNavigation: (NavSubItem | NavGroup)[] = [
     id: "interview-prep",
     title: "Interview Preparation",
     icon: UserCheck,
-    defaultOpen: true,
     color: "text-purple-600 dark:text-purple-400",
     badgeColor: "bg-purple-500/15 text-purple-600 dark:text-purple-400",
     items: [
@@ -140,10 +149,29 @@ const siteNavigation: (NavSubItem | NavGroup)[] = [
     ],
   },
   {
+    id: "live-batches",
+    title: "Live Batches",
+    icon: GraduationCap,
+    color: "text-blue-600 dark:text-blue-400",
+    badgeColor: "bg-blue-500/15 text-blue-600 dark:text-blue-400",
+    items: [
+      {
+        icon: GraduationCap,
+        label: "My Batches",
+        href: "/batch",
+        exact: true,
+      },
+      {
+        icon: Video,
+        label: "Live Classes",
+        href: "/batch/live-classes",
+      },
+    ],
+  },
+  {
     id: "job-applications",
     title: "Job Applications",
     icon: Briefcase,
-    defaultOpen: true,
     color: "text-emerald-600 dark:text-emerald-400",
     badgeColor: "bg-emerald-500/15 text-emerald-600 dark:text-emerald-400",
     items: [
@@ -206,7 +234,10 @@ export const SidebarRoutes = ({ isCollapsed = false, onItemClick }: SidebarRoute
   const isAdminPage = pathname?.startsWith("/admin");
   const isBatchPage = pathname?.startsWith("/batch");
 
-  const batchId = isBatchPage ? pathname?.split("/")[2] : null;
+  const rawBatchSegment = isBatchPage ? pathname?.split("/")[2] : null;
+  // If no segment or segment is "live-classes", it's a general batch route (show main sidebar)
+  const isGeneralBatchRoute = !rawBatchSegment || rawBatchSegment === "live-classes";
+  const batchId = isBatchPage && !isGeneralBatchRoute ? rawBatchSegment : null;
 
   const [batchType, setBatchType] = useState<string | null>(() => {
     if (typeof window !== "undefined" && batchId) {
@@ -232,6 +263,7 @@ export const SidebarRoutes = ({ isCollapsed = false, onItemClick }: SidebarRoute
   const batchRoutes: NavSubItem[] = useMemo(() => {
     if (!batchId) return [];
     return [
+      { icon: ArrowLeft, label: "All Batches", href: `/batch`, exact: true },
       { icon: LayoutDashboard, label: "Batch Dashboard", href: `/batch/${batchId}`, exact: true },
       ...(isDsaBatch
         ? [
@@ -247,14 +279,33 @@ export const SidebarRoutes = ({ isCollapsed = false, onItemClick }: SidebarRoute
     ];
   }, [batchId, isDsaBatch]);
 
-  // Submenu open states (accordion)
+  // Submenu open state: independent accordions (multiple can be open), "dsa-contests" open by default
   const [openGroups, setOpenGroups] = useState<Record<string, boolean>>({
     "dsa-contests": true,
-    "interview-prep": true,
-    "job-applications": true,
   });
 
-  // Automatically expand group if active pathname matches
+  // Collapsed mode hover state
+  const [hoveredGroupId, setHoveredGroupId] = useState<string | null>(null);
+  const hoverTimeoutRef = React.useRef<NodeJS.Timeout | null>(null);
+
+  const handleGroupMouseEnter = (id: string) => {
+    if (hoverTimeoutRef.current) clearTimeout(hoverTimeoutRef.current);
+    setHoveredGroupId(id);
+  };
+
+  const handleGroupMouseLeave = () => {
+    hoverTimeoutRef.current = setTimeout(() => {
+      setHoveredGroupId(null);
+    }, 150);
+  };
+
+  useEffect(() => {
+    return () => {
+      if (hoverTimeoutRef.current) clearTimeout(hoverTimeoutRef.current);
+    };
+  }, []);
+
+  // Automatically expand group if active pathname matches a child item
   useEffect(() => {
     siteNavigation.forEach((item) => {
       if ("items" in item) {
@@ -262,14 +313,20 @@ export const SidebarRoutes = ({ isCollapsed = false, onItemClick }: SidebarRoute
           (child) => pathname === child.href || pathname?.startsWith(`${child.href}/`)
         );
         if (hasActiveChild) {
-          setOpenGroups((prev) => ({ ...prev, [item.id]: true }));
+          setOpenGroups((prev) => {
+            if (prev[item.id]) return prev;
+            return { ...prev, [item.id]: true };
+          });
         }
       }
     });
   }, [pathname]);
 
   const toggleGroup = (id: string) => {
-    setOpenGroups((prev) => ({ ...prev, [id]: !prev[id] }));
+    setOpenGroups((prev) => ({
+      ...prev,
+      [id]: !prev[id],
+    }));
   };
 
   // Render Flat Routes for Admin, Classroom, Batch
@@ -330,19 +387,31 @@ export const SidebarRoutes = ({ isCollapsed = false, onItemClick }: SidebarRoute
 
         // Submenu Group (e.g. DSA & Contests, Career & Prep)
         const group = navItem as NavGroup;
-        const isOpen = openGroups[group.id] ?? group.defaultOpen ?? true;
+        const isOpen = !!openGroups[group.id];
         const hasActiveChild = group.items.some(
           (child) => pathname === child.href || pathname?.startsWith(`${child.href}/`)
         );
         const GroupIcon = group.icon;
 
-        // COLLAPSED MODE: Show Popover / Flyout menu on click/hover
+        // COLLAPSED MODE: Show Popover / Flyout menu on HOVER
         if (isCollapsed) {
+          const isMenuOpen = hoveredGroupId === group.id;
+
           return (
             <React.Fragment key={group.id}>
               {!isFirst && <div className="w-8 mx-auto my-1.5 border-t border-border/60" />}
-              <div className="w-full flex justify-center py-0.5">
-                <DropdownMenu>
+              <div
+                className="w-full flex justify-center py-0.5"
+                onMouseEnter={() => handleGroupMouseEnter(group.id)}
+                onMouseLeave={handleGroupMouseLeave}
+              >
+                <DropdownMenu
+                  open={isMenuOpen}
+                  onOpenChange={(open) => {
+                    if (!open) setHoveredGroupId(null);
+                  }}
+                  modal={false}
+                >
                   <DropdownMenuTrigger asChild>
                     <button
                       className={cn(
@@ -361,14 +430,23 @@ export const SidebarRoutes = ({ isCollapsed = false, onItemClick }: SidebarRoute
                       )}
                     </button>
                   </DropdownMenuTrigger>
-                  <DropdownMenuContent side="right" align="start" className="w-56 p-1.5 shadow-xl rounded-xl z-50">
+                  <DropdownMenuContent
+                    side="right"
+                    align="start"
+                    sideOffset={8}
+                    className="w-56 p-1.5 shadow-xl rounded-xl z-50 bg-popover border border-border"
+                    onMouseEnter={() => {
+                      if (hoverTimeoutRef.current) clearTimeout(hoverTimeoutRef.current);
+                    }}
+                    onMouseLeave={handleGroupMouseLeave}
+                  >
                     <DropdownMenuLabel className="text-xs font-bold text-muted-foreground uppercase tracking-wider px-2 py-1.5 flex items-center gap-2">
                       <div className={cn("w-5 h-5 rounded flex items-center justify-center", group.badgeColor)}>
                         <GroupIcon className="w-3.5 h-3.5" />
                       </div>
                       <span>{group.title}</span>
                     </DropdownMenuLabel>
-                    <DropdownMenuSeparator />
+                    <DropdownMenuSeparator className="my-1" />
                     {group.items.map((subItem) => {
                       const SubIcon = subItem.icon;
                       const isSubActive =
@@ -377,7 +455,10 @@ export const SidebarRoutes = ({ isCollapsed = false, onItemClick }: SidebarRoute
                         <DropdownMenuItem key={subItem.href} asChild className="p-0 rounded-lg">
                           <Link
                             href={subItem.href}
-                            onClick={onItemClick}
+                            onClick={() => {
+                              setHoveredGroupId(null);
+                              onItemClick?.();
+                            }}
                             className={cn(
                               "flex items-center justify-between w-full px-2.5 py-2 text-xs font-medium cursor-pointer rounded-lg transition-colors",
                               isSubActive
@@ -390,7 +471,7 @@ export const SidebarRoutes = ({ isCollapsed = false, onItemClick }: SidebarRoute
                               <span>{subItem.label}</span>
                             </div>
                             {subItem.badge && (
-                              <span className="text-[10px] font-bold px-1.5 py-0.2 rounded-full bg-amber-500/15 text-amber-600 dark:text-amber-400">
+                              <span className="text-[10px] font-bold px-1.5 py-0.5 rounded-full bg-primary/15 text-primary">
                                 {subItem.badge}
                               </span>
                             )}
@@ -410,7 +491,7 @@ export const SidebarRoutes = ({ isCollapsed = false, onItemClick }: SidebarRoute
           <React.Fragment key={group.id}>
             {!isFirst && <div className="my-1.5 mx-2 border-t border-border/50" />}
             <div className="pt-0.5">
-              {/* Submenu Accordion Header */}
+              {/* Clean Classic Submenu Accordion Header */}
               <button
                 onClick={() => toggleGroup(group.id)}
                 className={cn(
@@ -428,7 +509,7 @@ export const SidebarRoutes = ({ isCollapsed = false, onItemClick }: SidebarRoute
                     {group.title}
                   </span>
                 </div>
-                <div className="text-muted-foreground/50 group-hover:text-foreground p-0.5">
+                <div className="text-muted-foreground/60 group-hover:text-foreground p-0.5">
                   {isOpen ? (
                     <ChevronDown className="w-3.5 h-3.5 transition-transform duration-200" />
                   ) : (

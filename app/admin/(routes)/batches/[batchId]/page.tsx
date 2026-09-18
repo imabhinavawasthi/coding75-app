@@ -38,6 +38,7 @@ import { Badge } from "@/components/ui/badge";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { toast } from "sonner";
 import supabase from "@/supabase";
+import { getValidAccessToken } from "@/lib/auth-client";
 
 export default function EditBatchPage() {
     const routeParams = useParams();
@@ -77,8 +78,7 @@ export default function EditBatchPage() {
     async function loadBatchAndClasses() {
         setLoading(true);
         try {
-            const { data: { session } } = await supabase.auth.getSession();
-            const token = session?.access_token;
+            const token = await getValidAccessToken();
 
             // Fetch batch details
             const batchRes = await fetch(`/api/batches/${batchId}`, {
@@ -225,8 +225,7 @@ export default function EditBatchPage() {
 
         setSaving(true);
         try {
-            const { data: { session } } = await supabase.auth.getSession();
-            const token = session?.access_token;
+            const token = await getValidAccessToken();
 
             const notesObj: Record<string, string> = {};
             batchNotes.forEach(({ title, link }) => {
