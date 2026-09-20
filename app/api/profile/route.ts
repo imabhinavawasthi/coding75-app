@@ -16,7 +16,7 @@ export async function GET(req: Request) {
         // Fetch existing profile from users table
         let { data: profile, error } = await supabase
             .from('users')
-            .select('id, user_email, college, graduation_year, branch, social_links, metadata, created_at')
+            .select('id, user_email, college, graduation_year, branch, social_links, metadata, created_at, pro_subscription')
             .eq('user_email', user.email)
             .maybeSingle();
 
@@ -49,7 +49,7 @@ export async function GET(req: Request) {
                         avatar_url: user.user_metadata?.avatar_url || user.user_metadata?.picture || ''
                     }
                 })
-                .select('id, user_email, college, graduation_year, branch, social_links, metadata, created_at')
+                .select('id, user_email, college, graduation_year, branch, social_links, metadata, created_at, pro_subscription')
                 .single();
 
             if (insertError) {
@@ -59,17 +59,34 @@ export async function GET(req: Request) {
             }
         }
 
+        const proSub = profile?.pro_subscription || {};
+        const activeTill = typeof proSub.subscription_active_till_epoch === 'number'
+            ? proSub.subscription_active_till_epoch
+            : 0;
+        const nowEpoch = Math.floor(Date.now() / 1000);
+        const isProActive = Boolean(
+            proSub.is_pro || 
+            activeTill === -1 || 
+            activeTill > nowEpoch
+        );
+
         const userDetails = {
             email: user.email,
             name: user.user_metadata?.full_name || user.user_metadata?.name || '',
             avatar_url: user.user_metadata?.avatar_url || user.user_metadata?.picture || '',
-            isAdmin: user.isAdmin
+            isAdmin: user.isAdmin,
+            is_pro: isProActive,
+            is_pro_active: isProActive,
+            pro_subscription: proSub
         };
 
         return NextResponse.json({
             user: userDetails,
             isNewUser,
             isOnboarded,
+            is_pro: isProActive,
+            is_pro_active: isProActive,
+            pro_subscription: proSub,
             profile: {
                 id: profile?.id || '',
                 user_email: user.email,
@@ -77,7 +94,10 @@ export async function GET(req: Request) {
                 graduation_year: profile?.graduation_year || '',
                 branch: profile?.branch || '',
                 social_links: profile?.social_links || {},
-                created_at: profile?.created_at || new Date().toISOString()
+                created_at: profile?.created_at || new Date().toISOString(),
+                is_pro: isProActive,
+                is_pro_active: isProActive,
+                pro_subscription: proSub
             }
         }, { status: 200 });
 
@@ -141,7 +161,7 @@ export async function PUT(req: Request) {
                 user_email: user.email,
                 ...updatePayload
             }, { onConflict: 'user_email' })
-            .select('id, user_email, college, graduation_year, branch, social_links, metadata, created_at')
+            .select('id, user_email, college, graduation_year, branch, social_links, metadata, created_at, pro_subscription')
             .single();
 
         if (updateError) {
@@ -149,10 +169,28 @@ export async function PUT(req: Request) {
             return NextResponse.json({ error: updateError.message }, { status: 500 });
         }
 
+        const proSub = updatedProfile?.pro_subscription || {};
+        const activeTill = typeof proSub.subscription_active_till_epoch === 'number'
+            ? proSub.subscription_active_till_epoch
+            : 0;
+        const isProActive = Boolean(
+            proSub.is_pro || 
+            activeTill === -1 || 
+            activeTill > Math.floor(Date.now() / 1000)
+        );
+
         return NextResponse.json({
             message: 'Profile updated successfully',
             isOnboarded: true,
-            profile: updatedProfile
+            is_pro: isProActive,
+            is_pro_active: isProActive,
+            pro_subscription: proSub,
+            profile: {
+                ...updatedProfile,
+                is_pro: isProActive,
+                is_pro_active: isProActive,
+                pro_subscription: proSub
+            }
         }, { status: 200 });
 
     } catch (err: any) {

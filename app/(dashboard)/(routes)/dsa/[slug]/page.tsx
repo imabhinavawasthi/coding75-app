@@ -26,7 +26,7 @@ import supabase from "@/supabase";
 import { getValidSession } from "@/lib/auth-client";
 import { deriveSectionStats } from "@/lib/courseCatalogSync";
 import { fetchUserAssetStates, saveUserAssetState, UserAssetState } from "@/lib/user-states";
-import { CurriculumAccordion } from "../_components/curriculum-accordion";
+import { DSATopicRoadmapTimeline } from "../_components/dsa-topic-roadmap-timeline";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 
@@ -504,10 +504,10 @@ export default function DSATopicDetailPage() {
           <div className="flex items-center justify-between">
             <div className="space-y-0.5">
               <h2 className="text-lg font-black tracking-tight text-foreground">
-                Lectures & Practice Problems
+                Complete Curriculum
               </h2>
               <p className="text-xs text-muted-foreground">
-                Update status (Pending, Revise, Done) or bookmark items. Click to open lecture or solver.
+                Follow the structured phase roadmap, track completion, and solve problems interactively.
               </p>
             </div>
             <Link
@@ -518,15 +518,15 @@ export default function DSATopicDetailPage() {
             </Link>
           </div>
 
-          <CurriculumAccordion
-            sections={topicSections}
+          <DSATopicRoadmapTimeline
+            topicTitle={localModule.title}
+            topicSubtitle={localModule.subtitle || `${localModule.categoryLabel || localModule.category} Track Phase`}
+            subsections={matchedSection?.subsections || []}
+            rootItems={matchedSection?.items || []}
             userStates={userStates}
             onUpdateStatus={handleUpdateStatus}
             onToggleBookmark={handleToggleBookmark}
             topicSlug={localModule.id}
-            enableDirectNavigation={true}
-            isLoadingStates={isLoading}
-            isLoggedIn={isLoggedIn}
           />
 
           {/* Bottom Topic Navigation Flow */}

@@ -19,22 +19,30 @@ import {
   Flame,
   GitFork,
   GraduationCap,
+  Layers,
   Layout,
   LayoutDashboard,
   ListVideo,
   MessageSquare,
+  Rocket,
   RocketIcon,
   ScrollText,
   Send,
   Sparkles,
   Trophy,
   User,
+  User2,
   UserCheck,
+  Users,
   UserSquare,
   Video,
+  Youtube,
+  Lock,
 } from "lucide-react";
 import { SidebarItem } from "./sidebar-item";
 import { cn } from "@/lib/utils";
+import { useProStatus } from "@/hooks/use-pro-status";
+import { ProRequiredModal } from "@/components/pro/pro-required-modal";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -88,6 +96,12 @@ const siteNavigation: (NavSubItem | NavGroup)[] = [
         label: "Learn DSA",
         href: "/dsa",
         exact: true,
+      },
+      {
+        icon: Layers,
+        label: "Course Roadmap",
+        href: "/dsa/learn",
+        badge: "Flow",
       },
       {
         icon: GitFork,
@@ -150,7 +164,7 @@ const siteNavigation: (NavSubItem | NavGroup)[] = [
   },
   {
     id: "live-batches",
-    title: "Live Batches",
+    title: "Live Classes",
     icon: GraduationCap,
     color: "text-blue-600 dark:text-blue-400",
     badgeColor: "bg-blue-500/15 text-blue-600 dark:text-blue-400",
@@ -188,9 +202,59 @@ const siteNavigation: (NavSubItem | NavGroup)[] = [
     ],
   },
   {
-    icon: Sparkles,
-    label: "Coding75 Pro",
-    href: "/pro",
+    id: "pro",
+    title: "coding75 Pro",
+    icon: Rocket,
+    color: "text-amber-600 dark:text-amber-400",
+    badgeColor: "bg-amber-500/15 text-amber-600 dark:text-amber-400",
+    items: [
+      {
+        icon: Sparkles,
+        label: "Pro Dashboard",
+        href: "/pro/dashboard",
+      },
+      {
+        icon: Youtube,
+        label: "Live DSA Sessions",
+        href: "/batch/coding75-pro-dsa",
+      },
+      {
+        icon: MessageSquare,
+        label: "Doubt Sessions",
+        href: "/batch/coding75-pro-doubt",
+      },
+      {
+        icon: FileText,
+        label: "Exclusive Resources",
+        href: "/pro/resources",
+      },
+      {
+        icon: Users,
+        label: "Pro Community",
+        href: "/pro/community",
+      }
+    ],
+  },
+  {
+    id: "profile",
+    title: "Profile",
+    icon: User,
+    color: "text-blue-600 dark:text-blue-400",
+    badgeColor: "bg-blue-500/15 text-blue-600 dark:text-blue-400",
+    items: [
+      {
+        icon: User2,
+        label: "My Profile",
+        href: "/profile",
+        exact: true,
+      },
+      {
+        icon: UserCheck,
+        label: "Pro Subscription",
+        href: "/profile/subscription",
+        exact: true,
+      }
+    ],
   },
 ];
 
@@ -229,6 +293,8 @@ interface SidebarRoutesProps {
 
 export const SidebarRoutes = ({ isCollapsed = false, onItemClick }: SidebarRoutesProps) => {
   const pathname = usePathname();
+  const { isPro } = useProStatus();
+  const [showProModal, setShowProModal] = useState(false);
 
   const isClassroomPage = pathname?.startsWith("/classroom");
   const isAdminPage = pathname?.startsWith("/admin");
@@ -451,11 +517,19 @@ export const SidebarRoutes = ({ isCollapsed = false, onItemClick }: SidebarRoute
                       const SubIcon = subItem.icon;
                       const isSubActive =
                         pathname === subItem.href || pathname?.startsWith(`${subItem.href}/`);
+                      const isItemLocked = group.id === "pro" && !isPro;
+
                       return (
                         <DropdownMenuItem key={subItem.href} asChild className="p-0 rounded-lg">
                           <Link
                             href={subItem.href}
-                            onClick={() => {
+                            onClick={(e) => {
+                              if (isItemLocked) {
+                                e.preventDefault();
+                                setHoveredGroupId(null);
+                                setShowProModal(true);
+                                return;
+                              }
                               setHoveredGroupId(null);
                               onItemClick?.();
                             }}
@@ -470,11 +544,15 @@ export const SidebarRoutes = ({ isCollapsed = false, onItemClick }: SidebarRoute
                               <SubIcon className={cn("w-3.5 h-3.5", isSubActive ? "text-primary" : "text-muted-foreground")} />
                               <span>{subItem.label}</span>
                             </div>
-                            {subItem.badge && (
+                            {isItemLocked ? (
+                              <span className="text-[10px] font-black px-1.5 py-0.2 rounded bg-amber-500/15 text-amber-600 dark:text-amber-400 border border-amber-500/20 flex items-center gap-0.5 font-mono">
+                                <Lock className="w-2.5 h-2.5" /> PRO
+                              </span>
+                            ) : subItem.badge ? (
                               <span className="text-[10px] font-bold px-1.5 py-0.5 rounded-full bg-primary/15 text-primary">
                                 {subItem.badge}
                               </span>
-                            )}
+                            ) : null}
                           </Link>
                         </DropdownMenuItem>
                       );
@@ -509,37 +587,55 @@ export const SidebarRoutes = ({ isCollapsed = false, onItemClick }: SidebarRoute
                     {group.title}
                   </span>
                 </div>
-                <div className="text-muted-foreground/60 group-hover:text-foreground p-0.5">
-                  {isOpen ? (
-                    <ChevronDown className="w-3.5 h-3.5 transition-transform duration-200" />
-                  ) : (
-                    <ChevronRight className="w-3.5 h-3.5 transition-transform duration-200" />
+                <div className="flex items-center gap-1">
+                  {group.id === "pro" && !isPro && (
+                    <span className="text-[9px] font-black px-1.5 py-0.2 rounded bg-amber-500/20 text-amber-700 dark:text-amber-300 uppercase tracking-tight flex items-center gap-0.5">
+                      <Lock className="w-2.5 h-2.5" /> PRO
+                    </span>
                   )}
+                  <div className="text-muted-foreground/60 group-hover:text-foreground p-0.5">
+                    {isOpen ? (
+                      <ChevronDown className="w-3.5 h-3.5 transition-transform duration-200" />
+                    ) : (
+                      <ChevronRight className="w-3.5 h-3.5 transition-transform duration-200" />
+                    )}
+                  </div>
                 </div>
               </button>
 
               {/* Submenu Children */}
               {isOpen && (
                 <div className="mt-0.5 space-y-0.5 transition-all duration-200">
-                  {group.items.map((subItem) => (
-                    <SidebarItem
-                      key={subItem.href}
-                      icon={subItem.icon}
-                      label={subItem.label}
-                      href={subItem.href}
-                      exact={subItem.exact}
-                      badge={subItem.badge}
-                      isCollapsed={false}
-                      indent={false}
-                      onClick={onItemClick}
-                    />
-                  ))}
+                  {group.items.map((subItem) => {
+                    const isItemLocked = group.id === "pro" && !isPro;
+                    return (
+                      <SidebarItem
+                        key={subItem.href}
+                        icon={subItem.icon}
+                        label={subItem.label}
+                        href={subItem.href}
+                        exact={subItem.exact}
+                        badge={subItem.badge}
+                        isCollapsed={false}
+                        indent={false}
+                        isLocked={isItemLocked}
+                        onLockedClick={() => setShowProModal(true)}
+                        onClick={onItemClick}
+                      />
+                    );
+                  })}
                 </div>
               )}
             </div>
           </React.Fragment>
         );
       })}
+
+      {/* Pro Access Required Modal for Locked Routes */}
+      <ProRequiredModal
+        isOpen={showProModal}
+        onClose={() => setShowProModal(false)}
+      />
     </div>
   );
 };

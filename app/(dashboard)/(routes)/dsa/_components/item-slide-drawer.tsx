@@ -41,6 +41,7 @@ import {
   Plus,
   Trash2,
   Loader2,
+  Lock,
 } from "lucide-react";
 import { CourseSectionItem, VideoLecture, PracticeProblem } from "@/types/course";
 import { UserAssetState, UserNote, saveUserAssetState } from "@/lib/user-states";
@@ -50,6 +51,10 @@ import { cpp } from "@codemirror/lang-cpp";
 import { javascript } from "@codemirror/lang-javascript";
 import { vscodeDark } from "@uiw/codemirror-theme-vscode";
 import { ProtectedVideoPlayer } from "./protected-video-player";
+import { getValidSession } from "@/lib/auth-client";
+import { AuthModal } from "@/components/auth/auth-modal";
+import { useProStatus } from "@/hooks/use-pro-status";
+import { ProRequiredModal } from "@/components/pro/pro-required-modal";
 
 interface ItemSlideDrawerProps {
   item: CourseSectionItem | null;
@@ -102,6 +107,29 @@ export const ItemSlideDrawer: React.FC<ItemSlideDrawerProps> = ({
   const [copied, setCopied] = useState(false);
   const [selectedLang, setSelectedLang] = useState<"cpp" | "java" | "python" | "javascript">("cpp");
 
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [showAuthModal, setShowAuthModal] = useState(false);
+  const { isPro } = useProStatus();
+  const [showProModal, setShowProModal] = useState(false);
+  const [authConfig, setAuthConfig] = useState<{
+    title: string;
+    description: string;
+    feature: string;
+  }>({
+    title: "Sign In to CrackDSA",
+    description: "Access paid lectures and verified problem solutions.",
+    feature: "Premium Content",
+  });
+
+  const openAuth = (feature: string, description: string) => {
+    setAuthConfig({
+      title: `Sign In to Unlock ${feature}`,
+      description,
+      feature,
+    });
+    setShowAuthModal(true);
+  };
+
   // Notes state inside drawer
   const [newNoteText, setNewNoteText] = useState("");
   const [notes, setNotes] = useState<UserNote[]>([]);
@@ -119,6 +147,14 @@ export const ItemSlideDrawer: React.FC<ItemSlideDrawerProps> = ({
       setIsLoading(true);
       setVideoData(null);
       setProblemData(null);
+
+      // Check session
+      try {
+        const session = await getValidSession();
+        if (isMounted) setIsLoggedIn(!!session);
+      } catch {
+        if (isMounted) setIsLoggedIn(false);
+      }
 
       // Load existing notes
       if (itemState?.notes) {
@@ -152,6 +188,8 @@ export const ItemSlideDrawer: React.FC<ItemSlideDrawerProps> = ({
 
   const isVideo = item.type === "video";
   const isProblem = item.type === "problem";
+  const isVideoFree = Boolean(videoData?.is_free || (item as any)?.is_free || (item as any)?.isFree);
+  const isVideoLocked = isVideo && !isVideoFree && (videoData?.is_locked || videoData?.require_pro || !isPro);
 
   const fullPageUrl = isVideo
     ? `/video/${encodeURIComponent(targetAssetId)}${topicSlug ? `?topic=${topicSlug}` : ""}`
@@ -172,6 +210,17 @@ export const ItemSlideDrawer: React.FC<ItemSlideDrawerProps> = ({
 
   const handleAddNote = async (e: React.FormEvent) => {
     e.preventDefault();
+    if (isVideoLocked) {
+      setShowProModal(true);
+      return;
+    }
+    if (!isLoggedIn) {
+      openAuth(
+        "Personal Notes",
+        "Sign in with Google to take timestamped notes and sync them to your learning dashboard."
+      );
+      return;
+    }
     if (!newNoteText.trim() || !item) return;
 
     const newNote: UserNote = {
@@ -191,6 +240,10 @@ export const ItemSlideDrawer: React.FC<ItemSlideDrawerProps> = ({
   };
 
   const handleDeleteNote = async (noteId: string) => {
+    if (isVideoLocked) {
+      setShowProModal(true);
+      return;
+    }
     if (!item) return;
     const updatedNotes = notes.filter((n) => n.id !== noteId);
     setNotes(updatedNotes);
@@ -247,6 +300,32 @@ export const ItemSlideDrawer: React.FC<ItemSlideDrawerProps> = ({
                   <Loader2 size={12} className="animate-spin text-muted-foreground" />
                   <span>Loading...</span>
                 </span>
+              ) : isVideoLocked ? (
+                <button
+                  type="button"
+                  onClick={() => setShowProModal(true)}
+                  className="flex items-center gap-1 px-2 py-1 rounded-lg text-xs font-bold border transition-all bg-amber-500/10 text-amber-600 dark:text-amber-400 border-amber-500/30 hover:bg-amber-500/20 cursor-pointer"
+                  title="Status Locked - coding75 Pro Required"
+                >
+                  <Lock size={12} className="text-amber-500 shrink-0" />
+                  <span>Locked</span>
+                </button>
+              ) : !isLoggedIn ? (
+                <button
+                  type="button"
+                  onClick={() =>
+                    openAuth(
+                      "Progress Tracking",
+                      "Sign in with Google to mark items as solved, track revisions, and sync your roadmap."
+                    )
+                  }
+                  className="flex items-center gap-1 px-2 py-1 rounded-lg text-xs font-bold border transition-all bg-muted text-muted-foreground border-border hover:text-foreground cursor-pointer"
+                  title="Sign in to track progress"
+                >
+                  <CircleDot size={13} className="text-muted-foreground" />
+                  <span>Pending</span>
+                  <Lock size={10} className="text-amber-500/80 ml-0.5" />
+                </button>
               ) : (
                 <DropdownMenu>
                   <DropdownMenuTrigger asChild>
@@ -299,15 +378,34 @@ export const ItemSlideDrawer: React.FC<ItemSlideDrawerProps> = ({
               {/* Bookmark Toggle */}
               <button
                 type="button"
-                onClick={() => onToggleBookmark(targetAssetId, item.type)}
+                onClick={() => {
+                  if (isVideoLocked) {
+                    setShowProModal(true);
+                    return;
+                  }
+                  if (!isLoggedIn) {
+                    openAuth(
+                      "Bookmarks",
+                      "Sign in with Google to save problems and videos to your revision list."
+                    );
+                    return;
+                  }
+                  onToggleBookmark(targetAssetId, item.type);
+                }}
                 className={`p-1.5 rounded-lg border transition-all ${
-                  isBookmarked
+                  isVideoLocked
+                    ? "border-border hover:bg-muted text-muted-foreground/50 hover:text-amber-500 cursor-pointer"
+                    : isBookmarked
                     ? "bg-amber-500/15 border-amber-500/30 text-amber-500"
                     : "border-border hover:bg-muted text-muted-foreground"
                 }`}
-                title={isBookmarked ? "Saved" : "Save"}
+                title={isVideoLocked ? "Bookmark Locked - coding75 Pro Required" : !isLoggedIn ? "Sign in to save bookmark" : isBookmarked ? "Saved" : "Save"}
               >
-                <Bookmark size={14} className={isBookmarked ? "fill-amber-500 text-amber-500" : ""} />
+                {isVideoLocked ? (
+                  <Lock size={13} className="text-muted-foreground/60" />
+                ) : (
+                  <Bookmark size={14} className={isBookmarked ? "fill-amber-500 text-amber-500" : ""} />
+                )}
               </button>
 
               {/* Open Full Page Button */}
@@ -337,8 +435,64 @@ export const ItemSlideDrawer: React.FC<ItemSlideDrawerProps> = ({
           ) : isVideo ? (
             /* Video Lecture Drawer Content */
             <div className="space-y-6">
-              {/* Protected Video Player */}
-              <ProtectedVideoPlayer embedUrl={embedUrl} title={item.title} />
+              {/* Protected Video Player or Locked State */}
+              {!isLoggedIn && !videoData?.is_free && !item.is_free ? (
+                <div className="relative w-full aspect-video rounded-2xl overflow-hidden border border-blue-500/30 bg-gradient-to-br from-zinc-950 via-zinc-900 to-blue-950/40 p-6 flex flex-col items-center justify-center text-center space-y-3 shadow-xl">
+                  <div className="w-12 h-12 rounded-2xl bg-blue-500/20 border border-blue-500/30 text-blue-400 flex items-center justify-center shadow-lg shadow-blue-500/20">
+                    <Lock className="w-6 h-6" />
+                  </div>
+                  <div className="space-y-1">
+                    <h3 className="text-base font-bold text-white">Classroom Video Lecture Locked</h3>
+                    <p className="text-xs text-zinc-400 max-w-sm">
+                      Video masterclasses are part of CrackDSA paid curriculum. Sign in to stream high-definition lectures.
+                    </p>
+                  </div>
+                  <Button
+                    onClick={() =>
+                      openAuth(
+                        "Video Lectures",
+                        "Sign in with Google to stream full video masterclasses and intuitive whiteboard deep dives."
+                      )
+                    }
+                    className="rounded-xl font-bold text-xs h-9 px-4 bg-blue-600 hover:bg-blue-700 text-white shadow-md gap-2 cursor-pointer"
+                  >
+                    <PlayCircle className="w-4 h-4" />
+                    <span>Sign In to Watch Lecture</span>
+                  </Button>
+                </div>
+              ) : (!videoData?.is_free && !item.is_free && (videoData?.is_locked || videoData?.require_pro || !isPro)) ? (
+                <div className="relative w-full aspect-video rounded-2xl overflow-hidden border border-amber-500/30 bg-gradient-to-br from-zinc-950 via-zinc-900 to-amber-950/40 p-6 flex flex-col items-center justify-center text-center space-y-3 shadow-xl">
+                  <div className="w-12 h-12 rounded-2xl bg-amber-500/20 border border-amber-500/30 text-amber-400 flex items-center justify-center shadow-lg shadow-amber-500/20">
+                    <Lock className="w-6 h-6" />
+                  </div>
+                  <div className="space-y-1">
+                    <div className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full bg-amber-500/15 border border-amber-500/30 text-amber-400 text-[10px] font-black uppercase tracking-wider">
+                      <Sparkles className="w-3 h-3" />
+                      <span>coding75 Pro Required</span>
+                    </div>
+                    <h3 className="text-base font-black text-white">Lecture Masterclass is Locked</h3>
+                    <p className="text-xs text-zinc-400 max-w-sm">
+                      Upgrade to coding75 Pro to stream 150+ masterclasses, attend live doubt classes, and get complete preparation access.
+                    </p>
+                  </div>
+                  <div className="flex items-center gap-2 pt-1">
+                    <Button
+                      onClick={() => setShowProModal(true)}
+                      className="rounded-xl font-bold text-xs h-9 px-4 bg-gradient-to-r from-amber-500 to-orange-500 text-white shadow-md gap-2 cursor-pointer"
+                    >
+                      <Sparkles className="w-3.5 h-3.5" />
+                      <span>Unlock coding75 Pro</span>
+                    </Button>
+                    <Link href="/pro/checkout?plan=yearly">
+                      <Button variant="outline" className="rounded-xl font-bold text-xs h-9 px-3 border-amber-500/30 text-amber-300 hover:bg-amber-500/10 cursor-pointer">
+                        <span>Checkout</span>
+                      </Button>
+                    </Link>
+                  </div>
+                </div>
+              ) : (
+                <ProtectedVideoPlayer embedUrl={embedUrl} title={item.title} />
+              )}
 
               {/* Lecture Description */}
               <div className="space-y-2">
@@ -433,19 +587,19 @@ export const ItemSlideDrawer: React.FC<ItemSlideDrawerProps> = ({
               )}
 
               {/* Official Solution Code Preview */}
-              {problemData?.solutions && (
-                <div className="space-y-2.5 pt-2">
-                  <div className="flex items-center justify-between">
-                    <div className="flex items-center gap-1.5">
-                      <FileCode2 size={14} className="text-primary" />
-                      <span className="text-xs font-bold text-foreground uppercase tracking-wider">
-                        Official Editorial Code
-                      </span>
-                    </div>
+              <div className="space-y-2.5 pt-2">
+                <div className="flex items-center justify-between">
+                  <div className="flex items-center gap-1.5">
+                    <FileCode2 size={14} className="text-primary" />
+                    <span className="text-xs font-bold text-foreground uppercase tracking-wider">
+                      Official Editorial Code
+                    </span>
+                  </div>
 
+                  {isLoggedIn && !(problemData as any)?.is_locked && (
                     <div className="flex items-center gap-1">
                       {(["cpp", "java", "python", "javascript"] as const).map((lang) => {
-                        const hasSol = Boolean(problemData.solutions?.[lang]);
+                        const hasSol = Boolean(problemData?.solutions?.[lang]);
                         return (
                           <Button
                             key={lang}
@@ -461,47 +615,72 @@ export const ItemSlideDrawer: React.FC<ItemSlideDrawerProps> = ({
                         );
                       })}
                     </div>
-                  </div>
-
-                  {solutionCode ? (
-                    <div className="rounded-xl border overflow-hidden shadow-xs bg-[#1e1e1e]">
-                      <div className="flex items-center justify-between px-3 py-1.5 border-b border-border/40 bg-muted/20 text-xs">
-                        <div className="flex items-center gap-2">
-                          {currentSolution?.time_complexity && (
-                            <span className="text-[10px] text-primary font-mono font-bold">
-                              Time: {currentSolution.time_complexity}
-                            </span>
-                          )}
-                          {currentSolution?.space_complexity && (
-                            <span className="text-[10px] text-muted-foreground font-mono">
-                              Space: {currentSolution.space_complexity}
-                            </span>
-                          )}
-                        </div>
-                        <Button
-                          variant="ghost"
-                          size="sm"
-                          onClick={() => handleCopy(solutionCode)}
-                          className="h-6 px-2 text-[10px] gap-1"
-                        >
-                          {copied ? <Check size={12} className="text-emerald-500" /> : <Copy size={12} />}
-                          <span>{copied ? "Copied" : "Copy"}</span>
-                        </Button>
-                      </div>
-                      <CodeMirror
-                        value={solutionCode}
-                        height="260px"
-                        theme={vscodeDark}
-                        extensions={[cpp()]}
-                        editable={false}
-                        className="text-xs font-mono"
-                      />
-                    </div>
-                  ) : (
-                    <p className="text-xs text-muted-foreground">Solution code available on full page.</p>
                   )}
                 </div>
-              )}
+
+                {!isLoggedIn || (problemData as any)?.is_locked ? (
+                  <div className="rounded-2xl border border-amber-500/30 bg-gradient-to-b from-amber-500/10 via-card to-card p-6 text-center space-y-3 shadow-xs">
+                    <div className="w-10 h-10 rounded-xl bg-amber-500/15 border border-amber-500/30 text-amber-500 flex items-center justify-center mx-auto">
+                      <Lock className="w-5 h-5" />
+                    </div>
+                    <div className="space-y-1">
+                      <h4 className="text-sm font-bold text-foreground">Official Solution Code Locked</h4>
+                      <p className="text-xs text-muted-foreground max-w-sm mx-auto">
+                        Sign in with Google to unlock verified editorial code in C++, Java, Python, and JavaScript with complexity analysis.
+                      </p>
+                    </div>
+                    <Button
+                      onClick={() =>
+                        openAuth(
+                          "Editorial Solutions",
+                          "Sign in to unlock clean multi-language solutions and detailed algorithmic insights."
+                        )
+                      }
+                      size="sm"
+                      className="rounded-xl font-bold text-xs h-8 px-4 bg-primary text-primary-foreground gap-1.5 cursor-pointer"
+                    >
+                      <Lock className="w-3.5 h-3.5" />
+                      <span>Sign In to Unlock</span>
+                    </Button>
+                  </div>
+                ) : solutionCode ? (
+                  <div className="rounded-xl border overflow-hidden shadow-xs bg-[#1e1e1e]">
+                    <div className="flex items-center justify-between px-3 py-1.5 border-b border-border/40 bg-muted/20 text-xs">
+                      <div className="flex items-center gap-2">
+                        {currentSolution?.time_complexity && (
+                          <span className="text-[10px] text-primary font-mono font-bold">
+                            Time: {currentSolution.time_complexity}
+                          </span>
+                        )}
+                        {currentSolution?.space_complexity && (
+                          <span className="text-[10px] text-muted-foreground font-mono">
+                            Space: {currentSolution.space_complexity}
+                          </span>
+                        )}
+                      </div>
+                      <Button
+                        variant="ghost"
+                        size="sm"
+                        onClick={() => handleCopy(solutionCode)}
+                        className="h-6 px-2 text-[10px] gap-1"
+                      >
+                        {copied ? <Check size={12} className="text-emerald-500" /> : <Copy size={12} />}
+                        <span>{copied ? "Copied" : "Copy"}</span>
+                      </Button>
+                    </div>
+                    <CodeMirror
+                      value={solutionCode}
+                      height="260px"
+                      theme={vscodeDark}
+                      extensions={[cpp()]}
+                      editable={false}
+                      className="text-xs font-mono"
+                    />
+                  </div>
+                ) : (
+                  <p className="text-xs text-muted-foreground">Solution code available on full page.</p>
+                )}
+              </div>
 
               {/* Company Tags */}
               {problemData?.attributes?.company_tags && problemData.attributes.company_tags.length > 0 && (
@@ -527,38 +706,62 @@ export const ItemSlideDrawer: React.FC<ItemSlideDrawerProps> = ({
               Your Personal Notes ({notes.length})
             </h4>
 
-            <form onSubmit={handleAddNote} className="space-y-2">
-              <textarea
-                value={newNoteText}
-                onChange={(e) => setNewNoteText(e.target.value)}
-                placeholder="Add quick notes or interview tips..."
-                className="w-full min-h-[75px] rounded-xl border border-border bg-background p-2.5 text-xs focus:outline-none focus:border-primary placeholder:text-muted-foreground"
-              />
-              <div className="flex justify-end">
-                <Button type="submit" size="sm" className="gap-1 text-xs font-bold h-7">
-                  <Plus size={12} /> Add Note
+            {isVideoLocked ? (
+              <div className="py-6 px-4 text-center rounded-xl border border-dashed border-amber-500/30 bg-amber-500/5 space-y-2.5">
+                <div className="w-8 h-8 rounded-full bg-amber-500/10 text-amber-500 flex items-center justify-center mx-auto">
+                  <Lock className="w-4 h-4" />
+                </div>
+                <div className="space-y-0.5">
+                  <p className="text-xs font-bold text-foreground">Lecture Notes Locked</p>
+                  <p className="text-[11px] text-muted-foreground max-w-xs mx-auto">
+                    Notes and progress tracking for this lecture require coding75 Pro.
+                  </p>
+                </div>
+                <Button
+                  size="sm"
+                  onClick={() => setShowProModal(true)}
+                  className="rounded-lg text-xs font-bold h-7 px-3 bg-gradient-to-r from-amber-500 to-orange-500 text-white hover:from-amber-600 hover:to-orange-600 gap-1 cursor-pointer"
+                >
+                  <Sparkles size={11} />
+                  <span>Unlock with Pro</span>
                 </Button>
               </div>
-            </form>
-
-            {notes.length > 0 && (
-              <div className="space-y-2 pt-1">
-                {notes.map((n) => (
-                  <div
-                    key={n.id}
-                    className="flex items-start justify-between gap-2 p-2.5 rounded-lg border bg-muted/20 text-xs"
-                  >
-                    <p className="text-foreground whitespace-pre-wrap flex-1 leading-relaxed">{n.text}</p>
-                    <button
-                      type="button"
-                      onClick={() => handleDeleteNote(n.id)}
-                      className="text-muted-foreground hover:text-red-500 p-0.5"
-                    >
-                      <Trash2 size={12} />
-                    </button>
+            ) : (
+              <>
+                <form onSubmit={handleAddNote} className="space-y-2">
+                  <textarea
+                    value={newNoteText}
+                    onChange={(e) => setNewNoteText(e.target.value)}
+                    placeholder="Add quick notes or interview tips..."
+                    className="w-full min-h-[75px] rounded-xl border border-border bg-background p-2.5 text-xs focus:outline-none focus:border-primary placeholder:text-muted-foreground"
+                  />
+                  <div className="flex justify-end">
+                    <Button type="submit" size="sm" className="gap-1 text-xs font-bold h-7">
+                      <Plus size={12} /> Add Note
+                    </Button>
                   </div>
-                ))}
-              </div>
+                </form>
+
+                {notes.length > 0 && (
+                  <div className="space-y-2 pt-1">
+                    {notes.map((n) => (
+                      <div
+                        key={n.id}
+                        className="flex items-start justify-between gap-2 p-2.5 rounded-lg border bg-muted/20 text-xs"
+                      >
+                        <p className="text-foreground whitespace-pre-wrap flex-1 leading-relaxed">{n.text}</p>
+                        <button
+                          type="button"
+                          onClick={() => handleDeleteNote(n.id)}
+                          className="text-muted-foreground hover:text-red-500 p-0.5"
+                        >
+                          <Trash2 size={12} />
+                        </button>
+                      </div>
+                    ))}
+                  </div>
+                )}
+              </>
             )}
           </div>
         </div>
@@ -580,6 +783,24 @@ export const ItemSlideDrawer: React.FC<ItemSlideDrawerProps> = ({
             <Maximize2 size={13} />
           </Button>
         </div>
+
+        {/* Auth Modal */}
+        <AuthModal
+          isOpen={showAuthModal}
+          onClose={() => setShowAuthModal(false)}
+          title={authConfig.title}
+          description={authConfig.description}
+          featureName={authConfig.feature}
+        />
+
+        {/* coding75 Pro Required Modal */}
+        <ProRequiredModal
+          isOpen={showProModal}
+          onClose={() => setShowProModal(false)}
+          title="Unlock coding75 Pro Access"
+          description={`"${item?.title}" is part of the coding75 Pro masterclass series. Upgrade to full Pro access to stream all lectures.`}
+          featureName="coding75 Pro Masterclass"
+        />
       </SheetContent>
     </Sheet>
   );

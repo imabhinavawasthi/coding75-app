@@ -18,16 +18,23 @@ import {
   Sparkles,
   Terminal,
   Trophy,
+  CheckCircle2,
+  BookOpen,
+  ChevronRight
 } from "lucide-react";
 import DashboardHeader from "./_components/dashboard-header";
 import { DashboardNextClass } from "./_components/dashboard-next-class";
+import { DashboardContinueLearning } from "./_components/dashboard-continue-learning";
+import { DashboardPOTDWidget } from "./_components/dashboard-potd-widget";
+import { useDashboardData } from "./_hooks/use-dashboard-data";
 import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
+import { Badge } from "@/components/ui/badge";
 import { cn } from "@/lib/utils";
 
 const dsaCards = [
   {
-    title: "Learn DSA",
+    title: "Learn DSA Curriculum",
     badge: "18+ Modules",
     badgeColor: "bg-amber-500/15 text-amber-700 dark:text-amber-300 border-amber-500/30",
     description: "Structured visual roadmap from Arrays and Two Pointers to DP, Graphs, and Advanced Trees with step-by-step videos.",
@@ -54,10 +61,10 @@ const dsaCards = [
   },
   {
     title: "Curated Practice Sheets",
-    badge: "Blind 75 & SDE",
+    badge: "Blind 75 & Pattern Mastery",
     badgeColor: "bg-emerald-500/15 text-emerald-700 dark:text-emerald-300 border-emerald-500/30",
     description: "Industry-standard problem lists including Blind 75, Newbie to Expert Sheet, coding75 Sheet with tracked completions.",
-    tags: ["Blind 75", "Newbie to Expert Sheet", "Abhinav's DSA Sheet"],
+    tags: ["Blind 75", "Newbie to Expert", "Abhinav's SDE"],
     href: "/dsa/sheets",
     icon: Layers,
     iconColor: "text-emerald-600 dark:text-emerald-400",
@@ -67,7 +74,7 @@ const dsaCards = [
   },
   {
     title: "DSA Masterclasses",
-    badge: "Live Industry Mentorship",
+    badge: "Live Mentorship",
     badgeColor: "bg-purple-500/15 text-purple-700 dark:text-purple-300 border-purple-500/30",
     description: "Deep algorithmic masterclasses covering Tree Rerooting, Digit DP, Segment Trees, and Maximum Network Flow.",
     tags: ["Range Queries", "Tree DP", "Flows"],
@@ -170,7 +177,7 @@ function PremiumFeatureCard({ card }: { card: typeof dsaCards[0] }) {
     <Link href={card.href} className="group block h-full">
       <Card
         className={cn(
-          "h-full relative overflow-hidden bg-card border border-border/80 rounded-2xl shadow-xs transition-all duration-200 flex flex-col justify-between hover:shadow-md",
+          "h-full relative overflow-hidden bg-card border border-border/80 rounded-2xl shadow-xs transition-all duration-300 flex flex-col justify-between hover:shadow-md hover:-translate-y-0.5",
           card.hoverBorder
         )}
       >
@@ -234,32 +241,58 @@ function PremiumFeatureCard({ card }: { card: typeof dsaCards[0] }) {
 
 function TopicTreePromoCard() {
   return (
-    <Link href="/dsa/topic-tree" className="block group">
-      <div className="relative overflow-hidden rounded-2xl bg-gradient-to-r from-violet-600 to-fuchsia-600 p-6 sm:p-8 shadow-xl shadow-fuchsia-500/20 border border-white/20 hover:scale-[1.01] transition-transform duration-300">
-        {/* Animated background elements */}
-        <div className="absolute top-0 right-0 -mt-16 -mr-16 w-64 h-64 bg-white opacity-10 rounded-full blur-3xl group-hover:scale-150 transition-transform duration-700" />
-        <div className="absolute bottom-0 left-0 -mb-16 -ml-16 w-48 h-48 bg-black opacity-20 rounded-full blur-2xl group-hover:scale-150 transition-transform duration-700" />
-        
-        <div className="relative z-10 flex flex-col md:flex-row md:items-center justify-between gap-6">
-          <div className="flex items-start md:items-center gap-5">
-            <div className="w-14 h-14 rounded-2xl bg-white/20 backdrop-blur-md flex items-center justify-center shrink-0 border border-white/30 shadow-inner">
-               <Network className="w-7 h-7 text-white drop-shadow-sm" />
+    <Link href="/dsa/topic-tree" className="block group h-full focus:outline-none">
+      <div className="relative overflow-hidden rounded-3xl bg-gradient-to-br from-violet-600 via-purple-600 to-indigo-700 p-6 sm:p-7 shadow-xl shadow-violet-500/15 border border-white/25 hover:shadow-2xl hover:shadow-violet-500/30 group-hover:-translate-y-1 transition-all duration-300 flex flex-col justify-between h-full">
+        {/* Animated ambient background glows */}
+        <div className="absolute top-0 right-0 -mt-10 -mr-10 w-60 h-60 bg-white/20 rounded-full blur-3xl group-hover:scale-125 transition-transform duration-700 pointer-events-none animate-pulse" />
+        <div className="absolute bottom-0 left-0 -mb-10 -ml-10 w-48 h-48 bg-indigo-950/40 rounded-full blur-2xl group-hover:scale-125 transition-transform duration-700 pointer-events-none" />
+        <div className="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-violet-300 via-pink-300 to-indigo-200 opacity-80" />
+
+        <div className="relative z-10 space-y-4">
+          <div className="flex items-center justify-between">
+            <div className="w-11 h-11 rounded-2xl bg-white/20 backdrop-blur-sm flex items-center justify-center shrink-0 border border-white/30 shadow-inner group-hover:scale-110 group-hover:bg-white/25 transition-all duration-300">
+              <Network className="w-5 h-5 text-white" />
             </div>
-            <div className="space-y-1.5">
-              <div className="flex items-center gap-2">
-                <h3 className="text-lg sm:text-xl font-black text-white tracking-tight drop-shadow-sm">DSA Topic Tree Roadmap</h3>
-                <span className="px-2 py-0.5 rounded-md bg-white text-violet-700 text-[10px] font-black uppercase tracking-widest shadow-sm animate-pulse">New</span>
-              </div>
-              <p className="text-white/90 text-xs sm:text-sm font-medium max-w-xl leading-relaxed">
-                Explore our brand new interactive visual roadmap. Master Data Structures and Algorithms with a structured, top-to-bottom curriculum tree.
-              </p>
+            <div className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full bg-white/20 text-white text-[10px] font-extrabold uppercase tracking-wider backdrop-blur-sm border border-white/30 shadow-xs">
+              <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-ping inline-block" />
+              <span>Interactive Graph</span>
             </div>
           </div>
-          
-          <div className="shrink-0">
-             <Button variant="secondary" className="bg-white text-violet-700 hover:bg-white/90 font-bold shadow-md rounded-xl gap-2">
-                Explore Curriculum <ArrowRight className="w-4 h-4" />
-             </Button>
+
+          <div className="space-y-1.5">
+            <h3 className="text-lg sm:text-xl font-black text-white tracking-tight flex items-center gap-2">
+              <span>DSA Topic Tree Roadmap</span>
+              <Sparkles className="w-4 h-4 text-amber-300 animate-pulse" />
+            </h3>
+            <p className="text-violet-100 text-xs sm:text-sm font-medium leading-relaxed">
+              Explore our structured visual hierarchy mapping out 18+ foundational concepts, data structures, and algorithms in a top-to-bottom branching graph.
+            </p>
+          </div>
+
+          {/* Mini roadmap nodes preview visualization with animated flow */}
+          <div className="pt-2 flex flex-wrap items-center gap-2">
+            <div className="px-2.5 py-1 rounded-lg bg-white/20 backdrop-blur-sm text-white text-[11px] font-bold border border-white/30 shadow-xs group-hover:bg-white/25 transition-colors">
+              1. Fundamentals
+            </div>
+            <span className="text-white font-black text-xs animate-pulse">→</span>
+            <div className="px-2.5 py-1 rounded-lg bg-white/20 backdrop-blur-sm text-white text-[11px] font-bold border border-white/30 shadow-xs group-hover:bg-white/25 transition-colors">
+              2. Data Structures
+            </div>
+            <span className="text-white font-black text-xs animate-pulse">→</span>
+            <div className="px-2.5 py-1 rounded-lg bg-white/20 backdrop-blur-sm text-white text-[11px] font-bold border border-white/30 shadow-xs group-hover:bg-white/25 transition-colors">
+              3. Algorithms
+            </div>
+          </div>
+        </div>
+
+        {/* Action footer */}
+        <div className="relative z-10 pt-5 mt-4 border-t border-white/20 flex items-center justify-between">
+          <span className="text-xs font-bold text-white/95">
+            Open Interactive Roadmap
+          </span>
+          <div className="rounded-xl bg-white text-violet-950 hover:bg-violet-50 font-black text-xs h-8 px-3.5 shadow-md flex items-center gap-1.5 group-hover:gap-2 transition-all">
+            <span>Explore Tree</span>
+            <ArrowRight className="w-3.5 h-3.5 text-violet-950 group-hover:translate-x-0.5 transition-transform" />
           </div>
         </div>
       </div>
@@ -267,20 +300,122 @@ function TopicTreePromoCard() {
   );
 }
 
-export default function DashboardPage() {
+function CuratedSheetsShowcaseCard() {
+  const topSheets = [
+    { name: "crackDSA Sprint 75", count: "75 Problems", tag: "Most Popular", href: "/dsa/sheets/crackdsa-revision-sprint" },
+    { name: "Newbie to Expert Sheet", count: "800-1800 Rating", tag: "Structured CP", href: "/dsa/sheets/expert-sheet" },
+    { name: "Abhinav's Pattern Mastery Sheet", count: "Top Interview Set", tag: "Handpicked", href: "/dsa/sheets/pattern-mastery" },
+  ];
+
   return (
-    <div className="py-6 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto space-y-10">
-      {/* 1. Hero Header */}
+    <div className="relative overflow-hidden rounded-3xl border border-border/80 bg-card p-6 sm:p-7 shadow-xs flex flex-col justify-between h-full group hover:border-emerald-500/40 transition-all duration-300">
+      {/* Ambient background decoration */}
+      <div className="absolute top-0 right-0 w-48 h-48 bg-emerald-500/5 rounded-full blur-3xl pointer-events-none" />
+      <div className="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-emerald-500 to-teal-500 opacity-80" />
+
+      <div className="space-y-4 relative z-10">
+        <div className="flex items-center justify-between">
+          <div className="inline-flex items-center gap-2 text-xs font-bold uppercase tracking-wider text-emerald-600 dark:text-emerald-400">
+            <Layers className="w-4 h-4 text-emerald-500" />
+            <span>Curated Practice Sheets</span>
+          </div>
+          <Badge
+            variant="outline"
+            className="text-[10px] font-bold px-2 py-0.5 rounded-full border-emerald-500/30 bg-emerald-500/10 text-emerald-700 dark:text-emerald-300"
+          >
+            Tracked Progress
+          </Badge>
+        </div>
+
+        <div>
+          <h3 className="text-lg sm:text-xl font-bold tracking-tight text-foreground">
+            Targeted SDE Problem Sets
+          </h3>
+          <p className="text-xs text-muted-foreground leading-relaxed mt-0.5">
+            Battle-tested problem lists designed to give maximum return on interview preparation time.
+          </p>
+        </div>
+
+        {/* Mini Sheet List */}
+        <div className="space-y-2 pt-1">
+          {topSheets.map((sheet, idx) => (
+            <Link
+              key={idx}
+              href={sheet.href}
+              className="flex items-center justify-between p-2.5 rounded-xl border border-border/60 bg-muted/30 hover:bg-muted/70 hover:border-emerald-500/30 transition-all duration-200 group/item"
+            >
+              <div className="space-y-0.5">
+                <div className="text-xs font-bold text-foreground group-hover/item:text-emerald-600 dark:group-hover/item:text-emerald-400 transition-colors">
+                  {sheet.name}
+                </div>
+                <div className="text-[10px] text-muted-foreground">
+                  {sheet.count} • {sheet.tag}
+                </div>
+              </div>
+              <ChevronRight className="w-4 h-4 text-muted-foreground group-hover/item:text-foreground group-hover/item:translate-x-0.5 transition-all" />
+            </Link>
+          ))}
+        </div>
+      </div>
+
+      {/* Action footer */}
+      <div className="pt-4 mt-3 border-t border-border/50 flex items-center justify-between">
+        <span className="text-xs text-muted-foreground">
+          Track problem status & bookmarks
+        </span>
+        <Button
+          asChild
+          size="sm"
+          variant="outline"
+          className="rounded-xl font-bold text-xs h-8 px-3 border-border/80 hover:bg-muted gap-1.5"
+        >
+          <Link href="/dsa/sheets">
+            <span>Browse All Sheets</span>
+            <ArrowRight className="w-3.5 h-3.5" />
+          </Link>
+        </Button>
+      </div>
+    </div>
+  );
+}
+
+export default function DashboardPage() {
+  const { potd, loadingPotd, userStates, activeTopicProgress, loadingLearning } = useDashboardData();
+  const isPOTDSolved = Boolean(potd?.id && userStates?.[potd.id]?.status === "done");
+
+  return (
+    <div className="py-6 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto space-y-9">
+      {/* 1. Command Center Header */}
       <DashboardHeader />
 
-      {/* Next Upcoming Live Session Countdown (for enrolled batch students) */}
+      {/* 2. Upcoming Live Session Countdown (for enrolled batch students) */}
       <DashboardNextClass />
 
-      {/* 2. Topic Tree Promo Banner */}
-      <TopicTreePromoCard />
+      {/* 3. Bento Row 1: Action Center (Continue Learning Spotlight + Today's POTD) */}
+      <div className="grid grid-cols-1 lg:grid-cols-12 gap-5">
+        <div className="lg:col-span-7">
+          <DashboardContinueLearning
+            progressData={activeTopicProgress}
+            isLoading={loadingLearning}
+          />
+        </div>
+        <div className="lg:col-span-5">
+          <DashboardPOTDWidget
+            potd={potd}
+            isLoading={loadingPotd}
+            isSolved={isPOTDSolved}
+          />
+        </div>
+      </div>
 
-      {/* 3. Spotlight Banner: Post-Contest Editorials & Solutions */}
-      <div className="relative overflow-hidden rounded-2xl bg-gradient-to-r from-blue-500/10 via-indigo-500/10 to-purple-500/10 border border-blue-500/25 p-5 sm:p-6 shadow-xs">
+      {/* 4. Bento Row 2: Flagship Visual Experiences (Topic Tree Roadmap + Curated Sheets) */}
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
+        <TopicTreePromoCard />
+        <CuratedSheetsShowcaseCard />
+      </div>
+
+      {/* 5. Spotlight Banner: Post-Contest Problem Editorials & Video Solutions */}
+      <div className="relative overflow-hidden rounded-3xl bg-gradient-to-r from-blue-500/10 via-indigo-500/10 to-purple-500/10 border border-blue-500/25 p-6 sm:p-7 shadow-xs">
         <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-5">
           <div className="flex items-start gap-4">
             <div className="w-12 h-12 rounded-2xl bg-gradient-to-tr from-blue-600 to-indigo-600 text-white flex items-center justify-center shrink-0 shadow-md shadow-blue-500/20">
@@ -324,7 +459,7 @@ export default function DashboardPage() {
         </div>
       </div>
 
-      {/* 3. Section 1: Data Structures & Algorithms */}
+      {/* 6. Section 1: Data Structures & Algorithms */}
       <section className="space-y-4">
         <div className="flex items-center justify-between">
           <div>
@@ -352,7 +487,7 @@ export default function DashboardPage() {
         </div>
       </section>
 
-      {/* 4. Section 2: Core Engineering & Interview Preparation */}
+      {/* 7. Section 2: Core Engineering & Interview Preparation */}
       <section className="space-y-4">
         <div className="flex items-center justify-between">
           <div>
@@ -380,7 +515,7 @@ export default function DashboardPage() {
         </div>
       </section>
 
-      {/* 5. Section 3: Career Tools & Resume Maker */}
+      {/* 8. Section 3: Career Tools & Resume Maker */}
       <section className="space-y-4">
         <div className="flex items-center justify-between">
           <div>

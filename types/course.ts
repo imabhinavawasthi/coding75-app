@@ -83,6 +83,9 @@ export interface VideoLecture {
   description?: string;
   video_url?: string;
   embed_url?: string;
+  is_free?: boolean;
+  is_locked?: boolean;
+  require_pro?: boolean;
   is_protected?: boolean;
   duration_seconds?: number;
   thumbnail_url?: string;

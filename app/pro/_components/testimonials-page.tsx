@@ -8,13 +8,13 @@ import FancyTestimonialsSlider from './testimonials'
   
     const testimonials = [
       {
-        img: "https://upload.wikimedia.org/wikipedia/commons/thumb/5/57/ServiceNow_logo.svg/2560px-ServiceNow_logo.svg.png",
+        img: "https://upload.wikimedia.org/wikipedia/commons/5/57/ServiceNow_logo.svg",
         quote: "I have attended the live DSA sessions and they are very useful. The concepts are explained thoroughly and doubts are resolved well, which helped me to get prepared for my placements and interviews.",
         name: 'Aditya Chaudhary',
         role: 'Intern at Service Now'
       },
       {
-        img: "https://upload.wikimedia.org/wikipedia/commons/9/96/Microsoft_logo_%282012%29.svg",
+        img: "/logos/microsoft.svg",
         quote: "Live project building sessions helped me a lot to put some good projects in my resume, with good resume review and mock interviews sessions, I got selected in microsoft internship.",
         name: 'Jatin Pal',
         role: 'SWE Intern at Microsoft.'
@@ -26,7 +26,7 @@ import FancyTestimonialsSlider from './testimonials'
         role: 'Intern at paisabazaar.com'
       },
       {
-        img: "https://upload.wikimedia.org/wikipedia/commons/thumb/1/1b/OpenText_logo.svg/2560px-OpenText_logo.svg.png",
+        img: "ttps://upload.wikimedia.org/wikipedia/commons/1/1b/OpenText_logo.svg",
         quote: "Attending the DSA and C++ lectures has truly been a game-changer for me. The guidance and regular doubt-clearing sessions were invaluable, helping me breeze through coding challenges and interview rounds with confidence. ",
         name: 'Priyanshu Singh',
         role: 'Software Engineer Intern at OpenText'

@@ -93,7 +93,13 @@ export async function fetchBatchTopicDetails(
 /**
  * Fetch video lecture details from the database.
  */
-export async function fetchVideoDetail(videoId: string): Promise<{ video: VideoLecture | null; error: string | null }> {
+export async function fetchVideoDetail(videoId: string): Promise<{
+  video: VideoLecture | null;
+  error: string | null;
+  requireLogin?: boolean;
+  isLocked?: boolean;
+  requirePro?: boolean;
+}> {
   try {
     const headers = await getAuthHeaders();
     const res = await fetch(`/api/videos/${encodeURIComponent(videoId)}`, {
@@ -102,9 +108,20 @@ export async function fetchVideoDetail(videoId: string): Promise<{ video: VideoL
     });
     const data = await res.json();
     if (!res.ok) {
-      return { video: null, error: data.error || `Video lecture '${videoId}' not found.` };
+      return {
+        video: null,
+        error: data.error || `Video lecture '${videoId}' not found.`,
+        requireLogin: res.status === 401 || data.requireLogin,
+        isLocked: true,
+        requirePro: data.require_pro,
+      };
     }
-    return { video: data.video || null, error: null };
+    return {
+      video: data.video || null,
+      error: null,
+      isLocked: Boolean(data.is_locked || data.video?.is_locked),
+      requirePro: Boolean(data.require_pro || data.video?.require_pro),
+    };
   } catch (error: any) {
     console.error("Error fetching video detail:", error);
     return { video: null, error: error.message || "Failed to load video lecture" };
@@ -114,7 +131,11 @@ export async function fetchVideoDetail(videoId: string): Promise<{ video: VideoL
 /**
  * Fetch practice problem details from the database.
  */
-export async function fetchProblemDetail(problemId: string): Promise<{ problem: PracticeProblem | null; error: string | null }> {
+export async function fetchProblemDetail(problemId: string): Promise<{
+  problem: PracticeProblem | null;
+  error: string | null;
+  isLocked?: boolean;
+}> {
   try {
     const headers = await getAuthHeaders();
     const res = await fetch(`/api/problems/${encodeURIComponent(problemId)}`, {
@@ -125,7 +146,11 @@ export async function fetchProblemDetail(problemId: string): Promise<{ problem: 
     if (!res.ok) {
       return { problem: null, error: data.error || `Practice problem '${problemId}' not found.` };
     }
-    return { problem: data.problem || null, error: null };
+    return {
+      problem: data.problem || null,
+      error: null,
+      isLocked: Boolean(data.is_locked),
+    };
   } catch (error: any) {
     console.error("Error fetching problem detail:", error);
     return { problem: null, error: error.message || "Failed to load practice problem" };

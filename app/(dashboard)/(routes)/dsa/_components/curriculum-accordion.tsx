@@ -34,10 +34,13 @@ import {
   Maximize2,
   SidebarOpen,
   Loader2,
+  Lock,
 } from "lucide-react";
 import { CourseSection, CourseSectionItem } from "@/types/course";
 import { UserAssetState } from "@/lib/user-states";
 import { ItemSlideDrawer } from "./item-slide-drawer";
+import { useProStatus } from "@/hooks/use-pro-status";
+import { ProRequiredModal } from "@/components/pro/pro-required-modal";
 
 interface CurriculumAccordionProps {
   sections: CourseSection[];
@@ -74,6 +77,8 @@ export const CurriculumAccordion: React.FC<CurriculumAccordionProps> = ({
   // Right slide-over drawer state
   const [selectedDrawerItem, setSelectedDrawerItem] = useState<CourseSectionItem | null>(null);
   const [isDrawerOpen, setIsDrawerOpen] = useState(false);
+  const { isPro } = useProStatus();
+  const [showProModal, setShowProModal] = useState(false);
 
   const getItemState = (item: CourseSectionItem): UserAssetState | undefined => {
     return (item.asset_id && userStates[item.asset_id]) || userStates[item.id];
@@ -325,6 +330,14 @@ export const CurriculumAccordion: React.FC<CurriculumAccordionProps> = ({
         onToggleBookmark={onToggleBookmark}
         topicSlug={topicSlug}
       />
+
+      {/* coding75 Pro Required Modal */}
+      <ProRequiredModal
+        isOpen={showProModal}
+        onClose={() => setShowProModal(false)}
+        title="Unlock coding75 Pro Access"
+        description="This video lecture is part of the coding75 Pro masterclass curriculum. Upgrade to full Pro access to watch all lectures."
+      />
     </div>
   );
 
@@ -332,6 +345,7 @@ export const CurriculumAccordion: React.FC<CurriculumAccordionProps> = ({
     const isVideo = item.type === "video";
     const isProblem = item.type === "problem";
     const isArticle = item.type === "article";
+    const isVideoLocked = isVideo && !item.is_free && !(item as any).isFree && !isPro;
 
     const state = getItemState(item);
     const currentStatus: "pending" | "done" | "revision" = state?.status || "pending";
@@ -362,6 +376,19 @@ export const CurriculumAccordion: React.FC<CurriculumAccordionProps> = ({
                 <Loader2 className="w-3.5 h-3.5 animate-spin text-muted-foreground shrink-0" />
                 <span>Loading...</span>
               </span>
+            ) : isVideoLocked ? (
+              <button
+                type="button"
+                onClick={(e) => {
+                  e.stopPropagation();
+                  setShowProModal(true);
+                }}
+                className="flex items-center gap-1 px-2 py-1 rounded-lg text-[11px] font-bold border transition-all shrink-0 bg-amber-500/10 text-amber-600 dark:text-amber-400 border-amber-500/30 hover:bg-amber-500/20 cursor-pointer"
+                title="Status Locked - coding75 Pro Required"
+              >
+                <Lock className="w-3 h-3 text-amber-500 shrink-0" />
+                <span>Locked</span>
+              </button>
             ) : (
               <DropdownMenu>
                 <DropdownMenuTrigger asChild>
@@ -421,17 +448,27 @@ export const CurriculumAccordion: React.FC<CurriculumAccordionProps> = ({
               type="button"
               onClick={(e) => {
                 e.stopPropagation();
+                if (isVideoLocked) {
+                  setShowProModal(true);
+                  return;
+                }
                 onToggleBookmark(targetAssetId, item.type);
               }}
               className={`p-1 rounded-md border transition-all shrink-0 ${
-                isBookmarked
+                isVideoLocked
+                  ? "border-transparent hover:bg-muted text-muted-foreground/40 hover:text-amber-500"
+                  : isBookmarked
                   ? "bg-amber-500/10 border-amber-500/30 text-amber-500"
                   : "border-transparent hover:bg-muted text-muted-foreground/40 hover:text-muted-foreground"
               }`}
-              title={isBookmarked ? "Saved in Bookmarks" : "Save / Bookmark"}
+              title={isVideoLocked ? "Bookmark Locked - coding75 Pro Required" : isBookmarked ? "Saved in Bookmarks" : "Save / Bookmark"}
               aria-label="Bookmark"
             >
-              <Bookmark className={`w-3.5 h-3.5 ${isBookmarked ? "fill-amber-500 text-amber-500" : ""}`} />
+              {isVideoLocked ? (
+                <Lock className="w-3.5 h-3.5 text-muted-foreground/50" />
+              ) : (
+                <Bookmark className={`w-3.5 h-3.5 ${isBookmarked ? "fill-amber-500 text-amber-500" : ""}`} />
+              )}
             </button>
           )}
 
@@ -454,11 +491,15 @@ export const CurriculumAccordion: React.FC<CurriculumAccordionProps> = ({
 
         {/* Right Action Toolbar */}
         <div className="flex items-center gap-2 shrink-0">
-          {item.is_free && (
-            <Badge variant="secondary" className="bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 text-[10px] h-5 border-emerald-500/20">
-              Free
+          {(item.is_free || (item as any).isFree) ? (
+            <Badge variant="secondary" className="bg-emerald-500/15 text-emerald-600 dark:text-emerald-400 text-[10px] font-black h-5 border border-emerald-500/30 font-mono tracking-wider">
+              FREE
             </Badge>
-          )}
+          ) : isVideo && !isPro ? (
+            <Badge variant="secondary" className="bg-amber-500/15 text-amber-600 dark:text-amber-400 text-[10px] font-black h-5 border border-amber-500/30 font-mono tracking-wider hidden sm:inline-flex">
+              PRO
+            </Badge>
+          ) : null}
 
           {item.duration_label && (
             <span
@@ -483,15 +524,30 @@ export const CurriculumAccordion: React.FC<CurriculumAccordionProps> = ({
           </span>
 
           {/* Direct Full Page Jump Button */}
-          <button
-            type="button"
-            onClick={(e) => handleDirectNavigate(e, item)}
-            className="flex items-center gap-1 px-2.5 py-1 rounded-lg text-xs font-bold bg-primary/10 text-primary hover:bg-primary hover:text-white transition-all shadow-xs"
-            title={`Open dedicated ${isVideo ? "lecture" : "problem"} page`}
-          >
-            <span>{isVideo ? "Watch" : isProblem ? "Solve" : "Open"}</span>
-            <Maximize2 size={11} />
-          </button>
+          {isVideo && !item.is_free && !(item as any).isFree && !isPro ? (
+            <button
+              type="button"
+              onClick={(e) => {
+                e.stopPropagation();
+                setShowProModal(true);
+              }}
+              className="flex items-center gap-1 px-2.5 py-1 rounded-lg text-xs font-bold bg-amber-500/15 text-amber-700 dark:text-amber-300 hover:bg-amber-500/25 border border-amber-500/30 transition-all shadow-2xs cursor-pointer"
+              title="Locked - coding75 Pro Required"
+            >
+              <Lock size={12} className="text-amber-500" />
+              <span>Locked</span>
+            </button>
+          ) : (
+            <button
+              type="button"
+              onClick={(e) => handleDirectNavigate(e, item)}
+              className="flex items-center gap-1 px-2.5 py-1 rounded-lg text-xs font-bold bg-primary/10 text-primary hover:bg-primary hover:text-white transition-all shadow-xs cursor-pointer"
+              title={`Open dedicated ${isVideo ? "lecture" : "problem"} page`}
+            >
+              <span>{isVideo ? "Watch" : isProblem ? "Solve" : "Open"}</span>
+              <Maximize2 size={11} />
+            </button>
+          )}
         </div>
       </div>
     );

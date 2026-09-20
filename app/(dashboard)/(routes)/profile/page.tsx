@@ -2,10 +2,12 @@
 
 import { useEffect, useState, useMemo } from "react";
 import { useRouter } from "next/navigation";
+import Link from "next/link";
 import Image from "next/image";
 import {
     User,
     Mail,
+    CreditCard,
     GraduationCap,
     Building2,
     Calendar,
@@ -42,9 +44,12 @@ import {
     cleanCodingHandle,
     getPlatformProfileUrl
 } from "@/lib/profile-constants";
+import { useProStatus } from "@/hooks/use-pro-status";
+import { cn } from "@/lib/utils";
 
 export default function ProfilePage() {
     const router = useRouter();
+    const { isPro } = useProStatus();
 
     const [loading, setLoading] = useState(true);
     const [saving, setSaving] = useState(false);
@@ -335,11 +340,37 @@ export default function ProfilePage() {
                 <div className="max-w-5xl mx-auto flex flex-col md:flex-row md:items-center justify-between gap-6">
                     <div>
                         <h1 className="text-3xl font-extrabold tracking-tight">
-                            Account & Profile Settings
+                            Account &amp; Profile Settings
                         </h1>
                         <p className="text-sm text-slate-300 mt-1 max-w-xl">
                             Manage your academic credentials, coding handles, and social links to personalize your learning experience.
                         </p>
+                        <div className="flex flex-wrap items-center gap-2.5 mt-4">
+                            <span className="px-3.5 py-1.5 rounded-xl bg-white/20 text-white text-xs font-bold border border-white/20 shadow-xs">
+                                Profile Details
+                            </span>
+                            <Link
+                                href="/profile/subscription"
+                                className="px-3.5 py-1.5 rounded-xl bg-white/10 hover:bg-white/20 text-slate-200 hover:text-white text-xs font-bold border border-white/10 transition-colors flex items-center gap-1.5"
+                            >
+                                <CreditCard className="w-3.5 h-3.5 text-amber-300" />
+                                <span>Subscription &amp; Billing</span>
+                            </Link>
+                            {isPro ? (
+                                <span className="px-3.5 py-1.5 rounded-xl bg-gradient-to-r from-amber-500 via-orange-500 to-amber-600 text-white text-xs font-black shadow-md shadow-amber-500/25 flex items-center gap-1.5">
+                                    <Sparkles className="w-3.5 h-3.5 text-amber-100" />
+                                    <span>coding75 PRO Active</span>
+                                </span>
+                            ) : (
+                                <Link
+                                    href="/pro"
+                                    className="px-3.5 py-1.5 rounded-xl bg-gradient-to-r from-amber-500 to-orange-500 text-white text-xs font-bold shadow-md shadow-amber-500/25 hover:from-amber-400 hover:to-orange-400 transition-all flex items-center gap-1.5"
+                                >
+                                    <Sparkles className="w-3.5 h-3.5 text-amber-100" />
+                                    <span>Upgrade to Pro</span>
+                                </Link>
+                            )}
+                        </div>
                     </div>
 
                     {/* Profile Completion Meter */}
@@ -383,7 +414,12 @@ export default function ProfilePage() {
                         <CardHeader className="pb-4">
                             <CardTitle className="text-lg font-bold text-gray-900 flex items-center gap-2">
                                 <User className="w-5 h-5 text-indigo-600" />
-                                Account Identity
+                                <span>Account Identity</span>
+                                {isPro && (
+                                    <span className="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full text-xs font-black bg-gradient-to-r from-amber-500 via-orange-500 to-amber-600 text-white shadow-xs">
+                                        <Sparkles className="w-3 h-3 text-amber-100" /> PRO MEMBER
+                                    </span>
+                                )}
                             </CardTitle>
                             <CardDescription className="text-xs text-gray-500">
                                 Identity metadata synced from your authentication provider
@@ -393,7 +429,14 @@ export default function ProfilePage() {
                             <div className="flex flex-col sm:flex-row items-center sm:items-start gap-6">
                                 {/* Profile Picture Preview */}
                                 <div className="relative group">
-                                    <div className="w-20 h-20 rounded-2xl overflow-hidden bg-gradient-to-tr from-indigo-500 to-purple-600 flex items-center justify-center text-white shadow-md border-2 border-white ring-2 ring-indigo-100">
+                                    <div
+                                        className={cn(
+                                            "w-20 h-20 rounded-2xl overflow-hidden flex items-center justify-center text-white shadow-md border-2 transition-all",
+                                            isPro
+                                                ? "bg-gradient-to-tr from-amber-500 via-orange-500 to-amber-600 border-amber-300 ring-4 ring-amber-400/40 shadow-amber-500/20"
+                                                : "bg-gradient-to-tr from-indigo-500 to-purple-600 border-white ring-2 ring-indigo-100"
+                                        )}
+                                    >
                                         {authUser?.avatar_url ? (
                                             <img
                                                 src={authUser.avatar_url}
@@ -406,9 +449,18 @@ export default function ProfilePage() {
                                             </span>
                                         )}
                                     </div>
-                                    <div className="absolute -bottom-1.5 -right-1.5 bg-emerald-500 text-white rounded-full p-1 shadow">
-                                        <CheckCircle2 className="w-3.5 h-3.5" />
-                                    </div>
+                                    {isPro ? (
+                                        <div
+                                            className="absolute -bottom-1.5 -right-1.5 bg-gradient-to-r from-amber-500 to-orange-500 text-white rounded-full p-1 shadow-md ring-2 ring-white"
+                                            title="coding75 Pro Active"
+                                        >
+                                            <Sparkles className="w-3.5 h-3.5" />
+                                        </div>
+                                    ) : (
+                                        <div className="absolute -bottom-1.5 -right-1.5 bg-emerald-500 text-white rounded-full p-1 shadow">
+                                            <CheckCircle2 className="w-3.5 h-3.5" />
+                                        </div>
+                                    )}
                                 </div>
 
                                 {/* Identity Fields */}

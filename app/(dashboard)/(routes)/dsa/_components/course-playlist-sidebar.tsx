@@ -19,6 +19,7 @@ import {
   CircleDot,
   Check,
   Layers,
+  Lock,
 } from "lucide-react";
 import {
   DropdownMenu,
@@ -29,6 +30,8 @@ import {
 import { Badge } from "@/components/ui/badge";
 import { CourseSection, CourseSectionItem, CourseSubsection } from "@/types/course";
 import { UserAssetState } from "@/lib/user-states";
+import { useProStatus } from "@/hooks/use-pro-status";
+import { ProRequiredModal } from "@/components/pro/pro-required-modal";
 
 interface CoursePlaylistSidebarProps {
   sections: CourseSection[];
@@ -57,6 +60,9 @@ export const CoursePlaylistSidebar: React.FC<CoursePlaylistSidebarProps> = ({
   className = "",
 }) => {
   const router = useRouter();
+  const { isPro } = useProStatus();
+  const [showProModal, setShowProModal] = useState(false);
+  const [lockedModalItem, setLockedModalItem] = useState<CourseSectionItem | null>(null);
   const [expandedSections, setExpandedSections] = useState<Record<string, boolean>>({});
   const [expandedSubsections, setExpandedSubsections] = useState<Record<string, boolean>>({});
   const [searchQuery, setSearchQuery] = useState("");
@@ -380,6 +386,19 @@ export const CoursePlaylistSidebar: React.FC<CoursePlaylistSidebarProps> = ({
           })
         )}
       </div>
+
+      {/* coding75 Pro Required Modal */}
+      <ProRequiredModal
+        isOpen={showProModal}
+        onClose={() => setShowProModal(false)}
+        title="Unlock coding75 Pro Access"
+        description={
+          lockedModalItem
+            ? `"${lockedModalItem.title}" is part of the coding75 Pro masterclass series. Upgrade to full Pro access to stream lectures and track progress.`
+            : "Upgrade to coding75 Pro to unlock full masterclass lectures and tracking."
+        }
+        featureName="coding75 Pro Masterclass"
+      />
     </div>
   );
 
@@ -397,6 +416,8 @@ export const CoursePlaylistSidebar: React.FC<CoursePlaylistSidebarProps> = ({
 
     const isVideo = item.type === "video";
     const isProblem = item.type === "problem";
+    const isVideoFree = Boolean(item.is_free || (item as any).isFree);
+    const isVideoLocked = isVideo && !isVideoFree && !isPro;
     const targetAssetId = item.asset_id || item.id;
 
     return (
@@ -412,56 +433,71 @@ export const CoursePlaylistSidebar: React.FC<CoursePlaylistSidebarProps> = ({
         }`}
       >
         {/* Status Dropdown Trigger Pill */}
-        <DropdownMenu>
-          <DropdownMenuTrigger asChild>
-            <button
-              type="button"
-              onClick={(e) => e.stopPropagation()}
-              className={`shrink-0 mt-0.5 p-0.5 rounded transition-transform hover:scale-110 ${
-                isCompleted
-                  ? "text-emerald-500"
-                  : isRevision
-                  ? "text-amber-500"
-                  : "text-muted-foreground/40 hover:text-muted-foreground"
-              }`}
-              title={`Status: ${currentStatus}`}
-            >
-              {isCompleted ? (
-                <CheckCircle2 size={15} className="fill-emerald-500/20 stroke-[2.5]" />
-              ) : isRevision ? (
-                <RotateCcw size={15} className="stroke-[2.5]" />
-              ) : (
-                <Circle size={15} />
-              )}
-            </button>
-          </DropdownMenuTrigger>
-          <DropdownMenuContent align="start" className="w-32 z-50">
-            <DropdownMenuItem
-              onClick={() => onUpdateStatus(targetAssetId, item.type, "pending")}
-              className="gap-2 text-[11px] cursor-pointer"
-            >
-              <CircleDot size={13} className="text-muted-foreground" />
-              <span>Pending</span>
-              {currentStatus === "pending" && <Check size={13} className="ml-auto text-primary" />}
-            </DropdownMenuItem>
-            <DropdownMenuItem
-              onClick={() => onUpdateStatus(targetAssetId, item.type, "revision")}
-              className="gap-2 text-[11px] cursor-pointer text-amber-600 dark:text-amber-400"
-            >
-              <RotateCcw size={13} className="text-amber-500" />
-              <span>Revise</span>
-              {currentStatus === "revision" && <Check size={13} className="ml-auto text-primary" />}
-            </DropdownMenuItem>
-            <DropdownMenuItem
-              onClick={() => onUpdateStatus(targetAssetId, item.type, "done")}
-              className="gap-2 text-[11px] cursor-pointer text-emerald-600 dark:text-emerald-400"
-            >
-              <CheckCircle2 size={13} className="text-emerald-500" />
-              <span>Done</span>
-              {currentStatus === "done" && <Check size={13} className="ml-auto text-primary" />}
-            </DropdownMenuItem>
-          </DropdownMenuContent>
-        </DropdownMenu>
+        {isVideoLocked ? (
+          <button
+            type="button"
+            onClick={(e) => {
+              e.stopPropagation();
+              setLockedModalItem(item);
+              setShowProModal(true);
+            }}
+            className="shrink-0 mt-0.5 p-0.5 rounded text-amber-500 hover:scale-110 transition-transform cursor-pointer"
+            title="Status locked - coding75 Pro required"
+          >
+            <Lock size={14} className="text-amber-500" />
+          </button>
+        ) : (
+          <DropdownMenu>
+            <DropdownMenuTrigger asChild>
+              <button
+                type="button"
+                onClick={(e) => e.stopPropagation()}
+                className={`shrink-0 mt-0.5 p-0.5 rounded transition-transform hover:scale-110 ${
+                  isCompleted
+                    ? "text-emerald-500"
+                    : isRevision
+                    ? "text-amber-500"
+                    : "text-muted-foreground/40 hover:text-muted-foreground"
+                }`}
+                title={`Status: ${currentStatus}`}
+              >
+                {isCompleted ? (
+                  <CheckCircle2 size={15} className="fill-emerald-500/20 stroke-[2.5]" />
+                ) : isRevision ? (
+                  <RotateCcw size={15} className="stroke-[2.5]" />
+                ) : (
+                  <Circle size={15} />
+                )}
+              </button>
+            </DropdownMenuTrigger>
+            <DropdownMenuContent align="start" className="w-32 z-50">
+              <DropdownMenuItem
+                onClick={() => onUpdateStatus(targetAssetId, item.type, "pending")}
+                className="gap-2 text-[11px] cursor-pointer"
+              >
+                <CircleDot size={13} className="text-muted-foreground" />
+                <span>Pending</span>
+                {currentStatus === "pending" && <Check size={13} className="ml-auto text-primary" />}
+              </DropdownMenuItem>
+              <DropdownMenuItem
+                onClick={() => onUpdateStatus(targetAssetId, item.type, "revision")}
+                className="gap-2 text-[11px] cursor-pointer text-amber-600 dark:text-amber-400"
+              >
+                <RotateCcw size={13} className="text-amber-500" />
+                <span>Revise</span>
+                {currentStatus === "revision" && <Check size={13} className="ml-auto text-primary" />}
+              </DropdownMenuItem>
+              <DropdownMenuItem
+                onClick={() => onUpdateStatus(targetAssetId, item.type, "done")}
+                className="gap-2 text-[11px] cursor-pointer text-emerald-600 dark:text-emerald-400"
+              >
+                <CheckCircle2 size={13} className="text-emerald-500" />
+                <span>Done</span>
+                {currentStatus === "done" && <Check size={13} className="ml-auto text-primary" />}
+              </DropdownMenuItem>
+            </DropdownMenuContent>
+          </DropdownMenu>
+        )}
 
         {/* Item Content: Title, Meta badges */}
         <div className="flex-1 min-w-0 space-y-0.5">
@@ -477,10 +513,21 @@ export const CoursePlaylistSidebar: React.FC<CoursePlaylistSidebarProps> = ({
             {item.title}
           </span>
 
-          <div className="flex items-center gap-1.5 text-[10px] text-muted-foreground">
+          <div className="flex items-center gap-1.5 text-[10px] text-muted-foreground flex-wrap">
             {isVideo && <PlayCircle size={11} className="text-blue-500 shrink-0" />}
             {isProblem && <Code2 size={11} className="text-emerald-500 shrink-0" />}
             <span className="uppercase font-mono text-[9px] font-bold">{item.type}</span>
+            {isVideo && (item.is_free || (item as any).isFree) && (
+              <span className="text-[9px] font-extrabold px-1 rounded bg-emerald-500/15 text-emerald-600 dark:text-emerald-400 border border-emerald-500/30">
+                FREE
+              </span>
+            )}
+            {isVideo && !(item.is_free || (item as any).isFree) && !isPro && (
+              <span className="flex items-center gap-0.5 text-[9px] font-bold text-amber-500">
+                <Lock size={9} className="text-amber-500" />
+                <span>PRO</span>
+              </span>
+            )}
             {item.duration_label && (
               <>
                 <span>•</span>
@@ -501,14 +548,27 @@ export const CoursePlaylistSidebar: React.FC<CoursePlaylistSidebarProps> = ({
           type="button"
           onClick={(e) => {
             e.stopPropagation();
+            if (isVideoLocked) {
+              setLockedModalItem(item);
+              setShowProModal(true);
+              return;
+            }
             onToggleBookmark(targetAssetId, item.type);
           }}
           className={`shrink-0 mt-0.5 p-1 rounded hover:bg-muted/60 transition-colors ${
-            isBookmarked ? "text-amber-500" : "text-muted-foreground/30 hover:text-muted-foreground"
+            isVideoLocked
+              ? "text-muted-foreground/30 hover:text-amber-500 cursor-pointer"
+              : isBookmarked
+              ? "text-amber-500"
+              : "text-muted-foreground/30 hover:text-muted-foreground"
           }`}
-          title={isBookmarked ? "Bookmarked" : "Bookmark"}
+          title={isVideoLocked ? "Bookmark locked - coding75 Pro required" : isBookmarked ? "Bookmarked" : "Bookmark"}
         >
-          <Bookmark size={12} className={isBookmarked ? "fill-amber-500 text-amber-500" : ""} />
+          {isVideoLocked ? (
+            <Lock size={12} className="text-muted-foreground/40" />
+          ) : (
+            <Bookmark size={12} className={isBookmarked ? "fill-amber-500 text-amber-500" : ""} />
+          )}
         </button>
       </div>
     );

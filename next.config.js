@@ -68,6 +68,11 @@ const nextConfig = {
                 destination: '/dsa/problem/:slug*',
                 permanent: false,
             },
+            {
+                source: '/internships',
+                destination: '/opportunities',
+                permanent: false,
+            },
         ];
     },
     webpack: (config) => {
@@ -78,6 +83,18 @@ const nextConfig = {
     turbopack: {},
     images: {
         remotePatterns: [
+            {
+                protocol: 'https',
+                hostname: '**.googleusercontent.com',
+            },
+            {
+                protocol: 'https',
+                hostname: 'lh3.googleusercontent.com',
+            },
+            {
+                protocol: 'https',
+                hostname: 'avatars.githubusercontent.com',
+            },
             {
                 protocol: 'https',
                 hostname: 'zettllhfmtvcunctalyo.supabase.co',

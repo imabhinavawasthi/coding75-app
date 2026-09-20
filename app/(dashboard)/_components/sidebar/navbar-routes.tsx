@@ -5,7 +5,7 @@ import React, { useEffect, useState } from "react";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import supabase from "@/supabase";
 import { getValidSession } from "@/lib/auth-client";
-import { Bell, LogIn, LogOut, MessageSquarePlusIcon, Rocket, User } from "lucide-react";
+import { Bell, LogIn, LogOut, MessageSquarePlusIcon, Rocket, User, Sparkles } from "lucide-react";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -26,12 +26,15 @@ import { Button } from "@/components/ui/button";
 import { feedback_form } from "@/components/social-links";
 import { Skeleton } from "@/components/ui/skeleton";
 import { Logo } from "../components/logo";
+import { useProStatus } from "@/hooks/use-pro-status";
+import { cn } from "@/lib/utils";
 
 export const NavbarRoutes = ({ isLogo = false }: any) => {
   const [notificationOpen, setNotificationOpen] = useState(false)
   const [user, setUser] = useState<any>(null)
   const pathname = usePathname(); 
   const [status, setStatus] = useState("loading")
+  const { isPro } = useProStatus();
 
   async function handleLogOut(e: any) {
     e.preventDefault()
@@ -113,13 +116,23 @@ export const NavbarRoutes = ({ isLogo = false }: any) => {
   return (
     <div className="flex items-center gap-2 sm:gap-3 ml-auto">
       {/* Coding75 Pro CTA Badge (hidden on mobile/tablet, visible only on desktop lg+) */}
-      <Link
-        href="/pro"
-        className="hidden lg:inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-semibold bg-gradient-to-r from-amber-500 via-orange-500 to-amber-600 text-white shadow-2xs hover:shadow-md hover:scale-[1.02] active:scale-[0.98] transition-all"
-      >
-        <Rocket className="w-3.5 h-3.5" />
-        <span>coding75 Pro</span>
-      </Link>
+      {isPro ? (
+        <Link
+          href="/pro/dashboard"
+          className="hidden lg:inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-bold bg-gradient-to-r from-amber-500 via-orange-500 to-amber-600 text-white shadow-2xs hover:shadow-md hover:scale-[1.02] active:scale-[0.98] transition-all"
+        >
+          <Sparkles className="w-3.5 h-3.5" />
+          <span>View Pro</span>
+        </Link>
+      ) : (
+        <Link
+          href="/pro"
+          className="hidden lg:inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-semibold bg-gradient-to-r from-amber-500 via-orange-500 to-amber-600 text-white shadow-2xs hover:shadow-md hover:scale-[1.02] active:scale-[0.98] transition-all"
+        >
+          <Rocket className="w-3.5 h-3.5" />
+          <span>coding75 Pro</span>
+        </Link>
+      )}
 
       {/* Notification Bell (hidden on mobile, visible from md) */}
       <DropdownMenu>
@@ -159,20 +172,42 @@ export const NavbarRoutes = ({ isLogo = false }: any) => {
         ) : user ? (
           <DropdownMenu>
             <DropdownMenuTrigger asChild className="cursor-pointer">
-              <button className="rounded-full ring-1 ring-border/80 hover:ring-2 hover:ring-primary/40 transition-all focus:outline-none">
+              <button
+                className={cn(
+                  "relative rounded-full transition-all focus:outline-none",
+                  isPro
+                    ? "ring-2 ring-amber-500 ring-offset-2 ring-offset-background hover:ring-amber-400"
+                    : "ring-1 ring-border/80 hover:ring-2 hover:ring-primary/40"
+                )}
+              >
                 <Avatar className="h-8 w-8">
                   <AvatarImage src={user?.["user_metadata"]?.["picture"]} alt={user?.["user_metadata"]?.["full_name"] || "User"} />
                   <AvatarFallback className="text-xs font-bold bg-primary/10 text-primary">
                     {user?.["user_metadata"]?.["full_name"]?.[0]?.toUpperCase() || <User className="w-3.5 h-3.5" />}
                   </AvatarFallback>
                 </Avatar>
+                {isPro && (
+                  <span
+                    className="absolute -bottom-1 -right-1 bg-gradient-to-r from-amber-500 to-orange-500 text-white text-[8px] font-black px-1.5 py-0.2 rounded-full ring-2 ring-background shadow-xs tracking-wider uppercase leading-tight"
+                    title="coding75 Pro Active"
+                  >
+                    PRO
+                  </span>
+                )}
               </button>
             </DropdownMenuTrigger>
             <DropdownMenuContent align="end" className="w-56 p-1.5 shadow-xl rounded-xl z-50">
               <div className="px-2.5 py-2 border-b border-border/60">
-                <p className="text-xs font-semibold text-foreground truncate">
-                  {user?.["user_metadata"]?.["full_name"] || "User"}
-                </p>
+                <div className="flex items-center justify-between gap-1.5">
+                  <p className="text-xs font-semibold text-foreground truncate">
+                    {user?.["user_metadata"]?.["full_name"] || "User"}
+                  </p>
+                  {isPro && (
+                    <span className="inline-flex items-center gap-0.5 px-1.5 py-0.2 rounded text-[9px] font-black bg-amber-500/15 text-amber-600 dark:text-amber-400 border border-amber-500/30 shrink-0 uppercase tracking-wider">
+                      PRO
+                    </span>
+                  )}
+                </div>
                 <p className="text-[11px] text-muted-foreground truncate">
                   {user?.["email"] || ""}
                 </p>
@@ -185,9 +220,18 @@ export const NavbarRoutes = ({ isLogo = false }: any) => {
                   </Link>
                 </DropdownMenuItem>
                 <DropdownMenuItem asChild className="p-0 rounded-lg">
-                  <Link href="/classroom/subscription" className="flex items-center gap-2 px-2.5 py-2 text-xs font-medium cursor-pointer rounded-lg hover:bg-muted">
-                    <Rocket className="w-3.5 h-3.5 text-amber-500" />
-                    <span>Pro Subscription</span>
+                  <Link href={isPro ? "/pro/dashboard" : "/profile/subscription"} className="flex items-center gap-2 px-2.5 py-2 text-xs font-medium cursor-pointer rounded-lg hover:bg-muted">
+                    {isPro ? (
+                      <>
+                        <Sparkles className="w-3.5 h-3.5 text-amber-500" />
+                        <span>Pro Dashboard</span>
+                      </>
+                    ) : (
+                      <>
+                        <Rocket className="w-3.5 h-3.5 text-amber-500" />
+                        <span>Pro Subscription</span>
+                      </>
+                    )}
                   </Link>
                 </DropdownMenuItem>
                 <DropdownMenuItem asChild className="p-0 rounded-lg">

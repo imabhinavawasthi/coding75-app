@@ -20,6 +20,7 @@ import { toast } from 'sonner';
 import ErrorBanner from '../../_components/banners/error-banner';
 import Loading from '@/components/loading';
 import LoginRequiredPage from "../../_components/components/login-required"
+import { AuthModal } from "@/components/auth/auth-modal";
 import {
     Tooltip,
     TooltipContent,
@@ -174,6 +175,7 @@ interface skillDetailsType {
 const Resume = () => {
     const [currentTab, setCurrentTab] = useState('personal-details')
     const [user, setUser] = useState<any>(null)
+    const [showAuthModal, setShowAuthModal] = useState(false)
     const [createResumeStatus, setCreateResumeStatus] = useState("pending")
     const [status, setStatus] = useState<statusType>({
         loadData: "pending",
@@ -615,6 +617,7 @@ const Resume = () => {
                 ...status,
                 loadData: "done"
             })
+            setShowAuthModal(true);
             return;
         }
         try {
@@ -1210,7 +1213,18 @@ const Resume = () => {
                         {
                             user == null ?
                                 <>
-                                    <LoginRequiredPage />
+                                    <LoginRequiredPage
+                                        title="Sign In to Build Your Resume"
+                                        description="Create an ATS-friendly, recruiter-approved software engineering resume with live preview and instant PDF export."
+                                        featureName="Resume Builder"
+                                    />
+                                    <AuthModal
+                                        isOpen={showAuthModal}
+                                        onClose={() => setShowAuthModal(false)}
+                                        title="Sign In to Build Your Resume"
+                                        description="Create an ATS-friendly, recruiter-approved software engineering resume with live preview and instant PDF export."
+                                        featureName="Resume Builder"
+                                    />
                                 </> :
                                 <>
                                     <div className='grid grid-cols-12 gap-x-5'>

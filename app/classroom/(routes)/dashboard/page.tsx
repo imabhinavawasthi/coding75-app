@@ -196,7 +196,7 @@ const ClassroomDashboard = () => {
                         title="coding75 Pro"
                         heading="Subscription Details"
                         description="Details of your coding75 Pro subscription."
-                        href="/classroom/subscription"
+                        href="/profile/subscription"
                         icon={Code2}
                     />
                 </div>

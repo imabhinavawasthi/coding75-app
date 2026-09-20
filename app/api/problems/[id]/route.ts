@@ -1,5 +1,6 @@
 import { NextResponse } from 'next/server';
 import { getSupabaseServerClient } from '../../_lib/supabase-server';
+import { getAuthUser } from '../../_lib/auth';
 
 export async function GET(
     req: Request,
@@ -10,6 +11,9 @@ export async function GET(
         if (!id) {
             return NextResponse.json({ error: 'Problem ID is required' }, { status: 400 });
         }
+
+        const user = await getAuthUser(req);
+        const isLoggedIn = Boolean(user);
 
         const authHeader = req.headers.get('authorization') || req.headers.get('Authorization');
         let token = '';
@@ -38,7 +42,32 @@ export async function GET(
             return NextResponse.json({ error: 'Practice problem not found' }, { status: 404 });
         }
 
-        return NextResponse.json({ problem: data }, { status: 200 });
+        // If user is not authenticated, redact paid editorial and solution content
+        if (!isLoggedIn) {
+            const hasEditorial = Boolean(
+                data.editorial ||
+                data.video_editorial ||
+                (data.resources?.video_lectures && data.resources.video_lectures.length > 0)
+            );
+
+            const redactedProblem = {
+                ...data,
+                solutions: null,
+                editorial: null,
+                video_editorial: null,
+                editorial_code: null,
+                resources: {
+                    ...(data.resources || {}),
+                    video_lectures: [],
+                },
+                is_locked: true,
+                has_editorial: hasEditorial,
+            };
+
+            return NextResponse.json({ problem: redactedProblem, is_locked: true }, { status: 200 });
+        }
+
+        return NextResponse.json({ problem: data, is_locked: false }, { status: 200 });
     } catch (err: any) {
         console.error('Error in GET /api/problems/[id]:', err);
         return NextResponse.json({ error: 'Internal server error' }, { status: 500 });

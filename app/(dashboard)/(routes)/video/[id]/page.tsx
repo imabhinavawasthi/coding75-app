@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useEffect, useState, useMemo } from "react";
+import React, { useEffect, useState, useMemo, Suspense } from "react";
 import { useParams, useRouter, useSearchParams } from "next/navigation";
 import Link from "next/link";
 import {
@@ -26,6 +26,7 @@ import {
   BookOpen,
   HelpCircle,
   Layers,
+  Lock,
 } from "lucide-react";
 import {
   DropdownMenu,
@@ -35,6 +36,8 @@ import {
 } from "@/components/ui/dropdown-menu";
 import { fetchCourseCurriculum, fetchVideoDetail, TARGET_DSA_COURSE_ID } from "@/lib/courses";
 import { fetchUserAssetStates, saveUserAssetState, UserAssetState, UserNote } from "@/lib/user-states";
+import { getValidSession } from "@/lib/auth-client";
+import { AuthModal } from "@/components/auth/auth-modal";
 import { CourseSection, CourseSectionItem, VideoLecture } from "@/types/course";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
@@ -43,6 +46,8 @@ import { Card, CardHeader, CardTitle, CardContent } from "@/components/ui/card";
 import { Sheet, SheetContent, SheetHeader, SheetTitle, SheetTrigger } from "@/components/ui/sheet";
 import { CoursePlaylistSidebar } from "../../dsa/_components/course-playlist-sidebar";
 import { ProtectedVideoPlayer } from "../../dsa/_components/protected-video-player";
+import { useProStatus } from "@/hooks/use-pro-status";
+import { ProRequiredModal } from "@/components/pro/pro-required-modal";
 
 interface EmbedInfo {
   embedUrl: string | null;
@@ -110,7 +115,7 @@ function formatDuration(seconds?: number): string {
   return secs > 0 ? `${mins}m ${secs}s` : `${mins}m`;
 }
 
-export default function VideoLecturePage() {
+function VideoLectureContent() {
   const params = useParams();
   const router = useRouter();
   const searchParams = useSearchParams();
@@ -122,6 +127,11 @@ export default function VideoLecturePage() {
   const [userStates, setUserStates] = useState<Record<string, UserAssetState>>({});
   const [isLoading, setIsLoading] = useState(true);
   const [copied, setCopied] = useState(false);
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [showAuthModal, setShowAuthModal] = useState(false);
+  const [authError, setAuthError] = useState(false);
+  const { isPro } = useProStatus();
+  const [showProModal, setShowProModal] = useState(false);
 
   // Notes state
   const [newNoteText, setNewNoteText] = useState("");
@@ -158,6 +168,12 @@ export default function VideoLecturePage() {
     async function loadData() {
       setIsLoading(true);
       try {
+        const session = await getValidSession();
+        const loggedIn = Boolean(session?.user);
+        if (isMounted) {
+          setIsLoggedIn(loggedIn);
+        }
+
         const [curriculumData, statesData, videoRes] = await Promise.all([
           fetchCourseCurriculum(TARGET_DSA_COURSE_ID),
           fetchUserAssetStates(),
@@ -169,6 +185,12 @@ export default function VideoLecturePage() {
           setUserStates(statesData);
           if (videoRes.video) {
             setVideoDetail(videoRes.video);
+          }
+
+          const isVideoFree = Boolean(videoRes.video?.is_free);
+          if (!isVideoFree && (videoRes.requireLogin || !loggedIn)) {
+            setAuthError(true);
+            setShowAuthModal(true);
           }
 
           const activeId = resolvedAssetId;
@@ -203,7 +225,18 @@ export default function VideoLecturePage() {
   const rawVideoUrl = videoDetail?.embed_url || videoDetail?.video_url || currentItem?.video_url || "";
   const embedInfo = getEmbedInfo(rawVideoUrl, activeId);
 
+  const isVideoFree = Boolean(videoDetail?.is_free || currentItem?.is_free);
+  const isVideoLocked = !isVideoFree && (videoDetail?.is_locked || videoDetail?.require_pro || !isPro);
+
   const handleUpdateStatus = async (newStatus: "pending" | "done" | "revision") => {
+    if (isVideoLocked) {
+      setShowProModal(true);
+      return;
+    }
+    if (!isLoggedIn) {
+      setShowAuthModal(true);
+      return;
+    }
     const updated = await saveUserAssetState({
       asset_id: activeId,
       asset_type: "video",
@@ -218,6 +251,14 @@ export default function VideoLecturePage() {
   };
 
   const handleToggleBookmark = async () => {
+    if (isVideoLocked) {
+      setShowProModal(true);
+      return;
+    }
+    if (!isLoggedIn) {
+      setShowAuthModal(true);
+      return;
+    }
     const updated = await saveUserAssetState({
       asset_id: activeId,
       asset_type: "video",
@@ -231,6 +272,18 @@ export default function VideoLecturePage() {
     assetType: "video" | "problem" | "article",
     newStatus: "pending" | "done" | "revision"
   ) => {
+    const targetEntry = allItems.find((e) => e.item.id === itemId || e.item.asset_id === itemId);
+    const targetItem = targetEntry?.item;
+    const isTargetFree = Boolean(targetItem?.is_free || (targetItem as any)?.isFree);
+    const isTargetLocked = targetItem && targetItem.type === "video" && !isTargetFree && !isPro;
+    if (isTargetLocked) {
+      setShowProModal(true);
+      return;
+    }
+    if (!isLoggedIn) {
+      setShowAuthModal(true);
+      return;
+    }
     const updated = await saveUserAssetState({
       asset_id: itemId,
       asset_type: assetType,
@@ -243,6 +296,18 @@ export default function VideoLecturePage() {
     itemId: string,
     assetType: "video" | "problem" | "article"
   ) => {
+    const targetEntry = allItems.find((e) => e.item.id === itemId || e.item.asset_id === itemId);
+    const targetItem = targetEntry?.item;
+    const isTargetFree = Boolean(targetItem?.is_free || (targetItem as any)?.isFree);
+    const isTargetLocked = targetItem && targetItem.type === "video" && !isTargetFree && !isPro;
+    if (isTargetLocked) {
+      setShowProModal(true);
+      return;
+    }
+    if (!isLoggedIn) {
+      setShowAuthModal(true);
+      return;
+    }
     const currentState = userStates[itemId];
     const isSaved = currentState?.is_bookmarked ?? false;
     const updated = await saveUserAssetState({
@@ -255,6 +320,14 @@ export default function VideoLecturePage() {
 
   const handleAddNote = async (e: React.FormEvent) => {
     e.preventDefault();
+    if (isVideoLocked) {
+      setShowProModal(true);
+      return;
+    }
+    if (!isLoggedIn) {
+      setShowAuthModal(true);
+      return;
+    }
     if (!newNoteText.trim()) return;
     const newNote: UserNote = {
       id: `note-${Date.now()}`,
@@ -273,6 +346,10 @@ export default function VideoLecturePage() {
   };
 
   const handleDeleteNote = async (noteId: string) => {
+    if (isVideoLocked) {
+      setShowProModal(true);
+      return;
+    }
     const updatedNotes = notes.filter((n) => n.id !== noteId);
     setNotes(updatedNotes);
     await saveUserAssetState({
@@ -379,16 +456,100 @@ export default function VideoLecturePage() {
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
         {/* Left 2 Cols: Player & Content */}
         <div className="lg:col-span-2 space-y-6">
-          {/* Protected Video Player */}
-          <ProtectedVideoPlayer embedUrl={embedInfo.embedUrl} title={title} />
+          {/* Protected Video Player or Locked Overlay */}
+          {!isLoggedIn && !videoDetail?.is_free && !currentItem?.is_free ? (
+            <div className="relative overflow-hidden rounded-2xl sm:rounded-3xl border border-amber-500/30 bg-gradient-to-br from-gray-950 via-slate-900 to-amber-950/20 aspect-video flex flex-col items-center justify-center text-center p-6 sm:p-10 shadow-xl group">
+              <div className="absolute top-0 right-0 w-64 h-64 bg-amber-500/10 rounded-full blur-3xl pointer-events-none" />
+              <div className="absolute bottom-0 left-0 w-64 h-64 bg-primary/10 rounded-full blur-3xl pointer-events-none" />
+
+              <div className="relative z-10 max-w-md space-y-4">
+                <div className="w-14 h-14 rounded-2xl bg-amber-500/15 border border-amber-500/30 text-amber-500 flex items-center justify-center mx-auto shadow-lg shadow-amber-500/10">
+                  <Lock className="w-7 h-7" />
+                </div>
+
+                <div className="space-y-1.5">
+                  <div className="inline-flex items-center gap-1.5 px-3 py-0.5 rounded-full bg-amber-500/15 border border-amber-500/30 text-amber-400 text-xs font-bold uppercase tracking-wider">
+                    <span>Premium Video Lecture</span>
+                  </div>
+                  <h2 className="text-xl sm:text-2xl font-black text-white tracking-tight">
+                    Video Lecture is Locked
+                  </h2>
+                  <p className="text-xs sm:text-sm text-gray-300 leading-relaxed">
+                    This video is part of CrackDSA's structured curriculum. Sign in with your account to unlock this stream, follow the roadmap, and save notes.
+                  </p>
+                </div>
+
+                <div className="pt-2">
+                  <Button
+                    onClick={() => setShowAuthModal(true)}
+                    className="rounded-xl font-bold text-xs h-10 px-5 bg-gradient-to-r from-amber-500 to-orange-500 text-white hover:from-amber-600 hover:to-orange-600 shadow-md gap-2 cursor-pointer"
+                  >
+                    <Lock className="w-3.5 h-3.5" />
+                    <span>Sign In to Watch Lecture</span>
+                  </Button>
+                </div>
+              </div>
+            </div>
+          ) : (!videoDetail?.is_free && !currentItem?.is_free && (videoDetail?.is_locked || videoDetail?.require_pro || !isPro)) ? (
+            <div className="relative overflow-hidden rounded-2xl sm:rounded-3xl border border-amber-500/30 bg-gradient-to-br from-gray-950 via-slate-900 to-amber-950/20 aspect-video flex flex-col items-center justify-center text-center p-6 sm:p-10 shadow-xl group">
+              <div className="absolute top-0 right-0 w-64 h-64 bg-amber-500/10 rounded-full blur-3xl pointer-events-none" />
+              <div className="absolute bottom-0 left-0 w-64 h-64 bg-orange-500/10 rounded-full blur-3xl pointer-events-none" />
+
+              <div className="relative z-10 max-w-md space-y-4">
+                <div className="w-14 h-14 rounded-2xl bg-amber-500/15 border border-amber-500/30 text-amber-500 flex items-center justify-center mx-auto shadow-lg shadow-amber-500/10">
+                  <Lock className="w-7 h-7" />
+                </div>
+
+                <div className="space-y-1.5">
+                  <div className="inline-flex items-center gap-1.5 px-3 py-0.5 rounded-full bg-amber-500/15 border border-amber-500/30 text-amber-400 text-xs font-bold uppercase tracking-wider">
+                    <Sparkles className="w-3.5 h-3.5" />
+                    <span>coding75 Pro Required</span>
+                  </div>
+                  <h2 className="text-xl sm:text-2xl font-black text-white tracking-tight">
+                    Video is Locked
+                  </h2>
+                  <p className="text-xs sm:text-sm text-gray-300 leading-relaxed">
+                    This lecture is part of the coding75 Pro masterclass curriculum. Upgrade to the 2-Year Pass at just ₹8/day to stream all 150+ video lectures, join weekly live doubt classes, and get placement preparation.
+                  </p>
+                </div>
+
+                <div className="flex flex-wrap items-center justify-center gap-3 pt-2">
+                  <Button
+                    onClick={() => setShowProModal(true)}
+                    className="rounded-xl font-bold text-xs h-10 px-5 bg-gradient-to-r from-amber-500 to-orange-500 text-white hover:from-amber-600 hover:to-orange-600 shadow-md gap-2 cursor-pointer"
+                  >
+                    <Sparkles className="w-3.5 h-3.5" />
+                    <span>Unlock coding75 Pro</span>
+                  </Button>
+                  <Link href="/pro/checkout?plan=yearly">
+                    <Button
+                      variant="outline"
+                      className="rounded-xl font-bold text-xs h-10 px-4 border-amber-500/30 text-amber-300 hover:bg-amber-500/10 cursor-pointer"
+                    >
+                      <span>Go to Checkout</span>
+                      <ArrowRight className="w-3.5 h-3.5 ml-1" />
+                    </Button>
+                  </Link>
+                </div>
+              </div>
+            </div>
+          ) : (
+            <ProtectedVideoPlayer embedUrl={embedInfo.embedUrl} title={title} />
+          )}
 
           {/* Action Toolbar */}
           <div className="flex flex-wrap items-center justify-between gap-4 p-4 rounded-2xl border bg-card shadow-xs">
             <div className="space-y-1">
               <div className="flex items-center gap-2">
-                <Badge variant="secondary" className="text-[10px] uppercase font-bold bg-blue-500/10 text-blue-600 dark:text-blue-400">
-                  Video Lecture
-                </Badge>
+                {videoDetail?.is_free || currentItem?.is_free ? (
+                  <Badge variant="secondary" className="text-[10px] uppercase font-black bg-emerald-500/15 text-emerald-600 dark:text-emerald-400 border border-emerald-500/25">
+                    Free Preview
+                  </Badge>
+                ) : (
+                  <Badge variant="secondary" className="text-[10px] uppercase font-bold bg-amber-500/15 text-amber-600 dark:text-amber-400 border border-amber-500/25">
+                    coding75 Pro
+                  </Badge>
+                )}
                 {durationLabel && (
                   <span className="text-xs text-muted-foreground font-mono flex items-center gap-1">
                     <Clock size={12} /> {durationLabel}
@@ -402,53 +563,69 @@ export default function VideoLecturePage() {
 
             {/* Actions: Status Dropdown, Bookmark, Share */}
             <div className="flex items-center gap-2">
-              <DropdownMenu>
-                <DropdownMenuTrigger asChild>
-                  <Button
-                    variant="outline"
-                    size="sm"
-                    className={`gap-1.5 text-xs font-bold ${
-                      currentStatus === "done"
-                        ? "bg-emerald-600 hover:bg-emerald-700 text-white border-emerald-600"
-                        : currentStatus === "revision"
-                        ? "bg-amber-500 hover:bg-amber-600 text-white border-amber-500"
-                        : ""
-                    }`}
-                  >
-                    {currentStatus === "done" && <CheckCircle2 size={15} />}
-                    {currentStatus === "revision" && <RotateCcw size={15} />}
-                    {currentStatus === "pending" && <CircleDot size={15} />}
-                    <span>{currentStatus === "done" ? "Done" : currentStatus === "revision" ? "Revise" : "Pending"}</span>
-                    <ChevronDown size={13} className="opacity-70 ml-0.5" />
-                  </Button>
-                </DropdownMenuTrigger>
-                <DropdownMenuContent align="end" className="w-36">
-                  <DropdownMenuItem onClick={() => handleUpdateStatus("pending")} className="gap-2 text-xs font-medium cursor-pointer">
-                    <CircleDot size={14} className="text-muted-foreground" />
-                    <span>Pending</span>
-                    {currentStatus === "pending" && <Check size={14} className="ml-auto text-primary" />}
-                  </DropdownMenuItem>
-                  <DropdownMenuItem onClick={() => handleUpdateStatus("revision")} className="gap-2 text-xs font-medium cursor-pointer text-amber-600 dark:text-amber-400">
-                    <RotateCcw size={14} className="text-amber-500" />
-                    <span>Revise</span>
-                    {currentStatus === "revision" && <Check size={14} className="ml-auto text-primary" />}
-                  </DropdownMenuItem>
-                  <DropdownMenuItem onClick={() => handleUpdateStatus("done")} className="gap-2 text-xs font-medium cursor-pointer text-emerald-600 dark:text-emerald-400">
-                    <CheckCircle2 size={14} className="text-emerald-500" />
-                    <span>Done</span>
-                    {currentStatus === "done" && <Check size={14} className="ml-auto text-primary" />}
-                  </DropdownMenuItem>
-                </DropdownMenuContent>
-              </DropdownMenu>
+              {isVideoLocked ? (
+                <Button
+                  variant="outline"
+                  size="sm"
+                  onClick={() => setShowProModal(true)}
+                  className="gap-1.5 text-xs font-bold border-amber-500/30 text-amber-600 dark:text-amber-400 bg-amber-500/5 hover:bg-amber-500/15 cursor-pointer"
+                >
+                  <Lock size={14} className="text-amber-500" />
+                  <span>Locked</span>
+                </Button>
+              ) : (
+                <DropdownMenu>
+                  <DropdownMenuTrigger asChild>
+                    <Button
+                      variant="outline"
+                      size="sm"
+                      className={`gap-1.5 text-xs font-bold ${
+                        currentStatus === "done"
+                          ? "bg-emerald-600 hover:bg-emerald-700 text-white border-emerald-600"
+                          : currentStatus === "revision"
+                          ? "bg-amber-500 hover:bg-amber-600 text-white border-amber-500"
+                          : ""
+                      }`}
+                    >
+                      {currentStatus === "done" && <CheckCircle2 size={15} />}
+                      {currentStatus === "revision" && <RotateCcw size={15} />}
+                      {currentStatus === "pending" && <CircleDot size={15} />}
+                      <span>{currentStatus === "done" ? "Done" : currentStatus === "revision" ? "Revise" : "Pending"}</span>
+                      <ChevronDown size={13} className="opacity-70 ml-0.5" />
+                    </Button>
+                  </DropdownMenuTrigger>
+                  <DropdownMenuContent align="end" className="w-36">
+                    <DropdownMenuItem onClick={() => handleUpdateStatus("pending")} className="gap-2 text-xs font-medium cursor-pointer">
+                      <CircleDot size={14} className="text-muted-foreground" />
+                      <span>Pending</span>
+                      {currentStatus === "pending" && <Check size={14} className="ml-auto text-primary" />}
+                    </DropdownMenuItem>
+                    <DropdownMenuItem onClick={() => handleUpdateStatus("revision")} className="gap-2 text-xs font-medium cursor-pointer text-amber-600 dark:text-amber-400">
+                      <RotateCcw size={14} className="text-amber-500" />
+                      <span>Revise</span>
+                      {currentStatus === "revision" && <Check size={14} className="ml-auto text-primary" />}
+                    </DropdownMenuItem>
+                    <DropdownMenuItem onClick={() => handleUpdateStatus("done")} className="gap-2 text-xs font-medium cursor-pointer text-emerald-600 dark:text-emerald-400">
+                      <CheckCircle2 size={14} className="text-emerald-500" />
+                      <span>Done</span>
+                      {currentStatus === "done" && <Check size={14} className="ml-auto text-primary" />}
+                    </DropdownMenuItem>
+                  </DropdownMenuContent>
+                </DropdownMenu>
+              )}
 
               <Button
                 variant={isBookmarked ? "secondary" : "outline"}
                 size="sm"
-                onClick={handleToggleBookmark}
+                onClick={isVideoLocked ? () => setShowProModal(true) : handleToggleBookmark}
                 className={`gap-1.5 text-xs font-bold ${isBookmarked ? "text-amber-500 border-amber-500/40 bg-amber-500/10" : ""}`}
               >
-                <Bookmark size={15} className={isBookmarked ? "fill-amber-500 text-amber-500" : ""} />
-                {isBookmarked ? "Saved" : "Save"}
+                {isVideoLocked ? (
+                  <Lock size={14} className="text-muted-foreground" />
+                ) : (
+                  <Bookmark size={15} className={isBookmarked ? "fill-amber-500 text-amber-500" : ""} />
+                )}
+                <span>{isBookmarked ? "Saved" : "Save"}</span>
               </Button>
 
               <Button variant="ghost" size="sm" onClick={handleCopyLink} className="gap-1 text-xs">
@@ -554,46 +731,70 @@ export default function VideoLecturePage() {
                   </CardTitle>
                 </CardHeader>
                 <CardContent className="space-y-4">
-                  {/* Note Input */}
-                  <form onSubmit={handleAddNote} className="space-y-2">
-                    <textarea
-                      value={newNoteText}
-                      onChange={(e) => setNewNoteText(e.target.value)}
-                      placeholder="Write your personal takeaways, pseudo-code, or bookmarks..."
-                      className="w-full min-h-[90px] rounded-xl border border-border bg-background p-3 text-xs sm:text-sm focus:outline-none focus:border-primary placeholder:text-muted-foreground"
-                    />
-                    <div className="flex justify-end">
-                      <Button type="submit" size="sm" className="gap-1.5 text-xs font-bold">
-                        <Plus size={14} /> Add Note
+                  {isVideoLocked ? (
+                    <div className="py-8 px-4 text-center rounded-xl border border-dashed border-amber-500/30 bg-amber-500/5 space-y-3">
+                      <div className="w-10 h-10 rounded-full bg-amber-500/10 text-amber-500 flex items-center justify-center mx-auto">
+                        <Lock className="w-5 h-5" />
+                      </div>
+                      <div className="space-y-1">
+                        <h4 className="text-sm font-bold text-foreground">Lecture Notes are Locked</h4>
+                        <p className="text-xs text-muted-foreground max-w-sm mx-auto">
+                          Taking notes, saving timestamps, and tracking revision for this masterclass lecture is reserved for coding75 Pro members.
+                        </p>
+                      </div>
+                      <Button
+                        size="sm"
+                        onClick={() => setShowProModal(true)}
+                        className="rounded-lg text-xs font-bold bg-gradient-to-r from-amber-500 to-orange-500 text-white hover:from-amber-600 hover:to-orange-600 gap-1.5 cursor-pointer shadow-sm"
+                      >
+                        <Sparkles size={13} />
+                        <span>Unlock with Pro</span>
                       </Button>
                     </div>
-                  </form>
-
-                  {/* Notes List */}
-                  {notes.length === 0 ? (
-                    <p className="text-xs text-muted-foreground text-center py-6">
-                      No notes yet. Capture key insights as you study this lecture.
-                    </p>
                   ) : (
-                    <div className="space-y-2.5 pt-2 border-t">
-                      {notes.map((note) => (
-                        <div
-                          key={note.id}
-                          className="flex items-start justify-between gap-3 p-3 rounded-xl border bg-muted/30 text-xs sm:text-sm"
-                        >
-                          <p className="text-foreground whitespace-pre-wrap leading-relaxed flex-1">
-                            {note.text}
-                          </p>
-                          <button
-                            onClick={() => handleDeleteNote(note.id)}
-                            className="text-muted-foreground hover:text-red-500 p-1 shrink-0"
-                            title="Delete note"
-                          >
-                            <Trash2 size={13} />
-                          </button>
+                    <>
+                      {/* Note Input */}
+                      <form onSubmit={handleAddNote} className="space-y-2">
+                        <textarea
+                          value={newNoteText}
+                          onChange={(e) => setNewNoteText(e.target.value)}
+                          placeholder="Write your personal takeaways, pseudo-code, or bookmarks..."
+                          className="w-full min-h-[90px] rounded-xl border border-border bg-background p-3 text-xs sm:text-sm focus:outline-none focus:border-primary placeholder:text-muted-foreground"
+                        />
+                        <div className="flex justify-end">
+                          <Button type="submit" size="sm" className="gap-1.5 text-xs font-bold">
+                            <Plus size={14} /> Add Note
+                          </Button>
                         </div>
-                      ))}
-                    </div>
+                      </form>
+
+                      {/* Notes List */}
+                      {notes.length === 0 ? (
+                        <p className="text-xs text-muted-foreground text-center py-6">
+                          No notes yet. Capture key insights as you study this lecture.
+                        </p>
+                      ) : (
+                        <div className="space-y-2.5 pt-2 border-t">
+                          {notes.map((note) => (
+                            <div
+                              key={note.id}
+                              className="flex items-start justify-between gap-3 p-3 rounded-xl border bg-muted/30 text-xs sm:text-sm"
+                            >
+                              <p className="text-foreground whitespace-pre-wrap leading-relaxed flex-1">
+                                {note.text}
+                              </p>
+                              <button
+                                onClick={() => handleDeleteNote(note.id)}
+                                className="text-muted-foreground hover:text-red-500 p-1 shrink-0"
+                                title="Delete note"
+                              >
+                                <Trash2 size={13} />
+                              </button>
+                            </div>
+                          ))}
+                        </div>
+                      )}
+                    </>
                   )}
                 </CardContent>
               </Card>
@@ -635,6 +836,42 @@ export default function VideoLecturePage() {
           />
         </div>
       </div>
+
+      {/* Auth Modal Trigger */}
+      <AuthModal
+        isOpen={showAuthModal}
+        onClose={() => setShowAuthModal(false)}
+        title="Sign In to Watch Video"
+        description="Video lectures are part of CrackDSA's structured curriculum. Sign in to stream high-definition walkthroughs, follow the syllabus, and save personal notes."
+        featureName="Video Lecture"
+        icon={<PlayCircle className="w-6 h-6 text-white" />}
+      />
+
+      {/* coding75 Pro Required Modal */}
+      <ProRequiredModal
+        isOpen={showProModal}
+        onClose={() => setShowProModal(false)}
+        title="Unlock coding75 Pro Access"
+        description={`"${title}" is part of the coding75 Pro masterclass series. Upgrade to full 2-Year or Lifetime access to watch all lectures and attend live mentorship sessions.`}
+        featureName="coding75 Pro Masterclass"
+      />
     </div>
+  );
+}
+
+export default function VideoLecturePage() {
+  return (
+    <Suspense
+      fallback={
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 flex items-center justify-center min-h-[60vh]">
+          <div className="flex flex-col items-center gap-3">
+            <div className="w-10 h-10 border-3 border-primary border-t-transparent rounded-full animate-spin" />
+            <p className="text-xs font-semibold text-muted-foreground">Loading video masterclass...</p>
+          </div>
+        </div>
+      }
+    >
+      <VideoLectureContent />
+    </Suspense>
   );
 }

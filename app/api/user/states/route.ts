@@ -91,7 +91,16 @@ export async function POST(req: Request) {
     }
 
     if (!user) {
-      // If not logged in, return success echo so client falls back to localStorage
+      // If not logged in, return 401 if video is locked or guest echo
+      if (asset_type === 'video') {
+        return NextResponse.json({
+          error: 'Sign in or upgrade to coding75 Pro to track video progress and save notes.',
+          requireLogin: true,
+          require_pro: true,
+          is_locked: true,
+        }, { status: 401 });
+      }
+
       return NextResponse.json({
         state: {
           asset_id,
@@ -106,6 +115,84 @@ export async function POST(req: Request) {
     }
 
     const supabase = getSupabaseServerClient(token);
+
+    // Enforce Pro access for paid video lectures: no status updates, notes, or bookmarks allowed if locked
+    if (asset_type === 'video') {
+      const { data: videoData } = await supabase
+        .from('video_lectures')
+        .select('id, attributes')
+        .eq('id', asset_id)
+        .maybeSingle();
+
+      let isFree = Boolean(
+        videoData?.attributes?.is_free === true ||
+        videoData?.attributes?.isFree === true
+      );
+
+      if (!isFree) {
+        const { data: courseData } = await supabase
+          .from('courses')
+          .select('curriculum')
+          .limit(5);
+
+        if (courseData && Array.isArray(courseData)) {
+          for (const c of courseData) {
+            if (Array.isArray(c.curriculum)) {
+              for (const sec of c.curriculum) {
+                for (const it of sec.items || []) {
+                  if ((it.asset_id === asset_id || it.id === asset_id) && (it.is_free || it.isFree)) {
+                    isFree = true;
+                    break;
+                  }
+                }
+                if (isFree) break;
+                for (const sub of sec.subsections || []) {
+                  for (const it of sub.items || []) {
+                    if ((it.asset_id === asset_id || it.id === asset_id) && (it.is_free || it.isFree)) {
+                      isFree = true;
+                      break;
+                    }
+                  }
+                  if (isFree) break;
+                }
+                if (isFree) break;
+              }
+            }
+            if (isFree) break;
+          }
+        }
+      }
+
+      if (!isFree) {
+        let isPro = false;
+        if (user && user.email) {
+          const { data: userRow } = await supabase
+            .from('users')
+            .select('pro_subscription')
+            .eq('user_email', user.email)
+            .maybeSingle();
+
+          const proSub = userRow?.pro_subscription || {};
+          const activeTill = typeof proSub.subscription_active_till_epoch === 'number'
+            ? proSub.subscription_active_till_epoch
+            : 0;
+          const nowEpoch = Math.floor(Date.now() / 1000);
+          isPro = Boolean(
+            proSub.is_pro || 
+            activeTill === -1 || 
+            activeTill > nowEpoch
+          );
+        }
+
+        if (!isPro) {
+          return NextResponse.json({
+            error: 'coding75 Pro subscription required to update status or save notes on locked video lectures.',
+            require_pro: true,
+            is_locked: true,
+          }, { status: 403 });
+        }
+      }
+    }
 
     // Check existing row
     const { data: existingRows } = await supabase

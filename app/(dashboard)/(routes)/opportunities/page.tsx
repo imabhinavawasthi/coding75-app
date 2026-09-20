@@ -1,6 +1,6 @@
 "use client";
 
-import React from "react";
+import React, { useEffect, useState } from "react";
 import Link from "next/link";
 import {
   ArrowLeft,
@@ -17,14 +17,62 @@ import {
   Users,
   Wrench,
   Zap,
+  Lock,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
+import { getValidSession } from "@/lib/auth-client";
+import { AuthModal } from "@/components/auth/auth-modal";
 
 export default function OpportunitiesPage() {
+  const [isLoggedIn, setIsLoggedIn] = useState(true);
+  const [showAuthModal, setShowAuthModal] = useState(false);
+
+  useEffect(() => {
+    async function checkAuth() {
+      try {
+        const session = await getValidSession();
+        if (!session) {
+          setIsLoggedIn(false);
+          setShowAuthModal(true);
+        } else {
+          setIsLoggedIn(true);
+        }
+      } catch {
+        setIsLoggedIn(false);
+      }
+    }
+    checkAuth();
+  }, []);
+
   return (
     <div className="py-8 px-4 sm:px-6 lg:px-8 max-w-5xl mx-auto space-y-8 animate-in fade-in-50 duration-300">
+      {/* Auth Banner if not logged in */}
+      {!isLoggedIn && (
+        <div className="rounded-2xl border border-blue-500/30 bg-blue-500/10 p-4 sm:p-5 flex flex-col sm:flex-row items-center justify-between gap-4 shadow-sm">
+          <div className="flex items-center gap-3 text-center sm:text-left">
+            <div className="w-10 h-10 rounded-xl bg-blue-500/20 text-blue-600 dark:text-blue-400 flex items-center justify-center shrink-0">
+              <Lock className="w-5 h-5" />
+            </div>
+            <div>
+              <p className="text-sm font-bold text-foreground">
+                Sign In to Unlock Opportunities & Referral Matches
+              </p>
+              <p className="text-xs text-muted-foreground">
+                Access verified employer job postings and connect with verified CrackDSA alumni referrers.
+              </p>
+            </div>
+          </div>
+          <Button
+            onClick={() => setShowAuthModal(true)}
+            size="sm"
+            className="rounded-xl font-bold text-xs h-9 px-4 bg-blue-600 hover:bg-blue-700 text-white shrink-0 cursor-pointer shadow-md"
+          >
+            Sign In with Google
+          </Button>
+        </div>
+      )}
       {/* Top back navigation */}
       <div>
         <Link
@@ -209,6 +257,15 @@ export default function OpportunitiesPage() {
           </a>
         </div>
       </div>
+
+      {/* Auth Modal */}
+      <AuthModal
+        isOpen={showAuthModal}
+        onClose={() => setShowAuthModal(false)}
+        title="Sign In to Tech Opportunities"
+        description="Access verified tech internships, graduate hiring drives, and alumni referrals across top tech companies."
+        featureName="Tech Opportunities"
+      />
     </div>
   );
 }

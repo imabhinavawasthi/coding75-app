@@ -6,6 +6,7 @@ import { ArrowUpRight, Code2, Sparkles } from "lucide-react";
 import { Logo } from "../components/logo";
 import { SidebarRoutes } from "./sidebar-routes";
 import { useSidebar } from "./sidebar-context";
+import { useProStatus } from "@/hooks/use-pro-status";
 import { cn } from "@/lib/utils";
 import {
   Tooltip,
@@ -22,6 +23,7 @@ interface SidebarProps {
 
 export const Sidebar = ({ className, isMobile = false, onItemClick }: SidebarProps) => {
   const { isCollapsed } = useSidebar();
+  const { isPro } = useProStatus();
 
   // Mobile drawer is always expanded
   const collapsed = isMobile ? false : isCollapsed;
@@ -84,7 +86,7 @@ export const Sidebar = ({ className, isMobile = false, onItemClick }: SidebarPro
             <Tooltip>
               <TooltipTrigger asChild>
                 <Link
-                  href="/pro"
+                  href={isPro ? "/pro/dashboard" : "/pro"}
                   onClick={onItemClick}
                   className="flex items-center justify-center w-10 h-10 mx-auto rounded-xl bg-gradient-to-tr from-amber-500 to-orange-500 text-white shadow-xs hover:scale-105 active:scale-95 transition-all"
                 >
@@ -92,13 +94,13 @@ export const Sidebar = ({ className, isMobile = false, onItemClick }: SidebarPro
                 </Link>
               </TooltipTrigger>
               <TooltipContent side="right" className="font-semibold text-xs shadow-xl border border-border/80 px-2.5 py-1 z-50">
-                coding75 Pro 🚀
+                {isPro ? "View Pro Dashboard ✨" : "coding75 Pro 🚀"}
               </TooltipContent>
             </Tooltip>
           </TooltipProvider>
         ) : (
           <Link
-            href="/pro"
+            href={isPro ? "/pro/dashboard" : "/pro"}
             onClick={onItemClick}
             className="group relative block rounded-xl border border-amber-500/20 bg-gradient-to-br from-amber-500/10 via-orange-500/5 to-transparent p-2 hover:border-amber-500/40 hover:shadow-sm transition-all select-none"
           >
@@ -109,11 +111,13 @@ export const Sidebar = ({ className, isMobile = false, onItemClick }: SidebarPro
                 </div>
                 <div className="min-w-0">
                   <p className="text-xs font-bold text-foreground group-hover:text-amber-600 dark:group-hover:text-amber-400 transition-colors flex items-center gap-1 leading-none">
-                    <span>coding75 Pro</span>
-                    <span className="text-[9px] bg-amber-500/20 text-amber-700 dark:text-amber-300 px-1 py-0.2 rounded font-extrabold">PRO</span>
+                    <span>{isPro ? "View Pro" : "coding75 Pro"}</span>
+                    <span className="text-[9px] bg-amber-500/20 text-amber-700 dark:text-amber-300 px-1 py-0.2 rounded font-extrabold">
+                      {isPro ? "ACTIVE" : "PRO"}
+                    </span>
                   </p>
                   <p className="text-[10.5px] text-muted-foreground truncate mt-1">
-                    Cohorts & 1:1 Mentorship
+                    {isPro ? "Your Pro Pass is Active ✨" : "Live Classes & Placement Guidance"}
                   </p>
                 </div>
               </div>

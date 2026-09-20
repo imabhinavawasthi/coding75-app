@@ -125,6 +125,13 @@ function DsaCatalogContent() {
         subtitle="Structured video lessons, foundational concepts, curated problem sheets, and contest solutions."
       >
         <div className="flex items-center justify-center gap-3 pt-1 flex-wrap w-full">
+          <Button asChild size="default" className="font-bold gap-1.5 bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-500 hover:to-indigo-500 text-white shadow-md shadow-blue-500/20 rounded-xl">
+            <Link href="/dsa/learn">
+              <GraduationCap className="w-4 h-4" />
+              <span>Course Roadmap</span>
+              <Badge variant="secondary" className="ml-1 px-1.5 py-0 h-5 text-[10px] font-black bg-white/20 text-white border-none shadow-sm uppercase tracking-wider">Flow</Badge>
+            </Link>
+          </Button>
           <Button asChild size="default" className="font-black gap-2 bg-gradient-to-r from-violet-600 to-fuchsia-600 hover:from-violet-500 hover:to-fuchsia-500 text-white shadow-[0_0_15px_rgba(139,92,246,0.5)] border border-white/20 transition-all hover:scale-105 rounded-xl">
             <Link href="/dsa/topic-tree">
               <Network className="w-4 h-4 fill-white" />

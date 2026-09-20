@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useEffect, useState, useMemo } from "react";
+import React, { useEffect, useState, useMemo, Suspense } from "react";
 import { useParams, useRouter, useSearchParams } from "next/navigation";
 import Link from "next/link";
 import { ChevronRight, ArrowLeft, BookOpen } from "lucide-react";
@@ -37,7 +37,7 @@ function ProblemDetailSkeleton() {
   );
 }
 
-export default function ProblemDetailPage() {
+function ProblemDetailContent() {
   const params = useParams();
   const router = useRouter();
   const searchParams = useSearchParams();
@@ -360,5 +360,22 @@ export default function ProblemDetailPage() {
         />
       </div>
     </div>
+  );
+}
+
+export default function ProblemDetailPage() {
+  return (
+    <Suspense
+      fallback={
+        <div className="max-w-5xl mx-auto px-4 sm:px-6 py-4 sm:py-8 space-y-4 select-none">
+          <div className="h-4 w-48 bg-muted rounded animate-pulse" />
+          <div className="rounded-2xl sm:rounded-3xl bg-white dark:bg-gray-900 border border-gray-200 dark:border-gray-800 shadow-sm overflow-hidden">
+            <ProblemDetailSkeleton />
+          </div>
+        </div>
+      }
+    >
+      <ProblemDetailContent />
+    </Suspense>
   );
 }
