@@ -25,10 +25,7 @@ export const metadata: Metadata = {
   ],
   openGraph: {
     images: ['/og.png'],
-  },
-  other: {
-    'google-adsense-account': 'ca-pub-5737188174207597',
-  },
+  }
 }
 
 export default function RootLayout({

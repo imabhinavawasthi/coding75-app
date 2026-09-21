@@ -1,7 +1,7 @@
 import crypto from "crypto";
 
 // Internal secret for video token signing and URL obfuscation
-const VIDEO_SECRET = process.env.VIDEO_ENCRYPTION_SECRET || "crackdsa-vault-sec-k9x-2026-secure";
+const VIDEO_SECRET = process.env.VIDEO_ENCRYPTION_SECRET || "coding75-protected-video-playback-secret-v1";
 const ALGORITHM = "aes-256-cbc";
 
 // 32-byte derived key

@@ -40,6 +40,7 @@ export default function OnboardingPage() {
 
     const [loading, setLoading] = useState(true);
     const [submitting, setSubmitting] = useState(false);
+    const [skipping, setSkipping] = useState(false);
     const [currentStep, setCurrentStep] = useState<1 | 2>(1);
 
     // Auth user info
@@ -270,6 +271,64 @@ export default function OnboardingPage() {
         }
     };
 
+    // Skip Onboarding: Mark onboarded as true in metadata and navigate forward
+    const handleSkipOnboarding = async () => {
+        setSkipping(true);
+        try {
+            let token = await getValidAccessToken();
+            if (token) {
+                const resolvedCollege = isCustomCollege ? customCollege.trim() : college;
+                const resolvedBranch = isCustomBranch ? customBranch.trim() : branch;
+
+                const cleanLc = cleanCodingHandle("leetcode", leetcode);
+                const cleanCf = cleanCodingHandle("codeforces", codeforces);
+                const cleanCc = cleanCodingHandle("codechef", codechef);
+
+                const payload: any = {
+                    onboarded: true
+                };
+
+                if (resolvedCollege) payload.college = resolvedCollege;
+                if (resolvedBranch) payload.branch = resolvedBranch;
+                if (graduationYear) payload.graduation_year = graduationYear;
+
+                if (cleanLc || cleanCf || cleanCc || github.trim() || linkedin.trim()) {
+                    payload.social_links = {
+                        leetcode: cleanLc,
+                        codeforces: cleanCf,
+                        codechef: cleanCc,
+                        github: github.trim(),
+                        linkedin: linkedin.trim()
+                    };
+                }
+
+                await fetch("/api/profile", {
+                    method: "PUT",
+                    headers: {
+                        "Content-Type": "application/json",
+                        Authorization: `Bearer ${token}`
+                    },
+                    body: JSON.stringify(payload)
+                }).catch(() => {});
+            }
+
+            toast.info("Onboarding skipped. You can complete your profile anytime from Settings.");
+
+            const destination = localStorage.getItem("loggedin_route");
+            if (destination && destination !== "/onboarding") {
+                localStorage.removeItem("loggedin_route");
+                router.replace(destination);
+            } else {
+                router.replace("/");
+            }
+        } catch (err) {
+            console.error("Error skipping onboarding:", err);
+            router.replace("/");
+        } finally {
+            setSkipping(false);
+        }
+    };
+
     if (loading) {
         return (
             <div className="min-h-screen flex flex-col items-center justify-center bg-slate-50">
@@ -282,12 +341,32 @@ export default function OnboardingPage() {
     return (
         <div className="min-h-screen bg-gradient-to-b from-slate-50 via-white to-slate-50 py-10 px-4 sm:px-6">
             <div className="max-w-2xl mx-auto space-y-6">
+                {/* Top Navigation Bar with Logo & Skip Action */}
+                <div className="flex items-center justify-between pb-1">
+                    <Logo width={140} height={36} />
+                    <Button
+                        type="button"
+                        variant="ghost"
+                        size="sm"
+                        disabled={skipping || submitting}
+                        onClick={handleSkipOnboarding}
+                        className="text-xs font-semibold text-gray-500 hover:text-gray-900 gap-1.5 hover:bg-slate-100 rounded-lg px-3 py-1.5"
+                    >
+                        {skipping ? (
+                            <>
+                                <Loader2 className="w-3.5 h-3.5 animate-spin" /> Skipping...
+                            </>
+                        ) : (
+                            <>
+                                Skip for now <ArrowRight className="w-3.5 h-3.5" />
+                            </>
+                        )}
+                    </Button>
+                </div>
+
                 {/* Brand Header */}
                 <div className="text-center space-y-2">
-                    <div className="inline-block">
-                        <Logo width={160} height={40} />
-                    </div>
-                    <div className="pt-2">
+                    <div className="pt-1">
                         <Badge variant="outline" className="text-xs bg-emerald-50 text-emerald-700 border-emerald-200 gap-1.5 py-0.5">
                             <Sparkles className="w-3.5 h-3.5" /> Welcome Onboarding
                         </Badge>
@@ -483,10 +562,27 @@ export default function OnboardingPage() {
                                     </Select>
                                 </div>
 
-                                <div className="pt-4 border-t">
+                                <div className="pt-4 border-t flex flex-col sm:flex-row items-center justify-between gap-3">
+                                    <Button
+                                        type="button"
+                                        variant="ghost"
+                                        disabled={skipping || submitting}
+                                        onClick={handleSkipOnboarding}
+                                        className="text-xs text-gray-500 hover:text-gray-900 w-full sm:w-auto order-2 sm:order-1"
+                                    >
+                                        {skipping ? (
+                                            <>
+                                                <Loader2 className="w-3.5 h-3.5 animate-spin mr-1.5" /> Skipping...
+                                            </>
+                                        ) : (
+                                            "Skip setup for now"
+                                        )}
+                                    </Button>
+
                                     <Button
                                         type="submit"
-                                        className="w-full bg-emerald-600 hover:bg-emerald-700 text-white font-semibold text-xs sm:text-sm h-11 gap-2 shadow-sm"
+                                        disabled={skipping || submitting}
+                                        className="w-full sm:w-auto bg-emerald-600 hover:bg-emerald-700 text-white font-semibold text-xs sm:text-sm h-11 px-6 gap-2 shadow-sm order-1 sm:order-2"
                                     >
                                         Continue to Coding Profiles
                                         <ArrowRight className="w-4 h-4" />
@@ -601,20 +697,39 @@ export default function OnboardingPage() {
                                 </div>
 
                                 {/* Action Buttons */}
-                                <div className="pt-4 border-t flex items-center justify-between gap-3">
-                                    <Button
-                                        type="button"
-                                        variant="outline"
-                                        onClick={() => setCurrentStep(1)}
-                                        className="text-xs h-11 gap-1.5"
-                                    >
-                                        <ArrowLeft className="w-4 h-4" /> Back to Step 1
-                                    </Button>
+                                <div className="pt-4 border-t flex flex-col sm:flex-row items-center justify-between gap-3">
+                                    <div className="flex items-center gap-2 w-full sm:w-auto justify-between sm:justify-start">
+                                        <Button
+                                            type="button"
+                                            variant="outline"
+                                            onClick={() => setCurrentStep(1)}
+                                            disabled={submitting || skipping}
+                                            className="text-xs h-11 gap-1.5"
+                                        >
+                                            <ArrowLeft className="w-4 h-4" /> Back to Step 1
+                                        </Button>
+
+                                        <Button
+                                            type="button"
+                                            variant="ghost"
+                                            disabled={skipping || submitting}
+                                            onClick={handleSkipOnboarding}
+                                            className="text-xs text-gray-500 hover:text-gray-900"
+                                        >
+                                            {skipping ? (
+                                                <>
+                                                    <Loader2 className="w-3.5 h-3.5 animate-spin mr-1.5" /> Skipping...
+                                                </>
+                                            ) : (
+                                                "Skip this step"
+                                            )}
+                                        </Button>
+                                    </div>
 
                                     <Button
                                         type="submit"
-                                        disabled={submitting}
-                                        className="bg-emerald-600 hover:bg-emerald-700 text-white font-semibold text-xs sm:text-sm h-11 px-6 gap-2 shadow-sm"
+                                        disabled={submitting || skipping}
+                                        className="w-full sm:w-auto bg-emerald-600 hover:bg-emerald-700 text-white font-semibold text-xs sm:text-sm h-11 px-6 gap-2 shadow-sm"
                                     >
                                         {submitting ? (
                                             <>

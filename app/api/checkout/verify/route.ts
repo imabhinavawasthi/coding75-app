@@ -7,7 +7,7 @@ import { PRO_PRICING_CONFIG } from "@/app/pro/_config/pro-pricing";
 const RAZORPAY_KEY_SECRET =
   process.env.RAZORPAY_KEY_SECRET ||
   process.env.RAZORPAY_API_KEY_SECRET ||
-  "RHGMKJd3ImByYx21CU0IcUQy";
+  "";
 
 export async function POST(req: Request) {
   try {

@@ -71,7 +71,7 @@ function getEmbedInfo(url?: string, videoId?: string): EmbedInfo {
   const driveMatch = url.match(/(?:drive\.google\.com\/(?:file\/d\/|open\?id=)|docs\.google\.com\/(?:file\/d\/|open\?id=))([a-zA-Z0-9_-]+)/);
   if (driveMatch && driveMatch[1]) {
     return {
-      embedUrl: videoId ? `/api/videos/${videoId}/player` : `https://drive.google.com/file/d/${driveMatch[1]}/preview`,
+      embedUrl: videoId ? `/api/videos/${videoId}/player` : null,
       isIframeCompatible: true,
       originalUrl: "",
     };
@@ -400,7 +400,7 @@ function VideoLectureContent() {
   }
 
   return (
-    <div className="mx-auto max-w-7xl px-4 sm:px-6 pb-24 pt-4 space-y-6">
+    <div className="mx-auto max-w-7xl px-3 sm:px-6 pb-24 pt-3 sm:pt-4 space-y-4 sm:space-y-6">
       {/* Top Breadcrumb Navigation & Mobile Playlist Trigger */}
       <div className="flex items-center justify-between gap-2 flex-wrap">
         <nav className="flex items-center gap-1.5 text-xs text-muted-foreground font-medium flex-wrap">
@@ -420,7 +420,7 @@ function VideoLectureContent() {
             </>
           )}
           <ChevronRight size={13} className="text-muted-foreground/60" />
-          <span className="text-foreground font-semibold truncate max-w-[280px]">
+          <span className="text-foreground font-semibold truncate max-w-[140px] xs:max-w-[200px] sm:max-w-[280px]">
             {title}
           </span>
         </nav>
@@ -453,9 +453,9 @@ function VideoLectureContent() {
       </div>
 
       {/* Main Grid: Video Player + Playlist Sidebar */}
-      <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
+      <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 lg:gap-8">
         {/* Left 2 Cols: Player & Content */}
-        <div className="lg:col-span-2 space-y-6">
+        <div className="lg:col-span-2 space-y-4 sm:space-y-6">
           {/* Protected Video Player or Locked Overlay */}
           {!isLoggedIn && !videoDetail?.is_free && !currentItem?.is_free ? (
             <div className="relative overflow-hidden rounded-2xl sm:rounded-3xl border border-amber-500/30 bg-gradient-to-br from-gray-950 via-slate-900 to-amber-950/20 aspect-video flex flex-col items-center justify-center text-center p-6 sm:p-10 shadow-xl group">

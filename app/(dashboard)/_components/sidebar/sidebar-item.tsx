@@ -42,7 +42,7 @@ export const SidebarItem = ({
   const isActive = exact
     ? pathname === href
     : pathname === href ||
-      (href !== "/dashboard" && href !== "/admin" && href !== "/classroom" && pathname?.startsWith(`${href}`));
+      (href !== "/dashboard" && href !== "/admin" && pathname?.startsWith(`${href}`));
 
   const handleClick = (e: React.MouseEvent) => {
     if (isLocked) {

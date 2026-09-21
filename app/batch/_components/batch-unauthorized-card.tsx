@@ -30,9 +30,9 @@ export function BatchUnauthorizedCard({ batchName, batchId }: BatchUnauthorizedC
                         This batch is reserved for enrolled students only. If you have already enrolled, ensure you are logged in with your registered email address or contact support.
                     </p>
                     <div className="flex flex-col sm:flex-row items-center justify-center gap-3 pt-2">
-                        <Link href="/classroom">
+                        <Link href="/dashboard">
                             <Button variant="outline">
-                                Return to Classroom
+                                Return to Dashboard
                             </Button>
                         </Link>
                         <Link href="/pro">

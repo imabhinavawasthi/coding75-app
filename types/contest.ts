@@ -5,6 +5,23 @@ export interface ContestTagsJson {
   [key: string]: any;
 }
 
+export interface UnifiedProblemRecord {
+  id: string;
+  platform: ContestPlatform;
+  created_at: string;
+  problem_name: string;
+  problem_description: string | null;
+  problem_link: string | null;
+  video_editorial: string | null;
+  editorial: string | null;
+  difficulty: number;
+  company_tags?: any;
+  topic_tags?: any;
+  slug_url: string;
+  contest: string | null;
+  solution_link: string | null;
+}
+
 export interface ContestEditorial {
   id: string;
   platform: ContestPlatform;

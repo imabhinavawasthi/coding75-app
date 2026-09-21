@@ -1,5 +1,5 @@
 import { NextResponse } from 'next/server';
-import { getContestProblems } from '@/lib/contests-service';
+import { getContestProblemsFromDb } from '@/app/api/_lib/contests-db';
 import { slugifyContest } from '@/lib/contests';
 import { ContestPlatform, ContestSummary } from '@/types/contest';
 
@@ -18,7 +18,7 @@ export async function GET(
     const { searchParams } = new URL(req.url);
     const search = searchParams.get('search')?.toLowerCase().trim();
 
-    const rows = await getContestProblems({
+    const rows = await getContestProblemsFromDb({
       platform,
       search,
     });

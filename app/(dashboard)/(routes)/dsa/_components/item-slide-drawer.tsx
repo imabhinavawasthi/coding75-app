@@ -80,7 +80,7 @@ function getEmbedUrl(url?: string, assetId?: string): string | null {
 
   const driveMatch = url?.match(/(?:drive\.google\.com\/(?:file\/d\/|open\?id=)|docs\.google\.com\/(?:file\/d\/|open\?id=))([a-zA-Z0-9_-]+)/);
   if (driveMatch && driveMatch[1]) {
-    return `https://drive.google.com/file/d/${driveMatch[1]}/preview`;
+    return assetId ? `/api/videos/${assetId}/player` : null;
   }
   if (url?.includes("youtube.com/embed/")) return url;
   const ytMatch = url?.match(/(?:youtu\.be\/|youtube\.com\/(?:embed\/|v\/|watch\?v=|watch\?.+&v=))([\w-]{11})/);

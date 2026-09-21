@@ -78,6 +78,31 @@ export async function GET(
             }
         }
 
+        const sanitizeItem = (item: any) => {
+            if (!item) return item;
+            const hasDrive = typeof item.video_url === 'string' && (item.video_url.includes('drive.google.com') || item.video_url.includes('docs.google.com'));
+            if (hasDrive || item.type === 'video') {
+                const targetId = item.asset_id || item.id;
+                return {
+                    ...item,
+                    video_url: targetId ? `/api/videos/${targetId}/player` : null,
+                    is_protected: true,
+                };
+            }
+            return item;
+        };
+
+        const sanitizedCurriculum = rawCurriculum.map((section: any) => ({
+            ...section,
+            items: Array.isArray(section.items) ? section.items.map(sanitizeItem) : [],
+            subsections: Array.isArray(section.subsections)
+                ? section.subsections.map((sub: any) => ({
+                      ...sub,
+                      items: Array.isArray(sub.items) ? sub.items.map(sanitizeItem) : [],
+                  }))
+                : [],
+        }));
+
         const course = {
             id: data.id,
             slug: data.slug || data.id,
@@ -95,8 +120,8 @@ export async function GET(
             total_problems: totalProblems || data.total_problems || 0,
             total_videos: totalVideos || data.total_videos || 0,
             total_articles: totalArticles || data.total_articles || 0,
-            curriculum: rawCurriculum,
-            sections: rawCurriculum,
+            curriculum: sanitizedCurriculum,
+            sections: sanitizedCurriculum,
             metadata: data.metadata || {},
             created_at: data.created_at,
             updated_at: data.updated_at,

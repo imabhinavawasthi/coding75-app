@@ -1,5 +1,5 @@
 import { NextResponse } from 'next/server';
-import { getContestProblems } from '@/lib/contests-service';
+import { getContestProblemsFromDb } from '@/app/api/_lib/contests-db';
 import { generateVideoToken } from '@/lib/video-encryption';
 import { ContestPlatform } from '@/types/contest';
 
@@ -19,7 +19,7 @@ export async function GET(
       return NextResponse.json({ error: 'Contest slug is required' }, { status: 400 });
     }
 
-    const matchedProblems = await getContestProblems({
+    const matchedProblems = await getContestProblemsFromDb({
       platform,
       contestSlug,
     });

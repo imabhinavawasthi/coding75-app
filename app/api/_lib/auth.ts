@@ -1,17 +1,7 @@
 import { getSupabaseServerClient } from './supabase-server';
 
-export interface AuthenticatedUser {
-    id: string;
-    email: string;
-    isAdmin: boolean;
-    user_metadata?: {
-        full_name?: string;
-        name?: string;
-        avatar_url?: string;
-        picture?: string;
-        [key: string]: any;
-    };
-}
+export type { AuthenticatedUser } from '@/types/auth';
+import type { AuthenticatedUser } from '@/types/auth';
 
 export async function getAuthUser(req: Request): Promise<AuthenticatedUser | null> {
     try {

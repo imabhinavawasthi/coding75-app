@@ -29,9 +29,11 @@ export const ProtectedVideoPlayer: React.FC<ProtectedVideoPlayerProps> = ({
     );
   }
 
+  const isDirectDrive = typeof embedUrl === "string" && (embedUrl.includes("drive.google.com") || embedUrl.includes("docs.google.com"));
+
   return (
     <div
-      className={`relative w-full aspect-video rounded-2xl overflow-hidden bg-black border border-border shadow-lg flex items-center justify-center select-none group ${className}`}
+      className={`relative w-full aspect-video rounded-xl sm:rounded-2xl overflow-hidden bg-black border border-border shadow-lg flex items-center justify-center select-none group touch-manipulation ${className}`}
       onContextMenu={(e) => {
         e.preventDefault();
         return false;
@@ -49,44 +51,22 @@ export const ProtectedVideoPlayer: React.FC<ProtectedVideoPlayerProps> = ({
       <iframe
         src={embedUrl}
         title={title}
-        className="w-full h-full border-0 absolute inset-0"
+        className={`w-full absolute inset-x-0 border-0 ${
+          isDirectDrive
+            ? "-top-12 sm:-top-14 h-[calc(100%+48px)] sm:h-[calc(100%+56px)]"
+            : "inset-0 h-full"
+        }`}
         allow="accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture; fullscreen"
         allowFullScreen
+        sandbox="allow-scripts allow-same-origin allow-forms"
         onLoad={() => setIsLoaded(true)}
         onError={() => setHasError(true)}
       />
 
-      {/* 
-        PHYSICAL POP-OUT CLICK SHIELDS:
-        Google Drive's preview player renders a "Pop-out" / open in separate window icon in the top-right corner.
-        These invisible DOM shields sit directly over that zone with higher z-index, intercepting all clicks
-        and right-clicks, making it physically impossible for the end user to click the pop-out button.
-      */}
-      <div
-        className="absolute top-0 right-0 w-24 sm:w-28 h-16 z-30 pointer-events-auto bg-transparent cursor-default"
-        title=""
-        onClick={(e) => {
-          e.preventDefault();
-          e.stopPropagation();
-        }}
-        onMouseDown={(e) => {
-          e.preventDefault();
-          e.stopPropagation();
-        }}
-      />
-      
-      <div
-        className="absolute top-0 left-0 right-24 sm:right-28 h-14 z-20 pointer-events-auto bg-transparent cursor-default"
-        title=""
-        onClick={(e) => {
-          e.preventDefault();
-          e.stopPropagation();
-        }}
-        onMouseDown={(e) => {
-          e.preventDefault();
-          e.stopPropagation();
-        }}
-      />
+      {/* Top Edge Guard for direct drive embeds to prevent pixel bleed */}
+      {isDirectDrive && (
+        <div className="absolute top-0 left-0 right-0 h-1 bg-black z-10 pointer-events-none" />
+      )}
     </div>
   );
 };

@@ -74,12 +74,14 @@ export async function GET(
             previewEmbedUrl = rawUrl;
         }
 
+        const isGoogleDrive = Boolean(driveMatch && driveMatch[1]);
+
         // Return protected HTML stream wrapper
         const html = `<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>${video.title ? video.title.replace(/</g, '&lt;') : 'Lecture Player'}</title>
     <style>
         * { box-sizing: border-box; margin: 0; padding: 0; }
@@ -90,45 +92,54 @@ export async function GET(
             background: #000;
             user-select: none;
             -webkit-user-select: none;
+            touch-action: manipulation;
         }
         #player-container {
             position: relative;
             width: 100%;
             height: 100%;
+            overflow: hidden;
             background: #000;
         }
         iframe {
             position: absolute;
-            top: 0;
             left: 0;
             width: 100%;
-            height: 100%;
             border: 0;
-        }
-        /* Shield 1: Blocks Google Drive's top-right "Pop-out" / open in separate window button */
-        #shield-popout {
-            position: absolute;
+            ${isGoogleDrive ? `
+            top: -56px;
+            height: calc(100% + 56px);
+            ` : `
             top: 0;
-            right: 0;
-            width: 90px;
-            height: 58px;
-            z-index: 99999;
-            background: transparent;
-            cursor: default;
-            pointer-events: auto;
+            height: 100%;
+            `}
         }
-        /* Shield 2: Blocks Google Drive's top title bar and file details */
-        #shield-topbar {
+        ${isGoogleDrive ? `
+        /* On mobile, Google Drive header is 48px-50px */
+        @media (max-width: 640px) {
+            iframe {
+                top: -50px;
+                height: calc(100% + 50px);
+            }
+        }
+        /* Top guard strip to prevent any pixel bleed */
+        #top-edge-guard {
             position: absolute;
             top: 0;
             left: 0;
-            right: 90px;
-            height: 52px;
-            z-index: 99998;
-            background: transparent;
-            cursor: default;
-            pointer-events: auto;
+            right: 0;
+            height: 4px;
+            background: #000;
+            z-index: 10;
+            pointer-events: none;
         }
+        /* When in fullscreen, reset to full display */
+        iframe:fullscreen,
+        iframe:-webkit-full-screen {
+            top: 0 !important;
+            height: 100% !important;
+        }
+        ` : ''}
     </style>
 </head>
 <body oncontextmenu="return false;">
@@ -140,9 +151,7 @@ export async function GET(
             allowfullscreen
             sandbox="allow-scripts allow-same-origin allow-forms"
         ></iframe>
-        <!-- Physical Click Shields to prevent opening Google Drive externally -->
-        <div id="shield-popout" title=""></div>
-        <div id="shield-topbar" title=""></div>
+        ${isGoogleDrive ? `<div id="top-edge-guard"></div>` : ''}
     </div>
     <script>
         // Disable right click inside player
@@ -156,22 +165,6 @@ export async function GET(
             console.warn('External view popout blocked');
             return null;
         };
-
-        // Intercept clicks on shield overlays
-        var shield = document.getElementById('shield-popout');
-        if (shield) {
-            shield.addEventListener('click', function(e) {
-                e.preventDefault();
-                e.stopPropagation();
-            });
-        }
-        var topShield = document.getElementById('shield-topbar');
-        if (topShield) {
-            topShield.addEventListener('click', function(e) {
-                e.preventDefault();
-                e.stopPropagation();
-            });
-        }
 
         // Prevent common keyboard dev shortcuts inside frame
         window.addEventListener('keydown', function(e) {

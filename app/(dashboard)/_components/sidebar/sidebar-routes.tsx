@@ -258,21 +258,6 @@ const siteNavigation: (NavSubItem | NavGroup)[] = [
   },
 ];
 
-const classroomRoutes: NavSubItem[] = [
-  { icon: LayoutDashboard, label: "Pro Dashboard", href: "/classroom/dashboard" },
-  { icon: Calendar, label: "Class Schedule", href: "/classroom/schedule" },
-  { icon: ListVideo, label: "Live Classes", href: "/classroom/live" },
-  { icon: GitFork, label: "Live DSA Classes", href: "/classroom/dsa" },
-  { icon: BarChart2, label: "Live CP Classes", href: "/classroom/competitive-programming" },
-  { icon: BookText, label: "Class Material", href: "/classroom/resources" },
-  { icon: ScrollText, label: "Resume Review", href: "/classroom/resume-review" },
-  { icon: GraduationCap, label: "1:1 Mentorship", href: "/classroom/mentorship" },
-  { icon: UserSquare, label: "Mock Interview", href: "/classroom/mock-interview" },
-  { icon: Code2Icon, label: "Live Project Building", href: "/classroom/projects" },
-  { icon: ComputerIcon, label: "CS Fundamental", href: "/classroom/cs-fundamental" },
-  { icon: UserCheck, label: "Subscription Details", href: "/classroom/subscription" },
-];
-
 const adminRoutes: NavSubItem[] = [
   { icon: User, label: "Admin Home", href: "/admin" },
   { icon: Briefcase, label: "Add Opportunity", href: "/admin/opportunity" },
@@ -296,7 +281,6 @@ export const SidebarRoutes = ({ isCollapsed = false, onItemClick }: SidebarRoute
   const { isPro } = useProStatus();
   const [showProModal, setShowProModal] = useState(false);
 
-  const isClassroomPage = pathname?.startsWith("/classroom");
   const isAdminPage = pathname?.startsWith("/admin");
   const isBatchPage = pathname?.startsWith("/batch");
 
@@ -395,11 +379,9 @@ export const SidebarRoutes = ({ isCollapsed = false, onItemClick }: SidebarRoute
     }));
   };
 
-  // Render Flat Routes for Admin, Classroom, Batch
-  if (isClassroomPage || isAdminPage || (isBatchPage && batchId)) {
-    const activeRouteList = isClassroomPage
-      ? classroomRoutes
-      : isAdminPage
+  // Render Flat Routes for Admin or Batch
+  if (isAdminPage || (isBatchPage && batchId)) {
+    const activeRouteList = isAdminPage
       ? adminRoutes
       : batchRoutes;
 

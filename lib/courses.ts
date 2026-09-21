@@ -1,6 +1,5 @@
 import { CourseSummary, CourseSection, VideoLecture, PracticeProblem } from "@/types/course";
 import { BatchTopicResponse } from "./courseCatalogSync";
-import supabase from "@/supabase";
 import { getValidAccessToken } from "./auth-client";
 
 /**

@@ -8,12 +8,12 @@ const RAZORPAY_KEY_ID =
   process.env.RAZORPAY_KEY_ID ||
   process.env.RAZORPAY_API_KEY_ID ||
   process.env.NEXT_PUBLIC_RAZORPAY_KEY_ID ||
-  "rzp_test_T0l7SlQCl9cqYf";
+  "";
 
 const RAZORPAY_KEY_SECRET =
   process.env.RAZORPAY_KEY_SECRET ||
   process.env.RAZORPAY_API_KEY_SECRET ||
-  "RHGMKJd3ImByYx21CU0IcUQy";
+  "";
 
 export async function POST(req: Request) {
   try {
